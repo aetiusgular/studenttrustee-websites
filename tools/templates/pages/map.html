@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
+<link rel="preload" href="/data/districts.geojson" as="fetch" crossorigin="anonymous">
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <link rel="stylesheet" href="/assets/map.css">
 {%- endblock %}

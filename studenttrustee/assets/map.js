@@ -13,9 +13,11 @@ const REGION_NAME = {
   VII:"Los Angeles", VIII:"Orange County & San Gabriel", IX:"Inland Empire & Desert",
   X:"San Diego & Imperial"
 };
-const BOUNDARY_URL = "https://services6.arcgis.com/XNnWmtFBLgSx99Bz/arcgis/rest/services/" +
-  "CCC_ArcGIS__Map_Bundle/FeatureServer/4/query?where=1%3D1&outFields=DistrictNa,ShortName" +
-  "&outSR=4326&maxAllowableOffset=0.0012&geometryPrecision=5&returnGeometry=true&f=geojson";
+/* District outlines are a static snapshot (tools/legislation/boundaries.py)
+   served from this site's own CDN. The live ArcGIS query took 2.5 to 3.5 s of
+   server time per visit and was cacheable for 30 s; this file is ~90 KB
+   compressed and arrives in tens of milliseconds. */
+const BOUNDARY_URL = "/data/districts.geojson";
 
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const regionColor = (r) => css("--r" + (REGIONS.indexOf(r) + 1));
@@ -469,18 +471,12 @@ function banner(text, kind){
   }
 }
 
-async function tryUrl(url){
-  const res = await fetch(url, { mode:"cors" });
+async function loadBoundaries(){
+  const res = await fetch(BOUNDARY_URL, { credentials:"same-origin" });
   if (!res.ok) throw new Error("HTTP " + res.status);
   const gj = await res.json();
-  if (gj.error) throw new Error("service error " + (gj.error.code || ""));
-  if (!gj.features || !gj.features.length) throw new Error("no features returned");
+  if (!gj.features || !gj.features.length) throw new Error("no features in boundary file");
   return gj;
-}
-async function loadBoundaries(){
-  const alt = BOUNDARY_URL.replace("&maxAllowableOffset=0.0012&geometryPrecision=5", "");
-  try { return await tryUrl(BOUNDARY_URL); }
-  catch (e){ console.warn("simplified query failed, retrying full geometry:", e); return await tryUrl(alt); }
 }
 
 /* ---------- reveal ----------
@@ -537,8 +533,9 @@ function revealDistricts(){
   const used = new Set(); const unmatched = [];
   if (gj){
     for (const f of gj.features){
-      const raw = f.properties.DistrictNa || f.properties.ShortName || "";
-      const d = matchDistrict(raw);
+      // the snapshot carries the roster's own district name; fall back to fuzzy matching on the source name
+      const raw = f.properties.district || f.properties.DistrictNa || f.properties.ShortName || "";
+      const d = byNorm.get(norm(raw)) || matchDistrict(raw);
       if (!d){ unmatched.push(raw); continue; }
       if (used.has(d.name)) continue;
       used.add(d.name);
@@ -557,8 +554,8 @@ function revealDistricts(){
   if (h.d && bySlug.has(h.d)) focusDistrict(bySlug.get(h.d));
 
   if (usingFallback){
-    banner("Couldn’t reach the state GIS service, so district outlines aren’t drawn — " +
-           "trustee pins are placed at each district’s main campus instead. Reload while online to get the boundaries.", "err");
+    banner("Couldn’t load the district outlines, so trustee pins are placed at each district’s main campus instead. " +
+           "Reload to try again.", "err");
   } else if (used.size < DATA.districts.length){
     banner(`${used.size} of ${DATA.districts.length} district outlines loaded; the rest are shown as pins.`, "err");
   } else {

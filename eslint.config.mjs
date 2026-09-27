@@ -32,7 +32,7 @@ export default [
     },
   },
   {
-    files: ["tools/**/*.js", "tests/**/*.js", "playwright.config.js", "eslint.config.mjs"],
+    files: ["tools/**/*.js", "tools/**/*.mjs", "tests/**/*.js", "playwright.config.js", "eslint.config.mjs"],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",

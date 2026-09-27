@@ -16,6 +16,7 @@ URLS = {
     'https://www.senate.gov/general/committee_schedules/hearings.xml': 'senate-hearings.xml',
     'https://www.senate.gov/legislative/schedule/floor_schedule.xml': 'senate-floor-schedule.xml',
     'https://unitedstates.github.io/congress-legislators/legislators-current.json': 'legislators-current-sample.json',
+    'https://unitedstates.github.io/congress-legislators/legislators-historical.json': 'legislators-historical-sample.json',
     'https://www2.census.gov/geo/docs/reference/codes2020/cou/st06_ca_cou2020.txt': 'census-ca-counties.txt',
     'https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/tab20_cd11920_county20_st06.txt': 'census-cd119-county-ca.txt',
     'https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/tab20_sldu202420_county20_st06.txt': 'census-sldu2024-county-ca.txt',

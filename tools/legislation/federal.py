@@ -27,7 +27,7 @@ import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta
 
 from . import identity, writer
-from .common import Http, Manifest, et_to_iso, senate_datetime_to_iso, http_date_to_iso, iso, EASTERN
+from .common import Http, Manifest, et_to_iso, senate_datetime_to_iso, http_date_to_iso, iso, clock, clock_note, EASTERN
 
 HOUSE_INDEX = 'https://clerk.house.gov/evs/%d/index.asp'
 HOUSE_ROLL = 'https://clerk.house.gov/evs/%d/roll%03d.xml'
@@ -359,7 +359,7 @@ def refresh_senate_schedules(http, manifest):
             continue
         out.append({
             'id': 'us-senate-hearing-%s' % h['identifier'], 'level': 'federal', 'jurisdiction': 'us', 'body': 'us-senate',
-            'kind': 'committee', 'date': h['date'], 'time': h['time'] or None, 'tz': 'America/New_York',
+            'kind': 'committee', 'date': h['date'], 'time': clock(h['time']), 'time_note': clock_note(h['time']), 'tz': 'America/New_York',
             'title': '%s: %s' % (h['committee'], h['matter']) if h['committee'] else h['matter'],
             'category': h['type'], 'status': 'scheduled', 'location': h['room'] or None,
             'official_url': 'https://www.senate.gov/committees/hearings_meetings.htm',
@@ -379,7 +379,7 @@ def refresh_senate_schedules(http, manifest):
         nxt = max(convenes) if convenes else None
         if nxt and nxt[:10] >= date.today().isoformat():
             out.append({'id': 'us-senate-convene-%s' % nxt[:10], 'level': 'federal', 'jurisdiction': 'us', 'body': 'us-senate',
-                        'kind': 'floor', 'date': nxt[:10], 'time': nxt[11:16], 'tz': 'America/New_York',
+                        'kind': 'floor', 'date': nxt[:10], 'time': clock(nxt[11:16]), 'tz': 'America/New_York',
                         'title': 'Senate convenes', 'status': 'scheduled',
                         'official_url': 'https://www.senate.gov/legislative/floor_activity_pail.htm',
                         'source': {'id': sid, 'name': 'senate.gov floor schedule', 'url': SENATE_FLOOR},
@@ -501,7 +501,7 @@ def write_outputs(members, votes, bills, upcoming, congress, manifest):
     # search rows
     search = []
     for m in member_rows:
-        search.append(['member', m['id'], m['name'], '%s %s%s' % (m.get('party') or '', m['state'], ('-%d' % m['district']) if m.get('district') else ''), m['body']])
+        search.append(['member', m['id'], m['name'], '%s %s%s%s' % (m.get('party') or '', m['state'], ('-%d' % m['district']) if m.get('district') else '', ' former' if m.get('former') else ''), m['body']])
     for bid, b in bills.items():
         search.append(['bill', bid, '%s %s' % (b['label'], b.get('title') or ''), '', b.get('chamber_of_origin') or 'us'])
     writer.write_json('search/us.json', {'columns': ['type', 'id', 'label', 'meta', 'body'], 'rows': search})
@@ -548,6 +548,9 @@ def main(argv=None):
             print('   %s failed: %s' % (name, e))
             # keep what is already on disk for that chamber
             votes += _reload_existing(name, congress)
+    named = identity.resolve_departed(http, manifest, members, votes)
+    if named:
+        print('   %d former members named from the historical file' % named)
     bills = build_bills(votes, congress)
     bills = enrich_bills(http, manifest, bills, os.environ.get('CONGRESS_API_KEY', '').strip())
     upcoming = []

@@ -26,7 +26,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 from . import writer
-from .common import Http, Manifest, iso, PACIFIC, slugify
+from .common import Http, Manifest, iso, clock, clock_note, PACIFIC, slugify
 
 BASE = 'https://downloads.leginfo.legislature.ca.gov/'
 DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -383,7 +383,7 @@ def build(zf, session, manifest_note, today=None):
         upcoming.append({
             'id': 'ca-agenda-%s-%s' % (slugify(r['committee_code'] or ''), ad.replace('-', '')), 'level': 'state', 'jurisdiction': 'us-ca',
             'body': house, 'kind': 'committee', 'date': ad,
-            'time': (r['agenda_time'] or '').strip() or None, 'tz': 'America/Los_Angeles',
+            'time': clock(r['agenda_time']), 'time_note': clock_note(r['agenda_time']), 'tz': 'America/Los_Angeles',
             'title': '%s meets' % (loc.get('description') or r['committee_desc'] or r['committee_code']), 'location': where or None,
             'category': 'Committee agenda', 'status': 'scheduled', 'official_url': 'https://www.assembly.ca.gov/schedules-publications/daily-file' if house == 'ca-assembly' else 'https://www.senate.ca.gov/dailyfile',
             'source': {'id': 'ca-leginfo-pubinfo', 'name': 'California Legislature committee agendas (pubinfo)', 'url': BASE},

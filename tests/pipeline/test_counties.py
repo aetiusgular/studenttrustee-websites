@@ -100,6 +100,18 @@ class Counties(unittest.TestCase):
         self.assertEqual(sd_entry['latest_meeting'], '2026-09-16')
         self.assertTrue(os.path.exists(os.path.join(self.tmp, 'us-ca', 'counties', 'upcoming.json')))
 
+    def test_latest_across_counties(self):
+        from tools.legislation import counties
+        os.environ.pop('LEGIS_COUNTIES', None)
+        counties.main([])
+        latest = load(self.tmp, 'us-ca', 'counties', 'latest.json')
+        cols = latest['columns']
+        self.assertTrue(latest['rows'])
+        self.assertTrue(all(r[cols.index('body')] == 'ca-06073-bos' for r in latest['rows']))
+        dates = [r[cols.index('date')] for r in latest['rows']]
+        self.assertEqual(dates, sorted(dates, reverse=True))
+        self.assertTrue(all(r[cols.index('recorded')] for r in latest['rows']))
+
 
 if __name__ == '__main__':
     unittest.main()

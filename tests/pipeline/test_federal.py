@@ -124,6 +124,37 @@ class IdentityTests(unittest.TestCase):
         self.assertIn(m['body'], ('us-house', 'us-senate'))
         self.assertIn('bioguide', m['ids'])
 
+    def test_departed_members_are_named(self):
+        from tools.legislation import identity
+        hist = json.loads(fixture('legislators-historical-sample.json', 'r'))
+
+        class FakeHttp:
+            def get_json(self, url, ttl=0, **kw):
+                assert url == identity.HISTORICAL_URL
+                return hist, {'last_modified': 'Fri, 25 Sep 2026 10:00:00 GMT'}
+
+        class FakeManifest:
+            def describe(self, *a, **k): pass
+            def ok(self, *a, **k): pass
+            def error(self, *a, **k): raise AssertionError('no error expected')
+
+        members = {
+            'T000489': {'id': 'T000489', 'body': 'us-house', 'name': 'Turner (TX)', 'state': 'TX', 'district': None, 'provisional': True},
+            'lis-S350': {'id': 'lis-S350', 'body': 'us-senate', 'name': 'Marco Rubio', 'state': 'FL', 'district': None, 'provisional': True},
+            'P000145': {'id': 'P000145', 'body': 'us-senate', 'name': 'Alex Padilla', 'state': 'CA'},
+        }
+        votes = [{'positions': [['lis-S350', 'Y'], ['P000145', 'N']]}, {'positions': [['T000489', 'X']]}]
+        self.assertEqual(identity.resolve_departed(FakeHttp(), FakeManifest(), members, votes), 2)
+        self.assertEqual(members['T000489']['name'], 'Sylvester Turner')
+        self.assertEqual(members['T000489']['district'], 18)
+        self.assertEqual(members['T000489']['left_office'], '2025-03-04')
+        self.assertFalse(members['T000489']['active'])
+        self.assertNotIn('lis-S350', members)
+        self.assertEqual(members['R000595']['name'], 'Marco Rubio')
+        self.assertEqual(members['R000595']['body'], 'us-senate')
+        self.assertEqual(votes[0]['positions'], [['R000595', 'Y'], ['P000145', 'N']])
+        self.assertNotIn('former', members['P000145'])
+
 
 if __name__ == '__main__':
     unittest.main()

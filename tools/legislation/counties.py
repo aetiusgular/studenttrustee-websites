@@ -21,7 +21,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 from . import writer
-from .common import Http, Manifest, iso, FetchError, UTC
+from .common import Http, Manifest, iso, clock, clock_note, FetchError, UTC
 
 API = 'https://webapi.legistar.com/v1/%s/%s'
 SOURCES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'counties-sources.json')
@@ -121,7 +121,7 @@ def legistar_board(http, client, fips, county_name):
         if not ev_date or ev_date > far:
             continue     # Legistar template events dated 2099 and the like
         meeting = {'id': 'ca-%s-bos-meeting-%s' % (fips, eid), 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                   'kind': 'meeting', 'date': ev_date, 'time': (ev.get('EventTime') or '').strip() or None, 'tz': 'America/Los_Angeles',
+                   'kind': 'meeting', 'date': ev_date, 'time': clock(ev.get('EventTime')), 'time_note': clock_note(ev.get('EventTime')), 'tz': 'America/Los_Angeles',
                    'title': ('%s Board of Supervisors' % county_name.replace(' County', '') if fips != '06075' else 'San Francisco Board of Supervisors') + (' (%s)' % sitting(ev['_body_name']) if sitting(ev['_body_name']) else ''),
                    'location': (ev.get('EventLocation') or '').strip() or None,
                    'status': 'scheduled' if ev_date >= today_s else 'held',
@@ -239,6 +239,13 @@ def write_county(fips, rec, members, meetings, votes, matters):
     writer.write_json('us-ca/counties/%s/board.json' % fips, rec)
     if not LIMIT:
         writer.remove_stale('us-ca/counties/%s' % fips, keep)
+    by_id = {m['id']: m for m in matters.values()}
+    return [[v['id'], v['date'], rec['body'], rec['county'], v['question'], (by_id.get(v['bill_id']) or {}).get('label'),
+             ((by_id.get(v['bill_id']) or {}).get('title') or '')[:160], v['result'], v['passed'],
+             v['tally']['yes'], v['tally']['no'], v['tally']['not_voting'], v['recorded']] for v in votes]
+
+
+LATEST_COLUMNS = ['id', 'date', 'body', 'county', 'question', 'matter_label', 'matter_title', 'result', 'passed', 'yes', 'no', 'other', 'recorded']
 
 
 def links_only(http, src, rec, entry, manifest, sid):
@@ -267,7 +274,7 @@ def main(argv=None):
     slugs = {c['fips']: c['slug'] for c in counties}
     total_votes = total_meetings = with_votes = 0
     today_s = today().isoformat()
-    index, upcoming = [], []
+    index, upcoming, latest = [], [], []
     only = [f for f in os.environ.get('LEGIS_COUNTIES', '').split(',') if f]    # debugging hook: a few FIPS codes
     for fips, src in sorted(sources.items()):
         if only and fips not in only:
@@ -287,7 +294,7 @@ def main(argv=None):
                 member_rows = sorted(members.values(), key=lambda m: (m.get('provisional', False), m['name']))
                 meetings = sorted(meetings, key=lambda m: m['date'], reverse=True)
                 rec['coverage'] = 'votes' if any(v['recorded'] for v in votes) else 'agendas'
-                write_county(fips, rec, member_rows, meetings, votes, matters)
+                latest += write_county(fips, rec, member_rows, meetings, votes, matters)
                 entry.update({'coverage': rec['coverage'], 'counts': rec['counts'], 'members': len([m for m in member_rows if not m.get('provisional')]),
                               'latest_meeting': max((m['date'] for m in meetings if m['date'] < today_s), default=None),
                               'next_meeting': min((m['date'] for m in meetings if m['date'] >= today_s), default=None)})
@@ -318,6 +325,10 @@ def main(argv=None):
     upcoming.sort(key=lambda m: (m['date'], m.get('time') or '', m['county']))
     writer.write_json('us-ca/counties/index.json', {'counties': index, 'legistar': sum(1 for e in index if e.get('platform') == 'Legistar')})
     writer.write_json('us-ca/counties/upcoming.json', {'items': upcoming})
+    if not only:
+        # the most recent recorded votes across every county (roll calls first, then other actions)
+        latest.sort(key=lambda r: (r[1], r[12], r[0]), reverse=True)
+        writer.write_json('us-ca/counties/latest.json', {'columns': LATEST_COLUMNS, 'rows': [r for r in latest if r[12]][:40]})
     manifest.count('ca_counties_with_votes', with_votes)
     manifest.count('ca_county_votes', total_votes)
     manifest.count('ca_county_meetings', total_meetings)

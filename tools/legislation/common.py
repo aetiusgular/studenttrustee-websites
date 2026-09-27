@@ -211,6 +211,33 @@ def senate_datetime_to_iso(value):
     return None
 
 
+def clock(value):
+    """'14:00:00', '14:00', '1:30 p.m.', '01:30   PM' -> '14:00', '13:30' (24-hour, so it sorts).
+    Anything that is not a clock time ('Upon adjournment') -> None; see clock_note()."""
+    import re
+    if not value:
+        return None
+    v = ' '.join(str(value).replace('.', '').upper().split())
+    m = re.match(r'^(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?$', v)
+    if not m:
+        return None
+    h, mi, ap = int(m.group(1)), int(m.group(2)), m.group(3)
+    if ap == 'PM' and h < 12:
+        h += 12
+    elif ap == 'AM' and h == 12:
+        h = 0
+    if h > 23 or mi > 59:
+        return None
+    return '%02d:%02d' % (h, mi)
+
+
+def clock_note(value):
+    """The original text when it is not a clock time ('Upon adjournment of session'), else None."""
+    if not value or clock(value):
+        return None
+    return ' '.join(str(value).split()) or None
+
+
 def slugify(s):
     import re
     import unicodedata

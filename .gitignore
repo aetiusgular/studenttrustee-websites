@@ -8,3 +8,11 @@ _superseded/
 # local build scratch
 *.zip
 node_modules/
+
+# tooling
+playwright-report/
+test-results/
+.cache/
+__pycache__/
+*.pyc
+.venv/

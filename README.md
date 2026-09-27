@@ -59,3 +59,17 @@ These are missing and known, not forgotten:
 The roster was last fully checked 2 July 2026, with corrections through
 22 September 2026. Four districts remain unverified because their board
 systems block crawlers: Feather River, Solano, Monterey Peninsula, Compton.
+
+## Developing
+
+Checks run locally and in CI (`.github/workflows/ci.yml`) on every pull request.
+
+```
+npm install                       # lint and test tooling (Node 20+)
+python3 -m pip install -r requirements.txt   # template build and data pipeline
+npm run lint                      # html-validate + eslint on every page
+npm run test:a11y                 # Playwright + axe-core, WCAG 2.2 A/AA/AAA rules, at 1440, 768, 390 and 320 px
+npm run check                     # everything CI runs
+```
+
+`tests/a11y-baseline.json` lists the accessibility failures still tolerated per page. The goal is to empty it, not to grow it.

@@ -7,7 +7,6 @@ Integrity checks for data/legislation/. Returns a list of failure strings.
 - shrink guard: no index lost more than 20 percent of its rows since the last run (a feed returning
   an empty page must not wipe the site's data), unless ALLOW_SHRINK=1
 """
-import json
 import os
 
 from . import writer
@@ -15,6 +14,47 @@ from . import writer
 
 def _load(rel):
     return writer.read_json(rel)
+
+
+def california_checks():
+    """Every CA vote index row has its vote in the per-bill file, every position names a known
+    member (or a provisional ca-name- id), and every bill a vote points at is in the bill index."""
+    failures = []
+    members = _load('us-ca/members.json')
+    if members is None:
+        return failures
+    member_ids = {m['id'] for m in members.get('members', [])}
+    votes_dir = writer.path('us-ca/votes')
+    if not os.path.isdir(votes_dir):
+        return ['us-ca/members.json exists but us-ca/votes/ does not']
+    bill_index = {}
+    per_bill_cache = {}
+    unknown_total = 0
+    for name in sorted(os.listdir(votes_dir)):
+        if not name.endswith('.json'):
+            continue
+        session = name.split('-')[0]
+        if session not in bill_index:
+            idx = _load('us-ca/bills/%s/index.json' % session) or {}
+            bill_index[session] = {r[0] for r in idx.get('rows', [])}
+        for row in (_load('us-ca/votes/' + name) or {}).get('rows', []):
+            vid, bill_id = row[0], row[11]
+            key = (session, bill_id)
+            if key not in per_bill_cache:
+                per_bill_cache[key] = {v['id']: v for v in (_load('us-ca/votes/%s/%s.json' % key) or {}).get('votes', [])}
+            vote = per_bill_cache[key].get(vid)
+            if not vote:
+                failures.append('CA vote index %s references %s, missing from votes/%s/%s.json' % (name, vid, session, bill_id))
+                continue
+            unknown = [p[0] for p in vote.get('positions', []) if p[0] not in member_ids and not p[0].startswith('ca-name-')]
+            unknown_total += len(unknown)
+            if unknown and len(failures) < 50:
+                failures.append('CA vote %s has %d positions for unknown members (e.g. %s)' % (vid, len(unknown), unknown[0]))
+            if bill_id not in bill_index[session]:
+                failures.append('CA vote %s references bill %s missing from the %s index' % (vid, bill_id, session))
+    if unknown_total:
+        failures.append('CA: %d positions in total name unknown members' % unknown_total)
+    return failures
 
 
 def run():
@@ -47,6 +87,7 @@ def run():
                     congress = vote.get('congress')
                     if not _load('us/bills/%s/%s.json' % (congress, row[11])):
                         failures.append('vote %s references missing bill %s' % (row[0], row[11]))
+    failures += california_checks()
     # shrink guard against the previous manifest counts
     prev = manifest.get('previous_counts') or {}
     for key, old in prev.items():

@@ -24,10 +24,17 @@ drag-and-drop, and no more losing files to a bad upload.
 ## What is here
 
 **studenttrustee/** — landing page, the 72-district map, legislative calendars, about.
-`map.html` carries the district polygons and pulls boundaries from the
-Foundation for California Community Colleges GIS service at runtime. The
-basemap is Esri Light Gray Canvas; it was CARTO until CARTO started requiring
-an API key and stamping unkeyed tiles with a watermark.
+Every HTML file in it is rendered by `tools/build.py` from the Jinja2 templates
+in `tools/templates/` and the data in `studenttrustee/data/` (`roster.json` is
+the trustee roster, `site.json` the verification dates). Edit a template or the
+data, run `python3 tools/build.py`, commit the output. CI fails if the committed
+pages are stale. Shared styles live in `assets/site.css` (tokens meet WCAG AAA
+contrast), page styles in `assets/<page>.css`, scripts in `assets/<page>.js`.
+Leaflet is vendored under `vendor/leaflet-1.9.4/` so the site has no runtime
+dependency on a CDN. `map.html` pulls district boundaries from the Foundation
+for California Community Colleges GIS service at runtime. The basemap is Esri
+Light Gray Canvas; it was CARTO until CARTO started requiring an API key and
+stamping unkeyed tiles with a watermark.
 
 **volunteer/** — the Bay Area volunteer directory. `data.js` holds all 262
 organizations; `index.html` is the whole interface.
@@ -42,17 +49,8 @@ just adding a query string.
 
 These are missing and known, not forgotten:
 
-- **`_headers` is absent from both sites.** Netlify consumes it at build time
-  and never serves it back, so the original could not be recovered. If you
-  still have it, drop it in the relevant folder.
-- **The volunteer PDFs are not committed.** `bay-area-volunteer-directory.pdf`
-  and `bay-area-volunteer-how-to-apply.pdf` are linked from `volunteer/` and
-  will 404 until added.
-- **The 72 per-district pages, `sitemap.xml` and `robots.txt` are gone.** A
-  deploy dropped them and no backup survived; the files that looked like
-  backups turned out to be saved copies of Netlify's 404 page. They need
-  regenerating from the roster data. Until then Google can only see four pages
-  of the main site.
+- **`volunteer/_headers` is absent.** The main site's `_headers` was rewritten
+  (with a Content-Security-Policy); the volunteer site still has none.
 
 ## Roster freshness
 

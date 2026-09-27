@@ -1,70 +1,12 @@
 {
-  "_comment": "Known failures still allowed per page. Every number here is debt: the goal is an empty object per page. axe: rule ids allowed; contrast: text nodes below AAA 7:1; targets: pointer targets under 44px; small: text under 12px; skipLink: false when the page has none yet.",
-  "home": {
-    "axe": [
-      "color-contrast"
-    ],
-    "contrast": 5,
-    "targets": 7,
-    "small": 5,
-    "skipLink": false
-  },
-  "map": {
-    "axe": [
-      "color-contrast",
-      "region",
-      "link-in-text-block"
-    ],
-    "contrast": 40,
-    "targets": 30,
-    "small": 40,
-    "skipLink": false
-  },
-  "districts": {
-    "axe": [
-      "color-contrast"
-    ],
-    "contrast": 86,
-    "targets": 8,
-    "small": 14,
-    "skipLink": false
-  },
-  "district": {
-    "axe": [
-      "color-contrast"
-    ],
-    "contrast": 14,
-    "targets": 12,
-    "small": 14,
-    "skipLink": false
-  },
-  "district-vacant": {
-    "axe": [
-      "color-contrast"
-    ],
-    "contrast": 14,
-    "targets": 12,
-    "small": 14,
-    "skipLink": false
-  },
-  "legislature": {
-    "axe": [
-      "color-contrast"
-    ],
-    "contrast": 70,
-    "targets": 7,
-    "small": 50,
-    "skipLink": false
-  },
-  "about": {
-    "axe": [
-      "color-contrast"
-    ],
-    "contrast": 15,
-    "targets": 7,
-    "small": 12,
-    "skipLink": false
-  },
+  "_comment": "Known failures still allowed per page. Every number here is debt: the goal is an empty object per page. axe: rule ids allowed; contrast: text nodes below AAA 7:1; targets: pointer targets under 44px; small: text under 12px; skipLink: false when the page has none yet; reflow320: allowed horizontal overflow at 320px. The main site is at zero; the volunteer site is not in scope yet.",
+  "home": {},
+  "map": {},
+  "districts": {},
+  "district": {},
+  "district-vacant": {},
+  "legislature": {},
+  "about": {},
   "volunteer": {
     "axe": [
       "color-contrast",

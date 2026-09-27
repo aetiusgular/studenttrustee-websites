@@ -1,0 +1,27 @@
+/* Home page. Loaded after site.css. */
+main{max-width:1080px;margin:0 auto;padding:76px 24px 0}
+.hero{display:grid;grid-template-columns:1fr 400px;gap:56px;align-items:start}
+.hero>*{min-width:0}
+h1{font-size:60px;line-height:1.04;letter-spacing:-.035em;margin:0 0 22px;font-weight:700;max-width:15ch}
+.sub{font-size:19px;color:var(--text-secondary);max-width:52ch;margin:0 0 34px;line-height:1.55}
+.ctas{margin:0;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cta{display:inline-flex;align-items:center;min-height:var(--min-target);background:var(--text-primary);color:var(--surface-1);
+  text-decoration:none;font-weight:640;font-size:15px;padding:0 24px}
+.cta:hover{opacity:.85}
+.cta2{display:inline-flex;align-items:center;min-height:var(--min-target);font-size:15px;color:var(--text-secondary);text-decoration:underline;
+  text-underline-offset:3px;padding:0 4px}
+.cta2:hover{color:var(--text-primary)}
+.st-lockup{display:block;width:100%;height:auto;margin-top:4px}
+.tally{margin:0;font-size:15px;color:var(--text-secondary);line-height:1.6;max-width:64ch}
+.tally b{color:var(--text-primary);font-weight:680;font-variant-numeric:tabular-nums}
+.stats{display:flex;gap:40px;margin:64px 0 0;padding:26px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.door{text-decoration:none}
+.door .k{display:block}
+.door .dh{margin:11px 0 7px;font-size:19px;letter-spacing:-.018em;font-weight:660}
+.door p{margin:0;font-size:13.5px;color:var(--text-secondary);line-height:1.5}
+@media(max-width:880px){
+  .hero{grid-template-columns:1fr;gap:32px}
+  h1{font-size:40px}
+  .st-lockup{max-width:320px;margin:0 auto}
+  .stats{flex-wrap:wrap;gap:26px}
+}

@@ -374,7 +374,7 @@
       el("div", { class: "vote-head" }, badge(lvl), el("span", { class: "body" }, bodyName(u.body, counties)), el("span", { class: "when" }, u.date_precision === "week" ? "week of " : "", time(u.date), clockPart(u))),
       el("h3", null, u.bill_id && /^(us-|\d{8})/.test(u.bill_id) ? link(billHref(u.bill_id), u.title) : u.kind === "meeting" ? "Board meeting" + (/\(([^)]*)\)$/.test(u.title) ? " (" + /\(([^)]*)\)$/.exec(u.title)[1] + ")" : "") : u.title),
       el("p", { class: "vt" }, u.category || (u.kind === "floor" ? "Floor" : u.kind === "committee" ? "Committee" : "Meeting"), u.location ? " · " + u.location : "", u.file_item ? " · file item " + u.file_item : ""),
-      u.note ? el("p", { class: "vt" }, u.note) : null,
+      u.note ? el("p", { class: "vt" }, u.source && u.source.id === "senate-daily-press" ? el("strong", null, "Advisory, quoted from the Press Gallery's notice; floor times often change. ") : null, u.note) : null,
       el("p", { class: "src" }, u.official_url ? ext(u.official_url, u.source && u.source.name ? u.source.name : "Official source") : null, u.source_updated_at ? [" · updated ", time(u.source_updated_at, true)] : null));
   }
 
@@ -675,7 +675,7 @@
         })) : note(isCa ? "No floor or committee votes recorded on this bill yet." : "No roll-call votes recorded on this bill in this Congress.");
         var body = frag(
           el("p", { class: "crumb" }, link(href(["bills"], { level: lvl }), lvl === "federal" ? "Federal bills" : "State bills"), " › ", b.label),
-          b.summary ? el("p", { class: "lede2" }, b.summary, b.summary_version ? el("span", { class: "unk" }, " (summary as " + b.summary_version.toLowerCase() + ")") : null) : null,
+          b.summary ? el("p", { class: "lede2" }, b.summary, b.summary_version ? el("span", { class: "unk" }, " (Congressional Research Service summary: " + b.summary_version + ")") : null) : null,
           facts,
           section("Votes on this bill", vl, "votes"),
           b.actions && b.actions.length ? section("Actions", frag(

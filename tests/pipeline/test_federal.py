@@ -89,6 +89,19 @@ class BillRefTests(unittest.TestCase):
             self.assertEqual(parse_bill_ref(text, 119), want, text)
 
 
+class BillStatusTests(unittest.TestCase):
+    def test_summary_markup(self):
+        """Inline tags vanish without leaving a space before punctuation; paragraphs become spaces."""
+        from tools.legislation.federal import parse_billstatus
+        xml = (b'<?xml version="1.0"?><billStatus><bill><number>31</number><type>SJRES</type><title>T</title>'
+               b'<summaries><summary><actionDesc>Public Law</actionDesc><updateDate>2025-07-01T00:00:00Z</updateDate>'
+               b'<text><![CDATA[<p>The rule titled <em>Review of the Clean Air Act</em>. It&nbsp;applies.</p><p>Next.</p>]]></text>'
+               b'</summary></summaries></bill></billStatus>')
+        d = parse_billstatus(xml)
+        self.assertEqual(d['summary'], 'The rule titled Review of the Clean Air Act. It applies. Next.')
+        self.assertEqual(d['summary_version'], 'Public Law')
+
+
 class GeoTests(unittest.TestCase):
     def test_counties_and_relationships(self):
         from tools.legislation.geo import parse_counties, parse_relationship, parse_ab604

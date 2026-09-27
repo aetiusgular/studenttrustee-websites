@@ -642,7 +642,9 @@ def parse_billstatus(xml_bytes):
     if summaries:
         import html
         raw = summaries[-1].findtext('text') or ''
-        summary = ' '.join(html.unescape(re.sub(r'<[^>]+>', ' ', raw)).split()) or None
+        raw = re.sub(r'<(?:br|/?p|/?li|/?ul|/?ol|/?div|/?h\d)\b[^>]*>', ' ', raw, flags=re.I)   # blocks: a space
+        raw = re.sub(r'<[^>]+>', '', raw)                                                   # inline (em, strong): nothing
+        summary = ' '.join(html.unescape(raw).split()) or None
     actions, seen = [], set()
     for a in b.findall('actions/item'):
         d, t = _text(a, 'actionDate'), _text(a, 'text')

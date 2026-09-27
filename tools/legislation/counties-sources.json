@@ -65,8 +65,10 @@
    "name": "El Dorado County",
    "website": "https://www.edcgov.us/",
    "board_url": "https://www.edcgov.us/Government/BOS",
-   "platform": "county site",
-   "coverage": "links"
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "eldorado",
+   "agenda_url": "https://eldorado.legistar.com/Calendar.aspx"
   },
   "06019": {
    "name": "Fresno County",
@@ -88,8 +90,10 @@
    "name": "Humboldt County",
    "website": "https://humboldtgov.org/",
    "board_url": "https://humboldtgov.org/160/Board-of-Supervisors",
-   "platform": "county site",
-   "coverage": "links"
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "humboldt",
+   "agenda_url": "https://humboldt.legistar.com/Calendar.aspx"
   },
   "06025": {
    "name": "Imperial County",
@@ -123,8 +127,10 @@
    "name": "Lake County",
    "website": "https://www.lakecountyca.gov/",
    "board_url": "https://www.lakecountyca.gov/",
-   "platform": "county site",
-   "coverage": "links"
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "countyoflake",
+   "agenda_url": "https://countyoflake.legistar.com/Calendar.aspx"
   },
   "06035": {
    "name": "Lassen County",
@@ -169,8 +175,10 @@
    "name": "Mendocino County",
    "website": "https://www.mendocinocounty.gov/",
    "board_url": "https://www.mendocinocounty.gov/government/board-of-supervisors",
-   "platform": "county site",
-   "coverage": "links"
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "mendocino",
+   "agenda_url": "https://mendocino.legistar.com/Calendar.aspx"
   },
   "06047": {
    "name": "Merced County",
@@ -206,16 +214,19 @@
    "name": "Napa County",
    "website": "https://www.napacounty.gov/",
    "board_url": "https://www.napacounty.gov/1316/Board-of-Supervisors",
-   "agenda_url": "https://www.napacounty.gov/2812/Board-of-Supervisors-Meetings",
-   "platform": "Granicus MediaManager",
-   "coverage": "links"
+   "agenda_url": "https://napa.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "napa"
   },
   "06057": {
    "name": "Nevada County",
    "website": "https://www.nevadacountyca.gov/",
    "board_url": "https://www.nevadacountyca.gov/",
-   "platform": "county site",
-   "coverage": "links"
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "nevco",
+   "agenda_url": "https://nevco.legistar.com/Calendar.aspx"
   },
   "06059": {
    "name": "Orange County",
@@ -285,9 +296,8 @@
    "board_url": "https://sfbos.org/",
    "agenda_url": "https://sfgov.legistar.com/Calendar.aspx",
    "platform": "Legistar",
-   "coverage": "votes",
-   "legistar_client": "sfgov",
-   "note": "The city and county's Legistar API refuses meeting queries (a server-side configuration error), so meetings and votes are on the official pages only."
+   "coverage": "links",
+   "note": "San Francisco's Legistar API stopped updating in 2020, so votes are not collected here. They are on sfgov.legistar.com (each item's action details) and in the Board's minutes."
   },
   "06077": {
    "name": "San Joaquin County",
@@ -395,8 +405,10 @@
    "name": "Tehama County",
    "website": "https://www.tehamacountyca.gov/",
    "board_url": "https://www.tehamacountyca.gov/",
-   "platform": "county site",
-   "coverage": "links"
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "tehamacounty",
+   "agenda_url": "https://tehamacounty.legistar.com/Calendar.aspx"
   },
   "06105": {
    "name": "Trinity County",

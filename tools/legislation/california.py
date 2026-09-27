@@ -56,9 +56,11 @@ MEASURE_LABEL = {'AB': 'AB', 'SB': 'SB', 'ACA': 'ACA', 'SCA': 'SCA', 'ACR': 'ACR
 def current_session_year(today=None):
     today = today or date.today()
     y = today.year if today.year % 2 == 1 else today.year - 1
-    # sessions start the first Monday in December of the even year before; from December, the next session has begun
+    # a session starts on the first Monday in December of the even year before it
     if today.month == 12 and today.year % 2 == 0:
-        y = today.year + 1
+        first_monday = 1 + (7 - date(today.year, 12, 1).weekday()) % 7
+        if today.day >= first_monday:
+            y = today.year + 1
     return '%d%d' % (y, y + 1)
 
 
@@ -497,9 +499,9 @@ def write_outputs(built, session, manifest):
     search = [['member', m['id'], m['name'], '%s %s %d' % (m['party'], 'AD' if m['body'] == 'ca-assembly' else 'SD', m['district']), m['body']] for m in member_rows if m['active']]
     search += [['bill', bid, '%s %s' % (b['label'], (b.get('title') or '')[:TITLE_MAX]), b.get('status') or '', 'ca-assembly' if b['measure_type'].startswith('A') or b['measure_type'] == 'HR' else 'ca-senate'] for bid, b in sorted(bills.items())]
     writer.write_json('search/us-ca.json', {'columns': ['type', 'id', 'label', 'meta', 'body'], 'rows': search})
-    manifest.count('ca_members', len(member_rows))
-    manifest.count('ca_bills', len(bills))
-    manifest.count('ca_votes', len(votes))
+    manifest.count('ca_members', len(member_rows), scope=session)
+    manifest.count('ca_bills', len(bills), scope=session)
+    manifest.count('ca_votes', len(votes), scope=session)
     manifest.count('ca_upcoming', len(upcoming))
 
 

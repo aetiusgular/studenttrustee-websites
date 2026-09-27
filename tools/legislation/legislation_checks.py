@@ -4,12 +4,41 @@ Integrity checks for data/legislation/. Returns a list of failure strings.
 - manifest.json parses and every source has a status
 - every vote index row points at a vote file; every vote file's positions reference known members or provisional ids
 - every bill referenced by a vote exists in the bill index
-- shrink guard: no index lost more than 20 percent of its rows since the last run (a feed returning
-  an empty page must not wipe the site's data), unless ALLOW_SHRINK=1
+- shrink guard: a count that only grows during a Congress or a session may not fall by more than
+  20 percent from one night to the next (a feed returning an empty page must not wipe the site's
+  data), unless ALLOW_SHRINK=1. A new Congress or session starts its counts again, so the guard
+  skips a count whose scope changed. Rolling 90-day county counts may move with the boards'
+  calendars and only fail if they halve. Upcoming counts are not guarded: a recess empties them.
 """
 import os
 
 from . import writer
+
+# count key -> the lowest share of last night's value that still passes
+SHRINK_LIMITS = {
+    'us_members': 0.8, 'us_votes': 0.8, 'us_bills': 0.8,
+    'ca_members': 0.8, 'ca_bills': 0.8, 'ca_votes': 0.8, 'ca_counties': 0.8,
+    'ca_county_votes': 0.5, 'ca_county_meetings': 0.5,
+}
+
+
+def shrink_failures(manifest):
+    if os.environ.get('ALLOW_SHRINK'):
+        return []
+    failures = []
+    prev = manifest.get('previous_counts') or {}
+    counts = manifest.get('counts') or {}
+    prev_scopes = manifest.get('previous_count_scopes') or {}
+    scopes = manifest.get('count_scopes') or {}
+    for key, limit in SHRINK_LIMITS.items():
+        old, new = prev.get(key), counts.get(key)
+        if not (isinstance(old, int) and isinstance(new, int)) or old <= 20:
+            continue
+        if key in prev_scopes and key in scopes and prev_scopes[key] != scopes[key]:
+            continue   # a new Congress or session: the count starts again
+        if new < old * limit:
+            failures.append('%s shrank from %d to %d (set ALLOW_SHRINK=1 if this is expected)' % (key, old, new))
+    return failures
 
 
 def _load(rel):
@@ -96,10 +125,5 @@ def run():
                     if not _load('us/bills/%s/%s.json' % (congress, row[11])):
                         failures.append('vote %s references missing bill %s' % (row[0], row[11]))
     failures += california_checks()
-    # shrink guard against the previous manifest counts
-    prev = manifest.get('previous_counts') or {}
-    for key, old in prev.items():
-        new = manifest.get('counts', {}).get(key)
-        if isinstance(old, int) and isinstance(new, int) and old > 20 and new < old * 0.8 and not os.environ.get('ALLOW_SHRINK'):
-            failures.append('%s shrank from %d to %d (set ALLOW_SHRINK=1 if this is expected)' % (key, old, new))
+    failures += shrink_failures(manifest)
     return failures

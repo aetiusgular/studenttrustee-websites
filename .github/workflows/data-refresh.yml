@@ -18,6 +18,10 @@ on:
       targets:
         description: "Space-separated targets: all boundaries geo federal california counties"
         default: "all"
+      allow_shrink:
+        description: "Publish even if a record count fell sharply (only after checking why)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -61,12 +65,13 @@ jobs:
 
       - name: Refresh
         env:
-          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
           PUBINFO_DIR: ${{ runner.temp }}
           TARGETS: ${{ github.event.inputs.targets || 'all' }}
         run: python3 -m tools.legislation.refresh $TARGETS
 
       - name: Validate
+        env:
+          ALLOW_SHRINK: ${{ inputs.allow_shrink && '1' || '' }}
         run: python3 -m tools.legislation.validate
 
       - name: Publish the records to the data branch

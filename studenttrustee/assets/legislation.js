@@ -167,10 +167,11 @@
     var run = ++current;
     say("Loading…");
     app.setAttribute("aria-busy", "true");
-    return Promise.resolve().then(build).then(function (out) {
+    return Promise.all([Promise.resolve().then(build), manifest().catch(function () { return null; })]).then(function (r) {
+      var out = r[0];
       if (run !== current) return;
       app.innerHTML = "";
-      append(app, out.body);
+      append(app, staleNotice(r[1]), out.body);
       titleEl.textContent = out.title;
       ledeEl.textContent = out.lede || "";
       ledeEl.hidden = !out.lede;
@@ -202,6 +203,17 @@
       app.removeAttribute("aria-busy");
       say("");
     });
+  }
+  // The job runs every night. If the newest records are more than a day and a half old it has
+  // stopped (a failed check, a disabled schedule), and every page says so.
+  var STALE_HOURS = 36;
+  function staleNotice(man) {
+    if (!man || !man.generated_at) return null;
+    var hours = (Date.now() - Date.parse(man.generated_at)) / 36e5;
+    if (!(hours > STALE_HOURS)) return null;
+    return el("p", { class: "stale-all" }, el("strong", null, "Not refreshed since "), time(man.generated_at, true), el("strong", null, "."),
+      " The nightly update has not run since then, so newer votes and schedule changes are missing. Each record links to its official source, which has the current version. ",
+      link(href(["sources"]), "Source status"));
   }
   function say(t) { status.textContent = t; }
   function markNav() {
@@ -275,15 +287,16 @@
   }
   function caVoteIndex() { return get("us-ca/votes/index.json", true); }
   function sourceOf(man, id) { return (man && man.sources && man.sources[id]) || null; }
-  function freshness(man, sourceId, updated) {
+  function freshness(man, sourceId, updated, retrieved) {
     var s = sourceOf(man, sourceId);
     var parts = [];
     if (updated) parts.push(el("span", null, "Source updated ", time(updated, true)));
+    else if (retrieved) parts.push(el("span", null, "Retrieved ", time(retrieved, true)));
     if (s && s.last_checked_at) parts.push(el("span", null, "Checked ", time(s.last_checked_at, true), s.status === "ok" ? "" : el("span", { class: "warn" }, " · " + statusWord(s))));
     return parts.length ? el("p", { class: "fresh" }, parts.map(function (p, i) { return i ? [" · ", p] : p; })) : null;
   }
   function statusWord(s) {
-    return s.status === "ok" ? "OK" : s.status === "stale" ? "last check failed, showing the previous copy" : s.status === "error" ? "unavailable" : s.status === "not_configured" ? "not configured" : (s.status || "unknown");
+    return s.status === "ok" ? "OK" : s.status === "partial" ? "partly updated; earlier copies kept where a request failed" : s.status === "stale" ? "last check failed, showing the previous copy" : s.status === "error" ? "unavailable" : s.status === "not_configured" ? "not configured" : (s.status || "unknown");
   }
   function memberLabel(m) {
     if (!m) return "";
@@ -347,12 +360,21 @@
       el("p", { class: "res" }, el("b", { class: v.passed ? "pass" : "fail" }, resultWord(v)), " · ", tally({ yes: v.yes, no: v.no, other: v.other || 0 })));
   }
 
+  function ahead(u, today) {
+    // an item for "the week of" a Monday stays listed through that week
+    if (u.date_precision === "week") {
+      var p = u.date.split("-"); var end = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2] + 6));
+      return end.toISOString().slice(0, 10) >= today;
+    }
+    return u.date >= today;
+  }
   function upcomingItem(u, counties) {
     var lvl = u.level || levelOf(u.body);
     return el("li", { class: "up" },
       el("div", { class: "vote-head" }, badge(lvl), el("span", { class: "body" }, bodyName(u.body, counties)), el("span", { class: "when" }, u.date_precision === "week" ? "week of " : "", time(u.date), clockPart(u))),
       el("h3", null, u.bill_id && /^(us-|\d{8})/.test(u.bill_id) ? link(billHref(u.bill_id), u.title) : u.kind === "meeting" ? "Board meeting" + (/\(([^)]*)\)$/.test(u.title) ? " (" + /\(([^)]*)\)$/.exec(u.title)[1] + ")" : "") : u.title),
       el("p", { class: "vt" }, u.category || (u.kind === "floor" ? "Floor" : u.kind === "committee" ? "Committee" : "Meeting"), u.location ? " · " + u.location : "", u.file_item ? " · file item " + u.file_item : ""),
+      u.note ? el("p", { class: "vt" }, u.note) : null,
       el("p", { class: "src" }, u.official_url ? ext(u.official_url, u.source && u.source.name ? u.source.name : "Official source") : null, u.source_updated_at ? [" · updated ", time(u.source_updated_at, true)] : null));
   }
 
@@ -366,7 +388,7 @@
         var coLatest = rows2objs(r[8]).map(countyRowToVote);
         var today = todayISO();
         var up = ((r[4] && r[4].items) || []).concat((r[5] && r[5].items) || [], ((r[6] && r[6].items) || []).map(function (m) { return Object.assign({ level: "county" }, m); }))
-          .filter(function (u) { return u.date >= today; }).sort(function (a, b) { return whenKey(a).localeCompare(whenKey(b)); }).slice(0, 10);
+          .filter(function (u) { return ahead(u, today); }).sort(function (a, b) { return whenKey(a).localeCompare(whenKey(b)); }).slice(0, 10);
         var counts = man.counts || {};
         var ca = st.filter(function (s) { return s.code === "CA"; })[0];
 
@@ -464,7 +486,7 @@
         var caSession = c[0].session;
         var ca = c[0], cidx = c[1], geo = c[2], caLatest = rows2objs(c[3]);
         var today = todayISO();
-        var up = ((c[4] && c[4].items) || []).filter(function (u) { return u.date >= today; }).slice(0, 8);
+        var up = ((c[4] && c[4].items) || []).filter(function (u) { return ahead(u, today); }).slice(0, 8);
         var vacant = ca.vacant || [];
         function house(body, label) {
           var ms = ca.list.filter(function (m) { return m.body === body && m.active; }).sort(function (a, b) { return a.district - b.district; });
@@ -640,8 +662,11 @@
           b.chapter ? el("div", null, el("dt", null, "Enacted"), el("dd", null, b.chapter)) : null,
           b.latest_action ? el("div", null, el("dt", null, "Latest action"), el("dd", null, b.latest_action.date ? [time(b.latest_action.date), " · "] : null, b.latest_action.text || "")) : null,
           b.introduced ? el("div", null, el("dt", null, "Introduced"), el("dd", null, time(b.introduced))) : null,
-          b.sponsors && b.sponsors.length ? el("div", null, el("dt", null, b.sponsors.length > 1 ? "Authors" : "Author"), el("dd", null, b.sponsors.map(function (s, i) { return [i ? ", " : null, s.id ? link(memberHref(s.id), s.name) : s.name, s.house ? " (" + (s.house === "ASSEMBLY" ? "Assembly" : s.house === "SENATE" ? "Senate" : s.house) + ")" : (s.party || s.state ? " (" + [s.party, s.state].filter(Boolean).join("-") + ")" : "")]; }))) : null,
+          b.sponsors && b.sponsors.length ? el("div", null, el("dt", null, isCa ? (b.sponsors.length > 1 ? "Authors" : "Author") : (b.sponsors.length > 1 ? "Sponsors" : "Sponsor")), el("dd", null, b.sponsors.map(function (s, i) { return [i ? ", " : null, s.id ? link(memberHref(s.id), s.name.replace(/^(Sen|Rep|Del|Res\. Comm)\.\s+/, "").replace(/\s*\[[^\]]*\]$/, "").replace(/^([^,]+),\s*(.+)$/, "$2 $1")) : s.name, s.house ? " (" + (s.house === "ASSEMBLY" ? "Assembly" : s.house === "SENATE" ? "Senate" : s.house) + ")" : (s.party || s.state ? " (" + [s.party, s.state].filter(Boolean).join("-") + ")" : "")]; }))) : null,
+          b.cosponsors ? el("div", null, el("dt", null, "Cosponsors"), el("dd", null, String(b.cosponsors) + (b.cosponsors_original ? " (" + b.cosponsors_original + " original)" : ""))) : null,
+          b.committees && b.committees.length ? el("div", null, el("dt", null, b.committees.length > 1 ? "Committees" : "Committee"), el("dd", null, b.committees.join(", "))) : null,
           b.policy_area ? el("div", null, el("dt", null, "Policy area"), el("dd", null, b.policy_area)) : null,
+          b.laws && b.laws.length ? el("div", null, el("dt", null, "Became law"), el("dd", null, b.laws.join(", "))) : null,
           b.urgency ? el("div", null, el("dt", null, "Urgency"), el("dd", null, "Yes")) : null,
           b.vote_required ? el("div", null, el("dt", null, "Vote required"), el("dd", null, b.vote_required)) : null,
           el("div", null, el("dt", null, "Official record"), el("dd", null, ext(b.official_url, isCa ? "LegInfo" : "Congress.gov"), b.votes_url ? [" · ", ext(b.votes_url, "Vote history")] : null)));
@@ -650,9 +675,12 @@
         })) : note(isCa ? "No floor or committee votes recorded on this bill yet." : "No roll-call votes recorded on this bill in this Congress.");
         var body = frag(
           el("p", { class: "crumb" }, link(href(["bills"], { level: lvl }), lvl === "federal" ? "Federal bills" : "State bills"), " › ", b.label),
-          b.summary ? el("p", { class: "lede2" }, b.summary) : null,
+          b.summary ? el("p", { class: "lede2" }, b.summary, b.summary_version ? el("span", { class: "unk" }, " (summary as " + b.summary_version.toLowerCase() + ")") : null) : null,
           facts,
           section("Votes on this bill", vl, "votes"),
+          b.actions && b.actions.length ? section("Actions", frag(
+            el("ul", { class: "plain acts" }, b.actions.map(function (a) { return el("li", null, time(a.date), el("span", null, " · " + a.text)); })),
+            b.actions_total > b.actions.length ? el("p", { class: "links" }, ext(b.official_url, "All " + b.actions_total + " actions on Congress.gov")) : null), "actions") : null,
           freshness(man, b.source && b.source.id === "vote-records" ? (b.chamber_of_origin === "us-senate" ? "us-senate-lis" : "us-house-clerk") : (b.source && b.source.id), b.source_updated_at));
         return { title: b.label + (b.title ? ": " + b.title : ""), lede: null, body: body };
       });
@@ -729,8 +757,9 @@
         var body = frag(
           el("p", { class: "crumb" }, link(href(["votes"], { level: lvl }), LEVEL_NAME[lvl] + " votes"), " › ", v.question || "Vote"),
           facts,
+          v.source && v.source.id === "voteview" ? el("p", { class: "note" }, "These positions come from Voteview (UCLA), an academic roll-call database built from the same official records, because the nightly job could not reach senate.gov. The official record is linked above; the next successful check replaces this copy with the Senate's own.") : null,
           section("Positions", positions.length ? frag(byParty, filters, summary, table) : note("No individual positions were recorded for this vote (a voice vote or an unrecorded action)."), "positions"),
-          freshness(man, v.source && v.source.id, v.source_updated_at));
+          freshness(man, v.source && v.source.id, v.source_updated_at, v.retrieved_at));
         var q = cap(v.question || "Vote");
         return { title: q + (v.bill_label && q.indexOf(v.bill_label) < 0 ? " · " + v.bill_label : lvl === "county" && v.matter && v.matter.label ? " · " + v.matter.label : ""), lede: null, body: body };
       });
@@ -997,7 +1026,7 @@
       var cidx = r[3], man = r[4];
       var today = todayISO();
       var items = ((r[0] && r[0].items) || []).concat((r[1] && r[1].items) || [], ((r[2] && r[2].items) || []).map(function (m) { return Object.assign({ level: "county" }, m); }))
-        .filter(function (u) { return u.date >= today && (!level || (u.level || levelOf(u.body)) === level); })
+        .filter(function (u) { return ahead(u, today) && (!level || (u.level || levelOf(u.body)) === level); })
         .sort(function (a, b) { return whenKey(a).localeCompare(whenKey(b)) || (a.title || "").localeCompare(b.title || ""); });
       var form = el("form", { class: "filters", on: { submit: function (e) { e.preventDefault(); } } },
         el("div", { class: "row wrap" }, selectEl("level", "Level", [["", "All levels"], ["federal", "Federal"], ["state", "State"], ["county", "County"]], level, function (e) { navigate(href(["upcoming"], { level: e.target.value }), { keepScroll: true }); })));
@@ -1007,7 +1036,7 @@
         note("What the official feeds list as scheduled: the House floor for the week, Senate hearings and floor items, California's Daily File and committee hearings within 45 days, and county board meetings. Federal times are Eastern; California and county times are Pacific."),
         form,
         groups.length ? groups.map(function (g) { return section(fmtDate(g.date), el("ul", { class: "plain ups" }, g.items.map(function (u) { return upcomingItem(u, cidx); })), "day"); }) : note("Nothing scheduled in the published feeds."),
-        el("p", { class: "fresh" }, ["docs-house-floor", "senate-schedules", "ca-leginfo-pubinfo"].map(function (sid) { var s = sourceOf(man, sid); return s ? el("span", null, s.name + ": checked ", time(s.last_checked_at, true), s.status !== "ok" ? " (" + statusWord(s) + ")" : "", ". ") : null; })));
+        el("p", { class: "fresh" }, ["docs-house-floor", "senate-schedules", "senate-daily-press", "ca-leginfo-pubinfo"].map(function (sid) { var s = sourceOf(man, sid); return s ? el("span", null, s.name + ": checked ", time(s.last_checked_at, true), s.status !== "ok" ? " (" + statusWord(s) + ")" : "", ". ") : null; })));
       return { title: "Upcoming", lede: "Votes, hearings and meetings scheduled at the federal, state and county levels.", body: body };
     });
   }
@@ -1057,9 +1086,11 @@
         freshnessTable(man),
         ctable,
         section("Method notes", el("ul", null,
-          el("li", null, "Federal roll calls come from the Clerk of the House (evs XML) and the Senate Legislative Information System (vote XML). Members are matched by Bioguide ID through the public-domain congress-legislators dataset. Bill titles come from the vote records themselves unless a Congress.gov API key is configured."),
+          el("li", null, "Federal roll calls come from the Clerk of the House (evs XML) and the Senate Legislative Information System (vote XML). Members are matched by Bioguide ID through the public-domain congress-legislators dataset and the Senate's own member file. If senate.gov refuses the nightly job, votes already published stay, and new Senate votes are filled in from Voteview (UCLA) and labelled as such until the Senate's copy can be fetched."),
+          el("li", null, "Federal bill details (sponsor, cosponsors, committees, summary, actions) come from GovInfo's Bill Status files, published by the Government Publishing Office and the Library of Congress. GovInfo can trail Congress.gov by a day or two for Senate actions; vote results always come from the roll calls."),
+          el("li", null, "Upcoming Senate floor votes come from the Senate Daily Press Gallery's floor log, the only published source that names them; it is text, shown as written and linked. The House's come from the Majority Leader's weekly floor schedule on docs.house.gov."),
           el("li", null, "California bills, floor and committee votes, legislators and the Daily File come from the Legislature's nightly database export (LegInfo “pubinfo”). The export records the day of a vote but not the time of day. “No vote recorded” covers absent, abstaining and not-voting members alike, as the Legislature records it."),
-          el("li", null, "Counties: 11 boards publish through Granicus Legistar, whose public API gives meetings, items and per-supervisor votes; those are collected for the last 90 days. The other 47 counties are linked to their official board and agenda pages, which are checked nightly for reachability."),
+          el("li", null, "Counties: 17 boards publish through Granicus Legistar, whose public API gives meetings, agenda items and, for most, each supervisor's vote; those are collected for the last 90 days. The other counties are linked to their official board and agenda pages, which are checked nightly. Their votes are only in minutes documents or on platforms that ask automated tools not to collect them."),
           el("li", null, "Which state and federal districts overlap a county comes from the Census Bureau's 2024 relationship files and, for the congressional map that applies from January 2027, the Senate Elections Committee's AB 604 block equivalency file."),
           el("li", null, "Times are shown in Pacific Time with the zone marked. Each record shows when its source last changed and when this site last checked it."))),
         el("p", { class: "links" }, ext("https://github.com/nbonasera/studenttrustee-websites", "The pipeline's source code")));

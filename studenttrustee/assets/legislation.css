@@ -56,6 +56,7 @@ h3.lvlhead{display:flex;align-items:center;gap:10px;margin:22px 0 4px;font-size:
 .st{font-weight:650}
 .st-ok{color:var(--pass)}
 .st-stale,.st-error{color:var(--fail)}
+.st-partial{color:var(--text-primary)}
 .st-not_configured{color:var(--text-muted)}
 .warn{color:var(--fail)}
 .pass{color:var(--pass)}
@@ -130,10 +131,16 @@ ul.meets li{font-size:14px}
 .byparty{margin-bottom:18px}
 .byparty td{font-variant-numeric:tabular-nums}
 
+/* bill actions */
+ul.acts li{padding:8px 0;border-bottom:1px solid var(--rule);font-size:14px;color:var(--text-secondary)}
+ul.acts time{font-variant-numeric:tabular-nums;color:var(--text-primary);font-weight:600}
+
 /* filters */
 .filters{margin:0 0 16px;display:grid;gap:12px}
 .filters .row .btn{min-height:var(--min-target)}
 .err{border-left:3px solid var(--fail);padding:6px 0 6px 14px}
+.stale-all{border-left:3px solid var(--fail);padding:8px 0 8px 14px;margin:0 0 18px;font-size:14.5px;line-height:1.5;max-width:78ch;color:var(--text-primary)}
+.stale-all a{text-decoration:underline;text-underline-offset:3px}
 .err h2{margin:0 0 6px}
 
 @media (max-width:760px){

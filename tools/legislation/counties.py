@@ -115,12 +115,12 @@ def legistar_board(http, client, fips, county_name):
             continue
         mid = 'ca-%s-bos-%s' % (fips, pid)
         members[mid] = {'id': mid, 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                        'name': (r.get('OfficeRecordFullName') or '').strip(), 'first': r.get('OfficeRecordFirstName'), 'last': r.get('OfficeRecordLastName'),
+                        'name': ' '.join((r.get('OfficeRecordFullName') or '').split()), 'first': r.get('OfficeRecordFirstName'), 'last': r.get('OfficeRecordLastName'),
                         'title': (r.get('OfficeRecordTitle') or '').strip() or 'Supervisor', 'state': 'CA', 'county': county_name,
                         'term_start': start or None, 'term_end': end or None,
                         'ids': {'legistar_person': pid}, 'urls': {'official': 'https://%s.legistar.com/People.aspx' % client},
                         'source_updated_at': utc(r.get('OfficeRecordLastModifiedUtc'))}
-    name_to_id = {m['name'].lower(): mid for mid, m in members.items()}
+    name_to_id = {' '.join(m['name'].lower().split()): mid for mid, m in members.items()}
 
     meetings, votes, matters = [], [], {}
     far = (today() + timedelta(days=400)).isoformat()
@@ -129,6 +129,8 @@ def legistar_board(http, client, fips, county_name):
         eid = ev['EventId']
         if not ev_date or ev_date > far:
             continue     # Legistar template events dated 2099 and the like
+        if (ev.get('EventAgendaStatusName') or '').strip().lower() == 'hidden':
+            continue     # not public yet (Humboldt posts future meetings this way)
         meeting = {'id': 'ca-%s-bos-meeting-%s' % (fips, eid), 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
                    'kind': 'meeting', 'date': ev_date, 'time': clock(ev.get('EventTime')), 'time_note': clock_note(ev.get('EventTime')), 'tz': 'America/Los_Angeles',
                    'title': ('%s Board of Supervisors' % county_name.replace(' County', '') if fips != '06075' else 'San Francisco Board of Supervisors') + (' (%s)' % sitting(ev['_body_name']) if sitting(ev['_body_name']) else ''),
@@ -169,10 +171,10 @@ def legistar_board(http, client, fips, county_name):
                     code = vote_code(label)
                     labels.setdefault(code, label)
                     pid = vr.get('VotePersonId')
-                    member = 'ca-%s-bos-%s' % (fips, pid) if pid else name_to_id.get((vr.get('VotePersonName') or '').lower(), 'ca-%s-bos-unknown' % fips)
+                    member = 'ca-%s-bos-%s' % (fips, pid) if pid else name_to_id.get(' '.join((vr.get('VotePersonName') or '').lower().split()), 'ca-%s-bos-unknown' % fips)
                     if member not in members and pid:
                         members[member] = {'id': member, 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                                           'name': (vr.get('VotePersonName') or '').strip(), 'title': 'Supervisor (former)', 'state': 'CA', 'county': county_name,
+                                           'name': ' '.join((vr.get('VotePersonName') or '').split()), 'title': 'Supervisor (former)', 'state': 'CA', 'county': county_name,
                                            'ids': {'legistar_person': pid}, 'urls': {}, 'provisional': True}
                     positions.append([member, code])
             yes = sum(1 for p in positions if p[1] == 'Y'); no = sum(1 for p in positions if p[1] == 'N')
@@ -297,6 +299,7 @@ def main(argv=None):
                'urls': {k: src[k] for k in ('website', 'board_url', 'agenda_url') if src.get(k)},
                'members': [], 'meetings': [], 'vote_months': [], 'counts': {'meetings': 0, 'votes': 0, 'matters': 0}}
         entry = {k: rec[k] for k in ('fips', 'county', 'slug', 'body', 'body_name', 'coverage', 'platform', 'urls')}
+        stale_before = len(http.stale_served)
         try:
             if src.get('legistar_client'):
                 members, meetings, votes, matters = legistar_board(http, src['legistar_client'], fips, name)
@@ -309,8 +312,13 @@ def main(argv=None):
                               'next_meeting': min((m['date'] for m in meetings if m['date'] >= today_s), default=None)})
                 upcoming += [dict(m, county=name, fips=fips) for m in meetings if m['date'] >= today_s]
                 total_votes += len(votes); total_meetings += len(meetings); with_votes += 1 if rec['coverage'] == 'votes' else 0
-                manifest.ok(sid, source_updated_at=max((m['source_updated_at'] for m in meetings if m.get('source_updated_at')), default=None),
-                            note='%d meetings, %d votes' % (len(meetings), len(votes)))
+                updated = max((m['source_updated_at'] for m in meetings if m.get('source_updated_at')), default=None)
+                stale = len(http.stale_served) - stale_before
+                if stale:
+                    manifest.partial(sid, '%d requests failed; earlier copies were used' % stale, source_updated_at=updated,
+                                     note='%d meetings, %d votes' % (len(meetings), len(votes)))
+                else:
+                    manifest.ok(sid, source_updated_at=updated, note='%d meetings, %d votes' % (len(meetings), len(votes)))
             else:
                 links_only(http, src, rec, entry, manifest, sid)
         except Exception as e:

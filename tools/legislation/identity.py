@@ -8,6 +8,7 @@ the manifest, but every ID in it comes from the official sources it links.
 """
 
 LEGISLATORS_URL = 'https://unitedstates.github.io/congress-legislators/legislators-current.json'
+SENATE_MEMBERS_URL = 'https://www.senate.gov/legislative/LIS_MEMBER/cvc_member_data.xml'
 HISTORICAL_URL = 'https://unitedstates.github.io/congress-legislators/legislators-historical.json'
 TERRITORIES = {'DC', 'PR', 'GU', 'VI', 'AS', 'MP'}
 PARTY = {'Democrat': 'D', 'Republican': 'R', 'Independent': 'I', 'Libertarian': 'L'}
@@ -59,6 +60,51 @@ def load_members(http, manifest):
         members[rec['id']] = rec
     manifest.ok(sid, source_updated_at=_last_modified(meta))
     return members
+
+
+def apply_senate_roster(http, manifest, members):
+    """The Senate's own member file is the official map from LIS ids (used in Senate vote XML) to
+    bioguide ids. It fills LIS ids congress-legislators lacks and adds senators that file has not
+    caught up with yet, such as new appointees. Returns how many senators were added."""
+    import xml.etree.ElementTree as ET
+    sid = 'senate-member-data'
+    manifest.describe(sid, 'U.S. Senate member data (LIS ids to bioguide ids)', SENATE_MEMBERS_URL, 'federal')
+    try:
+        body, meta = http.get(SENATE_MEMBERS_URL, ttl=12 * 3600)
+        root = ET.fromstring(body)
+    except Exception as e:
+        manifest.error(sid, e)
+        print('   senate member data unavailable: %s' % e)
+        return 0
+    added = 0
+    for s in root.findall('senator'):
+        lis = (s.get('lis_member_id') or '').strip()
+        bio = (s.findtext('bioguideId') or '').strip()
+        if not lis or not bio:
+            continue
+        if bio in members:
+            members[bio].setdefault('ids', {})['lis'] = lis
+            continue
+        first = ' '.join((s.findtext('name/first') or '').split())
+        last = ' '.join((s.findtext('name/last') or '').split())
+        members[bio] = {'id': bio, 'level': 'federal', 'jurisdiction': 'us', 'body': 'us-senate',
+                        'name': ('%s %s' % (first, last)).strip(), 'first': first, 'last': last,
+                        'party': (s.findtext('party') or '').strip(), 'state': (s.findtext('state') or '').strip(),
+                        'district': None, 'delegate': False, 'ids': {'bioguide': bio, 'lis': lis},
+                        'urls': {'bioguide': 'https://bioguide.congress.gov/search/bio/%s' % bio}}
+        added += 1
+    updated = None
+    try:
+        # <lastUpdate><date>Sunday, September 27, 2026</date><time>5:00:13 AM EDT</time></lastUpdate>
+        from datetime import datetime
+        from .common import iso, EASTERN
+        stamp = '%s %s' % (' '.join((root.findtext('lastUpdate/date') or '').split()),
+                           ' '.join((root.findtext('lastUpdate/time') or '').replace('EDT', '').replace('EST', '').split()))
+        updated = iso(datetime.strptime(stamp, '%A, %B %d, %Y %I:%M:%S %p').replace(tzinfo=EASTERN))
+    except ValueError:
+        pass
+    manifest.ok(sid, source_updated_at=updated or _last_modified(meta), note='%d senators; %d added that congress-legislators lacked' % (len(root.findall('senator')), added))
+    return added
 
 
 def resolve_departed(http, manifest, members, votes):

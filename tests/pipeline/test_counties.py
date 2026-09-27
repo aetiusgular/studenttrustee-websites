@@ -19,6 +19,7 @@ def load(*parts):
 class FakeHttp:
     """Serves the zipped Legistar responses; every other URL is a 404 (the link-only counties)."""
     def __init__(self, *a, **k):
+        self.stale_served = []
         self.zf = zipfile.ZipFile(ZIP)
         self.urls = json.loads(self.zf.read('urls.json'))
         self.cache_dir = tempfile.mkdtemp()

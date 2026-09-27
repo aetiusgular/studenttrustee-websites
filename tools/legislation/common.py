@@ -28,6 +28,13 @@ EASTERN = ZoneInfo('America/New_York')
 UTC = timezone.utc
 
 
+def today():
+    """Today's date; LEGIS_TODAY=YYYY-MM-DD pins it for tests."""
+    from datetime import date
+    t = os.environ.get('LEGIS_TODAY')
+    return date.fromisoformat(t) if t else date.today()
+
+
 def now_iso():
     return datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')
 
@@ -55,7 +62,11 @@ class FetchError(Exception):
 
 
 class Http:
-    """requests.Session with an on-disk cache and polite retries."""
+    """requests.Session with an on-disk cache and polite retries.
+
+    When a request fails and an earlier copy is in the cache, the earlier copy is returned
+    (meta['stale'] is True and the URL is recorded in self.stale_served), so one bad night
+    at a source never removes records the site already had."""
 
     def __init__(self, cache_dir=CACHE_DIR, timeout=60, retries=3):
         import requests
@@ -65,6 +76,7 @@ class Http:
         self.timeout = timeout
         self.retries = retries
         self.calls = 0
+        self.stale_served = []
         os.makedirs(cache_dir, exist_ok=True)
 
     def _paths(self, url):
@@ -117,11 +129,18 @@ class Http:
             except FetchError as e:
                 last_exc = e
                 if 'HTTP 4' in str(e) and '429' not in str(e):
-                    raise
+                    return self._stale_or_raise(url, body_path, meta, e)
             except Exception as e:  # connection errors, timeouts
                 last_exc = e
             time.sleep(1.5 * (attempt + 1))
-        raise FetchError('%s: %s' % (url, last_exc))
+        return self._stale_or_raise(url, body_path, meta, last_exc)
+
+    def _stale_or_raise(self, url, body_path, meta, exc):
+        if os.path.exists(body_path):
+            self.stale_served.append(url)
+            with open(body_path, 'rb') as fh:
+                return fh.read(), dict(meta, from_cache=True, stale=True, error=str(exc)[:200])
+        raise FetchError('%s: %s' % (url, exc))
 
     def get_text(self, url, ttl=0, encoding='utf-8', **kw):
         body, meta = self.get(url, ttl=ttl, **kw)
@@ -145,6 +164,8 @@ class Manifest:
                 self.data['sources'] = old.get('sources', {}) or {}
                 self.data['counts'] = old.get('counts', {}) or {}
                 self.data['previous_counts'] = dict(old.get('counts', {}) or {})
+                self.data['count_scopes'] = dict(old.get('count_scopes', {}) or {})
+                self.data['previous_count_scopes'] = dict(old.get('count_scopes', {}) or {})
         except (FileNotFoundError, ValueError):
             pass
 
@@ -169,14 +190,29 @@ class Manifest:
         if note:
             s['note'] = note
 
+    def partial(self, sid, message, source_updated_at=None, note=None):
+        """Checked, but some requests failed and earlier copies were used for them."""
+        s = self.source(sid)
+        s['status'] = 'partial'
+        s['last_checked_at'] = now_iso()
+        s['error'] = str(message)[:500]
+        if source_updated_at:
+            s['source_updated_at'] = source_updated_at
+        if note:
+            s['note'] = note
+
     def error(self, sid, message):
         s = self.source(sid)
         s['status'] = 'error' if not s.get('last_success_at') else 'stale'
         s['last_checked_at'] = now_iso()
         s['error'] = str(message)[:500]
 
-    def count(self, key, value):
+    def count(self, key, value, scope=None):
+        """scope names what the count covers (a Congress, a session). When it changes, the count
+        starts again from zero and the validator does not compare it with the night before."""
         self.data['counts'][key] = value
+        if scope is not None:
+            self.data.setdefault('count_scopes', {})[key] = str(scope)
 
     def save(self):
         self.data['generated_at'] = now_iso()

@@ -1,0 +1,765 @@
+{
+ "count_scopes": {
+  "us_bills": "119",
+  "us_members": "119",
+  "us_votes": "119"
+ },
+ "counts": {
+  "ca_bills": 5065,
+  "ca_counties": 58,
+  "ca_counties_with_votes": 12,
+  "ca_county_meetings": 154,
+  "ca_county_votes": 3607,
+  "ca_members": 121,
+  "ca_upcoming": 1,
+  "ca_votes": 21546,
+  "us_bills": 509,
+  "us_members": 556,
+  "us_upcoming": 95,
+  "us_votes": 1579
+ },
+ "generated_at": "2026-09-27T21:06:58Z",
+ "previous_count_scopes": {
+  "us_bills": "119",
+  "us_members": "119",
+  "us_votes": "119"
+ },
+ "previous_counts": {
+  "ca_bills": 5065,
+  "ca_counties": 58,
+  "ca_counties_with_votes": 12,
+  "ca_county_meetings": 154,
+  "ca_county_votes": 3607,
+  "ca_members": 121,
+  "ca_upcoming": 1,
+  "ca_votes": 21546,
+  "us_bills": 509,
+  "us_members": 556,
+  "us_upcoming": 95,
+  "us_votes": 1579
+ },
+ "schema_version": 1,
+ "sources": {
+  "ab604-map": {
+   "last_checked_at": "2026-09-27T05:57:22Z",
+   "last_success_at": "2026-09-27T05:57:22Z",
+   "level": "geo",
+   "name": "AB 604 congressional districts (Proposition 50), block equivalency file",
+   "official": true,
+   "status": "ok",
+   "url": "https://selc.senate.ca.gov/"
+  },
+  "ca-leginfo-pubinfo": {
+   "last_checked_at": "2026-09-27T07:06:22Z",
+   "last_success_at": "2026-09-27T07:06:22Z",
+   "level": "state",
+   "name": "California Legislature nightly database dump (LegInfo pubinfo)",
+   "note": "session 20252026",
+   "official": true,
+   "status": "ok",
+   "url": "https://downloads.leginfo.legislature.ca.gov/"
+  },
+  "census-geo": {
+   "last_checked_at": "2026-09-27T05:57:21Z",
+   "last_success_at": "2026-09-27T05:57:21Z",
+   "level": "geo",
+   "name": "U.S. Census Bureau county codes and district relationship files",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html"
+  },
+  "congress-legislators": {
+   "last_checked_at": "2026-09-27T21:06:53Z",
+   "last_success_at": "2026-09-27T21:06:53Z",
+   "level": "federal",
+   "license": "CC0 1.0",
+   "name": "congress-legislators (unitedstates project)",
+   "official": false,
+   "source_updated_at": "2026-09-24T10:21:30Z",
+   "status": "ok",
+   "url": "https://unitedstates.github.io/congress-legislators/legislators-current.json"
+  },
+  "congress-legislators-historical": {
+   "last_checked_at": "2026-09-27T21:06:56Z",
+   "last_success_at": "2026-09-27T21:06:56Z",
+   "level": "federal",
+   "license": "CC0 1.0",
+   "name": "congress-legislators historical members (unitedstates project)",
+   "note": "17 former members named",
+   "official": false,
+   "source_updated_at": "2026-09-24T10:21:30Z",
+   "status": "ok",
+   "url": "https://unitedstates.github.io/congress-legislators/legislators-historical.json"
+  },
+  "county-06001": {
+   "last_checked_at": "2026-09-27T20:49:11Z",
+   "last_success_at": "2026-09-27T20:49:11Z",
+   "level": "county",
+   "name": "Alameda County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.acgov.org/board/"
+  },
+  "county-06003": {
+   "last_checked_at": "2026-09-27T20:49:11Z",
+   "last_success_at": "2026-09-27T20:49:11Z",
+   "level": "county",
+   "name": "Alpine County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.alpinecountyca.gov/"
+  },
+  "county-06005": {
+   "last_checked_at": "2026-09-27T20:49:11Z",
+   "last_success_at": "2026-09-27T20:49:11Z",
+   "level": "county",
+   "name": "Amador County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.amadorcounty.gov/government/board-of-supervisors"
+  },
+  "county-06007": {
+   "last_checked_at": "2026-09-27T20:49:11Z",
+   "last_success_at": "2026-09-27T20:49:11Z",
+   "level": "county",
+   "name": "Butte County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.buttecounty.net/324/Board-of-Supervisors"
+  },
+  "county-06009": {
+   "last_checked_at": "2026-09-27T20:49:11Z",
+   "last_success_at": "2026-09-27T20:49:11Z",
+   "level": "county",
+   "name": "Calaveras County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.calaverasgov.us/Government/Board-of-Supervisors"
+  },
+  "county-06011": {
+   "last_checked_at": "2026-09-27T20:49:11Z",
+   "last_success_at": "2026-09-27T20:49:11Z",
+   "level": "county",
+   "name": "Colusa County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.countyofcolusa.org/"
+  },
+  "county-06013": {
+   "last_checked_at": "2026-09-27T20:49:13Z",
+   "last_success_at": "2026-09-27T20:49:13Z",
+   "level": "county",
+   "name": "Contra Costa County Board of Supervisors",
+   "note": "7 meetings, 749 votes",
+   "official": true,
+   "source_updated_at": "2026-09-17T22:37:42Z",
+   "status": "ok",
+   "url": "https://www.contracosta.ca.gov/7289/Meetings-Agendas"
+  },
+  "county-06015": {
+   "last_checked_at": "2026-09-27T20:49:13Z",
+   "last_success_at": "2026-09-27T20:49:13Z",
+   "level": "county",
+   "name": "Del Norte County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.co.del-norte.ca.us/"
+  },
+  "county-06017": {
+   "last_checked_at": "2026-09-27T20:50:01Z",
+   "last_success_at": "2026-09-27T20:50:01Z",
+   "level": "county",
+   "name": "El Dorado County Board of Supervisors",
+   "note": "7 meetings, 250 votes",
+   "official": true,
+   "source_updated_at": "2026-09-24T22:58:11Z",
+   "status": "ok",
+   "url": "https://www.edcgov.us/Government/BOS"
+  },
+  "county-06019": {
+   "last_checked_at": "2026-09-27T20:50:04Z",
+   "last_success_at": "2026-09-27T20:50:04Z",
+   "level": "county",
+   "name": "Fresno County Board of Supervisors",
+   "note": "8 meetings, 347 votes",
+   "official": true,
+   "source_updated_at": "2026-09-25T18:38:55Z",
+   "status": "ok",
+   "url": "https://www.fresnocountyca.gov/Government/Board-of-Supervisors"
+  },
+  "county-06021": {
+   "last_checked_at": "2026-09-27T20:50:04Z",
+   "last_success_at": "2026-09-27T20:50:04Z",
+   "level": "county",
+   "name": "Glenn County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.countyofglenn.net/"
+  },
+  "county-06023": {
+   "last_checked_at": "2026-09-27T20:50:49Z",
+   "last_success_at": "2026-09-27T20:50:49Z",
+   "level": "county",
+   "name": "Humboldt County Board of Supervisors",
+   "note": "10 meetings, 233 votes",
+   "official": true,
+   "source_updated_at": "2026-09-12T01:00:50Z",
+   "status": "ok",
+   "url": "https://humboldtgov.org/160/Board-of-Supervisors"
+  },
+  "county-06025": {
+   "last_checked_at": "2026-09-27T20:50:49Z",
+   "last_success_at": "2026-09-27T20:50:49Z",
+   "level": "county",
+   "name": "Imperial County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://board.imperialcounty.org/"
+  },
+  "county-06027": {
+   "last_checked_at": "2026-09-27T20:50:49Z",
+   "last_success_at": "2026-09-27T20:50:49Z",
+   "level": "county",
+   "name": "Inyo County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.inyocounty.us/government/board-supervisors"
+  },
+  "county-06029": {
+   "last_checked_at": "2026-09-27T20:50:49Z",
+   "last_success_at": "2026-09-27T20:50:49Z",
+   "level": "county",
+   "name": "Kern County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.kerncounty.com/government/board-of-supervisors"
+  },
+  "county-06031": {
+   "last_checked_at": "2026-09-27T20:50:49Z",
+   "last_success_at": "2026-09-27T20:50:49Z",
+   "level": "county",
+   "name": "Kings County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.countyofkingsca.gov/"
+  },
+  "county-06033": {
+   "last_checked_at": "2026-09-27T20:50:56Z",
+   "last_success_at": "2026-09-27T20:50:56Z",
+   "level": "county",
+   "name": "Lake County Board of Supervisors",
+   "note": "12 meetings, 7 votes",
+   "official": true,
+   "source_updated_at": "2026-09-25T23:48:02Z",
+   "status": "ok",
+   "url": "https://www.lakecountyca.gov/"
+  },
+  "county-06035": {
+   "last_checked_at": "2026-09-27T20:50:56Z",
+   "last_success_at": "2026-09-27T20:50:56Z",
+   "level": "county",
+   "name": "Lassen County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.lassencounty.org/"
+  },
+  "county-06037": {
+   "last_checked_at": "2026-09-27T20:50:59Z",
+   "last_success_at": "2026-09-27T20:50:59Z",
+   "level": "county",
+   "name": "Los Angeles County Board of Supervisors",
+   "note": "1 meetings, 0 votes",
+   "official": true,
+   "source_updated_at": "2026-09-26T00:46:13Z",
+   "status": "ok",
+   "url": "https://bos.lacounty.gov/board-meeting-agendas/"
+  },
+  "county-06039": {
+   "last_checked_at": "2026-09-27T20:50:59Z",
+   "last_success_at": "2026-09-27T20:50:59Z",
+   "level": "county",
+   "name": "Madera County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.maderacounty.com/government/board-of-supervisors"
+  },
+  "county-06041": {
+   "error": "unreachable: https://www.marincounty.gov/departments/board-of-supervisors: HTTP 404 for https",
+   "last_checked_at": "2026-09-27T20:51:00Z",
+   "level": "county",
+   "name": "Marin County Board of Supervisors",
+   "official": true,
+   "status": "error",
+   "url": "https://www.marincounty.gov/departments/board-of-supervisors"
+  },
+  "county-06043": {
+   "last_checked_at": "2026-09-27T20:51:00Z",
+   "last_success_at": "2026-09-27T20:51:00Z",
+   "level": "county",
+   "name": "Mariposa County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.mariposacounty.org/"
+  },
+  "county-06045": {
+   "last_checked_at": "2026-09-27T20:51:13Z",
+   "last_success_at": "2026-09-27T20:51:13Z",
+   "level": "county",
+   "name": "Mendocino County Board of Supervisors",
+   "note": "6 meetings, 55 votes",
+   "official": true,
+   "source_updated_at": "2026-09-18T18:14:38Z",
+   "status": "ok",
+   "url": "https://www.mendocinocounty.gov/government/board-of-supervisors"
+  },
+  "county-06047": {
+   "last_checked_at": "2026-09-27T20:51:13Z",
+   "last_success_at": "2026-09-27T20:51:13Z",
+   "level": "county",
+   "name": "Merced County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.countyofmerced.com/"
+  },
+  "county-06049": {
+   "last_checked_at": "2026-09-27T20:51:13Z",
+   "last_success_at": "2026-09-27T20:51:13Z",
+   "level": "county",
+   "name": "Modoc County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.co.modoc.ca.us/"
+  },
+  "county-06051": {
+   "last_checked_at": "2026-09-27T20:51:13Z",
+   "last_success_at": "2026-09-27T20:51:13Z",
+   "level": "county",
+   "name": "Mono County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.monocounty.ca.gov/bos"
+  },
+  "county-06053": {
+   "last_checked_at": "2026-09-27T20:51:27Z",
+   "last_success_at": "2026-09-27T20:51:27Z",
+   "level": "county",
+   "name": "Monterey County Board of Supervisors",
+   "note": "15 meetings, 392 votes",
+   "official": true,
+   "source_updated_at": "2026-09-25T22:31:28Z",
+   "status": "ok",
+   "url": "https://www.countyofmonterey.gov/government/board-of-supervisors"
+  },
+  "county-06055": {
+   "last_checked_at": "2026-09-27T20:51:32Z",
+   "last_success_at": "2026-09-27T20:51:32Z",
+   "level": "county",
+   "name": "Napa County Board of Supervisors",
+   "note": "6 meetings, 0 votes",
+   "official": true,
+   "source_updated_at": "2026-09-24T20:35:36Z",
+   "status": "ok",
+   "url": "https://www.napacounty.gov/1316/Board-of-Supervisors"
+  },
+  "county-06057": {
+   "last_checked_at": "2026-09-27T20:51:43Z",
+   "last_success_at": "2026-09-27T20:51:43Z",
+   "level": "county",
+   "name": "Nevada County Board of Supervisors",
+   "note": "7 meetings, 31 votes",
+   "official": true,
+   "source_updated_at": "2026-09-10T20:58:07Z",
+   "status": "ok",
+   "url": "https://www.nevadacountyca.gov/"
+  },
+  "county-06059": {
+   "last_checked_at": "2026-09-27T20:51:43Z",
+   "last_success_at": "2026-09-27T20:51:43Z",
+   "level": "county",
+   "name": "Orange County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://board.oc.gov/"
+  },
+  "county-06061": {
+   "last_checked_at": "2026-09-27T20:51:43Z",
+   "last_success_at": "2026-09-27T20:51:43Z",
+   "level": "county",
+   "name": "Placer County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.placer.ca.gov/1512/Board-of-Supervisors"
+  },
+  "county-06063": {
+   "last_checked_at": "2026-09-27T20:51:43Z",
+   "last_success_at": "2026-09-27T20:51:43Z",
+   "level": "county",
+   "name": "Plumas County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.plumascounty.us/"
+  },
+  "county-06065": {
+   "last_checked_at": "2026-09-27T20:51:44Z",
+   "last_success_at": "2026-09-27T20:51:44Z",
+   "level": "county",
+   "name": "Riverside County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://rivcocob.org/"
+  },
+  "county-06067": {
+   "last_checked_at": "2026-09-27T20:51:44Z",
+   "last_success_at": "2026-09-27T20:51:44Z",
+   "level": "county",
+   "name": "Sacramento County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://bos.saccounty.gov/"
+  },
+  "county-06069": {
+   "last_checked_at": "2026-09-27T20:51:44Z",
+   "last_success_at": "2026-09-27T20:51:44Z",
+   "level": "county",
+   "name": "San Benito County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.sanbenitocountyca.gov/"
+  },
+  "county-06071": {
+   "last_checked_at": "2026-09-27T20:51:48Z",
+   "last_success_at": "2026-09-27T20:51:48Z",
+   "level": "county",
+   "name": "San Bernardino County Board of Supervisors",
+   "note": "4 meetings, 339 votes",
+   "official": true,
+   "source_updated_at": "2026-09-18T22:24:56Z",
+   "status": "ok",
+   "url": "https://www.sbcounty.gov/bos/"
+  },
+  "county-06073": {
+   "last_checked_at": "2026-09-27T20:51:50Z",
+   "last_success_at": "2026-09-27T20:51:50Z",
+   "level": "county",
+   "name": "San Diego County Board of Supervisors",
+   "note": "6 meetings, 105 votes",
+   "official": true,
+   "source_updated_at": "2026-09-17T22:17:27Z",
+   "status": "ok",
+   "url": "https://www.sandiegocounty.gov/content/sdc/cob.html"
+  },
+  "county-06075": {
+   "last_checked_at": "2026-09-27T20:51:50Z",
+   "last_success_at": "2026-09-27T20:51:50Z",
+   "level": "county",
+   "name": "San Francisco County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://sfbos.org/"
+  },
+  "county-06077": {
+   "last_checked_at": "2026-09-27T20:51:50Z",
+   "last_success_at": "2026-09-27T20:51:50Z",
+   "level": "county",
+   "name": "San Joaquin County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.sjgov.org/department/bos"
+  },
+  "county-06079": {
+   "last_checked_at": "2026-09-27T20:51:50Z",
+   "last_success_at": "2026-09-27T20:51:50Z",
+   "level": "county",
+   "name": "San Luis Obispo County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.slocounty.ca.gov/departments/board-of-supervisors"
+  },
+  "county-06081": {
+   "last_checked_at": "2026-09-27T20:51:55Z",
+   "last_success_at": "2026-09-27T20:51:55Z",
+   "level": "county",
+   "name": "San Mateo County Board of Supervisors",
+   "note": "8 meetings, 170 votes",
+   "official": true,
+   "source_updated_at": "2026-09-23T20:22:35Z",
+   "status": "ok",
+   "url": "https://www.smcgov.org/bos"
+  },
+  "county-06083": {
+   "last_checked_at": "2026-09-27T20:51:59Z",
+   "last_success_at": "2026-09-27T20:51:59Z",
+   "level": "county",
+   "name": "Santa Barbara County Board of Supervisors",
+   "note": "21 meetings, 292 votes",
+   "official": true,
+   "source_updated_at": "2026-09-21T23:42:34Z",
+   "status": "ok",
+   "url": "https://www.countyofsb.org/153/Board-of-Supervisors"
+  },
+  "county-06085": {
+   "last_checked_at": "2026-09-27T20:51:59Z",
+   "last_success_at": "2026-09-27T20:51:59Z",
+   "level": "county",
+   "name": "Santa Clara County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://bos.santaclaracounty.gov/"
+  },
+  "county-06087": {
+   "last_checked_at": "2026-09-27T20:51:59Z",
+   "last_success_at": "2026-09-27T20:51:59Z",
+   "level": "county",
+   "name": "Santa Cruz County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.santacruzcountyca.gov/Government/BoardofSupervisors.aspx"
+  },
+  "county-06089": {
+   "last_checked_at": "2026-09-27T20:52:00Z",
+   "last_success_at": "2026-09-27T20:52:00Z",
+   "level": "county",
+   "name": "Shasta County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.shastacounty.gov/board-supervisors"
+  },
+  "county-06091": {
+   "last_checked_at": "2026-09-27T20:52:00Z",
+   "last_success_at": "2026-09-27T20:52:00Z",
+   "level": "county",
+   "name": "Sierra County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.sierracounty.ca.gov/"
+  },
+  "county-06093": {
+   "last_checked_at": "2026-09-27T20:52:00Z",
+   "last_success_at": "2026-09-27T20:52:00Z",
+   "level": "county",
+   "name": "Siskiyou County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.co.siskiyou.ca.us/"
+  },
+  "county-06095": {
+   "last_checked_at": "2026-09-27T20:52:04Z",
+   "last_success_at": "2026-09-27T20:52:04Z",
+   "level": "county",
+   "name": "Solano County Board of Supervisors",
+   "note": "6 meetings, 108 votes",
+   "official": true,
+   "source_updated_at": "2026-09-18T01:08:46Z",
+   "status": "ok",
+   "url": "https://www.solanocounty.com/depts/bos/"
+  },
+  "county-06097": {
+   "last_checked_at": "2026-09-27T20:52:14Z",
+   "last_success_at": "2026-09-27T20:52:14Z",
+   "level": "county",
+   "name": "Sonoma County Board of Supervisors",
+   "note": "17 meetings, 254 votes",
+   "official": true,
+   "source_updated_at": "2026-09-11T20:39:11Z",
+   "status": "ok",
+   "url": "https://sonomacounty.ca.gov/administrative-support-and-fiscal-services/board-of-supervisors"
+  },
+  "county-06099": {
+   "last_checked_at": "2026-09-27T20:52:14Z",
+   "last_success_at": "2026-09-27T20:52:14Z",
+   "level": "county",
+   "name": "Stanislaus County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.stancounty.com/bos/"
+  },
+  "county-06101": {
+   "last_checked_at": "2026-09-27T20:52:14Z",
+   "last_success_at": "2026-09-27T20:52:14Z",
+   "level": "county",
+   "name": "Sutter County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.sutter.gov/"
+  },
+  "county-06103": {
+   "last_checked_at": "2026-09-27T20:53:09Z",
+   "last_success_at": "2026-09-27T20:53:09Z",
+   "level": "county",
+   "name": "Tehama County Board of Supervisors",
+   "note": "13 meetings, 275 votes",
+   "official": true,
+   "source_updated_at": "2026-09-23T22:45:46Z",
+   "status": "ok",
+   "url": "https://www.tehamacountyca.gov/"
+  },
+  "county-06105": {
+   "last_checked_at": "2026-09-27T20:53:09Z",
+   "last_success_at": "2026-09-27T20:53:09Z",
+   "level": "county",
+   "name": "Trinity County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.trinitycounty.org/"
+  },
+  "county-06107": {
+   "last_checked_at": "2026-09-27T20:53:09Z",
+   "last_success_at": "2026-09-27T20:53:09Z",
+   "level": "county",
+   "name": "Tulare County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://tularecounty.ca.gov/board-of-supervisors/"
+  },
+  "county-06109": {
+   "last_checked_at": "2026-09-27T20:53:09Z",
+   "last_success_at": "2026-09-27T20:53:09Z",
+   "level": "county",
+   "name": "Tuolumne County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.tuolumnecounty.ca.gov/"
+  },
+  "county-06111": {
+   "last_checked_at": "2026-09-27T20:53:09Z",
+   "last_success_at": "2026-09-27T20:53:09Z",
+   "level": "county",
+   "name": "Ventura County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.ventura.org/board-of-supervisors/"
+  },
+  "county-06113": {
+   "last_checked_at": "2026-09-27T20:53:10Z",
+   "last_success_at": "2026-09-27T20:53:10Z",
+   "level": "county",
+   "name": "Yolo County Board of Supervisors",
+   "note": "links only; the site blocks automated checks, so the link is not verified nightly",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.yolocounty.gov/government/general-government-departments/board-of-supervisors"
+  },
+  "county-06115": {
+   "last_checked_at": "2026-09-27T20:53:10Z",
+   "last_success_at": "2026-09-27T20:53:10Z",
+   "level": "county",
+   "name": "Yuba County Board of Supervisors",
+   "note": "links only",
+   "official": true,
+   "status": "ok",
+   "url": "https://www.yuba.gov/"
+  },
+  "docs-house-floor": {
+   "last_checked_at": "2026-09-27T21:06:57Z",
+   "last_success_at": "2026-09-27T21:06:57Z",
+   "level": "federal",
+   "name": "House Majority Leader: Bills This Week (docs.house.gov)",
+   "note": "week of 2026-09-14",
+   "official": true,
+   "source_updated_at": "2026-09-15T11:20:08-04:00",
+   "status": "ok",
+   "url": "https://docs.house.gov/floor/"
+  },
+  "govinfo-billstatus": {
+   "last_checked_at": "2026-09-27T21:06:57Z",
+   "last_success_at": "2026-09-27T21:06:57Z",
+   "level": "federal",
+   "name": "GovInfo Bill Status (BILLSTATUS) bulk data",
+   "note": "509 bills",
+   "official": true,
+   "source_updated_at": "2026-09-27T11:03:26Z",
+   "status": "ok",
+   "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS"
+  },
+  "senate-daily-press": {
+   "last_checked_at": "2026-09-27T21:06:58Z",
+   "last_success_at": "2026-09-27T21:06:58Z",
+   "level": "federal",
+   "name": "Senate Daily Press Gallery floor log (next session and scheduled votes)",
+   "note": "next session 2026-09-28",
+   "official": true,
+   "source_updated_at": "2026-09-24T20:32:17Z",
+   "status": "ok",
+   "url": "https://www.dailypress.senate.gov/"
+  },
+  "senate-member-data": {
+   "last_checked_at": "2026-09-27T21:06:53Z",
+   "last_success_at": "2026-09-27T21:06:53Z",
+   "level": "federal",
+   "name": "U.S. Senate member data (LIS ids to bioguide ids)",
+   "note": "100 senators; 0 added that congress-legislators lacked",
+   "official": true,
+   "source_updated_at": "2026-09-27T05:00:13-04:00",
+   "status": "ok",
+   "url": "https://www.senate.gov/legislative/LIS_MEMBER/cvc_member_data.xml"
+  },
+  "senate-schedules": {
+   "last_checked_at": "2026-09-27T21:06:57Z",
+   "last_success_at": "2026-09-27T21:06:57Z",
+   "level": "federal",
+   "name": "U.S. Senate committee hearings and floor schedule XML",
+   "official": true,
+   "source_updated_at": "2026-09-25T19:37:29-04:00",
+   "status": "ok",
+   "url": "https://www.senate.gov/committees/hearings_meetings.htm"
+  },
+  "us-house-clerk": {
+   "last_checked_at": "2026-09-27T21:06:54Z",
+   "last_success_at": "2026-09-27T21:06:54Z",
+   "level": "federal",
+   "name": "Clerk of the U.S. House, roll-call vote XML",
+   "official": true,
+   "source_updated_at": "2026-09-16T23:09:40Z",
+   "status": "ok",
+   "url": "https://clerk.house.gov/Votes"
+  },
+  "us-senate-lis": {
+   "last_checked_at": "2026-09-27T21:06:56Z",
+   "last_success_at": "2026-09-27T21:06:56Z",
+   "level": "federal",
+   "name": "U.S. Senate roll-call vote XML (LIS)",
+   "official": true,
+   "source_updated_at": "2026-09-24T15:05:00-04:00",
+   "status": "ok",
+   "url": "https://www.senate.gov/legislative/votes_new.htm"
+  }
+ }
+}

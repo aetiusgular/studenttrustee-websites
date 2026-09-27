@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block head_meta %}
+<meta name="st-legislation-data" content="{{ site.legislation_data_url }}">
+{%- endblock %}
+{% block head %}
+<link rel="stylesheet" href="/assets/legislation.css">
+{%- endblock %}
+{% block main %}
+  <div class="leg-head">
+    <div class="leg-title">
+      <p class="eyebrow">Legislation</p>
+      <h1 id="page-title" tabindex="-1">Legislative votes and records</h1>
+      <p class="lede" id="page-lede">Bills, roll-call votes, each legislator's record, and what is scheduled next, at the federal, state and county levels. Every record links to its official source and says when that source last changed.</p>
+    </div>
+    <form class="leg-search" id="search-form" role="search" action="/legislation/search/" method="get">
+      <label for="q">Search bills and legislators</label>
+      <div class="row">
+        <input id="q" name="q" type="search" placeholder="AB 1, wildfire, Padilla, S. 2403" autocomplete="off" spellcheck="false">
+        <button type="submit" class="btn">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <nav class="leg-nav" aria-label="Legislation sections">
+    <a href="/legislation/">Overview</a>
+    <a href="/legislation/states/">States &amp; counties</a>
+    <a href="/legislation/votes/">Votes</a>
+    <a href="/legislation/bills/">Bills</a>
+    <a href="/legislation/upcoming/">Upcoming</a>
+    <a href="/legislation/calendars/">Calendars</a>
+    <a href="/legislation/sources/">Sources</a>
+  </nav>
+
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+
+  <div id="app">
+    <noscript>
+      <p class="note">This section needs JavaScript to load the vote records. The same data comes from these official sources:</p>
+      <ul class="plain">
+        <li><a href="https://clerk.house.gov/Votes">U.S. House roll-call votes (Clerk of the House)</a></li>
+        <li><a href="https://www.senate.gov/legislative/votes_new.htm">U.S. Senate roll-call votes</a></li>
+        <li><a href="https://leginfo.legislature.ca.gov/">California Legislative Information (bills and votes)</a></li>
+        <li><a href="https://www.assembly.ca.gov/schedules-publications/daily-file">Assembly Daily File</a> and <a href="https://www.senate.ca.gov/dailyfile">Senate Daily File</a></li>
+      </ul>
+    </noscript>
+  </div>
+{%- endblock %}
+{% block footer_extra %}
+  <p id="footer-freshness">Records are refreshed nightly from official sources. Times are shown in Pacific Time.</p>
+{%- endblock %}
+{% block scripts %}
+<script src="/assets/legislation.js"></script>
+{%- endblock %}

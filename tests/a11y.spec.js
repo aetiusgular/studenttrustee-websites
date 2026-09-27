@@ -17,14 +17,75 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const baseline = JSON.parse(fs.readFileSync(path.join(here, "a11y-baseline.json"), "utf8"));
 const report = [];
 
+// The Legislation section renders from the records in studenttrustee/data/legislation/ (the data
+// branch, checked out by CI and by tools/pull-data.sh). Detail pages are picked from those records,
+// so the suite keeps working as votes, members and sessions change. "ready" waits until the app
+// has rendered (aria-busy cleared). With no records checked out, these pages are skipped.
+function legislationPages() {
+  const DATA = path.join(here, "..", "studenttrustee", "data", "legislation");
+  const read = (rel) => { try { return JSON.parse(fs.readFileSync(path.join(DATA, rel), "utf8")); } catch { return null; } };
+  if (!read("manifest.json")) return [];
+  const ready = (sel) => `#app:not([aria-busy]) ${sel}`;
+  const pages = [
+    { name: "leg-overview", url: "/legislation/", ready: ready(".sec") },
+    { name: "leg-states", url: "/legislation/states/", ready: ready("ul.cols") },
+    { name: "leg-california", url: "/legislation/california/", ready: ready("#counties") },
+    { name: "leg-other-state", url: "/legislation/texas/", ready: ready(".sec") },
+    { name: "leg-votes-federal", url: "/legislation/votes/?level=federal", ready: ready("form.filters") },
+    { name: "leg-votes-state", url: "/legislation/votes/?level=state", ready: ready("form.filters") },
+    { name: "leg-votes-county", url: "/legislation/votes/?level=county", ready: ready("form.filters") },
+    { name: "leg-bills-federal", url: "/legislation/bills/?level=federal", ready: ready("form.filters") },
+    { name: "leg-bills-state", url: "/legislation/bills/?level=state&type=SB", ready: ready("form.filters") },
+    { name: "leg-upcoming", url: "/legislation/upcoming/", ready: ready("form.filters") },
+    { name: "leg-search", url: "/legislation/search/?q=school", ready: ready(".sec") },
+    { name: "leg-sources", url: "/legislation/sources/", ready: ready("table.tbl") },
+    { name: "leg-not-found", url: "/legislation/nowhere/at-all/", ready: ready("p") },
+  ];
+  const col = (d, k) => d.columns.indexOf(k);
+  const usLatest = read("us/latest.json");
+  if (usLatest && usLatest.rows.length) {
+    pages.push({ name: "leg-vote-federal", url: `/legislation/vote/${usLatest.rows[0][0]}/`, ready: ready("dl.facts") });
+    const withBill = usLatest.rows.find((r) => r[col(usLatest, "bill_id")]);
+    if (withBill) pages.push({ name: "leg-bill-federal", url: `/legislation/bill/${withBill[col(usLatest, "bill_id")]}/`, ready: ready("dl.facts") });
+  }
+  const us = read("us/members.json");
+  const senator = us && us.members.find((m) => m.body === "us-senate" && m.state === "CA" && !m.former && !m.provisional);
+  if (senator) pages.push({ name: "leg-legislator-federal", url: `/legislation/legislator/${senator.id}/`, ready: ready("dl.facts") });
+  const caLatest = read("us-ca/latest.json");
+  if (caLatest && caLatest.rows.length) {
+    pages.push({ name: "leg-vote-state", url: `/legislation/vote/${caLatest.rows[0][0]}/`, ready: ready("dl.facts") });
+    pages.push({ name: "leg-bill-state", url: `/legislation/bill/${caLatest.rows[0][col(caLatest, "bill_id")]}/`, ready: ready("dl.facts") });
+  }
+  const ca = read("us-ca/members.json");
+  const asm = ca && ca.members.find((m) => m.active);
+  if (asm) pages.push({ name: "leg-legislator-state", url: `/legislation/legislator/${asm.id}/`, ready: ready("dl.facts") });
+  const counties = read("us-ca/counties/index.json");
+  if (counties) {
+    const voting = counties.counties.find((c) => c.coverage === "votes");
+    const linksOnly = counties.counties.find((c) => c.coverage === "links");
+    if (voting) {
+      pages.push({ name: "leg-county-votes", url: `/legislation/california/${voting.slug}/`, ready: ready("#votes") });
+      const board = read(`us-ca/counties/${voting.fips}/board.json`);
+      const sup = board && board.members.find((m) => !m.provisional);
+      if (sup) pages.push({ name: "leg-legislator-county", url: `/legislation/legislator/${sup.id}/`, ready: ready("dl.facts") });
+    }
+    if (linksOnly) pages.push({ name: "leg-county-links", url: `/legislation/california/${linksOnly.slug}/`, ready: ready("#votes") });
+    const coLatest = read("us-ca/counties/latest.json");
+    if (coLatest && coLatest.rows.length) pages.push({ name: "leg-vote-county", url: `/legislation/vote/${coLatest.rows[0][0]}/`, ready: ready("dl.facts") });
+  }
+  return pages;
+}
+
 const PAGES = [
   { name: "home", url: "/" },
   { name: "map", url: "/map", settle: 4000 },
   { name: "districts", url: "/districts/" },
   { name: "district", url: "/districts/los-rios-ccd/" },
   { name: "district-vacant", url: "/districts/ohlone-ccd/" },
-  { name: "legislature", url: "/legislature" },
+  { name: "calendars", url: "/legislation/calendars/" },
   { name: "about", url: "/about" },
+  { name: "accessibility", url: "/accessibility" },
+  ...legislationPages(),
   { name: "volunteer", url: "http://127.0.0.1:8101/", settle: 1500 },
 ];
 
@@ -69,7 +130,9 @@ function customScan() {
     const cs = getComputedStyle(el);
     // Inline text links inside a sentence are exempt from 2.5.5.
     if (el.tagName === "A" && cs.display === "inline" && el.parentElement && el.parentElement.textContent.trim().length > el.textContent.trim().length + 10) continue;
-    const r = el.getBoundingClientRect();
+    // A checkbox or radio inside its <label> is hit anywhere on the label, so the label's box is the target.
+    const hit = (el.type === "checkbox" || el.type === "radio") && el.closest("label") ? el.closest("label") : el;
+    const r = hit.getBoundingClientRect();
     if (r.width < 44 || r.height < 44) targets.push({ tag: el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.split(" ")[0] : ""), w: Math.round(r.width), h: Math.round(r.height), text: (el.textContent || el.getAttribute("aria-label") || el.value || "").trim().slice(0, 30) });
   }
   return { contrast, small, targets, overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth, lang: document.documentElement.lang, title: document.title,
@@ -81,6 +144,7 @@ for (const p of PAGES) {
     const key = p.name;
     const allowed = baseline[key] || {};
     await page.goto(p.url, { waitUntil: "load" });
+    if (p.ready) await page.waitForSelector(p.ready, { timeout: 30_000 });
     await page.waitForTimeout(p.settle || 500);
 
     const axe = await new AxeBuilder({ page }).withTags(AXE_TAGS)
@@ -110,6 +174,7 @@ test.describe("reflow at 320 px (WCAG 1.4.10)", () => {
   for (const p of PAGES) {
     test(`${p.name}: no horizontal scroll at 320 px`, async ({ page }) => {
       await page.goto(p.url, { waitUntil: "load" });
+      if (p.ready) await page.waitForSelector(p.ready, { timeout: 30_000 });
       await page.waitForTimeout(p.settle ? 1500 : 300);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       const allowed = (baseline[p.name] || {}).reflow320 ?? 0;

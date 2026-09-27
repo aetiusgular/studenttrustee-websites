@@ -1,17 +1,22 @@
 name: Nightly data refresh
 
-# Pulls official sources and commits what changed under studenttrustee/data/.
-# Netlify deploys main on push, so a data commit is a deploy.
-# 05:30 UTC is 22:30 Pacific: after the California Legislature's ~21:20 PT
-# pubinfo drop and after the day's congressional roll calls are posted.
+# Pulls the official sources and publishes the legislation records to the `data` branch,
+# which GitHub Pages serves (Settings > Pages > Deploy from a branch > data, / (root)).
+# The site reads the records from there, so a nightly refresh never triggers a Netlify
+# production deploy (on Netlify's credit-based free plan every production deploy costs
+# credits). District boundaries still live on main; they change about once a year, and
+# only then does this job commit to main.
+#
+# 06:30 UTC is 23:30 Pacific in summer and 22:30 in winter: after the California
+# Legislature's ~21:20 PT pubinfo drop and after the day's congressional roll calls.
 
 on:
   schedule:
-    - cron: "30 5 * * *"
+    - cron: "30 6 * * *"
   workflow_dispatch:
     inputs:
       targets:
-        description: "Space-separated targets: all boundaries federal california counties geo"
+        description: "Space-separated targets: all boundaries geo federal california counties"
         default: "all"
 
 permissions:
@@ -30,6 +35,14 @@ jobs:
         with:
           ref: main
 
+      # Last night's records: the pipeline keeps the last good copy of any source that
+      # fails tonight, and the validator compares tonight's counts with these.
+      - name: Check out the published records (data branch)
+        uses: actions/checkout@v4
+        with:
+          ref: data
+          path: studenttrustee/data/legislation
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -37,6 +50,8 @@ jobs:
 
       - run: python3 -m pip install -r requirements.txt
 
+      # Small HTTP responses only. The 1.1 GB California dump is downloaded to the runner's
+      # temp directory (PUBINFO_DIR) so it is never saved into this cache.
       - name: Restore HTTP cache
         uses: actions/cache@v4
         with:
@@ -47,21 +62,39 @@ jobs:
       - name: Refresh
         env:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
-          LEGISCAN_API_KEY: ${{ secrets.LEGISCAN_API_KEY }}
+          PUBINFO_DIR: ${{ runner.temp }}
           TARGETS: ${{ github.event.inputs.targets || 'all' }}
         run: python3 -m tools.legislation.refresh $TARGETS
 
       - name: Validate
         run: python3 -m tools.legislation.validate
 
-      - name: Commit and push
+      - name: Publish the records to the data branch
+        working-directory: studenttrustee/data/legislation
         run: |
           git config user.name "studenttrustee-bot"
           git config user.email "studenttrustee-bot@users.noreply.github.com"
-          git add studenttrustee/data
+          touch .nojekyll
+          git add -A
           if git diff --cached --quiet; then
-            echo "no data changes"
+            echo "no record changes"
+            exit 0
+          fi
+          # One commit with no parent: the branch is a published snapshot, not a history.
+          # The manifest inside it records when every source last changed and was checked.
+          tree=$(git write-tree)
+          commit=$(git commit-tree "$tree" -m "data: nightly refresh $(date -u +%Y-%m-%d)")
+          git push --force origin "$commit:refs/heads/data"
+
+      - name: Commit boundary changes to main (rare)
+        run: |
+          git config user.name "studenttrustee-bot"
+          git config user.email "studenttrustee-bot@users.noreply.github.com"
+          git add studenttrustee/data/districts.geojson
+          if git diff --cached --quiet; then
+            echo "boundaries unchanged"
           else
-            git commit -m "data: nightly refresh $(date -u +%Y-%m-%d)"
-            git push
+            git commit -m "data: district boundaries changed upstream"
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi

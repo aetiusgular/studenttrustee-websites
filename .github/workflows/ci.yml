@@ -16,6 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The Legislation section's records live on the data branch (published by GitHub Pages).
+      # The page tests and the data validator run against that snapshot.
+      - name: Check out the published records (data branch)
+        uses: actions/checkout@v4
+        with:
+          ref: data
+          path: studenttrustee/data/legislation
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22

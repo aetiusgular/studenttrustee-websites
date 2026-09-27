@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/assets/accessibility.css">
+{%- endblock %}
+{% block main %}
+  <h1>Accessibility</h1>
+  <p class="lead">studenttrustee.net aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AAA,
+  the strictest level. This page says what that covers, how it is checked, and where the site still falls short.</p>
+
+  <h2>What the site does</h2>
+  <ul>
+    <li>Text meets the AAA contrast ratio of 7:1 against its background (4.5:1 for large text). Colour is never the
+    only signal: every vote says Passed or Failed in words, and every record is labelled Federal, State or County.</li>
+    <li>Everything works from the keyboard. A skip link leads to the main content, focus is always visible as a
+    thick outline, and in the Legislation section focus moves to the new page heading when you follow a link.</li>
+    <li>Links and buttons that are not part of a sentence are at least 44 by 44 pixels, so they are easy to hit
+    on a phone or with a tremor.</li>
+    <li>Pages reflow to a 320 pixel wide screen without sideways scrolling, and text can be enlarged to 200 percent.</li>
+    <li>Animation is turned off when your device asks for reduced motion.</li>
+    <li>Times are shown with their time zone (PT or ET) and dates in words, so they do not depend on locale.</li>
+    <li>Tables have captions and header cells; vote positions can be filtered by position, name, party or district.</li>
+  </ul>
+
+  <h2>How it is checked</h2>
+  <p>Every change runs an automated suite before it can be merged. Each page is loaded at 1440, 768 and 390 pixels wide
+  and checked with axe-core against the WCAG 2.x A, AA and AAA rules, including the enhanced contrast rule. A second
+  scan measures every piece of text for contrast and size and every link and button for target size, and the layout is
+  checked for sideways scrolling at 320 pixels. The Legislation section is also walked through with the keyboard alone.
+  Automated tools do not catch everything, so reports from people who use assistive technology are the most useful
+  check there is.</p>
+
+  <h2>Known limitations</h2>
+  <ul>
+    <li>The volunteer site, volunteer.studenttrustee.net, has not been brought up to AAA yet. Some of its text is below
+    the 7:1 contrast ratio and a few of its controls are smaller than 44 pixels.</li>
+    <li>The district map is a visual aid. Every district, trustee and link on it is also in the list beside the map and
+    on the <a href="/districts/">Districts</a> pages, which work with a screen reader.</li>
+    <li>Agendas, minutes, bill text and calendars that this site links to are published by the Legislature, Congress and
+    county governments. Their accessibility is outside this site's control; many are PDFs.</li>
+    <li>Vote records are shown as the official source publishes them, so some motion titles from the California
+    Legislature are in capital letters or abbreviated.</li>
+  </ul>
+
+  <h2>Report a problem</h2>
+  <p>If something on this site is hard or impossible to use, <a href="mailto:{{ site.corrections_email }}?subject=Accessibility%20problem%20on%20studenttrustee.net">email {{ site.corrections_email }}</a>
+  with the page address and what you were trying to do. You will get a reply, and the fix will be tested the same way
+  as everything else on the site.</p>
+
+  <p class="stamp">Last reviewed {{ accessibility_reviewed }}.</p>
+{%- endblock %}

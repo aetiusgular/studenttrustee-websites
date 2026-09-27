@@ -11,7 +11,8 @@ Inputs
   tools/templates/                  Jinja2 templates (base.html + pages/)
 
 Outputs (all committed, so Netlify stays build-less)
-  studenttrustee/index.html, map.html, legislature.html, about.html
+  studenttrustee/index.html, map.html, about.html, accessibility.html
+  studenttrustee/legislation/index.html (the votes app) and legislation/calendars/index.html
   studenttrustee/districts/index.html and districts/<slug>/index.html (72)
   studenttrustee/sitemap.xml, robots.txt
 
@@ -43,9 +44,9 @@ REGION_HEX = {
     'VI': '#e87ba4', 'VII': '#2a78d6', 'VIII': '#eb6834', 'IX': '#0e8fae', 'X': '#e34948',
 }
 
-# Nav is defined once. The Legislation tab replaces the old Legislature page when it ships.
+# Nav is defined once. /legislature (the old calendars page) redirects to /legislation/calendars/.
 NAV = [('/', 'Home'), ('/map', 'District map'), ('/districts/', 'Districts'),
-       ('/legislature', 'Legislature'), ('/about', 'About')]
+       ('/legislation/', 'Legislation'), ('/about', 'About')]
 
 
 def slug(s):
@@ -115,8 +116,23 @@ def who_line(d):
     return 'Not listed'
 
 
+def check_csp(site):
+    """The Legislation section fetches from site.legislation_data_url; the CSP in _headers must allow it."""
+    from urllib.parse import urlparse
+    url = site.get('legislation_data_url') or ''
+    if not url.startswith('https://'):
+        return
+    origin = '%s://%s' % (urlparse(url).scheme, urlparse(url).netloc)
+    with open(os.path.join(SITE, '_headers'), encoding='utf-8') as fh:
+        csp = next((line for line in fh if 'Content-Security-Policy' in line), '')
+    connect = next((part for part in csp.split(';') if part.strip().startswith('connect-src')), '')
+    if origin not in connect.split():
+        sys.exit('studenttrustee/_headers: connect-src must include %s (site.json legislation_data_url)' % origin)
+
+
 def main(check=False):
     site = load_json('site.json')
+    check_csp(site)
     roster = load_json('roster.json')
     origin = site['origin']
     districts = sorted(roster['districts'], key=lambda d: d['name'])
@@ -148,9 +164,9 @@ def main(check=False):
         'site': site, 'nav': NAV, 'regions': REGIONS, 'region_name': REGION_NAME, 'region_hex': REGION_HEX,
         'roster_stamp': stamp(site['last_verified']), 'verified_stamp': stamp(site['last_verified']),
         'roster_as_of': stamp_us(site['roster_as_of']), 'corrections_through': stamp_us(site['corrections_through']),
-        'nav_legislation_href': '/legislature', 'nav_legislation_cta': 'Legislative calendars',
-        'door_legislation_title': 'Legislatures',
-        'door_legislation_text': "Track California's 2026 legislative deadlines and the weeks when the U.S. House and Senate are in session.",
+        'nav_legislation_href': '/legislation/', 'nav_legislation_cta': 'Legislative votes',
+        'door_legislation_title': 'Legislation',
+        'door_legislation_text': "Bills, roll-call votes and every legislator's record at the federal, state and county levels, refreshed nightly from official sources, plus the 2026 session calendars.",
     }
 
     outputs = {}
@@ -176,12 +192,24 @@ def main(check=False):
            og_description='All 72 California community college districts, their real boundaries, and the student trustees who represent them — grouped by SSCCC Region I–X.',
            canonical=origin + '/map', roster_json=roster_json)
 
-    render('pages/legislature.html', 'legislature.html', current='/legislature',
+    render('pages/legislation.html', 'legislation/index.html', current='/legislation/',
+           title='Legislative Votes & Records · Federal, California & County | studenttrustee.net',
+           description='Bills, roll-call votes, each legislator\'s voting record and upcoming votes at the federal, state and county levels, refreshed nightly from official government sources.',
+           og_title='Legislative votes and records · federal, state and county',
+           og_description='How Congress, the California Legislature and county boards have voted, with every record linked to its official source and stamped with when it last changed.',
+           canonical=origin + '/legislation/')
+
+    render('pages/calendars.html', 'legislation/calendars/index.html', current='/legislation/',
            title='Legislative Calendars · California & Congress | Who Represents You',
            description='The 2026 California legislative calendar, a House-vs-Senate comparison of the congressional calendar, and direct links to find your state and federal representatives.',
            og_title='Legislative Calendars · California & Congress',
            og_description='2026 California session deadlines, where the House and Senate calendars differ, and how to find your representatives.',
-           canonical=origin + '/legislature')
+           canonical=origin + '/legislation/calendars/')
+
+    render('pages/accessibility.html', 'accessibility.html', current=None,
+           title='Accessibility | studenttrustee.net',
+           description='How studenttrustee.net meets WCAG 2.2 AAA, how that is tested, where it still falls short, and how to report a barrier.',
+           canonical=origin + '/accessibility', accessibility_reviewed=stamp_us(site['accessibility_reviewed']))
 
     render('pages/about.html', 'about.html', current='/about',
            title='About | studenttrustee.net',
@@ -210,7 +238,9 @@ def main(check=False):
 
     # sitemap + robots. lastmod is the roster verification date so the file only changes when the data does.
     lastmod = site['last_verified']
-    urls = [('/', '1.0'), ('/map', '0.9'), ('/districts/', '0.9'), ('/legislature', '0.7'), ('/about', '0.6')]
+    urls = [('/', '1.0'), ('/map', '0.9'), ('/districts/', '0.9'), ('/legislation/', '0.9'), ('/legislation/calendars/', '0.7'),
+            ('/legislation/california/', '0.8'), ('/legislation/votes/', '0.7'), ('/legislation/bills/', '0.7'),
+            ('/legislation/upcoming/', '0.7'), ('/legislation/sources/', '0.5'), ('/about', '0.6'), ('/accessibility', '0.3')]
     urls += [('/districts/%s/' % d['slug'], '0.8') for d in districts]
     body = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for path, pri in urls:
@@ -239,7 +269,7 @@ def main(check=False):
             sys.exit(1)
         print('build output is fresh (%d files)' % len(outputs))
     else:
-        print('%d files written: %d district pages + index, home, map, legislature, about, sitemap, robots'
+        print('%d files written: %d district pages + index, home, map, legislation, calendars, about, accessibility, sitemap, robots'
               % (len(outputs), len(districts)))
         print('%d trustees across %d of %d districts' % (trustees, filled, len(districts)))
 

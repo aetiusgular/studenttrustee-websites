@@ -1,10 +1,47 @@
-{% extends "base.html" %}
-{% block head %}
-<link rel="stylesheet" href="/assets/legislature.css">
-{%- endblock %}
-{% block main %}
-  <h1>California Legislature</h1>
-  <p class="tagline">Session calendars &amp; who represents you</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legislative Calendars · California &amp; Congress | Who Represents You</title>
+<meta name="description" content="The 2026 California legislative calendar, a House-vs-Senate comparison of the congressional calendar, and direct links to find your state and federal representatives.">
+<link rel="canonical" href="https://studenttrustee.net/legislation/calendars/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="studenttrustee.net">
+<meta property="og:url" content="https://studenttrustee.net/legislation/calendars/">
+<meta property="og:title" content="Legislative Calendars · California &amp; Congress">
+<meta property="og:description" content="2026 California session deadlines, where the House and Senate calendars differ, and how to find your representatives.">
+<meta property="og:image" content="https://studenttrustee.net/brand/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/brand/poppy-p6.ico" sizes="48x48">
+<link rel="icon" href="/brand/poppy-p6.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" sizes="180x180" href="/brand/poppy-180-p6.png">
+<link rel="mask-icon" href="/brand/poppy-mask-p6.svg" color="#CC480D">
+<link rel="manifest" href="/site-p6.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/calendars.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="mark"><a href="/" aria-label="StudentTrustee.net home"><img class="st-wordmark" src="/brand/logo-wordmark.png" alt="StudentTrustee.net" width="1015" height="127"></a></div>
+  <div class="grow"></div>
+  <nav aria-label="Site">
+    <a href="/">Home</a>
+    <a href="/map">District map</a>
+    <a href="/districts/">Districts</a>
+    <a href="/legislation/" aria-current="page">Legislation</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main id="main" tabindex="-1">
+  <p class="crumb"><a href="/legislation/">Legislation</a> › Calendars</p>
+  <h1>Legislative calendars</h1>
+  <p class="tagline">Session deadlines &amp; who represents you</p>
+  <p class="lede">Looking for votes? <a href="/legislation/">The Legislation section</a> has bills, roll calls and each legislator's record at the federal, state and county levels.</p>
 
   <p class="lede">Knowing who represents your district and when key decisions are being made is
   essential to effective advocacy. Use the resources below to find your state and federal
@@ -48,13 +85,14 @@
     official machine-readable list, and anything I could not confirm is marked. Both official calendars
     are linked under <em>Federal · calendars</em> above; check them before you book travel.
   </p>
-{%- endblock %}
-{% block footer_extra %}
+</main>
+<footer class="site-footer">
   <p>California dates come from the 2026 Tentative Legislative Calendar. Congressional dates come from
     the Senate's own 2026 schedule and the House Majority Leader's calendar, reissued in March 2026.
     All of it is tentative. Floor schedules move for funding fights, conference, and elections, so check
     the official PDFs before you rely on a date. Links verified August 2026.</p>
-{%- endblock %}
-{% block scripts %}
-<script src="/assets/legislature.js"></script>
-{%- endblock %}
+  <p>Maintained by Nick Bonasera, Student Trustee, Contra Costa Community College District. Roster verified 23 September 2026. For site corrections, <a class="fix" href="mailto:studenttrustee@4cd.edu?subject=Student%20Trustee%20Website%20Update">please reach out</a> with updated information. <a href="/accessibility">Accessibility</a>.</p>
+</footer>
+<script src="/assets/calendars.js"></script>
+</body>
+</html>

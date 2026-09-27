@@ -1,8 +1,11 @@
-/* Legislature page. Loaded after site.css. */
+/* Calendars page (/legislation/calendars/). Loaded after site.css. */
 main{max-width:1000px;margin:0 auto;padding:36px 20px 40px}
 h1{font-size:40px;line-height:1.06;margin:0 0 6px}
 .tagline{margin:0 0 26px;font-size:15px;color:var(--text-muted)}
 .lede{font-size:15px;color:var(--text-secondary);max-width:60ch;margin:0 0 30px}
+.lede a{text-decoration:underline;text-underline-offset:3px}
+.crumb{font-size:13px;color:var(--text-muted);margin:0 0 14px}
+.crumb a{text-decoration:underline;text-underline-offset:3px}
 .grp{margin:0 0 30px}
 .grp h2{margin:0 0 10px}
 .card{text-decoration:none;padding:16px 0}

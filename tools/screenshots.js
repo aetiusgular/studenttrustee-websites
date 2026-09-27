@@ -9,7 +9,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const [base = "http://127.0.0.1:8100", out = "test-results/shots"] = process.argv.slice(2);
-const routes = process.env.ROUTES ? process.env.ROUTES.split(",") : ["/", "/map", "/districts/", "/districts/los-rios-ccd/", "/districts/ohlone-ccd/", "/legislature", "/about"];
+const routes = process.env.ROUTES ? process.env.ROUTES.split(",") : ["/", "/map", "/districts/", "/districts/los-rios-ccd/", "/districts/ohlone-ccd/", "/legislation/", "/legislation/california/", "/legislation/calendars/", "/about"];
 const sizes = [[1440, 900], [768, 1024], [390, 844]];
 
 fs.mkdirSync(out, { recursive: true });
@@ -19,8 +19,10 @@ for (const [w, h] of sizes) {
   const page = await ctx.newPage();
   for (const r of routes) {
     await page.goto(base + r, { waitUntil: "load" });
+    // the Legislation section renders from JSON; wait until it has finished
+    if (await page.$("#app")) await page.waitForSelector("#app:not([aria-busy])", { timeout: 20000 });
     await page.waitForTimeout(r === "/map" ? 3500 : 400);
-    const name = (r === "/" ? "home" : r.replace(/^\/|\/$/g, "").replace(/\//g, "_")) + `-${w}.png`;
+    const name = (r === "/" ? "home" : r.replace(/^\/|\/$/g, "").replace(/[/?&=]+/g, "_")) + `-${w}.png`;
     await page.screenshot({ path: path.join(out, name), fullPage: r !== "/map" });
     console.log("shot", name);
   }

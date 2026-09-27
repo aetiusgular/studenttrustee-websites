@@ -8,7 +8,7 @@ const browserGlobals = {
   clearTimeout: "readonly", setInterval: "readonly", clearInterval: "readonly",
   getComputedStyle: "readonly", matchMedia: "readonly", localStorage: "readonly",
   sessionStorage: "readonly", URL: "readonly", URLSearchParams: "readonly", Intl: "readonly",
-  AbortController: "readonly", HTMLElement: "readonly", Event: "readonly", CustomEvent: "readonly",
+  AbortController: "readonly", FormData: "readonly", HTMLElement: "readonly", Event: "readonly", CustomEvent: "readonly",
   IntersectionObserver: "readonly", queueMicrotask: "readonly", structuredClone: "readonly",
 };
 

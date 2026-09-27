@@ -49,8 +49,9 @@ export function serve(folder, port) {
     if (rule && rule.status !== 200) {
       res.writeHead(rule.status, { Location: rule.to }); res.end(); return;
     }
-    if (rule && rule.status === 200) pathname = rule.to;
+    // Like Netlify, a 200 rewrite without "!" only applies when no file exists at the path.
     const candidates = [pathname, pathname + ".html", path.join(pathname, "index.html")];
+    if (rule && rule.status === 200) candidates.push(rule.to);
     for (const c of candidates) {
       const file = path.join(dir, c);
       if (!file.startsWith(dir)) break;

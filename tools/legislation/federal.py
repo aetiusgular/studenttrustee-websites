@@ -167,14 +167,16 @@ def refresh_house(http, manifest, congress, years, members):
     manifest.describe(sid, 'Clerk of the U.S. House, roll-call vote XML', 'https://clerk.house.gov/Votes', 'federal')
     votes = []
     for year in years:
+        # index.asp lists only the newest rolls (older ones sit on ROLL_300.asp etc.),
+        # so take the highest number from it and walk every roll from 1.
         html, _ = http.get_text(HOUSE_INDEX % year, ttl=0)
         index = parse_house_index(html)
         if not index:
             raise RuntimeError('House EVS index for %d had no rows' % year)
-        rolls = sorted(index)
+        latest = max(index)
+        rolls = list(range(1, latest + 1))
         if LIMIT:
             rolls = rolls[-LIMIT:]
-        latest = rolls[-1]
         for roll in rolls:
             # Finished votes do not change; re-check the last few for corrections.
             ttl = 6 * 3600 if roll > latest - 5 else 60 * 24 * 3600

@@ -30,7 +30,7 @@ from .common import Http, Manifest, iso, PACIFIC, slugify
 
 BASE = 'https://downloads.leginfo.legislature.ca.gov/'
 DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-UPCOMING_DAYS = 14
+UPCOMING_DAYS = 45      # interim hearings are noticed weeks ahead
 LIMIT = int(os.environ.get('LEGIS_LIMIT', '0') or 0)
 
 COLUMNS = {
@@ -392,12 +392,21 @@ def build(zf, session, manifest_note, today=None):
     return {'members': members, 'vacant': sorted(vacant), 'bills': bills, 'votes': votes, 'upcoming': upcoming}
 
 
-VOTE_COLUMNS = ['id', 'date', 'body', 'location', 'question', 'title', 'result', 'passed', 'yes', 'no', 'other', 'bill_id', 'bill_label', 'source_updated_at', 'floor']
+VOTE_COLUMNS = ['id', 'date', 'location', 'question', 'title', 'result', 'passed', 'yes', 'no', 'other', 'bill_id', 'floor']
+BILL_COLUMNS = ['id', 'label', 'title', 'latest_action_date', 'status', 'location', 'votes']
+TITLE_MAX = 120
 
 
 def vote_row(v):
-    return [v['id'], v['date'], v['body'], v['location'], v['question'], v['title'], v['result'], v['passed'],
-            v['tally']['yes'], v['tally']['no'], v['tally']['not_voting'], v['bill_id'], v['bill_label'], v['source_updated_at'], v['floor']]
+    """Compact index row; location is the code (the shard carries a code -> name map) and the
+    title is capped, the per-bill file has the rest."""
+    return [v['id'], v['date'], v['location_code'], v['question'], (v['title'] or '')[:TITLE_MAX], v['result'], v['passed'],
+            v['tally']['yes'], v['tally']['no'], v['tally']['not_voting'], v['bill_id'], v['floor']]
+
+
+def bill_row(bid, b):
+    la = b.get('latest_action') or {}
+    return [bid, b['label'], (b.get('title') or '')[:TITLE_MAX], la.get('date'), b.get('status'), b.get('location'), len(b['vote_ids'])]
 
 
 def bill_shard(bill_id, session):
@@ -410,7 +419,10 @@ def write_outputs(built, session, manifest):
     members, bills, votes, upcoming = built['members'], built['bills'], built['votes'], built['upcoming']
     member_rows = sorted(members.values(), key=lambda m: (m['body'], m['district'], not m['active']))
     writer.write_json('us-ca/members.json', {'members': member_rows, 'vacant': built['vacant'], 'session': session})
-    # votes grouped by bill
+    location_names = {}
+    for v in votes:
+        location_names.setdefault(v['location_code'], v['location'])
+    # every vote on a bill, with positions, in one file
     by_bill = defaultdict(list)
     for v in votes:
         by_bill[v['bill_id']].append(v)
@@ -420,37 +432,68 @@ def write_outputs(built, session, manifest):
         keep.add(bid + '.json')
     if not LIMIT:
         writer.remove_stale('us-ca/votes/%s' % session, keep)
+    # vote index shards: one per house and month, listed in votes/index.json
     shards = defaultdict(list)
     for v in votes:
-        shards['%s-%s-%s.json' % (session, v['body'].split('-')[1], (v['date'] or '0000')[:4])].append(v)
-    for name, vs in shards.items():
+        shards[(v['body'].split('-')[1], (v['date'] or '0000-00')[:7])].append(v)
+    shard_list = []
+    keep = set()
+    for (house, month), vs in sorted(shards.items()):
         vs.sort(key=lambda v: (v['date'] or '', v['id']), reverse=True)
-        writer.write_json('us-ca/votes/' + name, {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in vs]})
+        name = '%s-%s-%s.json' % (session, house, month)
+        keep.add(name)
+        shard_list.append({'file': name, 'body': 'ca-' + house, 'month': month, 'votes': len(vs), 'floor': sum(1 for v in vs if v['floor'])})
+        writer.write_json('us-ca/votes/' + name, {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in vs],
+                                                  'locations': {c: location_names[c] for c in sorted({v['location_code'] for v in vs})}})
+    keep.add('index.json')
+    if not LIMIT:
+        writer.remove_stale('us-ca/votes', keep)
+    writer.write_json('us-ca/votes/index.json', {'session': session, 'shards': shard_list, 'locations': location_names, 'columns': VOTE_COLUMNS})
+    # member x vote matrix, one file per house and year
+    keep = set()
     for house in ('assembly', 'senate'):
-        vs = [v for v in votes if v['body'] == 'ca-' + house]
-        ids = [v['id'] for v in vs]
-        rows = {}
-        for i, v in enumerate(vs):
-            for mid, code in v['positions']:
-                rows.setdefault(mid, ['-'] * len(vs))[i] = code
-        writer.write_json('us-ca/records/%s-%s.json' % (house, session), {'votes': ids, 'floor': [v['floor'] for v in vs], 'members': {k: ''.join(r) for k, r in rows.items()},
-                                                                        'codes': CODE_LABELS})
-    # bills: index + shards
-    bill_rows = []
+        by_year = defaultdict(list)
+        for v in votes:
+            if v['body'] == 'ca-' + house:
+                by_year[(v['date'] or '0000')[:4]].append(v)
+        for year, vs in by_year.items():
+            vs.sort(key=lambda v: (v['date'] or '', v['id']))
+            rows = {}
+            for i, v in enumerate(vs):
+                for mid, code in v['positions']:
+                    rows.setdefault(mid, ['-'] * len(vs))[i] = code
+            name = '%s-%s-%s.json' % (house, session, year)
+            keep.add(name)
+            writer.write_json('us-ca/records/' + name, {'votes': [v['id'] for v in vs], 'dates': [v['date'] for v in vs], 'floor': [v['floor'] for v in vs],
+                                                        'members': {k: ''.join(r) for k, r in sorted(rows.items())}, 'codes': CODE_LABELS})
+    if not LIMIT:
+        writer.remove_stale('us-ca/records', keep)
+    # bills: an index per measure type plus detail shards of a hundred bills
+    by_type = defaultdict(list)
     shard_data = defaultdict(dict)
-    for bid, b in sorted(bills.items()):
-        la = b.get('latest_action') or {}
-        bill_rows.append([bid, b['label'], b.get('title'), la.get('date'), la.get('text'), b.get('status'), b.get('location'), len(b['vote_ids']), b.get('source_updated_at')])
+    for bid, b in sorted(bills.items(), key=lambda kv: (kv[1]['measure_type'], kv[1]['number'])):
+        by_type[b['measure_type']].append(bill_row(bid, b))
         shard_data[bill_shard(bid, session)][bid] = b
-    writer.write_json('us-ca/bills/%s/index.json' % session, {'columns': ['id', 'label', 'title', 'latest_action_date', 'latest_action', 'status', 'location', 'votes', 'source_updated_at'], 'rows': bill_rows})
+    keep = set()
+    for mtype, rows in by_type.items():
+        name = 'index-%s.json' % mtype
+        keep.add(name)
+        writer.write_json('us-ca/bills/%s/%s' % (session, name), {'columns': BILL_COLUMNS, 'rows': rows})
     for rel, data in shard_data.items():
+        keep.add(rel.split('/')[-1])
         writer.write_json('us-ca/' + rel, {'bills': data})
+    keep.add('index.json')
+    if not LIMIT:
+        writer.remove_stale('us-ca/bills/%s' % session, keep)
+    writer.write_json('us-ca/bills/%s/index.json' % session, {'session': session, 'columns': BILL_COLUMNS,
+                                                              'types': {t: {'file': 'index-%s.json' % t, 'bills': len(r)} for t, r in sorted(by_type.items())}})
     upcoming.sort(key=lambda u: (u['date'], u.get('time') or '', u['title']))
     writer.write_json('us-ca/upcoming.json', {'items': upcoming, 'horizon_days': UPCOMING_DAYS})
     latest = sorted(votes, key=lambda v: (v['date'] or '', v['id']), reverse=True)[:30]
-    writer.write_json('us-ca/latest.json', {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in latest]})
+    writer.write_json('us-ca/latest.json', {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in latest],
+                                            'locations': {c: location_names[c] for c in sorted({v['location_code'] for v in latest})}})
     search = [['member', m['id'], m['name'], '%s %s %d' % (m['party'], 'AD' if m['body'] == 'ca-assembly' else 'SD', m['district']), m['body']] for m in member_rows if m['active']]
-    search += [['bill', bid, '%s %s' % (b['label'], b.get('title') or ''), b.get('status') or '', 'ca-assembly' if b['measure_type'].startswith('A') or b['measure_type'] == 'HR' else 'ca-senate'] for bid, b in bills.items()]
+    search += [['bill', bid, '%s %s' % (b['label'], (b.get('title') or '')[:TITLE_MAX]), b.get('status') or '', 'ca-assembly' if b['measure_type'].startswith('A') or b['measure_type'] == 'HR' else 'ca-senate'] for bid, b in sorted(bills.items())]
     writer.write_json('search/us-ca.json', {'columns': ['type', 'id', 'label', 'meta', 'body'], 'rows': search})
     manifest.count('ca_members', len(member_rows))
     manifest.count('ca_bills', len(bills))

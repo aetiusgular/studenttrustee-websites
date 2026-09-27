@@ -31,14 +31,22 @@ def california_checks():
     per_bill_cache = {}
     unknown_total = 0
     for name in sorted(os.listdir(votes_dir)):
-        if not name.endswith('.json'):
+        if not name.endswith('.json') or name == 'index.json':
             continue
         session = name.split('-')[0]
         if session not in bill_index:
             idx = _load('us-ca/bills/%s/index.json' % session) or {}
-            bill_index[session] = {r[0] for r in idx.get('rows', [])}
-        for row in (_load('us-ca/votes/' + name) or {}).get('rows', []):
-            vid, bill_id = row[0], row[11]
+            ids = set()
+            for t in idx.get('types', {}).values():
+                ids.update(r[0] for r in (_load('us-ca/bills/%s/%s' % (session, t['file'])) or {}).get('rows', []))
+            bill_index[session] = ids
+        shard = _load('us-ca/votes/' + name) or {}
+        cols = shard.get('columns') or []
+        if 'id' not in cols or 'bill_id' not in cols:
+            failures.append('CA vote shard %s has no id/bill_id columns' % name)
+            continue
+        for row in shard.get('rows', []):
+            vid, bill_id = row[cols.index('id')], row[cols.index('bill_id')]
             key = (session, bill_id)
             if key not in per_bill_cache:
                 per_bill_cache[key] = {v['id']: v for v in (_load('us-ca/votes/%s/%s.json' % key) or {}).get('votes', [])}

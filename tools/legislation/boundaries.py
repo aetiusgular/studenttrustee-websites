@@ -13,8 +13,9 @@ then serves from its CDN in a few tens of milliseconds.
     python3 -m tools.legislation.boundaries --source raw.geojson   # from a saved download
     python3 -m tools.legislation.boundaries --check       # exit 1 if the file is missing or invalid
 
-The file only changes when the source's Last-Modified header or the
-simplified geometry changes, so a weekly run produces no commit noise.
+The nightly run first reads the layer's last-edit date (a small metadata
+request) and stops there when it matches the committed file, so the 11 MB
+geometry download only happens after the source has actually been edited.
 """
 import argparse
 import json
@@ -67,6 +68,20 @@ def match_district(raw, index):
         if score > best_score:
             best, best_score = d, score
     return best if best_score >= 0.55 else None
+
+
+LAYER_URL = SOURCE_URL.split('/query?')[0] + '?f=json'
+
+
+def layer_last_modified():
+    """The layer's last edit as an HTTP date, from its small metadata document (about 11 KB),
+    so the nightly run can skip the 11 MB geometry download when nothing has changed."""
+    import requests
+    from email.utils import formatdate
+    r = requests.get(LAYER_URL, timeout=60, headers={'User-Agent': 'studenttrustee.net boundaries snapshot (+https://studenttrustee.net)'})
+    r.raise_for_status()
+    ms = (r.json().get('editingInfo') or {}).get('lastEditDate')
+    return formatdate(ms / 1000, usegmt=True) if ms else None
 
 
 def fetch(url):
@@ -175,6 +190,12 @@ def main(argv=None):
             gj = json.load(fh)
         last_modified = args.last_modified
     else:
+        if not args.force:
+            current = (load_existing() or {}).get('properties', {}).get('source_last_modified')
+            edited = layer_last_modified()
+            if edited and current == edited:
+                print('districts.geojson up to date (layer last edited %s)' % edited)
+                return
         gj, last_modified = fetch(SOURCE_URL)
 
     fc = build(gj, roster, last_modified)

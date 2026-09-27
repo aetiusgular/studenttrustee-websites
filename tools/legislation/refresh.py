@@ -42,11 +42,6 @@ def main(argv=None):
         print('== %s ==' % name, flush=True)
         try:
             run_target(name)
-        except ModuleNotFoundError as e:
-            if name in str(e):
-                print('   (not implemented yet)')
-            else:
-                failures.append(name); traceback.print_exc()
         except Exception:
             failures.append(name)
             traceback.print_exc()

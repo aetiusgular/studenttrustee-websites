@@ -415,7 +415,8 @@ def enrich_bills(http, manifest, bills, key):
         _, congress, kind, num = bid.split('-')
         url = '%s/bill/%s/%s/%s' % (CONGRESS_API, congress, kind, num)
         try:
-            data, meta = http.get_json(url, ttl=24 * 3600, params={'format': 'json', 'api_key': key})
+            # the key goes in a header, never the URL: URLs are stored in the HTTP cache that CI persists
+            data, meta = http.get_json(url, ttl=24 * 3600, params={'format': 'json'}, headers={'X-Api-Key': key})
         except Exception as e:
             print('   congress.gov %s skipped: %s' % (bid, e))
             continue
@@ -432,7 +433,7 @@ def enrich_bills(http, manifest, bills, key):
         latest = max(latest or '', b['source_updated_at'] or '')
         if (bill.get('summaries') or {}).get('count'):
             try:
-                sdata, _ = http.get_json(url + '/summaries', ttl=24 * 3600, params={'format': 'json', 'api_key': key})
+                sdata, _ = http.get_json(url + '/summaries', ttl=24 * 3600, params={'format': 'json'}, headers={'X-Api-Key': key})
                 sums = sdata.get('summaries') or []
                 if sums:
                     s = sorted(sums, key=lambda x: x.get('updateDate') or '')[-1]

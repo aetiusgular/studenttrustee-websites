@@ -60,6 +60,13 @@ class Counties(unittest.TestCase):
         os.environ.pop('LEGIS_TODAY', None)
         os.environ.pop('LEGIS_COUNTIES', None)
 
+    def test_vote_values_from_every_county(self):
+        from tools.legislation.counties import vote_code
+        for label, code in [('Aye', 'Y'), ('Ayes', 'Y'), ('AYE', 'Y'), ('Yes', 'Y'), ('Nay', 'N'), ('Noes', 'N'), ('NO', 'N'),
+                            ('Absent', 'X'), ('NOT PRESENT', 'X'), ('Recuse', 'R'), ('Recused', 'R'), ('Abstain', 'A'),
+                            ('Abstained', 'A'), ('Something new', 'O')]:
+            self.assertEqual(vote_code(label), code, label)
+
     def test_sitting_names(self):
         from tools.legislation.counties import sitting
         self.assertEqual(sitting('BOARD OF SUPERVISORS - LAND USE'), 'Land Use')

@@ -99,12 +99,14 @@ def pick_latest_dump(index_html):
 
 
 def download(http, url, dest):
-    """Stream a large file to disk; returns the response's Last-Modified."""
+    """Stream a large file to disk (via a .part file, so a broken transfer never looks complete);
+    returns the response's Last-Modified."""
     r = http.session.get(url, stream=True, timeout=600)
     r.raise_for_status()
-    with open(dest, 'wb') as fh:
+    with open(dest + '.part', 'wb') as fh:
         for chunk in r.iter_content(chunk_size=1 << 20):
             fh.write(chunk)
+    os.replace(dest + '.part', dest)
     return r.headers.get('Last-Modified')
 
 
@@ -516,7 +518,8 @@ def main(argv=None):
             if not picked:
                 raise RuntimeError('no pubinfo_daily_*.zip in the directory listing')
             url, listed = picked
-            dump = os.path.join(http.cache_dir, 'pubinfo_daily.zip')
+            # PUBINFO_DIR keeps the 1.1 GB file out of the HTTP cache that CI persists between runs
+            dump = os.path.join(os.environ.get('PUBINFO_DIR') or http.cache_dir, 'pubinfo_daily.zip')
             stamp_file = dump + '.stamp'
             have = open(stamp_file).read().strip() if os.path.exists(stamp_file) else ''
             if have != listed or not os.path.exists(dump):

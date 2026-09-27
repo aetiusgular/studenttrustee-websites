@@ -27,8 +27,17 @@ API = 'https://webapi.legistar.com/v1/%s/%s'
 SOURCES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'counties-sources.json')
 LOOKBACK_DAYS = 90
 AHEAD_DAYS = 45
-VOTE_CODES = {'AYE': 'Y', 'YES': 'Y', 'YEA': 'Y', 'NO': 'N', 'NAY': 'N', 'ABSTAIN': 'A', 'ABSTAINED': 'A',
-              'ABSENT': 'X', 'RECUSED': 'R', 'RECUSE': 'R', 'EXCUSED': 'X', 'NOT VOTING': 'X', 'PRESENT': 'P'}
+# Each county names its vote values differently (seen: Aye/Ayes/AYE/Yes, Nay/Noes/NO/No, Absent,
+# NOT PRESENT, Recuse/Recused, Abstain/Abstained). Anything unrecognised is kept as O (other).
+VOTE_CODES = {'AYE': 'Y', 'AYES': 'Y', 'YES': 'Y', 'YEA': 'Y', 'YEAS': 'Y',
+              'NO': 'N', 'NOES': 'N', 'NAY': 'N', 'NAYS': 'N',
+              'ABSTAIN': 'A', 'ABSTAINED': 'A', 'ABSTENTION': 'A',
+              'ABSENT': 'X', 'EXCUSED': 'X', 'NOT VOTING': 'X', 'NOT PRESENT': 'X', 'DID NOT VOTE': 'X',
+              'RECUSED': 'R', 'RECUSE': 'R', 'RECUSAL': 'R', 'PRESENT': 'P'}
+
+
+def vote_code(label):
+    return VOTE_CODES.get(' '.join((label or '').upper().split()), 'O')
 LIMIT = int(os.environ.get('LEGIS_LIMIT', '0') or 0)
 
 
@@ -157,7 +166,7 @@ def legistar_board(http, client, fips, county_name):
                     vrows = []
                 for vr in vrows:
                     label = (vr.get('VoteValueName') or '').strip()
-                    code = VOTE_CODES.get(label.upper(), 'O')
+                    code = vote_code(label)
                     labels.setdefault(code, label)
                     pid = vr.get('VotePersonId')
                     member = 'ca-%s-bos-%s' % (fips, pid) if pid else name_to_id.get((vr.get('VotePersonName') or '').lower(), 'ca-%s-bos-unknown' % fips)

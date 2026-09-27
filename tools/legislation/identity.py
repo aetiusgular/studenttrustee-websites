@@ -6,7 +6,6 @@ is the hub that ties the House Clerk's bioguide IDs, the Senate's LIS IDs and
 Wikidata together. It is community maintained, so it is labelled as such in
 the manifest, but every ID in it comes from the official sources it links.
 """
-from .common import iso
 
 LEGISLATORS_URL = 'https://unitedstates.github.io/congress-legislators/legislators-current.json'
 TERRITORIES = {'DC', 'PR', 'GU', 'VI', 'AS', 'MP'}

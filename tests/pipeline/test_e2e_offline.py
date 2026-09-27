@@ -72,7 +72,7 @@ class EndToEnd(unittest.TestCase):
 
     def test_federal_and_geo(self):
         import importlib
-        from tools.legislation import federal, geo, common
+        from tools.legislation import federal, geo
         importlib.reload(federal)
         federal.Http = FakeHttp
         geo.Http = FakeHttp

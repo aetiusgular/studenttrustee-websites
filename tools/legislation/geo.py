@@ -14,10 +14,8 @@ Output: data/legislation/geo/states.json and data/legislation/geo/us-ca/counties
 """
 import csv
 import io
-import re
-
 from . import writer
-from .common import Http, Manifest, http_date_to_iso, now_iso, slugify
+from .common import Http, Manifest, http_date_to_iso, slugify
 
 COUNTY_CODES = 'https://www2.census.gov/geo/docs/reference/codes2020/cou/st06_ca_cou2020.txt'
 REL_BASE = 'https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/'
@@ -100,7 +98,7 @@ def parse_ab604(text):
 def main(argv=None):
     http = Http()
     manifest = Manifest()
-    writer.write_json('geo/states.json', {'states': states_list(), 'checked_at': now_iso()})
+    writer.write_json('geo/states.json', {'states': states_list()})
 
     sid = 'census-geo'
     manifest.describe(sid, 'U.S. Census Bureau county codes and district relationship files', 'https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html', 'geo')
@@ -138,7 +136,7 @@ def main(argv=None):
             'us_house': {'current': cd.get(fips, []), 'from_2027': cd2027.get(fips, []), 'effective_2027': AB604_EFFECTIVE},
             'ca_senate': sldu.get(fips, []), 'ca_assembly': sldl.get(fips, []),
         })
-    writer.write_json('geo/us-ca/counties.json', {'counties': rows, 'checked_at': now_iso(),
+    writer.write_json('geo/us-ca/counties.json', {'counties': rows,
                                                   'notes': 'us_house.current is the 2021 Citizens Redistricting Commission map (119th Congress, elections through 2026). us_house.from_2027 is the AB 604 / Proposition 50 map, effective January 2027 through 2032. State Senate and Assembly districts are the 2021 commission map (Census 2024 vintage).'})
     manifest.count('ca_counties', len(rows))
     manifest.save()

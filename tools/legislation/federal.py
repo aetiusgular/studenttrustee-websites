@@ -27,7 +27,7 @@ import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta
 
 from . import identity, writer
-from .common import Http, Manifest, et_to_iso, senate_datetime_to_iso, http_date_to_iso, now_iso, iso, EASTERN, UTC
+from .common import Http, Manifest, et_to_iso, senate_datetime_to_iso, http_date_to_iso, iso, EASTERN
 
 HOUSE_INDEX = 'https://clerk.house.gov/evs/%d/index.asp'
 HOUSE_ROLL = 'https://clerk.house.gov/evs/%d/roll%03d.xml'
@@ -187,7 +187,6 @@ def refresh_house(http, manifest, congress, years, members):
                 print('   house roll %d/%d skipped: %s' % (year, roll, e))
                 continue
             v['source_updated_at'] = http_date_to_iso(meta.get('last_modified')) or v['date']
-            v['checked_at'] = meta.get('fetched_at') or now_iso()
             votes.append(v)
     manifest.ok(sid, source_updated_at=max((v['source_updated_at'] for v in votes), default=None))
     return votes
@@ -270,7 +269,6 @@ def refresh_senate(http, manifest, congress, years, members):
                 print('   senate vote %d-%d-%d skipped: %s' % (congress, session, number, e))
                 continue
             v['source_updated_at'] = v.get('source_updated_at') or http_date_to_iso(meta.get('last_modified')) or v['date']
-            v['checked_at'] = meta.get('fetched_at') or now_iso()
             votes.append(v)
     manifest.ok(sid, source_updated_at=max((v['source_updated_at'] for v in votes if v.get('source_updated_at')), default=None))
     return votes
@@ -318,7 +316,7 @@ def refresh_house_floor(http, manifest, congress):
             'category': it['category'], 'bill_id': bill_id, 'bill_label': bill_label or it['legis_num'],
             'status': 'scheduled', 'official_url': 'https://docs.house.gov/floor/', 'documents': it['docs'][:3],
             'source': {'id': sid, 'name': 'docs.house.gov Bills This Week', 'url': HOUSE_FLOOR_XML % (week, week)},
-            'source_updated_at': _isoish(updated), 'checked_at': meta.get('fetched_at') or now_iso(),
+            'source_updated_at': _isoish(updated),
         })
     manifest.ok(sid, source_updated_at=_isoish(updated), note='week of %s' % monday.isoformat())
     return out
@@ -366,7 +364,7 @@ def refresh_senate_schedules(http, manifest):
             'category': h['type'], 'status': 'scheduled', 'location': h['room'] or None,
             'official_url': 'https://www.senate.gov/committees/hearings_meetings.htm',
             'source': {'id': sid, 'name': 'senate.gov committee schedule', 'url': SENATE_HEARINGS},
-            'source_updated_at': _senate_update_iso(h['last_update']), 'checked_at': meta.get('fetched_at') or now_iso(),
+            'source_updated_at': _senate_update_iso(h['last_update']),
         })
     # floor: next convene time
     try:
@@ -385,7 +383,7 @@ def refresh_senate_schedules(http, manifest):
                         'title': 'Senate convenes', 'status': 'scheduled',
                         'official_url': 'https://www.senate.gov/legislative/floor_activity_pail.htm',
                         'source': {'id': sid, 'name': 'senate.gov floor schedule', 'url': SENATE_FLOOR},
-                        'source_updated_at': None, 'checked_at': meta2.get('fetched_at') or now_iso()})
+                        'source_updated_at': None})
     except Exception as e:
         print('   senate floor schedule skipped: %s' % e)
     manifest.ok(sid, source_updated_at=max((o['source_updated_at'] for o in out if o.get('source_updated_at')), default=None))
@@ -459,10 +457,9 @@ def vote_row(v):
 
 
 def write_outputs(members, votes, bills, upcoming, congress, manifest):
-    checked = now_iso()
     # members
     member_rows = sorted(members.values(), key=lambda m: (m['body'], m['state'], m.get('district') or 0, m.get('last') or ''))
-    writer.write_json('us/members.json', {'columns': None, 'members': member_rows, 'checked_at': checked, 'congress': congress})
+    writer.write_json('us/members.json', {'columns': None, 'members': member_rows, 'congress': congress})
     # vote index shards and per-vote files
     by_shard = {}
     keep = set()
@@ -475,7 +472,7 @@ def write_outputs(members, votes, bills, upcoming, congress, manifest):
         keep.add(v['id'] + '.json')
     for shard, vs in by_shard.items():
         vs.sort(key=lambda v: (v['date'] or '', v['number']), reverse=True)
-        writer.write_json('us/votes/' + shard, {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in vs], 'checked_at': checked})
+        writer.write_json('us/votes/' + shard, {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in vs]})
         keep.add(shard)
     if not LIMIT:
         writer.remove_stale('us/votes', keep)
@@ -488,26 +485,26 @@ def write_outputs(members, votes, bills, upcoming, congress, manifest):
             for mid, code in v['positions']:
                 rows.setdefault(mid, ['-'] * len(vs))[i] = code
         writer.write_json('us/records/%s-%d.json' % (chamber, congress),
-                          {'votes': ids, 'members': {k: ''.join(r) for k, r in rows.items()}, 'codes': {'Y': 'yes', 'N': 'no', 'P': 'present', 'X': 'not voting', 'O': 'other', '-': 'not a member for this vote'}, 'checked_at': checked})
+                          {'votes': ids, 'members': {k: ''.join(r) for k, r in rows.items()}, 'codes': {'Y': 'yes', 'N': 'no', 'P': 'present', 'X': 'not voting', 'O': 'other', '-': 'not a member for this vote'}})
     # bills
     bill_rows = []
     for bid, b in sorted(bills.items()):
         writer.write_json('us/bills/%d/%s.json' % (congress, bid), b)
         la = b.get('latest_action') or {}
         bill_rows.append([bid, b['label'], b.get('title'), la.get('date'), la.get('text'), b.get('chamber_of_origin'), len(b.get('vote_ids') or []), b.get('source_updated_at')])
-    writer.write_json('us/bills/%d/index.json' % congress, {'columns': ['id', 'label', 'title', 'latest_action_date', 'latest_action', 'origin', 'votes', 'source_updated_at'], 'rows': bill_rows, 'checked_at': checked})
+    writer.write_json('us/bills/%d/index.json' % congress, {'columns': ['id', 'label', 'title', 'latest_action_date', 'latest_action', 'origin', 'votes', 'source_updated_at'], 'rows': bill_rows})
     # upcoming and latest
     upcoming.sort(key=lambda u: (u['date'], u.get('time') or ''))
-    writer.write_json('us/upcoming.json', {'items': upcoming, 'checked_at': checked, 'horizon_days': UPCOMING_DAYS})
+    writer.write_json('us/upcoming.json', {'items': upcoming, 'horizon_days': UPCOMING_DAYS})
     latest = sorted(votes, key=lambda v: (v['date'] or '', v['number']), reverse=True)[:30]
-    writer.write_json('us/latest.json', {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in latest], 'checked_at': checked})
+    writer.write_json('us/latest.json', {'columns': VOTE_COLUMNS, 'rows': [vote_row(v) for v in latest]})
     # search rows
     search = []
     for m in member_rows:
         search.append(['member', m['id'], m['name'], '%s %s%s' % (m.get('party') or '', m['state'], ('-%d' % m['district']) if m.get('district') else ''), m['body']])
     for bid, b in bills.items():
         search.append(['bill', bid, '%s %s' % (b['label'], b.get('title') or ''), '', b.get('chamber_of_origin') or 'us'])
-    writer.write_json('search/us.json', {'columns': ['type', 'id', 'label', 'meta', 'body'], 'rows': search, 'checked_at': checked})
+    writer.write_json('search/us.json', {'columns': ['type', 'id', 'label', 'meta', 'body'], 'rows': search})
     manifest.count('us_members', len(member_rows))
     manifest.count('us_votes', len(votes))
     manifest.count('us_bills', len(bills))
@@ -524,7 +521,7 @@ def build_bills(votes, congress):
                                    'label': v['bill_label'], 'title': None, 'vote_ids': [], 'official_url': bill_official_url(bid),
                                    'chamber_of_origin': 'us-house' if bid.split('-')[2].startswith('h') else 'us-senate',
                                    'source': {'id': 'vote-records', 'name': 'Derived from the roll-call records above'},
-                                   'source_updated_at': None, 'checked_at': now_iso()})
+                                   'source_updated_at': None})
         b['vote_ids'].append(v['id'])
         if v.get('title') and (not b['title'] or len(v['title']) > len(b['title'])):
             b['title'] = v['title']

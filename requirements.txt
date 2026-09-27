@@ -4,3 +4,4 @@ jinja2>=3.1,<4
 requests>=2.32,<3
 shapely>=2.0,<3
 jsonschema>=4.23,<5
+pyflakes>=3.2,<4

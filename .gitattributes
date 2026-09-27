@@ -3,3 +3,4 @@
 *.jpg binary
 *.ico binary
 *.pdf binary
+tests/pipeline/fixtures/** -text

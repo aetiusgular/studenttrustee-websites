@@ -35,6 +35,12 @@ jobs:
       - name: Committed output matches a fresh build
         run: npm run check:build
 
+      - name: Pipeline parser tests (offline fixtures)
+        run: python3 -m unittest discover -s tests/pipeline -t .
+
+      - name: Data files are consistent
+        run: python3 -m tools.legislation.validate
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 

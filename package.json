@@ -13,7 +13,8 @@
     "serve": "node tools/dev-server.js",
     "test:a11y": "playwright test",
     "test:a11y:report": "playwright show-report",
-    "check": "npm run lint && npm run check:build && npm run test:a11y"
+    "check": "npm run lint && npm run check:build && npm run test:pipeline && npm run test:a11y",
+    "test:pipeline": "python3 -m unittest discover -s tests/pipeline -t ."
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?><css_meetings_scheduled>
+  <meeting>
+    <cmte_code/>
+    <committee/>
+    <type/>
+    <date>27-SEP-2026</date>
+    <date_iso_8601>2026-09-27</date_iso_8601>
+    <day_of_week>Today</day_of_week>
+    <time>00:00:00</time>
+    <room/>
+    <matter>No committee hearings scheduled</matter>
+    <video_url/>
+    <senate_cable_channel/>
+  </meeting>
+  <meeting>
+    <identifier>338796</identifier>
+    <last_update>09-25-2026 07:37:29 PM</last_update>
+    <last_update_iso_8601>2026-09-25T19:37:29.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>JCSE00</cmte_code>
+    <committee>Commission on Security and Cooperation in Europe</committee>
+    <type>Open Hearing</type>
+    <date>28-SEP-2026 02:00 PM</date>
+    <date_iso_8601>2026-09-28</date_iso_8601>
+    <day_of_week>Monday</day_of_week>
+    <time>02:00 PM</time>
+    <time_iso_8601>14:00:00</time_iso_8601>
+    <room>SR-188</room>
+    <video_url>https://www.senate.gov/isvp/?comm=csce&amp;filename=csce092826</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>To receive a briefing on protecting Ukraine's energy infrastructure, focusing on winter, war, and lessons for the United States.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338784</identifier>
+    <last_update>09-22-2026 05:37:35 PM</last_update>
+    <last_update_iso_8601>2026-09-22T17:37:35.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSJU00</cmte_code>
+    <committee>Judiciary</committee>
+    <type>Open Hearing</type>
+    <date>29-SEP-2026 09:00 AM</date>
+    <date_iso_8601>2026-09-29</date_iso_8601>
+    <day_of_week>Tuesday</day_of_week>
+    <time>09:00 AM</time>
+    <time_iso_8601>09:00:00</time_iso_8601>
+    <room>SH-216</room>
+    <video_url>https://www.senate.gov/isvp/?comm=judiciary&amp;filename=judiciary092926</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Oversight hearings to examine Jack Smith's authority and Republicans and related matters.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338783</identifier>
+    <last_update>09-22-2026 05:15:13 PM</last_update>
+    <last_update_iso_8601>2026-09-22T17:15:13.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSJU26</cmte_code>
+    <committee>Judiciary</committee>
+    <sub_cmte>Intellectual Property Subcommittee</sub_cmte>
+    <type>Open Hearing</type>
+    <date>29-SEP-2026 02:30 PM</date>
+    <date_iso_8601>2026-09-29</date_iso_8601>
+    <day_of_week>Tuesday</day_of_week>
+    <time>02:30 PM</time>
+    <time_iso_8601>14:30:00</time_iso_8601>
+    <room>SD-562</room>
+    <video_url>https://www.senate.gov/isvp/?comm=judiciary&amp;filename=judiciary092925</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Oversight hearings to examine the United States Patent and Trademark Office.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338790</identifier>
+    <last_update>09-24-2026 03:27:29 PM</last_update>
+    <last_update_iso_8601>2026-09-24T15:27:29.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SLIN00</cmte_code>
+    <committee>Intelligence</committee>
+    <type>Closed Hearing</type>
+    <date>29-SEP-2026 03:00 PM</date>
+    <date_iso_8601>2026-09-29</date_iso_8601>
+    <day_of_week>Tuesday</day_of_week>
+    <time>03:00 PM</time>
+    <time_iso_8601>15:00:00</time_iso_8601>
+    <room>SH-219</room>
+    <video_url>
+    </video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>To receive a closed briefing on certain intelligence matters.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338758</identifier>
+    <last_update>09-14-2026 03:15:48 PM</last_update>
+    <last_update_iso_8601>2026-09-14T15:15:48.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSAS16</cmte_code>
+    <committee>Armed Services</committee>
+    <sub_cmte>Strategic Forces Subcommittee</sub_cmte>
+    <type>Open Hearing</type>
+    <date>29-SEP-2026 04:00 PM</date>
+    <date_iso_8601>2026-09-29</date_iso_8601>
+    <day_of_week>Tuesday</day_of_week>
+    <time>04:00 PM</time>
+    <time_iso_8601>16:00:00</time_iso_8601>
+    <room>SR-222</room>
+    <video_url>https://www.senate.gov/isvp/?comm=armed&amp;filename=armedA092926</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Hearings to examine an update on Golden Dome.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338770</identifier>
+    <last_update>09-25-2026 07:12:02 PM</last_update>
+    <last_update_iso_8601>2026-09-25T19:12:02.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSHR00</cmte_code>
+    <committee>Health, Education, Labor, and Pensions</committee>
+    <type>Open Business Meeting</type>
+    <date>30-SEP-2026 09:45 AM</date>
+    <date_iso_8601>2026-09-30</date_iso_8601>
+    <day_of_week>Wednesday</day_of_week>
+    <time>09:45 AM</time>
+    <time_iso_8601>09:45:00</time_iso_8601>
+    <room>SD-430</room>
+    <video_url>https://www.senate.gov/isvp/?comm=help&amp;filename=help092426</video_url>
+    <senate_cable_channel> 18.1</senate_cable_channel>
+    <Documents>
+      <AssociatedDocument congress="119" document_description="Timothy Westlake, of Wisconsin, to be Assistant Secretary for Mental Health and Substance Use, Department of Health and Human Services, vice Miriam E. Delphin-Rittmon, resigned." document_num="1180" document_prefix="PN" partition="03"/>
+      <AssociatedDocument congress="119" document_description="Mary Lazare, of Florida, to be Assistant Secretary for Aging, Department of Health and Human Services, vice Lance Allen Robertson." document_num="1255" document_prefix="PN" partition="10"/>
+      <AssociatedDocument congress="119" document_description="Loren E. Sweatt, of Virginia, to be a Member of the National Mediation Board for a term expiring July 1, 2029. (Reappointment)" document_num="1255" document_prefix="PN" partition="20"/>
+      <AssociatedDocument congress="119" document_description="Douglas Ralph, of Kentucky, to be a Member of the National Mediation Board for a term expiring July 1, 2028, vice Deirdre Hamilton, term expired." document_num="961" document_prefix="PN" partition="08"/>
+      <AssociatedDocument congress="119" document_description="Nicole Saphier, of New Jersey, to be Medical Director in the Regular Corps of the Public Health Service, subject to qualifications therefor as provided by law and regulations, and to be Surgeon General of the Public Health Service for a term of four years, vice Vivek Hallegere Murthy, resigned." document_num="963" document_prefix="PN" partition="0 "/>
+    </Documents>
+    <matter>Business meeting to consider the nominations of Nicole Saphier, of New Jersey, to be Medical Director in the Regular Corps of the Public Health Service, subject to qualifications therefor as provided by law and regulations, and to be Surgeon General of the Public Health Service, Timothy Westlake, of Wisconsin, to be Assistant Secretary for Mental Health and Substance Use, and Mary Lazare, of Florida, to be Assistant Secretary for Aging, all of the Department of Health and Human Services, and Loren E. Sweatt, of Virginia, and Douglas Ralph, of Kentucky, both to be a Member of the National Mediation Board.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338795</identifier>
+    <last_update>09-25-2026 07:33:14 PM</last_update>
+    <last_update_iso_8601>2026-09-25T19:33:14.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSEG00</cmte_code>
+    <committee>Energy and Natural Resources</committee>
+    <type>Open Business Meeting</type>
+    <date>30-SEP-2026 10:00 AM</date>
+    <date_iso_8601>2026-09-30</date_iso_8601>
+    <day_of_week>Wednesday</day_of_week>
+    <time>10:00 AM</time>
+    <time_iso_8601>10:00:00</time_iso_8601>
+    <room>SD-366</room>
+    <video_url>https://www.senate.gov/isvp/?comm=energy&amp;filename=energy093026</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents>
+      <AssociatedDocument congress="119" document_description="A bill to amend the John D. Dingell, Jr. Conservation, Management, and Recreation Act to allow for additional entities to be eligible to complete the maintenance work on Bolts Ditch and the Bolts Ditch Headgate within the Holy Cross Wilderness, Colorado." document_num="1729" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to reauthorize the Adams Memorial Commission, and for other purposes." document_num="2306" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to provide for transfer of ownership of certain Federal lands in northern Nevada, to authorize the disposal of certain Federal lands in northern Nevada for economic development, to promote conservation in northern Nevada, and for other purposes." document_num="2317" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to redesignate certain facilities at Paterson Great Falls National Historical Park in honor of Congressman Bill Pascrell, Jr." document_num="249" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to improve the health and resiliency of giant sequoias, and for other purposes." document_num="2709" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to direct the Secretary of Energy to prepare periodic assessments and submit reports on the supply chain for the generation and transmission of electricity, and for other purposes." document_num="3638" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to authorize direct emergency acquisition flexibilities for the National Park Service for the purpose of retaining, vetting, approving, and expediting contractor approval for the clearing, rebuilding, maintenance, and improvement of the Grand Canyon grounds that have been impacted by the Dragon Bravo Fire." document_num="5729" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to establish a process to expedite the review of appeals of certain decisions by the Department of the Interior." document_num="677" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Energy Policy and Conservation Act to require States to include supporting the physical security, cybersecurity, and resilience of local distribution systems in State energy security plans." document_num="7257" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend title 54, United States Code, to modify certain cost-sharing requirements for grant programs under the American Battlefield Protection Program, and for other purposes." document_num="7618" document_prefix="HR"/>
+      <AssociatedDocument congress="119" document_description="A bill to provide for conservation and economic development in the State of Nevada, and for other purposes." document_num="1005" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to provide that the memorial to commemorate the sacrifice and service of the women who worked on the home front to support the efforts of the United States military during World War II may be located on the National Mall, and for other purposes." document_num="1088" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to promote conservation, improve public land management, and provide for sensible development in Pershing County, Nevada, and for other purposes." document_num="1195" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Aquifer Recharge Flexibility Act to clarify a provision relating to conveyances for aquifer recharge purposes." document_num="1254" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Colorado Wilderness Act of 1993 to add certain land to the Sarvis Creek Wilderness, and for other purposes." document_num="1341" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Energy Conservation and Production Act to improve the weatherization assistance program, and for other purposes." document_num="1342" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to withdraw the National Forest System land in the Ruby Mountains subdistrict of the Humboldt-Toiyabe National Forest and the National Wildlife Refuge System land in Ruby Lake National Wildlife Refuge, Elko and White Pine Counties, Nevada, from operation under the mineral leasing laws." document_num="1349" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Wild and Scenic Rivers Act to designate certain segments of the Gila River system in the State of New Mexico as components of the National Wild and Scenic Rivers System, to provide for the transfer of administrative jurisdiction over certain Federal land in the State of New Mexico, and for other purposes." document_num="1476" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Energy Policy and Conservation Act to modify standards for general service lamps, and for other purposes." document_num="1568" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to designate and expand wilderness areas in Olympic National Forest in the State of Washington, and to designate certain rivers in Olympic National Forest and Olympic National Park as wild and scenic rivers, and for other purposes." document_num="1737" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the California Desert Protection Act of 1994 to expand the boundary of Joshua Tree National Park, to redesignate the Cottonwood Visitor Center at Joshua Tree National Park as the &quot;Dianne Feinstein Visitor Center&quot;, and for other purposes." document_num="1777" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to adjust the boundary of the Santa Monica Mountains National Recreation Area to include the Rim of the Valley Corridor, and for other purposes." document_num="1870" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Energy Conservation and Production Act to reauthorize the weatherization assistance program." document_num="2570" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to authorize the use of off-highway vehicles in certain areas of the Capitol Reef National Park, Utah." document_num="2970" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to designate the Museum of the Blind People's Movement in Baltimore, Maryland, as the &quot;National Museum of the Blind People's Movement&quot;." document_num="3371" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to require the Secretary of Energy to prepare periodic assessments and submit reports on the supply chain for the generation and transmission of electricity, and for other purposes." document_num="3499" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend title 54, United States Code, to modify certain cost-sharing requirements for grant programs under the American Battlefield Protection Program, and for other purposes." document_num="3524" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to provide for the protection of and investment in certain Federal land in the State of California, and for other purposes." document_num="3526" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Wild and Scenic Rivers Act to designate the Upper Raritan River Watershed in the State of New Jersey for study for potential addition to the National Wild and Scenic Rivers System, and for other purposes." document_num="3542" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the John D. Dingell, Jr. Conservation, Management, and Recreation Act to allow for additional entities to be eligible to complete the maintenance work on Bolts Ditch and the Bolts Ditch Headgate within the Holy Cross Wilderness, Colorado." document_num="365" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend Public Law 96-586 to modernize the authority of the Forest Service to acquire and administer land under that Act, and for other purposes." document_num="3695" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Reclamation States Emergency Drought Relief Act of 1991 to provide financial and technical assistance to eligible entities for the conduct of innovative approaches to voluntary water partnership agreements among multiple water users and projects conducted by individual agricultural entities, and for other purposes." document_num="3737" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to authorize direct emergency acquisition flexibilities for the National Park Service and Forest Service for the purpose of retaining, vetting, approving, and expediting contractor approval for the clearing, rebuilding, maintenance, and improvement of areas of the Grand Canyon National Park and Kaibab National Forest damaged by certain wildfires, and for other purposes." document_num="3785" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to establish the Julius Rosenwald and Rosenwald Schools National Historical Park, and for other purposes." document_num="3925" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Uranium Mill Tailings Radiation Control Act of 1978 to extend the authorization of a disposal site in Mesa County, Colorado, until the site is filled to designed capacity." document_num="4005" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to establish the America's Living Library Project, and for other purposes." document_num="4023" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to improve the health and resiliency of giant sequoias, and for other purposes." document_num="4103" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to advance next-generation geothermal electricity generation demonstration projects in new regions, and for other purposes." document_num="4116" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Energy Policy and Conservation Act to require States to include supporting the physical security, cybersecurity, and resilience of local distribution systems in State energy security plans, and for other purposes." document_num="4166" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to promote conservation, improve public land, and provide for sensible development in Douglas County, Nevada, and for other purposes." document_num="4200" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Waste Isolation Pilot Plant Land Withdrawal Act to ensure that economic assistance payments under that Act continue until the closure of the Waste Isolation Pilot Plant, and for other purposes." document_num="4252" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the National Energy Conservation Policy Act to include the installation of mechanical insulation property as an energy or water efficiency measure, and for other purposes." document_num="4312" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Federal Power Act and the Natural Gas Act with respect to the enforcement of certain provisions, and for other purposes." document_num="4351" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Energy Independence and Security Act of 2007 to direct research, development, demonstration, and commercial application activities in support of next-generation geothermal systems in various conditions, and for other purposes." document_num="4406" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Wild and Scenic Rivers Act to designate the Mullica River watershed in New Jersey for study for potential designation as a wild and scenic river, and for other purposes." document_num="4595" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to provide for economic development and conservation in Washoe County, Nevada, and for other purposes." document_num="462" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to require the Federal Energy Regulatory Commission to reform the interconnection queue process for the prioritization and approval of certain projects, and for other purposes." document_num="465" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the United States-Mexico Transboundary Aquifer Assessment Act to reauthorize the United States-Mexico transboundary aquifer assessment program, and for other purposes." document_num="4846" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Infrastructure Investment and Jobs Act to reauthorize the Earth Mapping Resources Initiative, and for other purposes." document_num="4870" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Water Infrastructure Improvements for the Nation Act and the Water Desalination Act of 1996 to reauthorize certain desalination programs, and for other purposes." document_num="5352" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to direct the Secretary of Agriculture to convey to Pennington County, South Dakota, certain National Forest System land." document_num="5359" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Infrastructure Investment and Jobs Act to reauthorize the Rural and Municipal Utility Advanced Cybersecurity Grant and Technical Assistance Program, and for other purposes." document_num="5360" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to facilitate the conveyance of certain land in Bonners Ferry, Idaho, platted under section 2387 of the Revised Statutes, and for other purposes." document_num="5374" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to extend authorizations for aquatic ecosystem restoration projects, multi-benefit watershed health projects, and WaterSMART grants, and for other purposes." document_num="5402" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to direct the Secretary of the Interior to conduct a study to assess the suitability and feasibility of establishing the African Burial Ground International Memorial Museum and Educational Center at the African Burial Ground National Monument, and for other purposes." document_num="730" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to provide for the designation of certain wilderness areas, recreation management areas, and conservation areas in the State of Colorado, and for other purposes." document_num="764" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to establish the Justice Thurgood Marshall National Historic Site in the State of Maryland as an affiliated area of the National Park System, and for other purposes." document_num="791" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to designate certain land administered by the Bureau of Land Management and the Forest Service in the State of Oregon as wilderness and national recreation areas, to withdraw certain land located in Curry County and Josephine County, Oregon, from all forms of entry, appropriation, or disposal under the public land laws, location, entry, and patent under the mining laws, and operation under the mineral leasing and geothermal leasing laws, and for other purposes." document_num="888" document_prefix="SN"/>
+      <AssociatedDocument congress="119" document_description="A bill to amend the Smith River National Recreation Area Act to include certain additions to the Smith River National Recreation Area, to amend the Wild and Scenic Rivers Act to designate certain wild rivers in the State of Oregon, and for other purposes." document_num="945" document_prefix="SN"/>
+    </Documents>
+    <matter>Business meeting to consider S.365, and H.R.1729, bills to amend the John D. Dingell, Jr. Conservation, Management, and Recreation Act to allow for additional entities to be eligible to complete the maintenance work on Bolts Ditch and the Bolts Ditch Headgate within the Holy Cross Wilderness, Colorado, S.462, to provide for economic development and conservation in Washoe County, Nevada, S.465, to require the Federal Energy Regulatory Commission to reform the interconnection queue process for the prioritization and approval of certain projects, S.730, to direct the Secretary of the Interior to conduct a study to assess the suitability and feasibility of establishing the African Burial Ground International Memorial Museum and Educational Center at the African Burial Ground National Monument, S.764, to provide for the designation of certain wilderness areas, recreation management areas, and conservation areas in the State of Colorado, S.791, to establish the Justice Thurgood Marshall National Historic Site in the State of Maryland as an affiliated area of the National Park System, S.888, to designate certain land administered by the Bureau of Land Management and the Forest Service in the State of Oregon as wilderness and national recreation areas, to withdraw certain land located in Curry County and Josephine County, Oregon, from all forms of entry, appropriation, or disposal under the public land laws, location, entry, and patent under the mining laws, and operation under the mineral leasing and geothermal leasing laws, S.945, to amend the Smith River National Recreation Area Act to include certain additions to the Smith River National Recreation Area, to amend the Wild and Scenic Rivers Act to designate certain wild rivers in the State of Oregon, S.1005, to provide for conservation and economic development in the State of Nevada, S.1088, to provide that the memorial to commemorate the sacrifice and service of the women who worked on the home front to support the efforts of the United States military during World War II may be located on the National Mall, S.1195, to promote conservation, improve public land management, and provide for sensible development in Pershing County, Nevada, S.1254, to amend the Aquifer Recharge Flexibility Act to clarify a provision relating to conveyances for aquifer recharge purposes, S.1341, to amend the Colorado Wilderness Act of 1993 to add certain land to the Sarvis Creek Wilderness, S.1342, to amend the Energy Conservation and Production Act to improve the weatherization assistance program, S.1349, to withdraw the National Forest System land in the Ruby Mountains subdistrict of the Humboldt-Toiyabe National Forest and the National Wildlife Refuge System land in Ruby Lake National Wildlife Refuge, Elko and White Pine Counties, Nevada, from operation under the mineral leasing laws, S.1476, to amend the Wild and Scenic Rivers Act to designate certain segments of the Gila River system in the State of New Mexico as components of the National Wild and Scenic Rivers System, to provide for the transfer of administrative jurisdiction over certain Federal land in the State of New Mexico, S.1568, to amend the Energy Policy and Conservation Act to modify standards for general service lamps, S.1737, to designate and expand wilderness areas in Olympic National Forest in the State of Washington, and to designate certain rivers in Olympic National Forest and Olympic National Park as wild and scenic rivers, S.1777, to amend the California Desert Protection Act of 1994 to expand the boundary of Joshua Tree National Park, to redesignate the Cottonwood Visitor Center at Joshua Tree National Park as the "Dianne Feinstein Visitor Center", S.1870, to adjust the boundary of the Santa Monica Mountains National Recreation Area to include the Rim of the Valley Corridor, S.2570, to amend the Energy Conservation and Production Act to reauthorize the weatherization assistance program, S.2970, to authorize the use of off-highway vehicles in certain areas of the Capitol Reef National Park, Utah, S.3371, to designate the Museum of the Blind People's Movement in Baltimore, Maryland, as the "National Museum of the Blind People's Movement", S.3499, and H.R.3638, bills to direct the Secretary of Energy to prepare periodic assessments and submit reports on the supply chain for the generation and transmission of electricity, S.3524, and H.R.7618, bills to amend title 54, United States Code, to modify certain cost-sharing requirements for grant programs under the American Battlefield Protection Program, S.3526, to provide for the protection of and investment in certain Federal land in the State of California, S.3542, to amend the Wild and Scenic Rivers Act to designate the Upper Raritan River Watershed in the State of New Jersey for study for potential addition to the National Wild and Scenic Rivers System, S.3695, to amend Public Law 96-586 to modernize the authority of the Forest Service to acquire and administer</matter>
+  </meeting>
+  <meeting>
+    <identifier>338787</identifier>
+    <last_update>09-23-2026 05:05:53 PM</last_update>
+    <last_update_iso_8601>2026-09-23T17:05:53.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSFR00</cmte_code>
+    <committee>Foreign Relations</committee>
+    <type>Open Hearing</type>
+    <date>30-SEP-2026 10:00 AM</date>
+    <date_iso_8601>2026-09-30</date_iso_8601>
+    <day_of_week>Wednesday</day_of_week>
+    <time>10:00 AM</time>
+    <time_iso_8601>10:00:00</time_iso_8601>
+    <room>SD-419</room>
+    <video_url>https://www.senate.gov/isvp/?comm=foreign&amp;filename=foreign093026</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Hearings to examine certain pending nominations.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338781</identifier>
+    <last_update>09-22-2026 03:25:18 PM</last_update>
+    <last_update_iso_8601>2026-09-22T15:25:18.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSJU00</cmte_code>
+    <committee>Judiciary</committee>
+    <type>Open Hearing</type>
+    <date>30-SEP-2026 10:15 AM</date>
+    <date_iso_8601>2026-09-30</date_iso_8601>
+    <day_of_week>Wednesday</day_of_week>
+    <time>10:15 AM</time>
+    <time_iso_8601>10:15:00</time_iso_8601>
+    <room>SH-216</room>
+    <video_url>https://www.senate.gov/isvp/?comm=judiciary&amp;filename=judiciary093026</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Hearings to examine pending nominations.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338785</identifier>
+    <last_update>09-25-2026 07:34:33 PM</last_update>
+    <last_update_iso_8601>2026-09-25T19:34:33.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSGA20</cmte_code>
+    <committee>Homeland Security and Governmental Affairs</committee>
+    <sub_cmte>Disaster Management, District of Columbia, and Census</sub_cmte>
+    <type>Open Hearing</type>
+    <date>30-SEP-2026 02:30 PM</date>
+    <date_iso_8601>2026-09-30</date_iso_8601>
+    <day_of_week>Wednesday</day_of_week>
+    <time>02:30 PM</time>
+    <time_iso_8601>14:30:00</time_iso_8601>
+    <room>SD-342</room>
+    <video_url>https://www.senate.gov/isvp/?comm=govtaff&amp;filename=govtaff093026</video_url>
+    <senate_cable_channel> 19.1</senate_cable_channel>
+    <Documents/>
+    <matter>Hearings to examine rogue AI, focusing on securing the homeland against AI agents.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338788</identifier>
+    <last_update>09-23-2026 06:57:09 PM</last_update>
+    <last_update_iso_8601>2026-09-23T18:57:09.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSFR06</cmte_code>
+    <committee>Foreign Relations</committee>
+    <sub_cmte>Western Hemisphere, Transnational Crime, Civilian Security, Democracy, Human Rights, and Global Women's Issues</sub_cmte>
+    <type>Open Hearing</type>
+    <date>30-SEP-2026 03:00 PM</date>
+    <date_iso_8601>2026-09-30</date_iso_8601>
+    <day_of_week>Wednesday</day_of_week>
+    <time>03:00 PM</time>
+    <time_iso_8601>15:00:00</time_iso_8601>
+    <room>SD-419</room>
+    <video_url>https://www.senate.gov/isvp/?comm=foreign&amp;filename=foreign093026</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Hearings to examine Nicaragua's political crisis, focusing on Ortega's assault on democracy.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338791</identifier>
+    <last_update>09-24-2026 03:29:02 PM</last_update>
+    <last_update_iso_8601>2026-09-24T15:29:02.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SLIN00</cmte_code>
+    <committee>Intelligence</committee>
+    <type>Closed Hearing</type>
+    <date>30-SEP-2026 03:00 PM</date>
+    <date_iso_8601>2026-09-30</date_iso_8601>
+    <day_of_week>Wednesday</day_of_week>
+    <time>03:00 PM</time>
+    <time_iso_8601>15:00:00</time_iso_8601>
+    <room>SH-219</room>
+    <video_url>
+    </video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>To receive a closed briefing on certain intelligence matters.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338789</identifier>
+    <last_update>09-24-2026 09:35:26 AM</last_update>
+    <last_update_iso_8601>2026-09-24T09:35:26.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSGA00</cmte_code>
+    <committee>Homeland Security and Governmental Affairs</committee>
+    <type>Open Business Meeting</type>
+    <date>01-OCT-2026 09:30 AM</date>
+    <date_iso_8601>2026-10-01</date_iso_8601>
+    <day_of_week>Thursday</day_of_week>
+    <time>09:30 AM</time>
+    <time_iso_8601>09:30:00</time_iso_8601>
+    <room>SD-342</room>
+    <video_url>https://www.senate.gov/isvp/?comm=govtaff&amp;filename=govtaff100126</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Business meeting to consider the request to direct Senate Legal Counsel to file an application seeking immunity.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338793</identifier>
+    <last_update>09-25-2026 06:56:39 PM</last_update>
+    <last_update_iso_8601>2026-09-25T18:56:39.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSBK00</cmte_code>
+    <committee>Banking, Housing, and Urban Affairs</committee>
+    <type>Open Hearing</type>
+    <date>01-OCT-2026 10:00 AM</date>
+    <date_iso_8601>2026-10-01</date_iso_8601>
+    <day_of_week>Thursday</day_of_week>
+    <time>10:00 AM</time>
+    <time_iso_8601>10:00:00</time_iso_8601>
+    <room>SD-538</room>
+    <video_url>https://www.senate.gov/isvp/?comm=banking&amp;filename=banking100126</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents>
+      <AssociatedDocument congress="119" document_description="David Slade, of Florida, to be First Vice President of the Export-Import Bank of the United States for a term expiring January 20, 2029, vice Judith DelZoppo Pryor, resigned." document_num="1180" document_prefix="PN" partition="02"/>
+      <AssociatedDocument congress="119" document_description="Michael Rigas, of Virginia, to be a Member of the Board of Directors of the Export-Import Bank of the United States for a term expiring January 20, 2031. (Reappointment)" document_num="1255" document_prefix="PN" partition="17"/>
+      <AssociatedDocument congress="119" document_description="Matthew Jones, of Virginia, to be an Assistant Secretary of Housing and Urban Development, vice Francis Cassidy, resigned." document_num="1273" document_prefix="PN" partition="12"/>
+      <AssociatedDocument congress="119" document_description="Jeremy Wiggins, of the District of Columbia, to be an Assistant Secretary of the Treasury, vice Francis Brooke, resigned." document_num="1273" document_prefix="PN" partition="25"/>
+    </Documents>
+    <matter>Hearings to examine the nominations of Jeremy Wiggins, of the District of Columbia, to be an Assistant Secretary of the Treasury, Matthew Jones, of Virginia, to be an Assistant Secretary of Housing and Urban Development, and David Slade, of Florida, to be First Vice President, and Michael Rigas, of Virginia, to be a Member of the Board of Directors, both of the Export-Import Bank of the United States.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338792</identifier>
+    <last_update>09-25-2026 06:49:49 PM</last_update>
+    <last_update_iso_8601>2026-09-25T18:49:49.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSJU00</cmte_code>
+    <committee>Judiciary</committee>
+    <type>Open Business Meeting</type>
+    <date>01-OCT-2026 10:15 AM</date>
+    <date_iso_8601>2026-10-01</date_iso_8601>
+    <day_of_week>Thursday</day_of_week>
+    <time>10:15 AM</time>
+    <time_iso_8601>10:15:00</time_iso_8601>
+    <room>SH-216</room>
+    <video_url>https://www.senate.gov/isvp/?comm=judiciary&amp;filename=judiciary100126</video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>Business meeting to consider pending calendar business.</matter>
+  </meeting>
+  <meeting>
+    <identifier>338794</identifier>
+    <last_update>09-25-2026 07:02:08 PM</last_update>
+    <last_update_iso_8601>2026-09-25T19:02:08.000000Z-04:00</last_update_iso_8601>
+    <cmte_code>SSFR00</cmte_code>
+    <committee>Foreign Relations</committee>
+    <type>Closed Hearing</type>
+    <date>01-OCT-2026 10:30 AM</date>
+    <date_iso_8601>2026-10-01</date_iso_8601>
+    <day_of_week>Thursday</day_of_week>
+    <time>10:30 AM</time>
+    <time_iso_8601>10:30:00</time_iso_8601>
+    <room>SVC-217</room>
+    <video_url>
+    </video_url>
+    <senate_cable_channel>
+    </senate_cable_channel>
+    <Documents/>
+    <matter>To receive a closed briefing on an update on Venezuela.</matter>
+  </meeting>
+</css_meetings_scheduled>

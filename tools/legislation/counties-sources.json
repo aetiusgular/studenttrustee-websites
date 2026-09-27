@@ -1,0 +1,444 @@
+{
+ "_comment": "Where each California county board of supervisors publishes its business. coverage: 'votes' = Legistar Web API with per-supervisor votes (legistar_client set); 'agendas' = machine-readable meeting list but votes only in minutes PDFs; 'links' = official pages only. Every url is checked nightly and marked unreachable in the manifest when it fails. Add a county by filling in its row; the pipeline picks it up on the next run.",
+ "counties": {
+  "06001": {
+   "name": "Alameda County",
+   "website": "https://www.acgov.org/",
+   "board_url": "https://www.acgov.org/board/",
+   "agenda_url": "https://alamedacounty.granicus.com/ViewPublisher.php?view_id=1",
+   "platform": "Granicus MediaManager",
+   "coverage": "links"
+  },
+  "06003": {
+   "name": "Alpine County",
+   "website": "https://www.alpinecountyca.gov/",
+   "board_url": "https://www.alpinecountyca.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06005": {
+   "name": "Amador County",
+   "website": "https://www.amadorcounty.gov/",
+   "board_url": "https://www.amadorcounty.gov/government/board-of-supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06007": {
+   "name": "Butte County",
+   "website": "https://www.buttecounty.net/",
+   "board_url": "https://www.buttecounty.net/324/Board-of-Supervisors",
+   "platform": "county site",
+   "coverage": "links",
+   "agenda_url": "https://www.buttecounty.net/2004/Board-of-Supervisors-Meeting-Portal"
+  },
+  "06009": {
+   "name": "Calaveras County",
+   "website": "https://www.calaverasgov.us/",
+   "board_url": "https://www.calaverasgov.us/Government/Board-of-Supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06011": {
+   "name": "Colusa County",
+   "website": "https://www.countyofcolusa.org/",
+   "board_url": "https://www.countyofcolusa.org/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06013": {
+   "name": "Contra Costa County",
+   "website": "https://www.contracosta.ca.gov/",
+   "board_url": "https://www.contracosta.ca.gov/7289/Meetings-Agendas",
+   "agenda_url": "https://contra-costa.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "contra-costa"
+  },
+  "06015": {
+   "name": "Del Norte County",
+   "website": "https://www.co.del-norte.ca.us/",
+   "board_url": "https://www.co.del-norte.ca.us/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06017": {
+   "name": "El Dorado County",
+   "website": "https://www.edcgov.us/",
+   "board_url": "https://www.edcgov.us/Government/BOS",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06019": {
+   "name": "Fresno County",
+   "website": "https://www.fresnocountyca.gov/",
+   "board_url": "https://www.fresnocountyca.gov/Government/Board-of-Supervisors",
+   "agenda_url": "https://fresnocounty.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "fresnocounty"
+  },
+  "06021": {
+   "name": "Glenn County",
+   "website": "https://www.countyofglenn.net/",
+   "board_url": "https://www.countyofglenn.net/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06023": {
+   "name": "Humboldt County",
+   "website": "https://humboldtgov.org/",
+   "board_url": "https://humboldtgov.org/160/Board-of-Supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06025": {
+   "name": "Imperial County",
+   "website": "https://imperialcounty.org/",
+   "board_url": "https://board.imperialcounty.org/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06027": {
+   "name": "Inyo County",
+   "website": "https://www.inyocounty.us/",
+   "board_url": "https://www.inyocounty.us/government/board-supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06029": {
+   "name": "Kern County",
+   "website": "https://www.kerncounty.com/",
+   "board_url": "https://www.kerncounty.com/government/board-of-supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06031": {
+   "name": "Kings County",
+   "website": "https://www.countyofkingsca.gov/",
+   "board_url": "https://www.countyofkingsca.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06033": {
+   "name": "Lake County",
+   "website": "https://www.lakecountyca.gov/",
+   "board_url": "https://www.lakecountyca.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06035": {
+   "name": "Lassen County",
+   "website": "https://www.lassencounty.org/",
+   "board_url": "https://www.lassencounty.org/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06037": {
+   "name": "Los Angeles County",
+   "website": "https://lacounty.gov/",
+   "board_url": "https://bos.lacounty.gov/board-meeting-agendas/",
+   "agenda_url": "https://lacounty.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "lacounty",
+   "note": "The county's Legistar API lists only some board meetings and publishes no per-supervisor votes; votes are in the Statement of Proceedings PDFs on the board site."
+  },
+  "06039": {
+   "name": "Madera County",
+   "website": "https://www.maderacounty.com/",
+   "board_url": "https://www.maderacounty.com/government/board-of-supervisors",
+   "agenda_url": "https://pub-maderacounty.escribemeetings.com/",
+   "platform": "eSCRIBE",
+   "coverage": "links"
+  },
+  "06041": {
+   "name": "Marin County",
+   "website": "https://www.marincounty.gov/",
+   "board_url": "https://www.marincounty.gov/departments/board-of-supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06043": {
+   "name": "Mariposa County",
+   "website": "https://www.mariposacounty.org/",
+   "board_url": "https://www.mariposacounty.org/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06045": {
+   "name": "Mendocino County",
+   "website": "https://www.mendocinocounty.gov/",
+   "board_url": "https://www.mendocinocounty.gov/government/board-of-supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06047": {
+   "name": "Merced County",
+   "website": "https://www.countyofmerced.com/",
+   "board_url": "https://www.countyofmerced.com/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06049": {
+   "name": "Modoc County",
+   "website": "https://www.co.modoc.ca.us/",
+   "board_url": "https://www.co.modoc.ca.us/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06051": {
+   "name": "Mono County",
+   "website": "https://www.monocounty.ca.gov/",
+   "board_url": "https://www.monocounty.ca.gov/bos",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06053": {
+   "name": "Monterey County",
+   "website": "https://www.countyofmonterey.gov/",
+   "board_url": "https://www.countyofmonterey.gov/government/board-of-supervisors",
+   "agenda_url": "https://monterey.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "monterey"
+  },
+  "06055": {
+   "name": "Napa County",
+   "website": "https://www.napacounty.gov/",
+   "board_url": "https://www.napacounty.gov/1316/Board-of-Supervisors",
+   "agenda_url": "https://www.napacounty.gov/2812/Board-of-Supervisors-Meetings",
+   "platform": "Granicus MediaManager",
+   "coverage": "links"
+  },
+  "06057": {
+   "name": "Nevada County",
+   "website": "https://www.nevadacountyca.gov/",
+   "board_url": "https://www.nevadacountyca.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06059": {
+   "name": "Orange County",
+   "website": "https://www.ocgov.com/",
+   "board_url": "https://board.oc.gov/",
+   "agenda_url": "https://board.oc.gov/meetings-agendas",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06061": {
+   "name": "Placer County",
+   "website": "https://www.placer.ca.gov/",
+   "board_url": "https://www.placer.ca.gov/1512/Board-of-Supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06063": {
+   "name": "Plumas County",
+   "website": "https://www.plumascounty.us/",
+   "board_url": "https://www.plumascounty.us/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06065": {
+   "name": "Riverside County",
+   "website": "https://rivco.org/",
+   "board_url": "https://rivcocob.org/",
+   "agenda_url": "https://rivcocob.org/riverside-county-meetings",
+   "platform": "IQM2 / MinuteTraq",
+   "coverage": "links"
+  },
+  "06067": {
+   "name": "Sacramento County",
+   "website": "https://saccounty.gov/",
+   "board_url": "https://bos.saccounty.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06069": {
+   "name": "San Benito County",
+   "website": "https://www.sanbenitocountyca.gov/",
+   "board_url": "https://www.sanbenitocountyca.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06071": {
+   "name": "San Bernardino County",
+   "website": "https://www.sbcounty.gov/",
+   "board_url": "https://www.sbcounty.gov/bos/",
+   "agenda_url": "https://sanbernardino.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "sanbernardino"
+  },
+  "06073": {
+   "name": "San Diego County",
+   "website": "https://www.sandiegocounty.gov/",
+   "board_url": "https://www.sandiegocounty.gov/content/sdc/cob.html",
+   "agenda_url": "https://sdcounty.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "sdcounty"
+  },
+  "06075": {
+   "name": "San Francisco",
+   "website": "https://sf.gov/",
+   "board_url": "https://sfbos.org/",
+   "agenda_url": "https://sfgov.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "sfgov",
+   "note": "The city and county's Legistar API refuses meeting queries (a server-side configuration error), so meetings and votes are on the official pages only."
+  },
+  "06077": {
+   "name": "San Joaquin County",
+   "website": "https://www.sjgov.org/",
+   "board_url": "https://www.sjgov.org/department/bos",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06079": {
+   "name": "San Luis Obispo County",
+   "website": "https://www.slocounty.ca.gov/",
+   "board_url": "https://www.slocounty.ca.gov/departments/board-of-supervisors",
+   "agenda_url": "https://slocounty.granicus.com/ViewPublisher.php?view_id=46",
+   "platform": "Granicus MediaManager",
+   "coverage": "links"
+  },
+  "06081": {
+   "name": "San Mateo County",
+   "website": "https://www.smcgov.org/",
+   "board_url": "https://www.smcgov.org/bos",
+   "agenda_url": "https://sanmateocounty.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "sanmateocounty"
+  },
+  "06083": {
+   "name": "Santa Barbara County",
+   "website": "https://www.countyofsb.org/",
+   "board_url": "https://www.countyofsb.org/153/Board-of-Supervisors",
+   "agenda_url": "https://santabarbara.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "santabarbara"
+  },
+  "06085": {
+   "name": "Santa Clara County",
+   "website": "https://www.santaclaracounty.gov/",
+   "board_url": "https://bos.santaclaracounty.gov/",
+   "agenda_url": "https://santaclaracounty.primegov.com/public/portal",
+   "platform": "PrimeGov",
+   "coverage": "links"
+  },
+  "06087": {
+   "name": "Santa Cruz County",
+   "website": "https://www.santacruzcountyca.gov/",
+   "board_url": "https://www.santacruzcountyca.gov/Government/BoardofSupervisors.aspx",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06089": {
+   "name": "Shasta County",
+   "website": "https://www.shastacounty.gov/",
+   "board_url": "https://www.shastacounty.gov/board-supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06091": {
+   "name": "Sierra County",
+   "website": "https://www.sierracounty.ca.gov/",
+   "board_url": "https://www.sierracounty.ca.gov/",
+   "agenda_url": "https://www.sierracounty.ca.gov/AgendaCenter",
+   "platform": "CivicPlus AgendaCenter",
+   "coverage": "links"
+  },
+  "06093": {
+   "name": "Siskiyou County",
+   "website": "https://www.co.siskiyou.ca.us/",
+   "board_url": "https://www.co.siskiyou.ca.us/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06095": {
+   "name": "Solano County",
+   "website": "https://www.solanocounty.com/",
+   "board_url": "https://www.solanocounty.com/depts/bos/",
+   "agenda_url": "https://solano.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "solano"
+  },
+  "06097": {
+   "name": "Sonoma County",
+   "website": "https://sonomacounty.ca.gov/",
+   "board_url": "https://sonomacounty.ca.gov/administrative-support-and-fiscal-services/board-of-supervisors",
+   "agenda_url": "https://sonoma-county.legistar.com/Calendar.aspx",
+   "platform": "Legistar",
+   "coverage": "votes",
+   "legistar_client": "sonoma-county"
+  },
+  "06099": {
+   "name": "Stanislaus County",
+   "website": "https://www.stancounty.com/",
+   "board_url": "https://www.stancounty.com/bos/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06101": {
+   "name": "Sutter County",
+   "website": "https://www.sutter.gov/",
+   "board_url": "https://www.sutter.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06103": {
+   "name": "Tehama County",
+   "website": "https://www.tehamacountyca.gov/",
+   "board_url": "https://www.tehamacountyca.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06105": {
+   "name": "Trinity County",
+   "website": "https://www.trinitycounty.org/",
+   "board_url": "https://www.trinitycounty.org/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06107": {
+   "name": "Tulare County",
+   "website": "https://tularecounty.ca.gov/",
+   "board_url": "https://tularecounty.ca.gov/board-of-supervisors/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06109": {
+   "name": "Tuolumne County",
+   "website": "https://www.tuolumnecounty.ca.gov/",
+   "board_url": "https://www.tuolumnecounty.ca.gov/",
+   "platform": "CivicPlus AgendaCenter",
+   "coverage": "links"
+  },
+  "06111": {
+   "name": "Ventura County",
+   "website": "https://www.ventura.org/",
+   "board_url": "https://www.ventura.org/board-of-supervisors/",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06113": {
+   "name": "Yolo County",
+   "website": "https://www.yolocounty.gov/",
+   "board_url": "https://www.yolocounty.gov/government/general-government-departments/board-of-supervisors",
+   "platform": "county site",
+   "coverage": "links"
+  },
+  "06115": {
+   "name": "Yuba County",
+   "website": "https://www.yuba.gov/",
+   "board_url": "https://www.yuba.gov/",
+   "platform": "county site",
+   "coverage": "links"
+  }
+ }
+}

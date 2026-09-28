@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moves to a new release in October 2026, before Playwright and the
+    # Python builds used here are known to support it.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4

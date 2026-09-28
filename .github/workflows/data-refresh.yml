@@ -1,11 +1,14 @@
 name: Nightly data refresh
 
-# Pulls the official sources and publishes the legislation records to the `data` branch,
-# which GitHub Pages serves (Settings > Pages > Deploy from a branch > data, / (root)).
-# The site reads the records from there, so a nightly refresh never triggers a Netlify
-# production deploy (on Netlify's credit-based free plan every production deploy costs
-# credits). District boundaries still live on main; they change about once a year, and
-# only then does this job commit to main.
+# Pulls the official sources, keeps the legislation records on the `data` branch (last
+# night's copy is where tonight's run starts), and deploys them to GitHub Pages, which the
+# site reads (Settings > Pages > Source: GitHub Actions). A nightly refresh therefore never
+# triggers a Netlify production deploy (on Netlify's credit-based free plan every production
+# deploy costs credits). District boundaries still live on main; they change about once a
+# year, and only then does this job commit to main.
+#
+# Pages is deployed by actions/deploy-pages rather than served from the branch, because
+# commits pushed with the workflow's GITHUB_TOKEN do not trigger a GitHub Pages build.
 #
 # 06:30 UTC is 23:30 Pacific in summer and 22:30 in winter: after the California
 # Legislature's ~21:20 PT pubinfo drop and after the day's congressional roll calls.
@@ -22,7 +25,12 @@ on:
         description: "Publish even if a record count fell sharply (only after checking why)"
         type: boolean
         default: false
+      publish_only:
+        description: "Only deploy the records already on the data branch, without refreshing"
+        type: boolean
+        default: false
 
+# Pushes the data branch and, rarely, boundary changes to main. The deploy job sets its own.
 permissions:
   contents: write
 
@@ -32,7 +40,9 @@ concurrency:
 
 jobs:
   refresh:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moves to a new release in October 2026, and a new image can lack
+    # the Python build this job asks for.
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -57,6 +67,7 @@ jobs:
       # Small HTTP responses only. The 1.1 GB California dump is downloaded to the runner's
       # temp directory (PUBINFO_DIR) so it is never saved into this cache.
       - name: Restore HTTP cache
+        if: ${{ !inputs.publish_only }}
         uses: actions/cache@v4
         with:
           path: .cache
@@ -64,9 +75,10 @@ jobs:
           restore-keys: data-refresh-cache-
 
       - name: Refresh
+        if: ${{ !inputs.publish_only }}
         env:
           PUBINFO_DIR: ${{ runner.temp }}
-          TARGETS: ${{ github.event.inputs.targets || 'all' }}
+          TARGETS: ${{ inputs.targets || 'all' }}
         run: python3 -m tools.legislation.refresh $TARGETS
 
       - name: Validate
@@ -74,7 +86,7 @@ jobs:
           ALLOW_SHRINK: ${{ inputs.allow_shrink && '1' || '' }}
         run: python3 -m tools.legislation.validate
 
-      - name: Publish the records to the data branch
+      - name: Keep tonight's records on the data branch
         working-directory: studenttrustee/data/legislation
         run: |
           git config user.name "studenttrustee-bot"
@@ -85,13 +97,19 @@ jobs:
             echo "no record changes"
             exit 0
           fi
-          # One commit with no parent: the branch is a published snapshot, not a history.
+          # One commit with no parent: the branch is a snapshot, not a history.
           # The manifest inside it records when every source last changed and was checked.
           tree=$(git write-tree)
           commit=$(git commit-tree "$tree" -m "data: nightly refresh $(date -u +%Y-%m-%d)")
           git push --force origin "$commit:refs/heads/data"
 
+      - name: Package the records for GitHub Pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: studenttrustee/data/legislation
+
       - name: Commit boundary changes to main (rare)
+        if: ${{ !inputs.publish_only }}
         run: |
           git config user.name "studenttrustee-bot"
           git config user.email "studenttrustee-bot@users.noreply.github.com"
@@ -103,3 +121,19 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
+
+  deploy:
+    needs: refresh
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write      # deploy to GitHub Pages
+      id-token: write   # lets Pages verify the deployment comes from this workflow
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the records to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

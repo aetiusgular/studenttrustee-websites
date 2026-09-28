@@ -5,7 +5,7 @@ Two static sites, one repo, plus a nightly job that collects legislative records
 ```
 studenttrustee/ -> studenttrustee.net            (Netlify, deploys from main)
 volunteer/      -> volunteer.studenttrustee.net  (Netlify, deploys from main)
-data branch     -> the Legislation section's records (GitHub Pages, updated nightly)
+data branch     -> the Legislation section's records (deployed to GitHub Pages nightly)
 ```
 
 Everything here is free to run: no API keys, no paid services.
@@ -25,15 +25,22 @@ nothing to build.
 
 ### One-time setup for the Legislation section
 
-The records do not live on `main`. They live on the `data` branch, which GitHub Pages serves and
-the nightly workflow replaces every night ([why](#choices-and-caveats)). Someone with admin rights
-on the GitHub repository does this once:
+The records do not live on `main`. The nightly workflow keeps them on the `data` branch, replaces
+that branch every night, and deploys the same files to GitHub Pages
+([why](#choices-and-caveats)). Setting this up takes three steps, done once:
 
 1. Push the `data` branch (`git push origin data`).
-2. Settings > Pages > Build and deployment: Source **Deploy from a branch**, Branch **data**, folder
-   **/ (root)**. Save. The records then appear at `https://nbonasera.github.io/studenttrustee-websites/`.
-3. Settings > Actions > General > Workflow permissions: **Read and write permissions**, so the nightly
-   job can push the `data` branch.
+2. The repository owner opens Settings > Pages > Build and deployment and sets Source to
+   **GitHub Actions**. Only the owner can: on a repository in a personal account, collaborators
+   have no Settings tab. There is no branch to pick; the workflow does the deploying.
+3. Merge the Legislation work into `main`, then run Actions > Nightly data refresh > Run workflow
+   with **Only deploy the records already on the data branch** ticked. The records appear at
+   `https://nbonasera.github.io/studenttrustee-websites/` a minute or two later. Until that first
+   deploy finishes, the Legislation pages show a loading error.
+
+The workflow file grants its own token the permissions it needs (push the `data` branch, deploy to
+Pages), so the repository's default workflow permissions can stay as they are. The schedule only
+runs from `main`, so nothing refreshes until the workflow is merged there.
 
 If the Pages address ever changes (a custom domain, or a renamed repository), update
 `legislation_data_url` in `studenttrustee/data/site.json` and the `connect-src` entry of the
@@ -116,7 +123,10 @@ choice costs.
 1. **The records are served by GitHub Pages, not Netlify.** On Netlify's credit-based Free plan
    (accounts created on or after 4 September 2025) every production deploy costs 15 of the plan's
    300 monthly credits, and when the credits run out Netlify pauses every site on the account.
-   Thirty nightly deploys would do that. GitHub Pages is free for a public repository.
+   Thirty nightly deploys would do that. GitHub Pages is free for a public repository. The
+   workflow deploys to Pages itself (`actions/deploy-pages`) instead of letting Pages serve the
+   `data` branch, because GitHub does not start a Pages build for commits pushed with the
+   workflow's own token; a branch-served site would have stayed on the first snapshot.
    *Caveats:* the section depends on a second host; if GitHub Pages is down, the Legislation pages
    show an error while the rest of the site works. The repository must stay public (Pages for a
    private repository needs a paid GitHub plan). The `data` branch keeps no history: each night

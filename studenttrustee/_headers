@@ -10,6 +10,21 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Cross-Origin-Opener-Policy: same-origin
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://services.arcgisonline.com; connect-src 'self' https://nbonasera.github.io; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
+  Speculation-Rules: "/speculation-rules.json"
+
+# Document prefetch rules for Chromium browsers (other browsers ignore them): links to the site's
+# other pages are fetched when the pointer rests on them. The Legislation section routes its own
+# links and prefetches their records itself, so its deep links are left out.
+/speculation-rules.json
+  Content-Type: application/speculationrules+json; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+# The Legislation pages build every element with DOM calls and never parse an HTML string, so
+# they enforce Trusted Types: any HTML string sink (innerHTML and the like) throws instead of
+# running. The whole site policy is repeated because this rule's header replaces the one above
+# (Netlify applies every matching rule, the later one winning for the same header).
+/legislation/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://services.arcgisonline.com; connect-src 'self' https://nbonasera.github.io; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests; require-trusted-types-for 'script'; trusted-types 'none'
 
 # Vendored libraries live in versioned folders (vendor/leaflet-1.9.4), so they can be cached hard.
 /vendor/*

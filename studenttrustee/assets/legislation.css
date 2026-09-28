@@ -143,6 +143,29 @@ ul.acts time{font-variant-numeric:tabular-nums;color:var(--text-primary);font-we
 .stale-all a{text-decoration:underline;text-underline-offset:3px}
 .err h2{margin:0 0 6px}
 
+
+/* national pages: states table, state and county pages */
+.covline.stack{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
+.covline.stack > span{display:inline-flex;gap:8px;align-items:center}
+.chambers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 28px}
+.chamber h3{margin:12px 0 4px}
+.chamber p{margin:0 0 6px;font-size:14.5px}
+.hint{font-size:13px;color:var(--text-muted);margin:6px 0 0;max-width:70ch}
+.filter-box{margin:0}
+.county-hits h3{margin:4px 0 8px}
+.county-hits{margin:0 0 18px}
+.chip{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;font-weight:600;margin:0 0 12px;max-width:70ch}
+.tbl.states td,.tbl.states th{font-size:14px}
+.filters button.filter-toggle{display:none}
+.filter-panel .row{align-items:flex-end}
+ul.people .meta{overflow-wrap:anywhere}
+@media (max-width:760px){
+  .tbl.states td[data-label]::before{content:attr(data-label) ": ";content:attr(data-label) ": " / "";font-weight:650;color:var(--text-muted)}
+  .filters button.filter-toggle{display:inline-flex;align-items:center}
+  .filter-panel{display:none}
+  .filter-panel.open{display:block}
+}
+
 @media (max-width:760px){
   main{padding:24px 16px 40px}
   h1{font-size:28px}

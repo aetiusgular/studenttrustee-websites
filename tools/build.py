@@ -117,17 +117,30 @@ def who_line(d):
 
 
 def check_csp(site):
-    """The Legislation section fetches from site.legislation_data_url; the CSP in _headers must allow it."""
+    """The Legislation section fetches from site.legislation_data_url, so every CSP in _headers must
+    allow it in connect-src. The /legislation/* policy must be the site policy plus Trusted Types,
+    so the two copies cannot drift apart."""
     from urllib.parse import urlparse
     url = site.get('legislation_data_url') or ''
-    if not url.startswith('https://'):
-        return
-    origin = '%s://%s' % (urlparse(url).scheme, urlparse(url).netloc)
     with open(os.path.join(SITE, '_headers'), encoding='utf-8') as fh:
-        csp = next((line for line in fh if 'Content-Security-Policy' in line), '')
-    connect = next((part for part in csp.split(';') if part.strip().startswith('connect-src')), '')
-    if origin not in connect.split():
-        sys.exit('studenttrustee/_headers: connect-src must include %s (site.json legislation_data_url)' % origin)
+        policies = [line.split('Content-Security-Policy:', 1)[1].strip() for line in fh if 'Content-Security-Policy:' in line]
+    if not policies:
+        sys.exit('studenttrustee/_headers: no Content-Security-Policy')
+    if url.startswith('https://'):
+        origin = '%s://%s' % (urlparse(url).scheme, urlparse(url).netloc)
+        for csp in policies:
+            connect = next((part for part in csp.split(';') if part.strip().startswith('connect-src')), '')
+            if origin not in connect.split():
+                sys.exit('studenttrustee/_headers: every connect-src must include %s (site.json legislation_data_url)' % origin)
+    trusted = "; require-trusted-types-for 'script'; trusted-types 'none'"
+    for csp in policies[1:]:
+        if csp != policies[0] + trusted:
+            sys.exit("studenttrustee/_headers: the /legislation/* policy must be the site policy followed by%s" % trusted)
+
+
+def data_origin(url):
+    from urllib.parse import urlparse
+    return '%s://%s' % (urlparse(url).scheme, urlparse(url).netloc) if url else ''
 
 
 def main(check=False):
@@ -165,6 +178,7 @@ def main(check=False):
         'roster_stamp': stamp(site['last_verified']), 'verified_stamp': stamp(site['last_verified']),
         'roster_as_of': stamp_us(site['roster_as_of']), 'corrections_through': stamp_us(site['corrections_through']),
         'nav_legislation_href': '/legislation/', 'nav_legislation_cta': 'Legislative votes',
+        'legislation_data_origin': data_origin(site.get('legislation_data_url')),
         'door_legislation_title': 'Legislation',
         'door_legislation_text': "Bills, roll-call votes and every legislator's record at the federal, state and county levels, refreshed nightly from official sources, plus the 2026 session calendars.",
     }
@@ -192,11 +206,11 @@ def main(check=False):
            og_description='All 72 California community college districts, their real boundaries, and the student trustees who represent them — grouped by SSCCC Region I–X.',
            canonical=origin + '/map', roster_json=roster_json)
 
-    render('pages/legislation.html', 'legislation/index.html', current='/legislation/',
-           title='Legislative Votes & Records · Federal, California & County | studenttrustee.net',
-           description='Bills, roll-call votes, each legislator\'s voting record and upcoming votes at the federal, state and county levels, refreshed nightly from official government sources.',
+    render('pages/legislation.html', 'legislation/index.html', current='/legislation/', body_class='leg-page',
+           title='Legislative Votes & Records · Federal, State & County | studenttrustee.net',
+           description='Bills, roll-call votes, each legislator\'s voting record and upcoming votes at the federal, state and county levels, for every state and county, refreshed nightly.',
            og_title='Legislative votes and records · federal, state and county',
-           og_description='How Congress, the California Legislature and county boards have voted, with every record linked to its official source and stamped with when it last changed.',
+           og_description='Who represents every state and county, how Congress, the California Legislature and county boards have voted, with every record linked to its source and stamped with when it last changed.',
            canonical=origin + '/legislation/')
 
     render('pages/calendars.html', 'legislation/calendars/index.html', current='/legislation/',
@@ -239,7 +253,7 @@ def main(check=False):
     # sitemap + robots. lastmod is the roster verification date so the file only changes when the data does.
     lastmod = site['last_verified']
     urls = [('/', '1.0'), ('/map', '0.9'), ('/districts/', '0.9'), ('/legislation/', '0.9'), ('/legislation/calendars/', '0.7'),
-            ('/legislation/california/', '0.8'), ('/legislation/votes/', '0.7'), ('/legislation/bills/', '0.7'),
+            ('/legislation/states/', '0.8'), ('/legislation/california/', '0.8'), ('/legislation/votes/', '0.7'), ('/legislation/bills/', '0.7'),
             ('/legislation/upcoming/', '0.7'), ('/legislation/sources/', '0.5'), ('/about', '0.6'), ('/accessibility', '0.3')]
     urls += [('/districts/%s/' % d['slug'], '0.8') for d in districts]
     body = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']

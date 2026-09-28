@@ -19,13 +19,21 @@
     <li>Animation is turned off when your device asks for reduced motion.</li>
     <li>Times are shown with their time zone (PT or ET) and dates in words, so they do not depend on locale.</li>
     <li>Tables have captions and header cells; vote positions can be filtered by position, name, party or district.</li>
+    <li>Filters never move you without asking. Where a filter reloads a list, nothing changes until you press Apply,
+    and focus then moves to the list's heading. Where a list filters in place (states, counties, legislators, a
+    county's votes), focus stays in the control and the number of matches is announced. On a phone, a county's vote
+    filters sit behind a Filter votes button that says how many filters are on.</li>
+    <li>When part of a page loads after the rest (a county's latest roll calls), the section says it is loading and
+    announces the number of roll calls when they arrive.</li>
   </ul>
 
   <h2>How it is checked</h2>
   <p>Every change runs an automated suite before it can be merged. Each page is loaded at 1440, 768 and 390 pixels wide
   and checked with axe-core against the WCAG 2.x A, AA and AAA rules, including the enhanced contrast rule. A second
   scan measures every piece of text for contrast and size and every link and button for target size, and the layout is
-  checked for sideways scrolling at 320 pixels. The Legislation section is also walked through with the keyboard alone.
+  checked for sideways scrolling at 320 pixels. The Legislation section is also walked through with the keyboard alone,
+  by an automated test that goes from the table of states to a state and a county using only Tab, the arrow keys and
+  Enter.
   Automated tools do not catch everything, so reports from people who use assistive technology are the most useful
   check there is.</p>
 
@@ -39,6 +47,8 @@
     county governments. Their accessibility is outside this site's control; many are PDFs.</li>
     <li>Vote records are shown as the official source publishes them, so some motion titles from the California
     Legislature are in capital letters or abbreviated.</li>
+    <li>County websites outside California come from Wikidata and are linked as they are. Their accessibility is
+    outside this site's control.</li>
   </ul>
 
   <h2>Report a problem</h2>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Legislative Votes &amp; Records · Federal, California &amp; County | studenttrustee.net</title>
-<meta name="description" content="Bills, roll-call votes, each legislator&#39;s voting record and upcoming votes at the federal, state and county levels, refreshed nightly from official government sources.">
+<title>Legislative Votes &amp; Records · Federal, State &amp; County | studenttrustee.net</title>
+<meta name="description" content="Bills, roll-call votes, each legislator&#39;s voting record and upcoming votes at the federal, state and county levels, for every state and county, refreshed nightly.">
 <link rel="canonical" href="https://studenttrustee.net/legislation/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="studenttrustee.net">
 <meta property="og:url" content="https://studenttrustee.net/legislation/">
 <meta property="og:title" content="Legislative votes and records · federal, state and county">
-<meta property="og:description" content="How Congress, the California Legislature and county boards have voted, with every record linked to its official source and stamped with when it last changed.">
+<meta property="og:description" content="Who represents every state and county, how Congress, the California Legislature and county boards have voted, with every record linked to its source and stamped with when it last changed.">
 <meta property="og:image" content="https://studenttrustee.net/brand/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,8 +24,10 @@
 <link rel="manifest" href="/site-p6.webmanifest">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/legislation.css">
+<link rel="preconnect" href="https://nbonasera.github.io" crossorigin>
+<link rel="preload" href="https://nbonasera.github.io/studenttrustee-websites/manifest.json" as="fetch" crossorigin>
 </head>
-<body>
+<body class="leg-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="top">
   <div class="mark"><a href="/" aria-label="StudentTrustee.net home"><img class="st-wordmark" src="/brand/logo-wordmark.png" alt="StudentTrustee.net" width="1015" height="127"></a></div>
@@ -46,9 +48,9 @@
       <p class="lede" id="page-lede">Bills, roll-call votes, each legislator's record, and what is scheduled next, at the federal, state and county levels. Every record links to its official source and says when that source last changed.</p>
     </div>
     <form class="leg-search" id="search-form" role="search" action="/legislation/search/" method="get">
-      <label for="q">Search bills and legislators</label>
+      <label for="q">Search bills, legislators and places</label>
       <div class="row">
-        <input id="q" name="q" type="search" placeholder="AB 1, wildfire, Padilla, S. 2403" autocomplete="off" spellcheck="false">
+        <input id="q" name="q" type="search" placeholder="AB 1, wildfire, Padilla, Travis County" autocomplete="off" spellcheck="false">
         <button type="submit" class="btn">Search</button>
       </div>
     </form>
@@ -74,6 +76,7 @@
         <li><a href="https://www.senate.gov/legislative/votes_new.htm">U.S. Senate roll-call votes</a></li>
         <li><a href="https://leginfo.legislature.ca.gov/">California Legislative Information (bills and votes)</a></li>
         <li><a href="https://www.assembly.ca.gov/schedules-publications/daily-file">Assembly Daily File</a> and <a href="https://www.senate.ca.gov/dailyfile">Senate Daily File</a></li>
+        <li><a href="https://openstates.org/find_your_legislator/">State legislators in every state (Open States)</a></li>
       </ul>
     </noscript>
   </div>

@@ -4,6 +4,11 @@
 {%- endblock %}
 {% block head %}
 <link rel="stylesheet" href="/assets/legislation.css">
+{#- The records host: connect early, and start the one file every page reads (the manifest, for
+    the freshness notice). The crossorigin attribute matches the app's fetch() (CORS, default
+    credentials), so the browser hands this response to it instead of fetching again. #}
+<link rel="preconnect" href="{{ legislation_data_origin }}" crossorigin>
+<link rel="preload" href="{{ site.legislation_data_url }}manifest.json" as="fetch" crossorigin>
 {%- endblock %}
 {% block main %}
   <div class="leg-head">
@@ -13,9 +18,9 @@
       <p class="lede" id="page-lede">Bills, roll-call votes, each legislator's record, and what is scheduled next, at the federal, state and county levels. Every record links to its official source and says when that source last changed.</p>
     </div>
     <form class="leg-search" id="search-form" role="search" action="/legislation/search/" method="get">
-      <label for="q">Search bills and legislators</label>
+      <label for="q">Search bills, legislators and places</label>
       <div class="row">
-        <input id="q" name="q" type="search" placeholder="AB 1, wildfire, Padilla, S. 2403" autocomplete="off" spellcheck="false">
+        <input id="q" name="q" type="search" placeholder="AB 1, wildfire, Padilla, Travis County" autocomplete="off" spellcheck="false">
         <button type="submit" class="btn">Search</button>
       </div>
     </form>
@@ -41,6 +46,7 @@
         <li><a href="https://www.senate.gov/legislative/votes_new.htm">U.S. Senate roll-call votes</a></li>
         <li><a href="https://leginfo.legislature.ca.gov/">California Legislative Information (bills and votes)</a></li>
         <li><a href="https://www.assembly.ca.gov/schedules-publications/daily-file">Assembly Daily File</a> and <a href="https://www.senate.ca.gov/dailyfile">Senate Daily File</a></li>
+        <li><a href="https://openstates.org/find_your_legislator/">State legislators in every state (Open States)</a></li>
       </ul>
     </noscript>
   </div>

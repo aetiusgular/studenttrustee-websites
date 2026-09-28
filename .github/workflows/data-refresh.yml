@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       targets:
-        description: "Space-separated targets: all boundaries geo federal california counties"
+        description: "Space-separated targets: all boundaries geo federal california counties states"
         default: "all"
       allow_shrink:
         description: "Publish even if a record count fell sharply (only after checking why)"
@@ -79,6 +79,7 @@ jobs:
         env:
           PUBINFO_DIR: ${{ runner.temp }}
           TARGETS: ${{ inputs.targets || 'all' }}
+          ALLOW_SHRINK: ${{ inputs.allow_shrink && '1' || '' }}
         run: python3 -m tools.legislation.refresh $TARGETS
 
       - name: Validate

@@ -13,7 +13,7 @@ was down for a night.
 import sys
 import traceback
 
-TARGETS = ['boundaries', 'geo', 'federal', 'california', 'counties']
+TARGETS = ['boundaries', 'geo', 'federal', 'california', 'counties', 'states']
 
 
 def run_boundaries():

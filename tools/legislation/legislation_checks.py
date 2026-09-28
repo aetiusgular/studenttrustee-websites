@@ -4,6 +4,9 @@ Integrity checks for data/legislation/. Returns a list of failure strings.
 - manifest.json parses and every source has a status
 - every vote index row points at a vote file; every vote file's positions reference known members or provisional ids
 - every bill referenced by a vote exists in the bill index
+- every state's county file: each county in exactly one state, the district keys it names are in
+  that state's district table, board links are http(s); every state's legislators: unique ids,
+  district keys the county files know, search rows that point at real legislators
 - shrink guard: a count that only grows during a Congress or a session may not fall by more than
   20 percent from one night to the next (a feed returning an empty page must not wipe the site's
   data), unless ALLOW_SHRINK=1. A new Congress or session starts its counts again, so the guard
@@ -19,6 +22,7 @@ SHRINK_LIMITS = {
     'us_members': 0.8, 'us_votes': 0.8, 'us_bills': 0.8,
     'ca_members': 0.8, 'ca_bills': 0.8, 'ca_votes': 0.8, 'ca_counties': 0.8,
     'ca_county_votes': 0.5, 'ca_county_meetings': 0.5,
+    'us_counties': 0.95, 'st_members': 0.8,
 }
 
 
@@ -94,6 +98,63 @@ def california_checks():
     return failures
 
 
+def national_checks():
+    failures = []
+    states = (_load('geo/states.json') or {}).get('states') or []
+    seen_fips, seen_ids = {}, set()
+    for s in states:
+        st = s['code']
+        if st == 'CA' or 'legislature' not in s or not s.get('counties'):
+            continue
+        low = st.lower()
+        geo = _load('geo/us-%s/counties.json' % low)
+        if geo is None:
+            failures.append('geo/states.json lists %d counties for %s but geo/us-%s/counties.json is missing' % (s['counties'], st, low))
+            continue
+        counties = geo.get('counties') or []
+        if len(counties) != s['counties']:
+            failures.append('%s: geo/states.json says %d counties, the county file has %d' % (st, s['counties'], len(counties)))
+        tables = geo.get('districts') or {}
+        slugs = set()
+        for c in counties:
+            fips = c.get('fips') or ''
+            if fips in seen_fips:
+                failures.append('county %s is in both %s and %s' % (fips, seen_fips[fips], st))
+            seen_fips[fips] = st
+            if fips[:2] != s['fips']:
+                failures.append('%s: county %s does not start with the state code %s' % (st, fips, s['fips']))
+            if c.get('slug') in slugs:
+                failures.append('%s: two counties share the slug %s' % (st, c.get('slug')))
+            slugs.add(c.get('slug'))
+            for chamber, col in (('upper', 'sldu'), ('lower', 'sldl')):
+                missing = [k for k in c.get(col) or [] if k not in (tables.get(chamber) or {})]
+                if missing:
+                    failures.append('%s: %s names %s districts %s that are not in the district table' % (st, c.get('name'), chamber, missing[:3]))
+            url = (c.get('board') or {}).get('url')
+            if url and not url.startswith(('https://', 'http://')):
+                failures.append('%s: board link for %s is not http(s): %s' % (st, c.get('name'), url[:60]))
+        members = _load('us-%s/members.json' % low)
+        if members is None:
+            continue
+        ids = set()
+        for m in members.get('members') or []:
+            if m['id'] in seen_ids:
+                failures.append('legislator id %s is used twice' % m['id'])
+            seen_ids.add(m['id'])
+            ids.add(m['id'])
+            if m.get('chamber') not in ('upper', 'lower', 'legislature'):
+                failures.append('%s: %s has chamber %r' % (st, m['id'], m.get('chamber')))
+            table = tables.get('upper' if m.get('chamber') in ('upper', 'legislature') else 'lower') or {}
+            if m.get('district_key') and m['district_key'] not in table:
+                failures.append('%s: %s has district key %s, not in the county file' % (st, m['id'], m['district_key']))
+    search = _load('search/states.json')
+    if search is not None:
+        stray = [r[1] for r in search.get('rows') or [] if r[0] == 'member' and r[1] not in seen_ids]
+        if stray:
+            failures.append('search/states.json lists %d legislators not in any members file (e.g. %s)' % (len(stray), stray[0]))
+    return failures[:200]
+
+
 def run():
     failures = []
     manifest = _load('manifest.json')
@@ -125,5 +186,6 @@ def run():
                     if not _load('us/bills/%s/%s.json' % (congress, row[11])):
                         failures.append('vote %s references missing bill %s' % (row[0], row[11]))
     failures += california_checks()
+    failures += national_checks()
     failures += shrink_failures(manifest)
     return failures

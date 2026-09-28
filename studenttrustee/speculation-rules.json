@@ -1,0 +1,26 @@
+{
+  "prefetch": [
+    {
+      "source": "document",
+      "where": {
+        "and": [
+          { "href_matches": "/*" },
+          { "not": { "href_matches": "/legislation/*" } },
+          { "not": { "href_matches": "/data/*" } },
+          { "not": { "selector_matches": "[download], [rel~=nofollow], [target=_blank]" } }
+        ]
+      },
+      "eagerness": "moderate"
+    },
+    {
+      "source": "document",
+      "where": {
+        "and": [
+          { "or": [{ "href_matches": "/legislation/" }, { "href_matches": "/legislation/calendars/" }] },
+          { "not": { "selector_matches": ".leg-page a" } }
+        ]
+      },
+      "eagerness": "moderate"
+    }
+  ]
+}

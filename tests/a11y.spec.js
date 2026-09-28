@@ -28,7 +28,7 @@ function legislationPages() {
   const ready = (sel) => `#app:not([aria-busy]) ${sel}`;
   const pages = [
     { name: "leg-overview", url: "/legislation/", ready: ready(".sec") },
-    { name: "leg-states", url: "/legislation/states/", ready: ready("ul.cols") },
+    { name: "leg-states", url: "/legislation/states/", ready: ready("table.states") },
     { name: "leg-california", url: "/legislation/california/", ready: ready("#counties") },
     { name: "leg-other-state", url: "/legislation/texas/", ready: ready(".sec") },
     { name: "leg-votes-federal", url: "/legislation/votes/?level=federal", ready: ready("form.filters") },
@@ -41,6 +41,17 @@ function legislationPages() {
     { name: "leg-sources", url: "/legislation/sources/", ready: ready("table.tbl") },
     { name: "leg-not-found", url: "/legislation/nowhere/at-all/", ready: ready("p") },
   ];
+  // Every state outside California: a state page, its legislators, a county with a board link, a
+  // county with no county government, a legislator, and a territory with no legislature.
+  if (read("geo/us-tx/counties.json")) {
+    pages.push({ name: "leg-legislators", url: "/legislation/texas/legislators/", ready: ready("ul.people") });
+    pages.push({ name: "leg-county-national", url: "/legislation/texas/travis/", ready: ready("#votes:not([aria-busy]) .count") });
+    pages.push({ name: "leg-territory", url: "/legislation/guam/", ready: ready(".sec") });
+    pages.push({ name: "leg-search-place", url: "/legislation/search/?q=travis", ready: ready(".sec") });
+  }
+  if (read("geo/us-ct/counties.json")) pages.push({ name: "leg-county-no-government", url: "/legislation/connecticut/fairfield/", ready: ready("#board") });
+  const tx = read("us-tx/members.json");
+  if (tx && tx.members.length) pages.push({ name: "leg-legislator-other-state", url: `/legislation/legislator/${tx.members[0].id}/`, ready: ready("dl.facts") });
   const col = (d, k) => d.columns.indexOf(k);
   const usLatest = read("us/latest.json");
   if (usLatest && usLatest.rows.length) {

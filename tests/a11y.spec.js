@@ -45,13 +45,40 @@ function legislationPages() {
   // county with no county government, a legislator, and a territory with no legislature.
   if (read("geo/us-tx/counties.json")) {
     pages.push({ name: "leg-legislators", url: "/legislation/texas/legislators/", ready: ready("ul.people") });
-    pages.push({ name: "leg-county-national", url: "/legislation/texas/travis/", ready: ready("#votes:not([aria-busy]) .count") });
+    pages.push({ name: "leg-county-national", url: "/legislation/texas/travis/", ready: ready("#congress-votes:not([aria-busy]) .count") });
     pages.push({ name: "leg-territory", url: "/legislation/guam/", ready: ready(".sec") });
     pages.push({ name: "leg-search-place", url: "/legislation/search/?q=travis", ready: ready(".sec") });
   }
   if (read("geo/us-ct/counties.json")) pages.push({ name: "leg-county-no-government", url: "/legislation/connecticut/fairfield/", ready: ready("#board") });
+  // A county board outside California that publishes on Legistar, and one of its votes.
+  const national = read("counties/index.json");
+  const statesFile = read("geo/states.json");
+  const board = national && national.counties.find((c) => c.coverage === "votes" && c.slug);
+  const stateRow = board && statesFile && statesFile.states.find((s) => s.code === board.state);
+  if (board && stateRow) pages.push({ name: "leg-county-board-national", url: `/legislation/${stateRow.slug}/${board.slug}/`, ready: ready("#votes") });
+  const natLatest = read("counties/latest.json");
+  if (natLatest && natLatest.rows.length) pages.push({ name: "leg-vote-county-national", url: `/legislation/vote/${natLatest.rows[0][0]}/`, ready: ready("dl.facts") });
   const tx = read("us-tx/members.json");
   if (tx && tx.members.length) pages.push({ name: "leg-legislator-other-state", url: `/legislation/legislator/${tx.members[0].id}/`, ready: ready("dl.facts") });
+  // Other states' bills and votes (Open States bulk data), once the nightly job has published some:
+  // that state's votes and bills lists, a vote, its bill, and a legislator with votes on record.
+  const legs = read("legislatures.json");
+  const vst = legs && Object.keys(legs.states).filter((k) => k !== "CA" && legs.states[k].votes > 0).sort()[0];
+  const vsum = vst && read(`us-${vst.toLowerCase()}/summary.json`);
+  if (vsum && vsum.latest && vsum.latest.length) {
+    const st = vst.toLowerCase();
+    const v = vsum.latest.find((x) => x.bill_id) || vsum.latest[0];
+    pages.push({ name: "leg-votes-other-state", url: `/legislation/votes/?level=state&state=${vst}`, ready: ready("form.filters") });
+    pages.push({ name: "leg-bills-other-state", url: `/legislation/bills/?level=state&state=${vst}`, ready: ready("form.filters") });
+    pages.push({ name: "leg-vote-other-state", url: `/legislation/vote/${v.id}/`, ready: ready("dl.facts") });
+    if (v.bill_id) pages.push({ name: "leg-bill-other-state", url: `/legislation/bill/${v.bill_id}/`, ready: ready("dl.facts") });
+    const vidx = read(`us-${st}/votes/index.json`);
+    const newest = vidx && vidx.shards.slice().sort((a, b) => b.month.localeCompare(a.month) || a.body.localeCompare(b.body))[0];
+    const month = newest && read(`us-${st}/votes/${newest.session}/${newest.file}`);
+    const members = read(`us-${st}/members.json`);
+    const voter = month && members && month.members.find((id) => members.members.some((m) => m.id === id));
+    if (voter) pages.push({ name: "leg-legislator-record-other-state", url: `/legislation/legislator/${voter}/`, ready: ready("#record .sum") });
+  }
   const col = (d, k) => d.columns.indexOf(k);
   const usLatest = read("us/latest.json");
   if (usLatest && usLatest.rows.length) {

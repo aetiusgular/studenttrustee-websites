@@ -240,9 +240,9 @@ def main(argv=None):
                                 'source_updated_at': updated, 'retrieved_at': retrieved})
         prev_summary = writer.read_json('us-%s/summary.json' % st.lower()) or {}
         summ = summary(st, members, updated, retrieved)
-        for k in ('session', 'latest'):
+        for k in ('session', 'latest', 'votes_source'):
             if prev_summary.get(k):
-                summ[k] = prev_summary[k]          # phase 2 fills these; keep them when only members refresh
+                summ[k] = prev_summary[k]          # openstates.py fills these; keep them when only members refresh
         writer.write_json('us-%s/summary.json' % st.lower(), summ)
         search_rows[st] = [['member', m['id'], m['name'], ' · '.join(x for x in (m['party'], district_words(m)) if x), m['body']] for m in members]
         row = dict(prev_index.get(st) or {})

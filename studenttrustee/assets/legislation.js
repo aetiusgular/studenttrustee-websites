@@ -48,6 +48,7 @@
   var SCHEMA_MAX = 1;
   var TIMEOUT = 10000, RETRY_AFTER = 1000, KEEP = 30 * 60 * 1000, FAIL_MEMORY = 3000, PREFETCH_SLOTS = 2;
   var MISSING = { missing: true };
+  var SAFE_REL = /^[A-Za-z0-9_-][A-Za-z0-9_./-]*\.json$/;
 
   function ApiError(kind, rel, httpStatus) {
     var msg = kind === "timeout" ? "The records service did not answer within " + (TIMEOUT / 1000) + " seconds."
@@ -131,6 +132,9 @@
 
     function get(rel, opts) {
       opts = opts || {};
+      // Paths are built from ids in the address; anything outside the data folder's own names is
+      // treated as a file that does not exist, and never requested.
+      if (!SAFE_REL.test(rel) || /(^|\/)\.\.?(\/|$)/.test(rel)) return opts.optional ? Promise.resolve(null) : Promise.reject(ApiError("missing", rel, 404));
       var e = files[rel];
       var now = Date.now();
       if (e && e.state === "done" && now - e.at > KEEP) e = null;
@@ -282,19 +286,23 @@
     return TIME_FMT.format(d);
   }
   function fmtMonth(ym) { var p = ym.split("-"); return MONTH_FMT.format(new Date(Date.UTC(+p[0], +p[1] - 1, 15))); }
+  // Zones the sources give times in: the abbreviation shown, and hours behind Eastern (for sorting;
+  // Arizona, Hawaii and Puerto Rico skip daylight time, so their offsets are right half the year).
+  var ZONES = { "America/New_York": ["ET", 0], "America/Detroit": ["ET", 0], "America/Indiana/Indianapolis": ["ET", 0], "America/Kentucky/Louisville": ["ET", 0],
+    "America/Chicago": ["CT", 1], "America/Denver": ["MT", 2], "America/Boise": ["MT", 2], "America/Phoenix": ["MST", 3], "America/Los_Angeles": ["PT", 3],
+    "America/Anchorage": ["AKT", 4], "Pacific/Honolulu": ["HST", 6], "America/Puerto_Rico": ["AST", 0] };
   function fmtClock(t, tz) {
     // "14:00" + "America/New_York" -> "2:00 PM ET". Times stay in the zone the source gives.
     var m = /^(\d{2}):(\d{2})$/.exec(t || "");
     if (!m) return t || "";
     var h = +m[1], ap = h >= 12 ? "PM" : "AM";
     h = h % 12 || 12;
-    return h + ":" + m[2] + " " + ap + " " + (tz === "America/New_York" ? "ET" : tz === "America/Chicago" ? "CT" : "PT");
+    return h + ":" + m[2] + " " + ap + " " + (ZONES[tz] || ZONES["America/Los_Angeles"])[0];
   }
   function whenKey(x) {
-    // Sort key for scheduled items across time zones. Eastern and Pacific switch to daylight time on
-    // the same dates, so Eastern is always Pacific + 3 h. Items without a time sort last in their day.
+    // Sort key for scheduled items across time zones, in Eastern time. Items without a time sort last in their day.
     var m = /^(\d{2}):(\d{2})$/.exec(x.time || "");
-    var mins = m ? (+m[1]) * 60 + (+m[2]) + (x.tz === "America/New_York" ? 0 : 180) : 9999;
+    var mins = m ? (+m[1]) * 60 + (+m[2]) + 60 * (ZONES[x.tz] || ZONES["America/Los_Angeles"])[1] : 9999;
     return (x.date || "") + " " + String(mins).padStart(4, "0");
   }
   function clockPart(x) { return x.time ? " · " + fmtClock(x.time, x.tz) : x.time_note ? " · " + x.time_note : ""; }
@@ -309,9 +317,14 @@
   function badge(level) { return el("span", { class: "lvl lvl-" + level }, LEVEL_NAME[level] || level); }
   function bodyName(body, counties) {
     if (BODY_NAME[body]) return BODY_NAME[body];
-    var sb = /^us-([a-z]{2})-(upper|lower)$/.exec(body || "");
-    if (sb && STATE_INFO[sb[1].toUpperCase()]) return chamberTitle(STATE_INFO[sb[1].toUpperCase()], sb[2]);
-    var m = /^ca-(\d{5})-bos$/.exec(body || "");
+    var sb = /^us-([a-z]{2})-(upper|lower|legislature)$/.exec(body || "");
+    var si = sb && STATE_INFO[sb[1].toUpperCase()];
+    if (si) {
+      // "legislature" is a unicameral body, or in a two-chamber state the legislature as a whole
+      var one = ((si.legislature && si.legislature.chambers) || []).length === 1;
+      return sb[2] === "legislature" && !one ? stateLegName(si) : chamberTitle(si, sb[2]);
+    }
+    var m = /^[a-z]{2}-(\d{5})-bos$/.exec(body || "");
     if (m && counties) { var c = counties[m[1]]; if (c) return c.body_name; }
     return body || "";
   }
@@ -540,9 +553,13 @@
   function manifest() { return get("manifest.json"); }
   function states() { return get("geo/states.json").then(function (d) { d.states.forEach(function (x) { STATE_INFO[x.code] = x; }); return d.states; }); }
   function caCounties() { return get("geo/us-ca/counties.json").then(function (d) { return d.counties; }); }
+  // County boards with a record here, California's and every other state's, by FIPS code.
   function countyIndex() {
-    return get("us-ca/counties/index.json", true).then(function (d) {
-      var byFips = {}; (d && d.counties || []).forEach(function (c) { byFips[c.fips] = c; }); return byFips;
+    return Promise.all([get("us-ca/counties/index.json", true), get("counties/index.json", true)]).then(function (r) {
+      var byFips = {};
+      ((r[0] && r[0].counties) || []).forEach(function (c) { byFips[c.fips] = Object.assign({ state: "CA" }, c); });
+      ((r[1] && r[1].counties) || []).forEach(function (c) { byFips[c.fips] = c; });
+      return byFips;
     });
   }
   function usMembers() {
@@ -575,7 +592,7 @@
     else if (m.body === "us-senate") bits.push(m.state);
     else if (m.body === "ca-assembly") bits.push("AD " + m.district);
     else if (m.body === "ca-senate") bits.push("SD " + m.district);
-    else if (/^us-[a-z]{2}-(upper|lower)$/.test(m.body || "")) return stateMemberLabel(m);
+    else if (/^us-[a-z]{2}-(upper|lower|legislature)$/.test(m.body || "")) return stateMemberLabel(m);
     else if (m.title) bits.push(m.title);
     if (m.former || m.provisional) bits.push(m.left_office ? "left office " + fmtDate(m.left_office) : "no longer serving");
     return bits.join(" · ");
@@ -590,7 +607,14 @@
     return { id: v.id, date: v.date, body: v.body, question: cap(v.question || "Vote") + (v.matter_label ? " · " + v.matter_label : ""), title: v.matter_title || "",
       result: v.result, passed: v.passed, yes: v.yes, no: v.no, other: v.other, bill_id: null };
   }
-  function idOfCounty(id) { var m = /^ca-(\d{5})-bos/.exec(id || ""); return m ? m[1] : null; }
+  // County records carry ids like ca-06073-bos-vote-... and tx-48201-bos-12345: the state, the county's FIPS code.
+  function idOfCounty(id) { var m = /^([a-z]{2})-(\d{5})-bos/.exec(id || ""); return m ? m[2] : null; }
+  function countyFolder(id) { var m = /^([a-z]{2})-(\d{5})-bos/.exec(id || ""); return m ? "us-" + m[1] + "/counties/" + m[2] : null; }
+  function countyHref(entry) {
+    var s = entry && STATE_INFO[entry.state || "CA"];
+    return entry && entry.slug && s ? href([s.slug, entry.slug]) : href(["states"]);
+  }
+  function countyCrumb(entry, name) { return link(countyHref(entry), name || (entry && entry.county) || "County"); }
 
   // ---------- states outside California: shared loaders and words ----------
   var STATE_INFO = {};          // code -> row of geo/states.json, filled whenever that file is read
@@ -760,20 +784,20 @@
 
   // ---------- overview ----------
   function viewOverview() {
-    return Promise.all([manifest(), states(), get("us/latest.json", true), get("us-ca/latest.json", true), get("us/upcoming.json", true), get("us-ca/upcoming.json", true), get("us-ca/counties/upcoming.json", true), countyIndex(), get("us-ca/counties/latest.json", true), caVoteIndex(), usMembers()])
+    return Promise.all([manifest(), states(), get("us/latest.json", true), get("us-ca/latest.json", true), get("us/upcoming.json", true), get("us-ca/upcoming.json", true), get("us-ca/counties/upcoming.json", true), countyIndex(), get("us-ca/counties/latest.json", true), caVoteIndex(), usMembers(), get("counties/latest.json", true), get("counties/upcoming.json", true)])
       .then(function (r) {
         var man = r[0], st = r[1], usLatest = rows2objs(r[2]), caLatest = rows2objs(r[3]), counties = r[7];
         var caSession = r[9] && r[9].session, congress = r[10].congress;
         caLatest.forEach(function (v) { v.body = v.body || caBody(v.location); });
-        var coLatest = rows2objs(r[8]).map(countyRowToVote);
+        var coLatest = rows2objs(r[8]).concat(rows2objs(r[11])).map(countyRowToVote).sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
         var today = todayISO();
-        var up = ((r[4] && r[4].items) || []).concat((r[5] && r[5].items) || [], ((r[6] && r[6].items) || []).map(function (m) { return Object.assign({ level: "county" }, m); }))
+        var up = ((r[4] && r[4].items) || []).concat((r[5] && r[5].items) || [], ((r[6] && r[6].items) || []).concat((r[12] && r[12].items) || []).map(function (m) { return Object.assign({ level: "county" }, m); }))
           .filter(function (u) { return ahead(u, today); }).sort(function (a, b) { return whenKey(a).localeCompare(whenKey(b)); }).slice(0, 10);
         var counts = man.counts || {};
         var ca = st.filter(function (s) { return s.code === "CA"; })[0];
 
         var sel = el("select", { id: "state-pick", name: "state" }, el("option", { value: "" }, "Choose a state"),
-          st.map(function (s) { return el("option", { value: s.slug }, s.name + (s.coverage === "full" ? " (votes at every level)" : s.legislature ? " (Congress, legislators and counties)" : " (Congress only)")); }));
+          st.map(function (s) { return el("option", { value: s.slug }, s.name + (s.coverage === "full" ? " (votes at every level)" : s.legislature ? " (Congress, legislature and counties)" : " (Congress only)")); }));
         var finder = el("form", { class: "finder", on: { submit: function (e) { e.preventDefault(); var v = sel.value; if (v) navigate(href([v])); } } },
           el("label", { for: "state-pick" }, "Start with a state"),
           el("div", { class: "row" }, sel, el("button", { type: "submit", class: "btn" }, "Go")));
@@ -782,10 +806,10 @@
           el("li", null, badge("federal"), el("h3", null, "Congress"), el("p", null, (counts.us_votes || 0).toLocaleString() + " roll-call votes, " + (counts.us_bills || 0).toLocaleString() + " bills with votes, " + (counts.us_members || 0) + " members of the " + ordinal(congress) + " Congress, including those who have left."),
             el("p", { class: "links" }, link(href(["votes"], { level: "federal" }), "Federal votes"), " · ", link(href(["bills"], { level: "federal" }), "Federal bills"))),
           el("li", null, badge("state"), el("h3", null, "State legislatures"), el("p", null, (counts.ca_votes ? "California: " + counts.ca_votes.toLocaleString() + " floor and committee votes on " + (counts.ca_bills || 0).toLocaleString() + " bills of the " + sessionLabel(caSession) + " session, " + (counts.ca_members || 0) + " legislators. " : "California records have not been published yet. ") +
-              (counts.st_members ? "The other 49 states, DC and Puerto Rico: " + counts.st_members.toLocaleString() + " legislators from Open States; their votes are not collected yet." : "")),
+              (counts.st_members ? "The other 49 states, DC and Puerto Rico: " + counts.st_members.toLocaleString() + " legislators from Open States" + (counts.st_votes ? " and " + counts.st_votes.toLocaleString() + " votes from its bulk data." : "; their votes are not collected yet.") : "")),
             el("p", { class: "links" }, link(href(["california"]), "California"), " · ", link(href(["states"]), "Every state"), " · ", link(href(["votes"], { level: "state" }), "State votes"), " · ", link(href(["bills"], { level: "state" }), "State bills"))),
           el("li", null, badge("county"), el("h3", null, "Counties"), el("p", null, (counts.us_counties ? "A page for each of " + counts.us_counties.toLocaleString() + " counties and county equivalents, with its districts and governing body. " : "") +
-              (counts.ca_counties_with_votes ? counts.ca_counties_with_votes + " California boards publish machine-readable votes (" + (counts.ca_county_votes || 0).toLocaleString() + " in the last 90 days); the rest are linked to their own sites." : "County records have not been published yet.")),
+              (counts.ca_counties_with_votes ? (counts.ca_counties_with_votes + (counts.us_counties_with_votes || 0)) + " county boards publish machine-readable votes (" + ((counts.ca_county_votes || 0) + (counts.us_county_votes || 0)).toLocaleString() + " in the last 90 days), " + counts.ca_counties_with_votes + " of them in California; the rest are linked to their own sites." : "County records have not been published yet.")),
             el("p", { class: "links" }, link(href(["states"]), "Find a county"), " · ", link(href(["votes"], { level: "county" }), "County votes"))));
 
         var body = frag(
@@ -826,18 +850,24 @@
   }
 
   // ---------- states ----------
-  function votesCollected(s, counts) {
+  function votesCollected(s, counts, l, boards) {
     if (s.code === "CA") return "Congress, the Legislature (floor and committee) and " + (counts.ca_counties_with_votes || 0) + " county boards";
     if (s.delegate_only) return "Congress (delegate)";
-    return "Congress";
+    var parts = ["Congress"];
+    if (l && l.votes) parts.push("the " + (s.code === "DC" ? "Council" : "Legislature") + " (" + (l.committee_votes === "left out" ? "floor votes" : "floor and committee") + ")");
+    if (boards) parts.push(plural(boards, "county board", "county boards"));
+    return listWords(parts);
   }
   function seatsLine(s) {
     if (!s.legislature) return "No state legislature";
     return s.legislature.chambers.map(function (c) { return shortChamber(c.name) + " " + c.seats; }).join(" · ");
   }
   function viewStates() {
-    return Promise.all([states(), legislatures(), manifest()]).then(function (r) {
+    return Promise.all([states(), legislatures(), manifest(), get("counties/index.json", true)]).then(function (r) {
       var st = r[0], leg = r[1], man = r[2];
+      var boards = {};          // county boards with recorded votes outside California, by state
+      ((r[3] && r[3].counties) || []).forEach(function (c) { if (c.coverage === "votes") boards[c.state] = (boards[c.state] || 0) + 1; });
+      var withVotes = statesWith(leg, "votes").length;
       var congress = +((man.count_scopes || {}).us_members || 0);
       var counts = man.counts || {};
       var withCounties = st.filter(function (s) { return s.counties; });
@@ -845,8 +875,10 @@
       var legislators = Object.keys(leg).reduce(function (a, k) { return a + (leg[k].members || 0); }, 0);
       var levels = el("ul", { class: "levels plain" },
         el("li", null, badge("federal"), el("h3", null, "Congress"), el("p", null, "Members of the " + (congress ? ordinal(congress) + " " : "current ") + "Congress and every House and Senate roll call, for every state and territory.")),
-        el("li", null, badge("state"), el("h3", null, "50 legislatures, DC and Puerto Rico"), el("p", null, (legislators ? legislators.toLocaleString() + " legislators. " : "") + "California's records, votes included, come from the Legislature. Elsewhere the legislators come from Open States; their votes are not collected yet.")),
-        el("li", null, badge("county"), el("h3", null, totalCounties ? plural(totalCounties, "county", "counties and county equivalents") : "Counties"), el("p", null, "A page for each, with the districts that overlap it and its governing body. Board votes where a California county publishes them.")));
+        el("li", null, badge("state"), el("h3", null, "50 legislatures, DC and Puerto Rico"), el("p", null, (legislators ? legislators.toLocaleString() + " legislators. " : "") + "California's records, votes included, come from the Legislature. " +
+          (withVotes ? "Elsewhere the legislators, bills and votes come from Open States, which collects them from each legislature's website; " + plural(withVotes, "legislature has", "legislatures have") + " votes here so far." : "Elsewhere the legislators come from Open States; their votes are not collected yet."))),
+        el("li", null, badge("county"), el("h3", null, totalCounties ? plural(totalCounties, "county", "counties and county equivalents") : "Counties"), el("p", null, "A page for each, with the districts that overlap it and its governing body. Board votes where a county publishes them through Legistar" +
+          ((counts.ca_counties_with_votes || 0) + (counts.us_counties_with_votes || 0) ? ": " + plural((counts.ca_counties_with_votes || 0) + (counts.us_counties_with_votes || 0), "board", "boards") + " so far." : "."))));
 
       var rowsBySlug = {};
       var tbody = el("tbody", null, st.map(function (s) {
@@ -855,7 +887,7 @@
           el("th", { scope: "row" }, link(href([s.slug]), s.name)),
           el("td", { "data-label": "Legislature" }, seatsLine(s), l.vacant ? el("span", { class: "meta" }, " (" + l.vacant + " vacant)") : null),
           el("td", { "data-label": "Counties" }, s.counties ? plural(s.counties, countyWord(s, 1), countyWord(s, 2)) : el("span", { class: "unk" }, "none listed")),
-          el("td", { "data-label": "Votes collected" }, votesCollected(s, counts)),
+          el("td", { "data-label": "Votes collected" }, votesCollected(s, counts, l, boards[s.code])),
           el("td", { "data-label": "Legislators updated" }, l.source_updated_at ? time(l.source_updated_at) : el("span", { class: "unk" }, s.legislature ? "not stated" : "no legislature")));
         rowsBySlug[s.slug] = { tr: tr, name: s.name.toLowerCase(), code: s.code.toLowerCase() };
         return tr;
@@ -953,8 +985,11 @@
           el("span", null, badge("state"), " " + chambers.map(function (c) { return shortChamber(c.name) + " " + c.seats; }).join(" · ")),
           el("span", null, badge("county"), " " + plural(counties.length, countyWord(s, 1), countyWord(s, 2))));
         var src = summ.source || {};
+        var vsrc = summ.votes_source || null;
+        var latest = (summ.latest || []).map(function (v) { return stateRow(v, v.body); });
         var fresh = el("p", { class: "fresh" }, "Members of Congress checked ", time((sourceOf(man, "congress-legislators") || {}).last_checked_at, true),
           ". " + legName + " members from " + (src.id === "openstates-people" ? "Open States" : src.name || "Open States") + ", updated ", time(summ.source_updated_at, true), " (not the official record)",
+          vsrc ? [". Bills and votes from Open States' bulk data, updated ", time(vsrc.updated_at, true)] : null,
           ". Districts from the Census Bureau's 2024 relationship files.");
         var chamberBlocks = chambers.map(function (c) {
           var id = c.id === "legislature" ? "upper" : c.id;
@@ -967,8 +1002,14 @@
         });
         var legislature = section(legName, frag(
           el("div", { class: "chambers" }, chamberBlocks),
-          note("Legislators and their districts come from Open States, which collects them from the legislature's website. " + legName + " votes are not collected yet; the legislature's own journals are the official record."),
+          vsrc ? note("Legislators, bills and votes come from Open States, which collects them from the legislature's website" + (summ.session && summ.session.name ? "; the latest session here is the " + summ.session.name : "") + ". The legislature's own journals are the official record." +
+              (vsrc.committee_votes === "left out" ? " Committee votes are left out for " + s.name + " to keep the published records within the free hosting limit; floor votes are all here." : ""))
+            : note("Legislators and their districts come from Open States, which collects them from the legislature's website. " + legName + " votes are not collected yet; the legislature's own journals are the official record."),
+          vsrc ? el("p", { class: "links" }, latest.length ? [link(href(["votes"], { level: "state", state: s.code }), legName + " votes"), " · "] : null, link(href(["bills"], { level: "state", state: s.code }), legName + " bills")) : null,
           freshness(man, "openstates-people", summ.source_updated_at, summ.retrieved_at)), "state");
+        var stateLatest = latest.length ? section("Latest votes in the " + legName, frag(
+          el("ul", { class: "plain votes" }, latest.slice(0, 6).map(function (v) { return voteItem(v); })),
+          el("p", { class: "links" }, link(href(["votes"], { level: "state", state: s.code }), "All " + legName + " votes"))), "latest") : null;
 
         var countyList = el("ul", { class: "plain cols" });
         var count = liveCount();
@@ -994,10 +1035,11 @@
           cov, fresh,
           delegation,
           legislature,
+          stateLatest,
           countySec,
           section("Latest votes in Congress", el("ul", { class: "plain votes" }, usLatest.slice(0, 6).map(function (v) { return voteItem(v); })), "latest"),
           el("p", { class: "links" }, link(href(["votes"], { level: "federal" }), "All federal votes"), " · ", link(href(["upcoming"], { level: "federal" }), "Upcoming in Congress")));
-        return { title: s.name, lede: "Who represents " + s.name + " in Congress and in the " + legName + ", and a page for each of its " + plural(counties.length, countyWord(s, 1), countyWord(s, 2)) + ".", body: body };
+        return { title: s.name, lede: "Who represents " + s.name + " in Congress and in the " + legName + (latest.length ? ", how both have voted" : "") + ", and a page for each of its " + plural(counties.length, countyWord(s, 1), countyWord(s, 2)) + ".", body: body };
       });
     });
   }
@@ -1096,8 +1138,47 @@
   }
 
   // ---------- county ----------
+  // A county board's meetings and one month of its votes, for any county on Legistar.
+  function boardSections(board, vf, month, place, cidx, memberWord) {
+    var months = board.vote_months || [];
+    var meetings = (board.meetings || []);
+    var today = todayISO();
+    var upcoming = meetings.filter(function (m) { return m.date >= today; }).sort(function (a, b) { return whenKey(a).localeCompare(whenKey(b)); });
+    var held = meetings.filter(function (m) { return m.date < today; });
+    var meetSec = section("Board meetings", board.platform === "Legistar" ? frag(
+      el("h3", null, "Scheduled"),
+      upcoming.length ? el("ul", { class: "plain ups" }, upcoming.map(function (m) { return upcomingItem(Object.assign({ level: "county" }, m), cidx); })) : note("No meetings scheduled in the published calendar."),
+      el("h3", null, "Held in the last 90 days"),
+      held.length ? el("ul", { class: "plain meets" }, held.map(function (m) { return el("li", null, time(m.date), clockPart(m), m.title && / \(/.test(m.title) ? " · " + m.title.replace(/^.*\((.*)\)$/, "$1") : "", " · " + m.votes + " actions on " + m.items + " agenda items · ", m.minutes_url ? ext(m.minutes_url, "Minutes") : null, m.minutes_url && m.agenda_url ? " · " : null, m.agenda_url ? ext(m.agenda_url, "Agenda") : null, !m.minutes_url && !m.agenda_url ? ext(m.official_url, "Meeting page") : null); })) : note("No meetings in the last 90 days.")) :
+      note("Meeting schedules for this county are on its official agenda page linked above; they are not published in a machine-readable form."), "meetings");
+    var votesSec;
+    if (board.platform === "Legistar") {
+      var msel = el("select", { id: "month-pick", name: "month" }, months.slice().reverse().map(function (m) { return el("option", { value: m.month, selected: m.month === month }, fmtMonth(m.month) + " (" + m.votes + ")"); }));
+      var picker = months.length ? el("form", { class: "filters", on: { submit: function (ev) { ev.preventDefault(); navigate(href(place, { month: msel.value }) + "#votes", { keepScroll: true }); } } },
+        el("label", { for: "month-pick" }, "Month"),
+        el("div", { class: "row" }, msel, el("button", { type: "submit", class: "btn" }, "Show"))) : null;
+      var vrows = rows2objs(vf);
+      var matters = (vf && vf.matters) || {};
+      var list = more(vrows, function (v) {
+        var m = v.matter_id ? matters[v.matter_id] : null;
+        return el("li", { class: "vote" },
+          el("div", { class: "vote-head" }, badge("county"), el("span", { class: "when" }, time(v.date)), v.agenda_number ? el("span", { class: "loc" }, "Item " + v.agenda_number) : null),
+          el("h3", null, link(voteHref(v.id), (v.question ? v.question.charAt(0).toUpperCase() + v.question.slice(1) : "Vote") + (m && m.label ? " · " + m.label : ""))),
+          m && m.title ? el("p", { class: "vt" }, m.title) : null,
+          el("p", { class: "res" }, el("b", { class: v.passed ? "pass" : "fail" }, v.passed ? "Passed" : v.passed === false ? "Failed" : v.result), /[^-]/.test(v.positions || "") ? [" · ", tally({ yes: v.yes, no: v.no, other: v.other })] : el("span", { class: "unk" }, " · no roll call recorded")));
+      }, { ulClass: "votes", empty: "No recorded votes for this month." });
+      votesSec = section("Board votes" + (month ? " · " + fmtMonth(month) : ""), frag(
+        note(board.coverage === "votes" ? "Every agenda item the board acted on, with each " + memberWord + "'s position, from the county's Legistar system. Consent-calendar items are usually approved in one vote." : "This county publishes agendas through Legistar but no per-" + memberWord + " vote records."),
+        picker, list), "votes");
+    } else {
+      votesSec = section("Board votes", note("This county does not publish votes in a machine-readable form. Minutes and agendas are on its official pages linked above."), "votes");
+    }
+    votesSec.id = "votes";
+    return { votes: votesSec, meetings: meetSec };
+  }
+
   function viewCounty(stateSlug, countySlug, params) {
-    if (stateSlug !== "california") return viewNationalCounty(stateSlug, countySlug);
+    if (stateSlug !== "california") return viewNationalCounty(stateSlug, countySlug, params);
     return Promise.all([caCounties(), countyIndex(), usMembers(), caMembers(), manifest()]).then(function (r) {
       var geo = r[0], cidx = r[1], us = r[2], ca = r[3], man = r[4];
       var g = geo.filter(function (x) { return x.slug === countySlug; })[0];
@@ -1135,41 +1216,8 @@
               freshness(man, "county-" + g.fips, (sourceOf(man, "county-" + g.fips) || {}).source_updated_at)),
             el("p", { class: "links" }, ext("https://findyourrep.legislature.ca.gov/", "Find Your Representative (California Legislature)"), " · ", ext("https://www.house.gov/representatives/find-your-representative", "Find Your Representative (U.S. House)"))), "represent");
 
-          var meetings = (board.meetings || []);
-          var today = todayISO();
-          var upcoming = meetings.filter(function (m) { return m.date >= today; }).sort(function (a, b) { return whenKey(a).localeCompare(whenKey(b)); });
-          var held = meetings.filter(function (m) { return m.date < today; });
-          var meetSec = section("Board meetings", board.platform === "Legistar" ? frag(
-            el("h3", null, "Scheduled"),
-            upcoming.length ? el("ul", { class: "plain ups" }, upcoming.map(function (m) { return upcomingItem(Object.assign({ level: "county" }, m), cidx); })) : note("No meetings scheduled in the published calendar."),
-            el("h3", null, "Held in the last 90 days"),
-            held.length ? el("ul", { class: "plain meets" }, held.map(function (m) { return el("li", null, time(m.date), clockPart(m), m.title && / \(/.test(m.title) ? " · " + m.title.replace(/^.*\((.*)\)$/, "$1") : "", " · " + m.votes + " actions on " + m.items + " agenda items · ", m.minutes_url ? ext(m.minutes_url, "Minutes") : null, m.minutes_url && m.agenda_url ? " · " : null, m.agenda_url ? ext(m.agenda_url, "Agenda") : null, !m.minutes_url && !m.agenda_url ? ext(m.official_url, "Meeting page") : null); })) : note("No meetings in the last 90 days.")) :
-            note("Meeting schedules for this county are on its official agenda page linked above; they are not published in a machine-readable form."), "meetings");
-
-          var votesSec;
-          if (board.platform === "Legistar") {
-            var msel = el("select", { id: "month-pick", name: "month" }, months.slice().reverse().map(function (m) { return el("option", { value: m.month, selected: m.month === month }, fmtMonth(m.month) + " (" + m.votes + ")"); }));
-            var picker = months.length ? el("form", { class: "filters", on: { submit: function (ev) { ev.preventDefault(); navigate(href([stateSlug, countySlug], { month: msel.value }) + "#votes", { keepScroll: true }); } } },
-              el("label", { for: "month-pick" }, "Month"),
-              el("div", { class: "row" }, msel, el("button", { type: "submit", class: "btn" }, "Show"))) : null;
-            var vrows = rows2objs(vf);
-            var matters = (vf && vf.matters) || {};
-            var list = more(vrows, function (v) {
-              var m = v.matter_id ? matters[v.matter_id] : null;
-              return el("li", { class: "vote" },
-                el("div", { class: "vote-head" }, badge("county"), el("span", { class: "when" }, time(v.date)), v.agenda_number ? el("span", { class: "loc" }, "Item " + v.agenda_number) : null),
-                el("h3", null, link(voteHref(v.id), (v.question ? v.question.charAt(0).toUpperCase() + v.question.slice(1) : "Vote") + (m && m.label ? " · " + m.label : ""))),
-                m && m.title ? el("p", { class: "vt" }, m.title) : null,
-                el("p", { class: "res" }, el("b", { class: v.passed ? "pass" : "fail" }, v.passed ? "Passed" : v.passed === false ? "Failed" : v.result), /[^-]/.test(v.positions || "") ? [" · ", tally({ yes: v.yes, no: v.no, other: v.other })] : el("span", { class: "unk" }, " · no roll call recorded")));
-            }, { ulClass: "votes", empty: "No recorded votes for this month." });
-            votesSec = section("Board votes" + (month ? " · " + fmtMonth(month) : ""), frag(
-              note(board.coverage === "votes" ? "Every agenda item the board acted on, with each supervisor's position, from the county's Legistar system. Consent-calendar items are usually approved in one vote." : "This county publishes agendas through Legistar but no per-supervisor vote records."),
-              picker, list), "votes");
-            votesSec.id = "votes";
-          } else {
-            votesSec = section("Board votes", note("This county does not publish votes in a machine-readable form. Minutes and agendas are on its official pages linked above."), "votes");
-            votesSec.id = "votes";
-          }
+          var secs = boardSections(board, vf, month, [stateSlug, countySlug], cidx, "supervisor");
+          var votesSec = secs.votes, meetSec = secs.meetings;
           var body = frag(
             el("p", { class: "crumb" }, link(href(["states"]), "States"), " › ", link(href([stateSlug]), "California"), " › ", g.name),
             represent, votesSec, meetSec);
@@ -1187,72 +1235,93 @@
     var m = ids.length ? /^us-(?:house|senate)-(\d+)-(\d+)-/.exec(ids[0]) : null;
     return m ? { congress: +m[1], session: +m[2] } : null;
   }
-  function viewNationalCounty(stateSlug, countySlug) {
-    return Promise.all([states(), manifest(), usMembers(), get("us/latest.json", true)]).then(function (r) {
+  function viewNationalCounty(stateSlug, countySlug, params) {
+    return Promise.all([states(), manifest(), usMembers(), get("us/latest.json", true), countyIndex()]).then(function (r) {
       var s = stateOfSlug(r[0], stateSlug), man = r[1], us = r[2];
       if (!s || NO_LEGISLATURE[s.code]) return notFound();
       if (!s.legislature) return { title: "Not published yet", body: el("p", null, "County pages outside California appear after the next nightly update. ", link(href([s.slug]), s.name), " has its members of Congress now.") };
+      var cidx = r[4];
       return Promise.all([stateGeo(s.code), stateMembers(s.code)]).then(function (x) {
         var geo = x[0], mem = x[1];
         var g = (geo.counties || []).filter(function (c) { return c.slug === countySlug; })[0];
         if (!g) return notFound();
-        var tables = geo.districts || {};
-        var serving = function (m) { return !m.former && !m.provisional; };
-        var senators = us.list.filter(function (m) { return m.body === "us-senate" && m.state === s.code && serving(m); });
-        var reps = us.list.filter(function (m) { return m.body === "us-house" && m.state === s.code && serving(m) && (g.cd || []).indexOf(m.district || 0) >= 0; })
-          .sort(function (a, b) { return (a.district || 0) - (b.district || 0); });
-        var upper = countyLegislators(mem.list, g, "upper");
-        var lower = s.legislature.chambers.length > 1 ? countyLegislators(mem.list, g, "lower") : [];
-        var cdWords = (g.cd || []).filter(function (n) { return n > 0; });
-        function people(list, meta) {
-          return list.length ? el("ul", { class: "plain people" }, list.map(function (m) { return el("li", null, memberLink(m), el("span", { class: "meta" }, " " + meta(m))); }))
-            : note("No current member was matched to these districts. The legislature's website lists every member.");
-        }
-        var lowerChamber = chamberOf(s, "lower");
-        var upperKeys = districtList(tables.upper, g.sldu), lowerKeys = districtList(tables.lower, g.sldl);
-        var represent = section("Who represents " + g.name, frag(
-          note("A " + countyWord(s, 1) + " can span several districts, so this lists everyone whose district covers part of it. For the districts of one address, use the House's Find Your Representative page or Open States' address lookup, linked at the end of this section."),
-          el("div", { class: "lvlblock" }, badge("federal"),
-            senators.length ? frag(el("h3", null, "U.S. Senate"), people(senators, memberLabel)) : null,
-            el("h3", null, s.delegate_only ? "U.S. House (delegate)" : cdWords.length ? "U.S. House (district" + (cdWords.length > 1 ? "s " : " ") + listWords(cdWords.map(String)) + ")" : "U.S. House (at large)"),
-            people(reps, memberLabel)),
-          el("div", { class: "lvlblock" }, badge("state"),
-            el("h3", null, chamberTitle(s, "upper") + (upperKeys.length ? " (district" + (upperKeys.length > 1 ? "s " : " ") + listWords(upperKeys) + ")" : "")),
-            people(upper, stateMemberLabel),
-            lowerChamber ? frag(el("h3", null, chamberTitle(s, "lower") + (lowerKeys.length ? " (district" + (lowerKeys.length > 1 ? "s " : " ") + listWords(lowerKeys) + ")" : "")),
-              people(lower, stateMemberLabel)) : null,
-            freshness(man, "openstates-people", mem.source_updated_at, mem.retrieved_at)),
-          el("p", { class: "links" }, ext("https://www.house.gov/representatives/find-your-representative", "Find Your Representative (U.S. House)"), " · ",
-            ext("https://openstates.org/find_your_legislator/", "Find your legislators by address (Open States)", " (Open States, a nonprofit project; opens its site)"))), "represent");
+        var entry = cidx[g.fips];
+        // A board on Legistar: its record, and the month of votes asked for (else the latest).
+        var boardP = entry && entry.platform === "Legistar" ? get("us-" + lc(s.code) + "/counties/" + g.fips + "/board.json", true).then(function (board) {
+          if (!board) return null;
+          var months = board.vote_months || [];
+          var month = params.get("month") && months.some(function (m) { return m.month === params.get("month"); }) ? params.get("month") : (months.length ? months[months.length - 1].month : null);
+          return (month ? get("us-" + lc(s.code) + "/counties/" + g.fips + "/votes-" + month + ".json", true) : Promise.resolve(null)).then(function (vf) { return { board: board, vf: vf, month: month }; });
+        }) : Promise.resolve(null);
+        return boardP.then(function (bx) {
+          var tables = geo.districts || {};
+          var serving = function (m) { return !m.former && !m.provisional; };
+          var senators = us.list.filter(function (m) { return m.body === "us-senate" && m.state === s.code && serving(m); });
+          var reps = us.list.filter(function (m) { return m.body === "us-house" && m.state === s.code && serving(m) && (g.cd || []).indexOf(m.district || 0) >= 0; })
+            .sort(function (a, b) { return (a.district || 0) - (b.district || 0); });
+          var upper = countyLegislators(mem.list, g, "upper");
+          var lower = s.legislature.chambers.length > 1 ? countyLegislators(mem.list, g, "lower") : [];
+          var cdWords = (g.cd || []).filter(function (n) { return n > 0; });
+          function people(list, meta) {
+            return list.length ? el("ul", { class: "plain people" }, list.map(function (m) { return el("li", null, memberLink(m), el("span", { class: "meta" }, " " + meta(m))); }))
+              : note("No current member was matched to these districts. The legislature's website lists every member.");
+          }
+          var lowerChamber = chamberOf(s, "lower");
+          var upperKeys = districtList(tables.upper, g.sldu), lowerKeys = districtList(tables.lower, g.sldl);
+          var represent = section("Who represents " + g.name, frag(
+            note("A " + countyWord(s, 1) + " can span several districts, so this lists everyone whose district covers part of it. For the districts of one address, use the House's Find Your Representative page or Open States' address lookup, linked at the end of this section."),
+            el("div", { class: "lvlblock" }, badge("federal"),
+              senators.length ? frag(el("h3", null, "U.S. Senate"), people(senators, memberLabel)) : null,
+              el("h3", null, s.delegate_only ? "U.S. House (delegate)" : cdWords.length ? "U.S. House (district" + (cdWords.length > 1 ? "s " : " ") + listWords(cdWords.map(String)) + ")" : "U.S. House (at large)"),
+              people(reps, memberLabel)),
+            el("div", { class: "lvlblock" }, badge("state"),
+              el("h3", null, chamberTitle(s, "upper") + (upperKeys.length ? " (district" + (upperKeys.length > 1 ? "s " : " ") + listWords(upperKeys) + ")" : "")),
+              people(upper, stateMemberLabel),
+              lowerChamber ? frag(el("h3", null, chamberTitle(s, "lower") + (lowerKeys.length ? " (district" + (lowerKeys.length > 1 ? "s " : " ") + listWords(lowerKeys) + ")" : "")),
+                people(lower, stateMemberLabel)) : null,
+              freshness(man, "openstates-people", mem.source_updated_at, mem.retrieved_at)),
+            el("p", { class: "links" }, ext("https://www.house.gov/representatives/find-your-representative", "Find Your Representative (U.S. House)"), " · ",
+              ext("https://openstates.org/find_your_legislator/", "Find your legislators by address (Open States)", " (Open States, a nonprofit project; opens its site)"))), "represent");
 
-        var b = g.board || {};
-        var boardBlock;
-        if (b.none) {
-          boardBlock = section("Local government", frag(el("p", { class: "covline" }, badge("county"), " " + b.none)), "board");
-        } else {
-          boardBlock = section(b.name ? (g.name + " " + b.name) : "County government", frag(
-            el("p", { class: "chip" }, badge("county"), " Board website only: this " + countyWord(s, 1) + "'s votes are not collected. Its agendas and minutes are on its own site."),
-            el("dl", { class: "facts" },
-              el("div", null, el("dt", null, "Governing body"), el("dd", null, b.name ? b.name + (b.name === "County government" ? "" : ", " + g.name) : "Not recorded")),
-              el("div", null, el("dt", null, "Official site"), el("dd", null, b.url ? [ext(b.url, b.url.replace(/^https?:\/\//, "").replace(/\/$/, ""), " (the " + countyWord(s, 1) + "'s website)"), el("br"), boardLinkStatus(b)] : el("span", { class: "unk" }, "No website is listed for this " + countyWord(s, 1) + " in Wikidata."))),
-              b.url ? el("div", null, el("dt", null, "Where the link comes from"), el("dd", null, "Wikidata's official-website entry, checked by this site once a week. Wikidata is edited by volunteers, so a link can be out of date.")) : null)), "board");
-        }
-        boardBlock.id = "board";
+          var b = g.board || {};
+          var boardBlock, boardSecs = null;
+          if (bx) {
+            var board = bx.board;
+            var word = /commissioner/i.test(board.body_name) || /Commissioners Court/.test(board.body_name) ? "commissioner" : /council/i.test(board.body_name) ? "council member" : /supervisor/i.test(board.body_name) ? "supervisor" : "member";
+            boardBlock = section(board.body_name, frag(
+              el("p", { class: "chip" }, badge("county"), board.coverage === "votes" ? " Meetings, agenda actions and each " + word + "'s vote, from the county's Legistar system." : " Meetings and agenda actions from the county's Legistar system; it publishes no roll calls."),
+              board.members && board.members.length ? el("ul", { class: "plain people" }, board.members.filter(function (m) { return !m.provisional; }).map(function (m) { return el("li", null, memberLink(m), el("span", { class: "meta" }, " " + (m.title || cap(word)))); })) : null,
+              el("p", { class: "links" }, board.urls && board.urls.board_url ? ext(board.urls.board_url, "Legistar calendar", " (the county's meeting system)") : null, board.urls && board.urls.website ? [" · ", ext(board.urls.website, "County website", " (the county's website)")] : null),
+              note("Found on Legistar by name and confirmed because " + (/^links /.test((board.found || {}).confirmed_by || "") ? "the county's Legistar site links its website." : "its name is the county's own.")),
+              freshness(man, "county-" + g.fips, (sourceOf(man, "county-" + g.fips) || {}).source_updated_at)), "board");
+            boardSecs = boardSections(board, bx.vf, bx.month, [s.slug, g.slug], cidx, word);
+          } else if (b.none) {
+            boardBlock = section("Local government", frag(el("p", { class: "covline" }, badge("county"), " " + b.none)), "board");
+          } else {
+            boardBlock = section(b.name ? (g.name + " " + b.name) : "County government", frag(
+              el("p", { class: "chip" }, badge("county"), " Board website only: this " + countyWord(s, 1) + "'s votes are not collected. Its agendas and minutes are on its own site."),
+              el("dl", { class: "facts" },
+                el("div", null, el("dt", null, "Governing body"), el("dd", null, b.name ? b.name + (b.name === "County government" ? "" : ", " + g.name) : "Not recorded")),
+                el("div", null, el("dt", null, "Official site"), el("dd", null, b.url ? [ext(b.url, b.url.replace(/^https?:\/\//, "").replace(/\/$/, ""), " (the " + countyWord(s, 1) + "'s website)"), el("br"), boardLinkStatus(b)] : el("span", { class: "unk" }, "No website is listed for this " + countyWord(s, 1) + " in Wikidata."))),
+                b.url ? el("div", null, el("dt", null, "Where the link comes from"), el("dd", null, "Wikidata's official-website entry, checked by this site once a week. Wikidata is edited by volunteers, so a link can be out of date.")) : null)), "board");
+          }
+          boardBlock.id = "board";
 
-        var voteSec = el("section", { class: "sec votes-by", id: "votes", "aria-busy": "true" }, el("h2", null, "Recent votes by " + g.name + "'s members of Congress"), el("p", { class: "note" }, "Loading the latest roll calls…"));
-        var body = frag(
-          el("p", { class: "crumb" }, link(href(["states"]), "States"), " › ", link(href([s.slug]), s.name), " › ", g.name),
-          represent, boardBlock, voteSec);
-        // The roll calls are the heaviest part of the page (about 70 KB compressed), so the page is
-        // drawn without them and the section fills in when they arrive; its count line announces it.
-        function fill() {
-          countyVotes(voteSec, senators, reps, us, r[3], man).catch(function (e) {
-            if (e && e.kind === "aborted") return;
-            voteSec.removeAttribute("aria-busy");
-            voteSec.replaceChildren(el("h2", null, voteSec.firstChild.textContent), el("p", { class: "warn", role: "status" }, "The latest roll calls could not be loaded. " + (e && e.kind ? e.message : "")));
-          });
-        }
-        return { title: g.name, lede: "Who represents " + g.name + ", " + s.name + " in Congress and in the " + s.legislature.name + ", and how its members of Congress have voted.", body: body, after: fill };
+          var voteSec = el("section", { class: "sec votes-by", id: "congress-votes", "aria-busy": "true" }, el("h2", null, "Recent votes by " + g.name + "'s members of Congress"), el("p", { class: "note" }, "Loading the latest roll calls…"));
+          var body = frag(
+            el("p", { class: "crumb" }, link(href(["states"]), "States"), " › ", link(href([s.slug]), s.name), " › ", g.name),
+            represent, boardBlock, boardSecs ? [boardSecs.votes, boardSecs.meetings] : null, voteSec);
+          // The roll calls are the heaviest part of the page (about 70 KB compressed), so the page is
+          // drawn without them and the section fills in when they arrive; its count line announces it.
+          function fill() {
+            countyVotes(voteSec, senators, reps, us, r[3], man).catch(function (e) {
+              if (e && e.kind === "aborted") return;
+              voteSec.removeAttribute("aria-busy");
+              voteSec.replaceChildren(el("h2", null, voteSec.firstChild.textContent), el("p", { class: "warn", role: "status" }, "The latest roll calls could not be loaded. " + (e && e.kind ? e.message : "")));
+            });
+          }
+          return { title: g.name, lede: "Who represents " + g.name + ", " + s.name + " in Congress and in the " + s.legislature.name + ", and how " + (bx ? "they have" : "its members of Congress have") + " voted.", body: body, after: fill };
+        });
       });
     });
   }
@@ -1327,9 +1396,12 @@
   }
 
   // ---------- a state legislator outside California ----------
-  function viewStateMember(id, code) {
-    return Promise.all([states(), stateMembers(code), stateGeo(code)]).then(function (r) {
-      var s = STATE_INFO[code], mem = r[1], geo = r[2];
+  function viewStateMember(id, code, params) {
+    // The vote index is read only for a legislature whose votes are published (legislatures.json
+    // says so), so a state without them costs no failed request.
+    var idxP = legislatures().then(function (leg) { return leg[code] && leg[code].votes ? stateVoteIndex(code) : null; });
+    return Promise.all([states(), stateMembers(code), stateGeo(code), idxP, manifest()]).then(function (r) {
+      var s = STATE_INFO[code], mem = r[1], geo = r[2], idx = r[3], man = r[4];
       var m = mem.by[id];
       if (!s || !m) return notFound();
       var chamber = m.chamber === "legislature" ? "upper" : m.chamber;
@@ -1351,40 +1423,119 @@
         contact.length ? el("div", null, el("dt", null, "Contact"), el("dd", null, contact.map(function (c, i) { return [i ? " · " : null, c]; }))) : null,
         el("div", null, el("dt", null, "Official page"), el("dd", null, m.url ? ext(m.url, m.url.replace(/^https?:\/\//, "").replace(/\/.*$/, "") + " member page", " (the legislature's page for this member)") : el("span", { class: "unk" }, "none published"))),
         el("div", null, el("dt", null, "Record"), el("dd", null, "Open States, updated ", time(mem.source_updated_at, true), ". Not the official record.")));
-      var body = frag(
-        el("p", { class: "crumb" }, link(href(["states"]), "States"), " › ", link(href([s.slug]), s.name), " › ", link(href([s.slug, "legislators"]), "Legislators"), " › ", m.name),
-        facts,
-        section("Voting record", note("Votes in the " + s.legislature.name + " are not collected yet. The legislature's journals, linked from its website, are the official record."), "record"));
-      return { title: m.name, lede: "Member of the " + chamberTitle(s, chamber) + (m.party_name ? " (" + m.party_name + ")" : "") + ".", body: body };
+      var head = el("p", { class: "crumb" }, link(href(["states"]), "States"), " › ", link(href([s.slug]), s.name), " › ", link(href([s.slug, "legislators"]), "Legislators"), " › ", m.name);
+      var lede = "Member of the " + chamberTitle(s, chamber) + (m.party_name ? " (" + m.party_name + ")" : "") + ".";
+      var legName = stateLegName(s);
+      var vbody = idx ? bodyWithVotes(idx, m) : null;
+      function done(rec) {
+        rec.id = "record";
+        return { title: m.name, lede: lede, body: frag(head, facts, rec) };
+      }
+      if (!idx) return done(section("Voting record", note("Votes in the " + legName + " are not collected yet. The legislature's journals, linked from its website, are the official record."), "record"));
+      if (!vbody) return done(section("Voting record", note("No votes of the " + chamberTitle(s, chamber) + " are in the Open States data for the sessions kept here."), "record"));
+      var pick = statePick(idx, vbody, params);
+      var ch = vbody.split("-")[2];
+      return Promise.all([get("us-" + lc(code) + "/records/" + ch + "-" + pick.session + ".json", true), pick.shard ? get("us-" + lc(code) + "/votes/" + pick.session + "/" + pick.shard.file, true) : null]).then(function (d) {
+        var rec = d[0], vf = d[1];
+        var codes = (rec && rec.members && rec.members[id]) || "";
+        var counts = {}, total = 0, floorTotal = 0;
+        for (var i = 0; i < codes.length; i++) {
+          var c = codes.charAt(i);
+          if (c === "-") continue;
+          total++; counts[c] = (counts[c] || 0) + 1;
+          if (rec.floor && rec.floor[i]) floorTotal++;
+        }
+        var at = vf ? vf.members.indexOf(id) : -1;
+        var entries = at < 0 ? [] : rows2objs(vf).map(function (v) {
+          var c2 = (v.positions || "").charAt(at);
+          return c2 && c2 !== "-" ? { v: stateRow(v, vbody), code: c2 } : null;
+        }).filter(Boolean);
+        entries.sort(function (a, b) { return (b.v.date || "").localeCompare(a.v.date || "") || b.v.id.localeCompare(a.v.id); });
+        var sessName = sessionName(pick.sessions, pick.session);
+        var ssel = pick.sessions.length > 1 ? el("select", { id: "session-pick", name: "session" }, pick.sessions.map(function (x) { return el("option", { value: x.id, selected: x.id === pick.session }, x.name || x.id); })) : null;
+        var msel = el("select", { id: "month-pick", name: "month" }, pick.months.slice().reverse().map(function (mo) { return el("option", { value: mo, selected: mo === pick.month }, fmtMonth(mo)); }));
+        var form = el("form", { class: "filters", on: { submit: function (e) {
+          e.preventDefault();
+          var sess = ssel ? ssel.value : pick.session;
+          navigate(href(["legislator", id], { session: ssel ? sess : "", month: sess === pick.session ? msel.value : "" }) + "#record", { keepScroll: true });
+        } } }, el("div", { class: "row wrap" }, ssel ? [el("label", { for: "session-pick" }, "Session"), ssel] : null, el("label", { for: "month-pick" }, "Month"), msel, el("button", { type: "submit", class: "btn" }, "Show")),
+          ssel ? el("p", { class: "hint" }, "A different session shows its latest month.") : null);
+        var state = { code: "", text: "", floor: false };
+        var box = el("div");
+        function redraw() { box.replaceChildren(); box.appendChild(recordList(entries, state, null)); }
+        redraw();
+        var other = (counts.X || 0), abst = (counts.A || 0) + (counts.O || 0);
+        return done(section("Voting record", frag(
+          el("p", { class: "sum" }, el("b", null, String(total)), " votes recorded in the " + sessName + " (", el("b", null, String(floorTotal)), " on the floor, the rest in committee): ",
+            el("span", { class: "pos pos-Y" }, counts.Y || 0), " yes, ", el("span", { class: "pos pos-N" }, counts.N || 0), " no, ", el("span", { class: "pos pos-X" }, other), " absent or not voting",
+            abst ? [", ", el("span", { class: "pos pos-A" }, abst), " abstained or other"] : null, "."),
+          form,
+          el("h3", null, (pick.month ? fmtMonth(pick.month) : sessName) + " · " + plural(entries.length, "vote", "votes")),
+          recordFilters(state, redraw, { floor: true }), box,
+          note(OPEN_STATES_NOTE),
+          freshness(man, "openstates-bulk", vf && vf.source_updated_at)), "record"));
+      });
     });
   }
 
   // ---------- id resolution ----------
   function parseCaBill(id) { var m = /^(\d{8})(\d)([A-Z]+)(\d+)$/.exec(id); return m ? { session: m[1], type: m[3], num: +m[4], shard: m[3] + "-" + (Math.floor(m[4] / 100) < 10 ? "0" : "") + Math.floor(m[4] / 100) } : null; }
   // Where a bill or a vote lives, from its id alone. The loaders and the views both use these.
+  // Bills and votes of the other states (Open States bulk data): tx-89-SB12, tx-89-upper-20250304-aaaaaaaa.
+  function stateBillFile(id) {
+    var m = /^([a-z]{2})-([A-Za-z0-9_-]+)-([A-Z]+)(\d+)(-[0-9a-z]+)?$/.exec(id || "");
+    if (!m || m[1] === "us" || m[1] === "ca") return null;
+    var nn = Math.floor(+m[4] / 100);
+    return { st: m[1], session: m[2], rel: "us-" + m[1] + "/bills/" + m[2] + "/" + m[3] + "-" + (nn < 10 ? "0" : "") + nn + ".json", national: true };
+  }
+  function stateVoteFile(id) {
+    var m = /^([a-z]{2})-([A-Za-z0-9_-]+)-(upper|lower|legislature)-(\d{4})(\d{2})\d{2}-([0-9a-f]{8})$/.exec(id || "");
+    if (!m || m[1] === "us" || m[1] === "ca") return null;
+    return { st: m[1], session: m[2], chamber: m[3], rel: "us-" + m[1] + "/votes/" + m[2] + "/" + m[3] + "-" + m[4] + "-" + m[5] + ".json", members: "us-" + m[1] + "/members.json", level: "state", national: true };
+  }
   function billFile(id) {
     if (/^us-\d+-/.test(id)) return { rel: "us/bills/" + id.split("-")[1] + "/" + id + ".json" };
+    var nb = stateBillFile(id);
+    if (nb) return nb;
     var ca = parseCaBill(id);
     return ca ? { rel: "us-ca/bills/" + ca.session + "/" + ca.shard + ".json", ca: true, session: ca.session } : null;
   }
   function voteFile(id) {
     if (/^us-(house|senate)-/.test(id)) return { rel: "us/votes/" + id + ".json", members: "us/members.json", level: "federal" };
+    var nv = stateVoteFile(id);
+    if (nv) return nv;
     var ca = /^ca-(\d{8}\d[A-Z]+\d+)-/.exec(id);
     var bill = ca && parseCaBill(ca[1]);
     if (bill) return { rel: "us-ca/votes/" + bill.session + "/" + ca[1] + ".json", members: "us-ca/members.json", level: "state" };
-    var co = /^ca-(\d{5})-bos-vote-(\d{4})(\d{2})\d{2}-/.exec(id);
-    if (co) return { rel: "us-ca/counties/" + co[1] + "/votes-" + co[2] + "-" + co[3] + ".json", members: "us-ca/counties/" + co[1] + "/board.json", level: "county", fips: co[1] };
+    var co = /^([a-z]{2})-(\d{5})-bos-vote-(\d{4})(\d{2})\d{2}-/.exec(id);
+    if (co) return { rel: "us-" + co[1] + "/counties/" + co[2] + "/votes-" + co[3] + "-" + co[4] + ".json", members: "us-" + co[1] + "/counties/" + co[2] + "/board.json", level: "county", fips: co[2], st: co[1] };
     return null;
   }
   function loadBill(id) {
     var f = billFile(id);
     if (!f) return Promise.resolve(null);
+    if (f.national) return get(f.rel, true).then(function (d) { return d && d.bills[id] || null; });
     if (!f.ca) return get(f.rel, true);
     return get(f.rel, true).then(function (d) { return d && d.bills[id] || null; });
+  }
+  // One vote of another state's legislature, rebuilt from its month file: positions are a string
+  // in the order of the file's member list.
+  function stateVote(d, id, f) {
+    if (!d) return null;
+    var row = rows2objs(d).filter(function (v) { return v.id === id; })[0];
+    if (!row) return null;
+    var positions = [];
+    (d.members || []).forEach(function (mid, i) { var c = (row.positions || "").charAt(i); if (c && c !== "-") positions.push([mid, c]); });
+    return { id: id, level: "state", body: "us-" + f.st + "-" + f.chamber, date: row.date, question: row.question, title: row.title, bill_id: row.bill_id, bill_label: row.bill_label,
+      result: row.result === "pass" ? "Passed" : row.result === "fail" ? "Failed" : row.result, passed: row.passed, floor: !!row.floor, recorded: positions.length > 0,
+      tally: { yes: row.yes, no: row.no, not_voting: row.other, present: 0 }, positions: positions, names: d.names || {},
+      labels: d.codes || { Y: "yes", N: "no", X: "absent or not voting", A: "abstain", O: "other" }, official_url: row.official_url,
+      source: { id: "openstates-bulk" }, source_updated_at: d.source_updated_at, session: f.session };
   }
   function loadVote(id) {
     var f = voteFile(id);
     if (!f) return Promise.resolve(null);
+    if (f.national) return get(f.rel, true).then(function (d) { return stateVote(d, id, f); });
     if (f.level === "federal") return get(f.rel, true);
     if (f.level === "state") return get(f.rel, true).then(function (d) { return d && d.votes.filter(function (v) { return v.id === id; })[0] || null; });
     return get(f.rel, true).then(function (d) {
@@ -1392,7 +1543,7 @@
       var row = rows2objs(d).filter(function (v) { return v.id === id; })[0];
       if (!row) return null;
       var m = row.matter_id ? d.matters[row.matter_id] : null;
-      return { id: id, level: "county", body: "ca-" + f.fips + "-bos", county: f.fips, date: row.date, question: row.question, title: m ? (m.label ? m.label + ": " : "") + m.title : "", matter: m,
+      return { id: id, level: "county", body: f.st + "-" + f.fips + "-bos", county: f.fips, date: row.date, question: row.question, title: m ? (m.label ? m.label + ": " : "") + m.title : "", matter: m,
         result: row.result, passed: row.passed, tally: { yes: row.yes, no: row.no, not_voting: row.other, present: 0 },
         positions: d.members.map(function (mid, i) { return [mid, row.positions.charAt(i) || "-"]; }).filter(function (p) { return p[1] !== "-"; }),
         labels: d.codes, mover: row.mover, seconder: row.seconder, agenda_number: row.agenda_number, meeting_id: row.meeting_id,
@@ -1408,17 +1559,117 @@
     var month = params.get("month") && months.indexOf(params.get("month")) >= 0 ? params.get("month") : months[months.length - 1];
     return { years: years, year: year, months: months, month: month };
   }
-  function membersFor(level, countyFips) {
+  function membersFor(level, countyId) {
     if (level === "federal") return usMembers();
+    var sm = /^us-([a-z]{2})-(upper|lower|legislature)$/.exec(countyId || "");
+    if (level === "state" && sm && sm[1] !== "ca") return stateMembers(sm[1].toUpperCase());
     if (level === "state") return caMembers();
-    return get("us-ca/counties/" + countyFips + "/board.json", true).then(function (b) { var by = {}; ((b && b.members) || []).forEach(function (m) { by[m.id] = m; }); return { list: (b && b.members) || [], by: by, board: b }; });
+    return get(countyFolder(countyId) + "/board.json", true).then(function (b) { var by = {}; ((b && b.members) || []).forEach(function (m) { by[m.id] = m; }); return { list: (b && b.members) || [], by: by, board: b }; });
   }
 
+  // ---------- other states' bills and votes (Open States bulk data) ----------
+  // us-{st}/votes/index.json lists the sessions kept and, for each chamber, the months with votes.
+  function stateVoteIndex(code) { return get("us-" + lc(code) + "/votes/index.json", true); }
+  function stateLegName(s) { return (s && s.legislature && s.legislature.name) || ((s && s.name) || "State") + " Legislature"; }
+  // A row of a month file in the shape the vote lists draw.
+  function stateRow(v, body) {
+    return { id: v.id, date: v.date, body: body || v.body, question: cap(v.question || "Vote"), title: v.title || "", bill_id: v.bill_id, bill_label: v.bill_label,
+      result: v.result, passed: v.passed, yes: v.yes, no: v.no, other: v.other || 0, floor: !!v.floor, location: v.floor ? "Floor" : "Committee" };
+  }
+  // The chamber a legislator's votes are filed under. Unicameral bodies can be filed as
+  // "legislature" or "upper", so both are tried.
+  function bodyWithVotes(idx, m) {
+    var st = (m.jurisdiction || "").slice(3);
+    var alt = m.chamber === "legislature" ? "upper" : m.chamber === "upper" ? "legislature" : null;
+    var bodies = [m.body || "us-" + st + "-" + m.chamber].concat(alt ? ["us-" + st + "-" + alt] : []);
+    var shards = (idx && idx.shards) || [];
+    return bodies.filter(function (b) { return shards.some(function (x) { return x.body === b; }); })[0] || null;
+  }
+  // Which session and month of a chamber's votes to show: those asked for, or the latest.
+  function statePick(idx, body, params) {
+    var shards = ((idx && idx.shards) || []).filter(function (x) { return x.body === body; });
+    var sessions = ((idx && idx.sessions) || []).filter(function (s) { return shards.some(function (x) { return x.session === s.id; }); })
+      .sort(function (a, b) { return (a.start || "").localeCompare(b.start || ""); });
+    var ids = sessions.map(function (s) { return s.id; });
+    var session = params.get("session") && ids.indexOf(params.get("session")) >= 0 ? params.get("session") : ids[ids.length - 1];
+    var inSession = shards.filter(function (x) { return x.session === session; }).sort(function (a, b) { return a.month.localeCompare(b.month); });
+    var months = inSession.map(function (x) { return x.month; });
+    var month = params.get("month") && months.indexOf(params.get("month")) >= 0 ? params.get("month") : months[months.length - 1];
+    return { sessions: sessions, session: session, shards: inSession, months: months, month: month,
+      shard: inSession.filter(function (x) { return x.month === month; })[0] || null };
+  }
+  function sessionName(sessions, id) { var s = (sessions || []).filter(function (x) { return x.id === id; })[0]; return (s && s.name) || "session " + id; }
+  // "Texas 89th Legislature", "Georgia General Assembly, 2025-2026 Regular Session"
+  function sessionTitle(s, name) {
+    return /legislature|assembly|council|congress/i.test(name || "") ? s.name + " " + name : stateLegName(s) + ", " + (name || "current session");
+  }
+  // The votes of a bill, read from the month files that hold them (one request per file).
+  function stateVotes(ids) {
+    var byFile = {};
+    (ids || []).forEach(function (vid) { var f = stateVoteFile(vid); if (f) (byFile[f.rel] = byFile[f.rel] || []).push(vid); });
+    return Promise.all(Object.keys(byFile).map(function (rel) {
+      return get(rel, true).then(function (d) { return byFile[rel].map(function (vid) { return stateVote(d, vid, stateVoteFile(vid)); }); });
+    })).then(function (lists) { return [].concat.apply([], lists).filter(Boolean); });
+  }
+  // States other than California whose legislature's votes (or bills) are published here, by name.
+  function statesWith(leg, key) {
+    return Object.keys(leg).filter(function (k) { return k !== "CA" && leg[k] && leg[k][key] > 0 && STATE_INFO[k]; })
+      .sort(function (a, b) { return STATE_INFO[a].name.localeCompare(STATE_INFO[b].name); });
+  }
+  // Which chamber acted, when it was one chamber (not the legislature as a whole or the governor).
+  function actionChamber(s, ch) {
+    if (!s || !ch || ch === "legislature") return "";
+    var c = chamberOf(s, ch);
+    return c && s.legislature.chambers.length > 1 ? " (" + shortChamber(c.name) + ")" : "";
+  }
+  var OPEN_STATES_NOTE = "From Open States, which collects the legislature's records from its website. Not the official record.";
+
   // ---------- bill ----------
+  // A bill of another state's legislature. Its record keeps the latest 25 actions and up to 12
+  // sponsors, primary sponsors first.
+  function viewStateBill(b, man) {
+    var s = STATE_INFO[b.state] || null;
+    var legName = stateLegName(s || { name: b.state });
+    return stateVotes(b.vote_ids).then(function (votes) {
+      votes.sort(function (a, c) { return (c.date || "").localeCompare(a.date || "") || c.id.localeCompare(a.id); });
+      var sponsors = b.sponsors || [];
+      var primary = sponsors.filter(function (x) { return x.primary; }), others = sponsors.filter(function (x) { return !x.primary; });
+      if (!primary.length) { primary = others; others = []; }
+      var extra = Math.max(0, (b.sponsors_total || sponsors.length) - sponsors.length);
+      function names(list, last) {
+        return [list.map(function (x, i) { var nm = x.name || "Unnamed sponsor"; return [i ? ", " : null, x.id ? link(memberHref(x.id), nm) : nm]; }), last && extra ? " and " + plural(extra, "other", "others") : null];
+      }
+      var facts = el("dl", { class: "facts" },
+        el("div", null, el("dt", null, "Level"), el("dd", null, badge("state"), " " + sessionTitle(s || { name: b.state }, b.session_name || "session " + b.session))),
+        b.classification && b.classification.length ? el("div", null, el("dt", null, "Kind"), el("dd", null, cap(b.classification.join(", ")))) : null,
+        b.latest_action ? el("div", null, el("dt", null, "Latest action"), el("dd", null, b.latest_action.date ? [time(b.latest_action.date), " · "] : null, b.latest_action.text || "")) : null,
+        b.introduced ? el("div", null, el("dt", null, "First action"), el("dd", null, time(b.introduced))) : null,
+        primary.length ? el("div", null, el("dt", null, primary.length > 1 ? "Sponsors" : "Sponsor"), el("dd", null, names(primary, !others.length))) : null,
+        others.length ? el("div", null, el("dt", null, "Cosponsors"), el("dd", null, names(others, true))) : null,
+        b.subjects && b.subjects.length ? el("div", null, el("dt", null, b.subjects.length > 1 ? "Subjects" : "Subject"), el("dd", null, b.subjects.join(", "))) : null,
+        el("div", null, el("dt", null, "Record"), el("dd", null, b.official_url ? ext(b.official_url, "The legislature's page for this bill") : el("span", { class: "unk" }, "not linked"),
+          el("p", { class: "meta" }, OPEN_STATES_NOTE))));
+      var vl = votes.length ? el("ul", { class: "plain votes" }, votes.map(function (v) {
+        return voteItem({ id: v.id, date: v.date, body: v.body, question: cap(v.question || "Vote"), title: null, result: v.result, passed: v.passed, yes: v.tally.yes, no: v.tally.no, other: v.tally.not_voting || 0, location: v.floor ? "Floor" : "Committee", bill_id: null });
+      })) : note("No recorded votes on this bill in the Open States data.");
+      var acts = (b.actions || []).slice().reverse();      // newest first, as on the other bill pages
+      var body = frag(
+        el("p", { class: "crumb" }, link(href(["bills"], { level: "state", state: b.state }), legName + " bills"), " › ", b.label),
+        facts,
+        section("Votes on this bill", vl, "votes"),
+        acts.length ? section("Actions", frag(
+          el("ul", { class: "plain acts" }, acts.map(function (a) { return el("li", null, time(a.date), el("span", null, " · " + a.text + actionChamber(s, a.chamber))); })),
+          b.actions_total > acts.length ? (b.official_url ? el("p", { class: "links" }, ext(b.official_url, "All " + b.actions_total + " actions on the legislature's site")) : note("The latest " + acts.length + " of " + b.actions_total + " actions.")) : null), "actions") : null,
+        freshness(man, "openstates-bulk", b.source_updated_at));
+      return { title: b.label + (b.title ? ": " + b.title : ""), lede: null, body: body };
+    });
+  }
+
   function viewBill(id) {
-    return Promise.all([loadBill(id), manifest(), countyIndex()]).then(function (r) {
+    return Promise.all([loadBill(id), manifest(), countyIndex(), states()]).then(function (r) {
       var b = r[0], man = r[1];
       if (!b) return notFound();
+      if (stateBillFile(id)) return viewStateBill(b, man);
       var lvl = b.level || (/^us-/.test(id) ? "federal" : "state");
       var isCa = lvl === "state";
       var votesP = isCa ? get("us-ca/votes/" + b.session + "/" + id + ".json", true).then(function (d) { return (d && d.votes) || []; })
@@ -1458,12 +1709,11 @@
 
   // ---------- vote ----------
   function viewVote(id) {
-    return Promise.all([loadVote(id), manifest(), countyIndex()]).then(function (r) {
+    return Promise.all([loadVote(id), manifest(), countyIndex(), states()]).then(function (r) {
       var v = r[0], man = r[1], cidx = r[2];
       if (!v) return notFound();
       var lvl = v.level || levelOf(v.body);
-      var fips = idOfCounty(v.body);
-      return membersFor(lvl, fips).then(function (mem) {
+      return membersFor(lvl, v.body).then(function (mem) {
         var positions = v.positions || [];
         var labels = v.labels || {};
         var codeName = function (c) { return cap(labels[c] || ({ Y: "Yes", N: "No", X: "Not voting", P: "Present", A: "Abstain", R: "Recused", O: "Other" })[c] || c); };
@@ -1480,14 +1730,14 @@
           var shown = 0;
           positions.forEach(function (p) {
             var m = mem.by[p[0]];
-            var name = m ? m.name : (/^lis-/.test(p[0]) ? "Senator (LIS " + p[0].slice(4) + ")" : p[0]);
+            var name = m ? m.name : (/^lis-/.test(p[0]) ? "Senator (LIS " + p[0].slice(4) + ")" : (v.names && v.names[p[0]]) || (/^[a-z]{2}-[0-9a-f]{8}$/.test(p[0]) ? "A former member (" + p[0] + ")" : p[0]));
             if (state.code && p[1] !== state.code) return;
             if (t && (name + " " + memberLabel(m)).toLowerCase().indexOf(t) < 0) return;
             shown++;
             tbody.appendChild(el("tr", null,
               el("th", { scope: "row" }, m ? link(memberHref(m.id), name) : name),
               el("td", null, party(partyOf(m))),
-              el("td", null, m ? (m.body === "us-house" ? m.state + (m.district ? "-" + m.district : "") : m.body === "us-senate" ? m.state : m.district ? (m.body === "ca-assembly" ? "AD " : "SD ") + m.district : (m.title || "")) : ""),
+              el("td", null, m ? (m.body === "us-house" ? m.state + (m.district ? "-" + m.district : "") : m.body === "us-senate" ? m.state : /^us-[a-z]{2}-/.test(m.body || "") ? districtWords(m) : m.district ? (m.body === "ca-assembly" ? "AD " : "SD ") + m.district : (m.title || "")) : ""),
               el("td", null, el("span", { class: "pos pos-" + p[1] }, codeName(p[1])))));
           });
           summary.textContent = shown + " of " + positions.length + " positions shown";
@@ -1505,16 +1755,19 @@
           draw();
         }
         draw();
-        var bill = v.bill_id && /^(us-|\d{8})/.test(v.bill_id) ? link(billHref(v.bill_id), v.bill_label || v.bill_id) : (v.matter && v.matter.official_url ? ext(v.matter.official_url, v.matter.label || "Agenda item") : null);
+        var national = v.source && v.source.id === "openstates-bulk";
+        var bill = v.bill_id && (/^(us-|\d{8})/.test(v.bill_id) || stateBillFile(v.bill_id)) ? link(billHref(v.bill_id), v.bill_label || v.bill_id) : (v.matter && v.matter.official_url ? ext(v.matter.official_url, v.matter.label || "Agenda item") : null);
         var facts = el("dl", { class: "facts" },
           el("div", null, el("dt", null, "Level"), el("dd", null, badge(lvl), " " + bodyName(v.body, cidx), v.location && !v.floor ? " · " + v.location : "")),
-          el("div", null, el("dt", null, "When"), el("dd", null, time(v.date, !isDateOnly(v.date)), isDateOnly(v.date) ? clockPart(v) : "", isDateOnly(v.date) && lvl === "state" ? el("span", { class: "unk" }, " (the Legislature records the day, not the time)") : null)),
+          el("div", null, el("dt", null, "When"), el("dd", null, time(v.date, !isDateOnly(v.date)), isDateOnly(v.date) ? clockPart(v) : "", isDateOnly(v.date) && lvl === "state" ? el("span", { class: "unk" }, " (the record gives the day, not the time)") : null)),
           el("div", null, el("dt", null, "Result"), el("dd", null, el("b", { class: v.passed ? "pass" : "fail" }, resultWord(v)), v.result && v.result !== resultWord(v) ? " · " + v.result : "", v.vote_type ? " · " + v.vote_type : "")),
           el("div", null, el("dt", null, "Tally"), el("dd", null, tally(v))),
           bill ? el("div", null, el("dt", null, lvl === "county" ? "Agenda item" : "Bill"), el("dd", null, bill, lvl !== "county" && stripLabel(v.title, v.bill_label) ? ": " + stripLabel(v.title, v.bill_label) : lvl === "county" && v.matter && v.matter.title ? ": " + v.matter.title : "")) : (v.title ? el("div", null, el("dt", null, "Subject"), el("dd", null, v.title)) : null),
           v.number ? el("div", null, el("dt", null, "Roll call"), el("dd", null, "No. " + v.number + ", session " + v.session + " of the " + ordinal(v.congress) + " Congress")) : null,
           v.mover ? el("div", null, el("dt", null, "Motion"), el("dd", null, "Moved by " + v.mover + (v.seconder ? ", seconded by " + v.seconder : ""))) : null,
-          el("div", null, el("dt", null, "Official record"), el("dd", null, v.official_url ? ext(v.official_url, lvl === "federal" ? (v.body === "us-house" ? "Clerk of the House" : "Senate.gov") : lvl === "state" ? "LegInfo vote history" : "County minutes") : (mem.board && mem.board.urls && mem.board.urls.agenda_url ? ext(mem.board.urls.agenda_url, "County agendas and minutes") : el("span", { class: "unk" }, "not linked")))));
+          national ? el("div", null, el("dt", null, "Kind"), el("dd", null, v.floor ? "Floor vote" : "Committee vote")) : null,
+          el("div", null, el("dt", null, national ? "Record" : "Official record"), el("dd", null, v.official_url ? ext(v.official_url, lvl === "federal" ? (v.body === "us-house" ? "Clerk of the House" : "Senate.gov") : national ? "The legislature's record of this vote" : lvl === "state" ? "LegInfo vote history" : "County minutes", national ? " (the legislature's site)" : null) : (mem.board && mem.board.urls && mem.board.urls.agenda_url ? ext(mem.board.urls.agenda_url, "County agendas and minutes") : el("span", { class: "unk" }, "not linked")),
+            national ? el("p", { class: "meta" }, "From Open States, which collects votes from the legislature's website. Not the official record.") : null)));
         var parties = {};
         positions.forEach(function (p2) { var m2 = mem.by[p2[0]]; var pa = (m2 && m2.party) || "?"; parties[pa] = parties[pa] || {}; parties[pa][p2[1]] = (parties[pa][p2[1]] || 0) + 1; });
         var partyKeys = Object.keys(parties).sort(function (a, b) { return a === "?" ? 1 : b === "?" ? -1 : a.localeCompare(b); });
@@ -1524,7 +1777,7 @@
         var table = el("table", { class: "tbl positions" }, el("caption", null, "How each member voted"),
           el("thead", null, el("tr", null, el("th", { scope: "col" }, "Member"), el("th", { scope: "col" }, "Party"), el("th", { scope: "col" }, lvl === "county" ? "Seat" : "State / district"), el("th", { scope: "col" }, "Position"))), tbody);
         var body = frag(
-          el("p", { class: "crumb" }, link(href(["votes"], { level: lvl }), LEVEL_NAME[lvl] + " votes"), " › ", v.question || "Vote"),
+          el("p", { class: "crumb" }, link(href(["votes"], national ? { level: lvl, state: v.body.slice(3, 5).toUpperCase(), body: v.body, session: v.session, month: (v.date || "").slice(0, 7) } : { level: lvl }), (national ? bodyName(v.body) : LEVEL_NAME[lvl]) + " votes"), " › ", v.question || "Vote"),
           facts,
           v.source && v.source.id === "voteview" ? el("p", { class: "note" }, "These positions come from Voteview (UCLA), an academic roll-call database built from the same official records, because the nightly job could not reach senate.gov. The official record is linked above; the next successful check replaces this copy with the Senate's own.") : null,
           section("Positions", positions.length ? frag(byParty, filters, summary, table) : note("No individual positions were recorded for this vote (a voice vote or an unrecorded action)."), "positions"),
@@ -1558,6 +1811,7 @@
       el("label", { for: "rec-q" }, "Filter by question or bill"),
       el("input", { id: "rec-q", type: "search", autocomplete: "off", on: { input: function (e) { state.text = e.target.value.trim().toLowerCase(); redraw(); } } }));
   }
+  var POSITION_WORD = { Y: "Yes", N: "No", X: "Did not vote", P: "Present", A: "Abstained", O: "Other" };
   function recordList(entries, state, cidx, locations) {
     // entries: [{v: index row object, code}], newest first
     var list = entries.filter(function (e) {
@@ -1568,7 +1822,7 @@
     });
     return more(list, function (e) {
       var li = voteItem(e.v, cidx, locations);
-      li.insertBefore(el("p", { class: "mypos" }, "Position: ", el("span", { class: "pos pos-" + e.code }, e.code === "Y" ? "Yes" : e.code === "N" ? "No" : e.code === "X" ? "Did not vote" : e.code === "P" ? "Present" : e.code)), li.querySelector(".res"));
+      li.insertBefore(el("p", { class: "mypos" }, "Position: ", el("span", { class: "pos pos-" + e.code }, POSITION_WORD[e.code] || e.code)), li.querySelector(".res"));
       return li;
     }, { ulClass: "votes", empty: "No votes match these filters." });
   }
@@ -1578,15 +1832,15 @@
 
   function viewMember(id, params) {
     var stCode = stateMemberCode(id);
-    if (stCode) return viewStateMember(id, stCode);
-    var lvl = /^ca-(asm|sen)-/.test(id) ? "state" : /^ca-\d{5}-bos-/.test(id) ? "county" : "federal";
-    return Promise.all([manifest(), countyIndex(), membersFor(lvl, idOfCounty(id))]).then(function (r) {
+    if (stCode) return viewStateMember(id, stCode, params);
+    var lvl = /^ca-(asm|sen)-/.test(id) ? "state" : /^[a-z]{2}-\d{5}-bos-/.test(id) ? "county" : "federal";
+    return Promise.all([manifest(), countyIndex(), membersFor(lvl, id), states()]).then(function (r) {
       var man = r[0], cidx = r[1], mem = r[2];
       var m = mem.by[id];
       if (!m) return notFound();
       var state = { code: "", text: "", floor: false };
       var facts = memberFacts(m, lvl, man, cidx);
-      var head = el("p", { class: "crumb" }, lvl === "federal" ? link(href([m.state === "CA" ? "california" : "states"]), m.state === "CA" ? "California" : "States") : lvl === "state" ? link(href(["california"]), "California") : link(href(["california", (cidx[idOfCounty(id)] || {}).slug || ""]), m.county || "County"), " › ", m.name);
+      var head = el("p", { class: "crumb" }, lvl === "federal" ? link(href([m.state === "CA" ? "california" : "states"]), m.state === "CA" ? "California" : "States") : lvl === "state" ? link(href(["california"]), "California") : countyCrumb(cidx[idOfCounty(id)], m.county), " › ", m.name);
 
       if (lvl === "federal") {
         var house = m.body === "us-house" ? "house" : "senate";
@@ -1644,7 +1898,7 @@
       var months = (board.vote_months || []).map(function (x) { return x.month; });
       var month = params.get("month") && months.indexOf(params.get("month")) >= 0 ? params.get("month") : months[months.length - 1];
       if (!month) return { title: m.name, lede: null, body: frag(head, facts, note("No recorded votes for this board in the last 90 days.")) };
-      return get("us-ca/counties/" + idOfCounty(id) + "/votes-" + month + ".json", true).then(function (vf) {
+      return get(countyFolder(id) + "/votes-" + month + ".json", true).then(function (vf) {
         var i = vf ? vf.members.indexOf(id) : -1;
         var counts = {};
         var entries = rows2objs(vf).map(function (v) {
@@ -1677,21 +1931,26 @@
   function applyHint() { return el("p", { class: "hint" }, "Choose the filters, then press Apply. A different level shows its own filters after Apply."); }
   function viewVotes(p) {
     var level = p.get("level") || "federal";
-    return Promise.all([countyIndex(), caVoteIndex(), usMembers()]).then(function (r) {
-      var cidx = r[0], caIdx = r[1], us = r[2];
+    return Promise.all([countyIndex(), caVoteIndex(), usMembers(), states(), legislatures()]).then(function (r) {
+      var cidx = r[0], caIdx = r[1], us = r[2], leg = r[4];
       var congress = us.congress;
       var body = p.get("body"), month = p.get("month"), fips = p.get("county"), text = (p.get("q") || "").toLowerCase(), floorOnly = p.get("floor") === "1", result = p.get("result") || "";
       var loads, locations = null, subtitle = "";
+      // Legislatures with votes here: California's from the Legislature, the others' from Open States.
+      var others = statesWith(leg, "votes");
+      var stCode = (p.get("state") || "CA").toUpperCase();
+      if (stCode !== "CA" && others.indexOf(stCode) < 0) stCode = "CA";
       var form = el("form", { class: "filters", on: { submit: function (e) { e.preventDefault(); apply(); } } });
       function apply() {
         var f = new FormData(form);
         var lv = f.get("level") || "federal";
-        var keep = lv === level;      // another level's chamber, month or county does not carry over
+        // another level's (or another state's) chamber, session, month or county does not carry over
+        var keep = lv === level && (lv !== "state" || (f.get("state") || "CA") === stCode);
         var sameCounty = keep && f.get("county") === fips;
-        navigate(href(["votes"], { level: lv, body: keep ? f.get("body") : "", session: keep ? f.get("session") : "", month: keep && (level !== "county" || sameCounty) ? f.get("month") : "",
+        navigate(href(["votes"], { level: lv, state: lv === "state" && f.get("state") !== "CA" ? f.get("state") : "", body: keep ? f.get("body") : "", session: keep ? f.get("session") : "", month: keep && (level !== "county" || sameCounty) ? f.get("month") : "",
           county: keep ? f.get("county") : "", floor: keep && f.get("floor") ? "1" : "", result: f.get("result"), q: f.get("q") }) + "#results", { keepScroll: true });
       }
-      var levelSel = selectEl("level", "Level", [["federal", "Federal (Congress)"], ["state", "State (California Legislature)"], ["county", "County (boards of supervisors)"]], level);
+      var levelSel = selectEl("level", "Level", [["federal", "Federal (Congress)"], ["state", others.length ? "State (legislatures)" : "State (California Legislature)"], ["county", "County (boards on Legistar)"]], level);
       var controls = [levelSel];
       if (level === "federal") {
         body = body || "us-house";
@@ -1701,7 +1960,24 @@
         var files = (sess ? [sess] : ["1", "2"]).map(function (s) { return get("us/votes/" + congress + "-" + s + "-" + (body === "us-house" ? "house" : "senate") + ".json", true); });
         loads = Promise.all(files).then(function (ds) { return ds.reduce(function (a, d) { return a.concat(rows2objs(d)); }, []); });
         subtitle = BODY_NAME[body] + ", " + ordinal(congress) + " Congress";
+      } else if (level === "state" && stCode !== "CA") {
+        controls.push(selectEl("state", "State", [["CA", "California"]].concat(others.map(function (k) { return [k, STATE_INFO[k].name]; })), stCode));
+        loads = stateVoteIndex(stCode).then(function (idx) {
+          var bodies = [];
+          ((idx && idx.shards) || []).forEach(function (x) { if (bodies.indexOf(x.body) < 0) bodies.push(x.body); });
+          bodies.sort();
+          body = body && bodies.indexOf(body) >= 0 ? body : bodies[0];
+          if (!body) return [];
+          controls.push(selectEl("body", "Chamber", bodies.map(function (b) { return [b, shortChamber(bodyName(b))]; }), body));
+          var pick = statePick(idx, body, p);
+          if (pick.sessions.length > 1) controls.push(selectEl("session", "Session", pick.sessions.map(function (x) { return [x.id, x.name || x.id]; }), pick.session));
+          controls.push(selectEl("month", "Month", pick.shards.slice().reverse().map(function (x) { return [x.month, fmtMonth(x.month) + " (" + x.votes + ")"]; }), pick.month));
+          subtitle = bodyName(body) + (pick.month ? ", " + fmtMonth(pick.month) : "") + ". From Open States, not the official record";
+          if (!pick.shard) return [];
+          return get("us-" + lc(stCode) + "/votes/" + pick.session + "/" + pick.shard.file, true).then(function (d) { return rows2objs(d).map(function (v) { return stateRow(v, body); }); });
+        });
       } else if (level === "state") {
+        if (others.length) controls.push(selectEl("state", "State", [["CA", "California"]].concat(others.map(function (k) { return [k, STATE_INFO[k].name]; })), "CA"));
         body = body || "ca-assembly";
         var shards = ((caIdx && caIdx.shards) || []).filter(function (s) { return s.body === body; });
         var months = shards.map(function (s) { return s.month; });
@@ -1712,17 +1988,21 @@
         loads = month ? get("us-ca/votes/" + caIdx.session + "-" + body.split("-")[1] + "-" + month + ".json", true).then(function (d) { return rows2objs(d).map(function (v) { v.body = body; return v; }); }) : Promise.resolve([]);
         subtitle = BODY_NAME[body] + (month ? ", " + fmtMonth(month) : "");
       } else {
-        var withVotes = Object.keys(cidx).map(function (k) { return cidx[k]; }).filter(function (c) { return c.coverage === "votes" || c.coverage === "agendas"; }).sort(function (a, b) { return a.county.localeCompare(b.county); });
+        // California's counties first, then the other states' by state and name.
+        var withVotes = Object.keys(cidx).map(function (k) { return cidx[k]; }).filter(function (c) { return c.coverage === "votes" || c.coverage === "agendas"; })
+          .sort(function (a, b) { return ((a.state || "CA") === "CA" ? "" : a.state || "").localeCompare((b.state || "CA") === "CA" ? "" : b.state || "") || a.county.localeCompare(b.county); });
         fips = fips && cidx[fips] ? fips : (withVotes[0] || {}).fips;
-        controls.push(selectEl("county", "County", withVotes.map(function (c) { return [c.fips, c.county + (c.coverage === "votes" ? "" : " (agenda actions, no roll calls)")]; }), fips));
-        loads = fips ? get("us-ca/counties/" + fips + "/board.json", true).then(function (b) {
+        var place = function (c) { var s = STATE_INFO[c.state || "CA"]; return c.county + (s ? ", " + s.name : ""); };
+        controls.push(selectEl("county", "County", withVotes.map(function (c) { return [c.fips, place(c) + (c.coverage === "votes" ? "" : " (agenda actions, no roll calls)")]; }), fips));
+        var countyState = fips ? lc((cidx[fips] || {}).state || "CA") : "ca";
+        loads = fips ? get("us-" + countyState + "/counties/" + fips + "/board.json", true).then(function (b) {
           var months = ((b && b.vote_months) || []).map(function (x) { return x.month; });
           month = month && months.indexOf(month) >= 0 ? month : months[months.length - 1];
           controls.push(selectEl("month", "Month", months.slice().reverse().map(function (mo) { return [mo, fmtMonth(mo)]; }), month));
           subtitle = (b && b.body_name || "") + (month ? ", " + fmtMonth(month) : "");
           if (!month) return [];
-          return get("us-ca/counties/" + fips + "/votes-" + month + ".json", true).then(function (vf) {
-            return rows2objs(vf).map(function (v) { var mt = v.matter_id ? vf.matters[v.matter_id] : null; return { id: v.id, date: v.date, body: "ca-" + fips + "-bos", question: (v.question ? v.question.charAt(0).toUpperCase() + v.question.slice(1) : "Vote") + (mt && mt.label ? " · " + mt.label : ""), title: mt ? mt.title : "", result: v.result, passed: v.passed, yes: v.yes, no: v.no, other: v.other, bill_id: null, floor: true }; });
+          return get("us-" + countyState + "/counties/" + fips + "/votes-" + month + ".json", true).then(function (vf) {
+            return rows2objs(vf).map(function (v) { var mt = v.matter_id ? vf.matters[v.matter_id] : null; return { id: v.id, date: v.date, body: countyState + "-" + fips + "-bos", question: (v.question ? v.question.charAt(0).toUpperCase() + v.question.slice(1) : "Vote") + (mt && mt.label ? " · " + mt.label : ""), title: mt ? mt.title : "", result: v.result, passed: v.passed, yes: v.yes, no: v.no, other: v.other, bill_id: null, floor: true }; });
           });
         }) : Promise.resolve([]);
       }
@@ -1752,19 +2032,31 @@
     var level = p.get("level") || "federal";
     var text = (p.get("q") || "").toLowerCase();
     var form = el("form", { class: "filters", on: { submit: function (e) { e.preventDefault(); apply(); } } });
+    var stCode = "CA";
     function apply() {
       var f = new FormData(form);
       var lv = f.get("level") || "federal";
-      var keep = lv === level;
-      navigate(href(["bills"], { level: lv, type: keep ? f.get("type") : "", status: keep ? f.get("status") : "", q: f.get("q") }) + "#results", { keepScroll: true });
+      var keep = lv === level && (lv !== "state" || (f.get("state") || "CA") === stCode);
+      navigate(href(["bills"], { level: lv, state: lv === "state" && f.get("state") !== "CA" ? f.get("state") : "", session: keep ? f.get("session") : "", type: keep ? f.get("type") : "", status: keep ? f.get("status") : "", q: f.get("q") }) + "#results", { keepScroll: true });
     }
-    var controls = [selectEl("level", "Level", [["federal", "Federal (Congress)"], ["state", "State (California Legislature)"]], level)];
+    var controls = [];
     var loads, subtitle;
     if (level === "federal") {
+      controls.push(selectEl("level", "Level", [["federal", "Federal (Congress)"], ["state", "State (legislatures)"]], level));
       loads = usMembers().then(function (us) { return get("us/bills/" + us.congress + "/index.json", true).then(function (d) { return rows2objs(d).map(function (b) { return { id: b.id, label: b.label, title: b.title, date: b.latest_action_date, action: b.latest_action, status: null, votes: b.votes, level: "federal" }; }); }); });
       subtitle = "Federal bills with at least one roll-call vote in this Congress. Bills without a recorded vote are on Congress.gov.";
     } else {
-      loads = caMembers().then(function (ca) { return ca.session ? get("us-ca/bills/" + ca.session + "/index.json", true).then(function (idx) { return { idx: idx, session: ca.session }; }) : { idx: null }; }).then(function (x) {
+      loads = Promise.all([legislatures(), states()]).then(function (x) {
+        var others = statesWith(x[0], "bills");
+        stCode = (p.get("state") || "CA").toUpperCase();
+        if (stCode !== "CA" && others.indexOf(stCode) < 0) stCode = "CA";
+        controls.push(selectEl("level", "Level", [["federal", "Federal (Congress)"], ["state", others.length ? "State (legislatures)" : "State (California Legislature)"]], level));
+        if (others.length) controls.push(selectEl("state", "State", [["CA", "California"]].concat(others.map(function (k) { return [k, STATE_INFO[k].name]; })), stCode));
+        return stCode === "CA" ? caBills() : stateBills(STATE_INFO[stCode]);
+      });
+    }
+    function caBills() {
+      return caMembers().then(function (ca) { return ca.session ? get("us-ca/bills/" + ca.session + "/index.json", true).then(function (idx) { return { idx: idx, session: ca.session }; }) : { idx: null }; }).then(function (x) {
         var idx = x.idx;
         if (!idx) return [];
         subtitle = "Every measure of the " + sessionLabel(x.session) + " session, from the Legislature's nightly database.";
@@ -1772,6 +2064,28 @@
         var type = p.get("type") && types.indexOf(p.get("type")) >= 0 ? p.get("type") : "AB";
         controls.push(selectEl("type", "Measure type", types.map(function (t) { return [t, t + " (" + idx.types[t].bills + ")"]; }), type));
         return get("us-ca/bills/" + x.session + "/" + idx.types[type].file, true).then(function (d) { return rows2objs(d).map(function (b) { return { id: b.id, label: b.label, title: b.title, date: b.latest_action_date, action: null, status: b.status, location: b.location, votes: b.votes, level: "state" }; }); });
+      });
+    }
+    // Another state's bills: the regular session unless another is asked for, one measure type at a time.
+    function stateBills(s) {
+      return stateVoteIndex(s.code).then(function (vidx) {
+        var sessions = ((vidx && vidx.sessions) || []).slice().sort(function (a, b) { return (a.start || "").localeCompare(b.start || ""); });
+        var ids = sessions.map(function (x) { return x.id; });
+        var regular = sessions.filter(function (x) { return x.classification === "primary"; });
+        var session = p.get("session") && ids.indexOf(p.get("session")) >= 0 ? p.get("session") : (regular.length ? regular[regular.length - 1] : sessions[sessions.length - 1] || {}).id;
+        if (!session) return [];
+        if (sessions.length > 1) controls.push(selectEl("session", "Session", sessions.map(function (x) { return [x.id, x.name || x.id]; }), session));
+        return get("us-" + lc(s.code) + "/bills/" + session + "/index.json", true).then(function (idx) {
+          if (!idx) return [];
+          var types = Object.keys(idx.types).sort(function (a, b) { return idx.types[b].bills - idx.types[a].bills || a.localeCompare(b); });
+          var type = p.get("type") && types.indexOf(p.get("type")) >= 0 ? p.get("type") : types[0];
+          if (!type) return [];
+          controls.push(selectEl("type", "Measure type", types.map(function (t) { return [t, t + " (" + idx.types[t].bills + ")"]; }), type));
+          subtitle = "Every measure in the Open States data for the " + sessionTitle(s, sessionName(sessions, session)) + ". Open States collects them from the legislature's website; it is not the official record.";
+          return get("us-" + lc(s.code) + "/bills/" + session + "/" + idx.types[type].file, true).then(function (d) {
+            return rows2objs(d).map(function (b) { return { id: b.id, label: b.label, title: b.title, date: b.latest_action_date, action: b.latest_action, status: null, votes: b.votes, level: "state" }; });
+          });
+        });
       });
     }
     return loads.then(function (rows) {
@@ -1801,10 +2115,10 @@
   // ---------- upcoming ----------
   function viewUpcoming(p) {
     var level = p.get("level") || "";
-    return Promise.all([get("us/upcoming.json", true), get("us-ca/upcoming.json", true), get("us-ca/counties/upcoming.json", true), countyIndex(), manifest()]).then(function (r) {
+    return Promise.all([get("us/upcoming.json", true), get("us-ca/upcoming.json", true), get("us-ca/counties/upcoming.json", true), countyIndex(), manifest(), get("counties/upcoming.json", true)]).then(function (r) {
       var cidx = r[3], man = r[4];
       var today = todayISO();
-      var items = ((r[0] && r[0].items) || []).concat((r[1] && r[1].items) || [], ((r[2] && r[2].items) || []).map(function (m) { return Object.assign({ level: "county" }, m); }))
+      var items = ((r[0] && r[0].items) || []).concat((r[1] && r[1].items) || [], ((r[2] && r[2].items) || []).concat((r[5] && r[5].items) || []).map(function (m) { return Object.assign({ level: "county" }, m); }))
         .filter(function (u) { return ahead(u, today) && (!level || (u.level || levelOf(u.body)) === level); })
         .sort(function (a, b) { return whenKey(a).localeCompare(whenKey(b)) || (a.title || "").localeCompare(b.title || ""); });
       var form = el("form", { class: "filters", on: { submit: function (e) { e.preventDefault(); navigate(href(["upcoming"], { level: new FormData(form).get("level") }) + "#schedule", { keepScroll: true }); } } },
@@ -1812,7 +2126,7 @@
       var groups = [];
       items.forEach(function (u) { var g = groups[groups.length - 1]; if (!g || g.date !== u.date) { g = { date: u.date, items: [] }; groups.push(g); } g.items.push(u); });
       var body = frag(
-        note("What the official feeds list as scheduled: the House floor for the week, Senate hearings and floor items, California's Daily File and committee hearings within 45 days, and county board meetings. Federal times are Eastern; California and county times are Pacific."),
+        note("What the official feeds list as scheduled: the House floor for the week, Senate hearings and floor items, California's Daily File and committee hearings within 45 days, and the meetings of county boards that publish through Legistar. Each time is shown in the zone its source gives, marked ET, CT, MT or PT."),
         form,
         el("h2", { class: "results-h", id: "schedule" }, plural(items.length, "item", "items") + " scheduled" + (level ? " at the " + level + " level" : "")),
         groups.length ? groups.map(function (g) { return section(fmtDate(g.date), el("ul", { class: "plain ups" }, g.items.map(function (u) { return upcomingItem(u, cidx); })), "day"); }) : note("Nothing scheduled in the published feeds."),
@@ -1833,7 +2147,7 @@
       function hit(text) { var t = text.toLowerCase(); return terms.every(function (w) { return t.indexOf(w) >= 0; }); }
       var members = [], bills = [];
       rows.forEach(function (x) {
-        var where = /^us-[a-z]{2}-(upper|lower)$/.test(x.body || "") ? bodyName(x.body) : "";
+        var where = /^us-[a-z]{2}-(upper|lower|legislature)$/.test(x.body || "") ? bodyName(x.body) : "";
         if (!hit(x.label + " " + x.meta + " " + x.id + " " + where)) return;
         x.where = where;
         (x.type === "member" ? members : bills).push(x);
@@ -1850,25 +2164,29 @@
         })) : note("No legislators match."), "people"),
         section("Bills", bills.length ? el("ul", { class: "plain bills" }, bills.slice(0, 100).map(function (b) { return el("li", null, badge(levelOf(b.body)), " ", link(billHref(b.id), b.label), b.meta ? el("span", { class: "meta" }, " · " + b.meta) : null); })) : note("No bills match."), "bills"),
         members.length > 100 || bills.length > 100 ? note("Showing the first 100 in each group; add a word to narrow the search.") : null,
-        note("Bills are searched for Congress and California. County supervisors and agenda items are searched on each county's page."));
+        note("Bills are searched for Congress and California; other states' bills are listed on each state's bills page. County supervisors and agenda items are searched on each county's page."));
       return { title: "Search: " + query, lede: (members.length + bills.length + places.length) + " results for “" + query + "”", body: body };
     });
   }
 
   // ---------- sources ----------
   function viewSources() {
-    return Promise.all([manifest(), countyIndex()]).then(function (r) {
+    return Promise.all([manifest(), countyIndex(), states()]).then(function (r) {
       var man = r[0], cidx = r[1];
       var srcs = man.sources || {};
-      var counties = Object.keys(srcs).filter(function (k) { return /^county-/.test(k); }).sort(function (a, b) { return srcs[a].name.localeCompare(srcs[b].name); });
-      var ctable = el("table", { class: "tbl" }, el("caption", null, "County boards of supervisors"),
+      var counties = Object.keys(srcs).filter(function (k) { return /^county-/.test(k); }).sort(function (a, b) {
+        var x = cidx[a.slice(7)] || {}, y = cidx[b.slice(7)] || {};
+        return ((x.state || "CA") === "CA" ? "" : x.state || "").localeCompare((y.state || "CA") === "CA" ? "" : y.state || "") || srcs[a].name.localeCompare(srcs[b].name);
+      });
+      var ctable = el("table", { class: "tbl" }, el("caption", null, "County boards"),
         el("thead", null, el("tr", null, el("th", { scope: "col" }, "County"), el("th", { scope: "col" }, "What is collected"), el("th", { scope: "col" }, "Status"), el("th", { scope: "col" }, "Last checked"), el("th", { scope: "col" }, "Source updated"))),
         el("tbody", null, counties.map(function (k) {
           var s = srcs[k]; var c = cidx[k.slice(7)] || {};
-          return el("tr", null, el("th", { scope: "row" }, c.slug ? link(href(["california", c.slug]), c.county || s.name) : s.name, " ", s.url ? ext(s.url, "official page") : null), el("td", null, c.coverage === "votes" ? "meetings, agenda items and each supervisor's vote (Legistar)" : c.coverage === "agendas" ? "meetings and agenda items (Legistar), no per-member votes" : "links only (" + (c.platform || "county site") + ")"), el("td", null, el("span", { class: "st st-" + s.status }, statusWord(s)), s.error ? el("span", { class: "unk" }, " · " + s.error) : null), el("td", null, s.last_checked_at ? time(s.last_checked_at, true) : "never"), el("td", null, s.source_updated_at ? time(s.source_updated_at, true) : el("span", { class: "unk" }, "not stated")));
+          var st = STATE_INFO[c.state || "CA"];
+          return el("tr", null, el("th", { scope: "row" }, c.slug ? link(countyHref(c), (c.county || s.name) + (st && st.code !== "CA" ? ", " + st.name : "")) : s.name, " ", s.url ? ext(s.url, "official page") : null), el("td", null, c.coverage === "votes" ? "meetings, agenda items and each supervisor's vote (Legistar)" : c.coverage === "agendas" ? "meetings and agenda items (Legistar), no per-member votes" : "links only (" + (c.platform || "county site") + ")"), el("td", null, el("span", { class: "st st-" + s.status }, statusWord(s)), s.error ? el("span", { class: "unk" }, " · " + s.error) : null), el("td", null, s.last_checked_at ? time(s.last_checked_at, true) : "never"), el("td", null, s.source_updated_at ? time(s.source_updated_at, true) : el("span", { class: "unk" }, "not stated")));
         })));
       var body = frag(
-        el("p", null, "Votes, bills and schedules come from official government publications. Two sources are not official and are named wherever they are used: Open States for legislators outside California, and Wikidata for county websites outside California. Everything is collected once a night by a scheduled job and published as static files; nothing is edited by hand. When a source is down the job keeps the last good copy and marks it stale here; a feed that returns far fewer records than the night before is rejected rather than published."),
+        el("p", null, "Votes, bills and schedules come from official government publications. Two sources are not official and are named wherever they are used: Open States for legislators, bills and votes outside California, and Wikidata for county websites outside California. Everything is collected once a night by a scheduled job and published as static files; nothing is edited by hand. When a source is down the job keeps the last good copy and marks it stale here; a feed that returns far fewer records than the night before is rejected rather than published."),
         freshnessTable(man),
         ctable,
         section("Method notes", el("ul", null,
@@ -1876,9 +2194,11 @@
           el("li", null, "Federal bill details (sponsor, cosponsors, committees, summary, actions) come from GovInfo's Bill Status files, published by the Government Publishing Office and the Library of Congress. GovInfo can trail Congress.gov by a day or two for Senate actions; vote results always come from the roll calls."),
           el("li", null, "Upcoming Senate floor votes come from the Senate Daily Press Gallery's floor log, the only published source that names them; it is text, shown as written and linked. The House's come from the Majority Leader's weekly floor schedule on docs.house.gov."),
           el("li", null, "California bills, floor and committee votes, legislators and the Daily File come from the Legislature's nightly database export (LegInfo “pubinfo”). The export records the day of a vote but not the time of day. “No vote recorded” covers absent, abstaining and not-voting members alike, as the Legislature records it."),
-          el("li", null, "Counties: 17 boards publish through Granicus Legistar, whose public API gives meetings, agenda items and, for most, each supervisor's vote; those are collected for the last 90 days. The other counties are linked to their official board and agenda pages, which are checked nightly. Their votes are only in minutes documents or on platforms that ask automated tools not to collect them."),
+          el("li", null, "Counties in California: 17 boards publish through Granicus Legistar, whose public API gives meetings, agenda items and, for most, each supervisor's vote; those are collected for the last 90 days. The other counties are linked to their official board and agenda pages, which are checked nightly. Their votes are only in minutes documents or on platforms that ask automated tools not to collect them."),
+          el("li", null, "Counties elsewhere: each night the job tries a thirtieth of the country's counties on Legistar under names built from the county's name and website, so every county is tried once a month. A name that answers is used only when the county's Legistar site links the county's own website, or when the name is the website's own name or spells out the county and its state. The boards found this way are collected the same way as California's."),
           el("li", null, "Which state and federal districts overlap a county comes from the Census Bureau's 2024 relationship files and, for California's congressional map that applies from January 2027, the Senate Elections Committee's AB 604 block equivalency file. Every state's counties come from the Census Bureau's 2020 county list, so Connecticut appears as its eight former counties."),
-          el("li", null, "Legislators in the other 49 states, the District of Columbia and Puerto Rico come from Open States (Plural), a nonprofit project that collects them from each legislature's website and publishes them in the public domain. It is not an official record, and each legislator's page says so and links the legislature's own page. Their districts are matched to the Census districts by name; the few that cannot be matched are listed without counties. Votes of those legislatures are not collected yet."),
+          el("li", null, "Legislators in the other 49 states, the District of Columbia and Puerto Rico come from Open States (Plural), a nonprofit project that collects them from each legislature's website and publishes them in the public domain. It is not an official record, and each legislator's page says so and links the legislature's own page. Their districts are matched to the Census districts by name; the few that cannot be matched are listed without counties."),
+          el("li", null, "Bills and votes of those legislatures come from Open States' bulk data: one file per legislative session, built from each legislature's website and published in the public domain. The nightly job keeps each state's current regular session and any special session since it, and downloads a session's file only when Open States has published a new copy. The files are listed only through Open States' free API, so this part runs once the site's key is configured; until then the table above marks it “not configured”. A vote Open States could not match to a legislator keeps the name as the legislature wrote it. If the published records approach the free hosting limit, committee votes are left out, largest state first, and the state's page says so; floor votes are always kept."),
           el("li", null, "County websites outside California come from Wikidata's official-website entries, which volunteers edit. The nightly job checks a seventh of them each night, so every link is checked once a week, and each county page says when its link was last checked and whether it answered. A link that answers can still point to the wrong page; report one with the corrections link at the foot of the page."),
           el("li", null, "Times are shown in Pacific Time with the zone marked. Each record shows when its source last changed and when this site last checked it."))),
         el("p", { class: "links" }, ext("https://github.com/nbonasera/studenttrustee-websites", "The pipeline's source code")));
@@ -1896,8 +2216,10 @@
     oklahoma: "OK", oregon: "OR", pennsylvania: "PA", "rhode-island": "RI", "south-carolina": "SC", "south-dakota": "SD", tennessee: "TN", texas: "TX",
     utah: "UT", vermont: "VT", virginia: "VA", washington: "WA", "west-virginia": "WV", wisconsin: "WI", wyoming: "WY", "district-of-columbia": "DC",
     "puerto-rico": "PR", guam: "GU", "u-s-virgin-islands": "VI", "american-samoa": "AS", "northern-mariana-islands": "MP" };
-  var CA_STATE_FILES = ["us-ca/members.json", "us-ca/counties/index.json", "geo/us-ca/counties.json", "us-ca/latest.json", "us-ca/upcoming.json", "us-ca/counties/upcoming.json"];
+  var CA_STATE_FILES = ["us-ca/members.json", "us-ca/counties/index.json", "counties/index.json", "geo/us-ca/counties.json", "us-ca/latest.json", "us-ca/upcoming.json", "us-ca/counties/upcoming.json"];
   var NO_LEGISLATURE = { GU: 1, VI: 1, AS: 1, MP: 1 };
+  var STATE_CODES_SET = {};
+  Object.keys(STATE_CODES).forEach(function (k) { STATE_CODES_SET[STATE_CODES[k]] = 1; });
   function stateFiles(code) { return code && code !== "CA" && !NO_LEGISLATURE[code] ? ["us-" + lc(code) + "/summary.json", "geo/us-" + lc(code) + "/counties.json"] : []; }
   // Records files (a chamber's positions for a year or a Congress, 30 to 70 KB compressed) and the
   // search indexes (over 100 KB) wait for focus or touch; a passing pointer does not fetch them.
@@ -1905,9 +2227,9 @@
 
   function loadOverview(parts, params, c) {
     return need(c, ["manifest.json", "geo/states.json", "us/latest.json", "us-ca/latest.json", "us/upcoming.json", "us-ca/upcoming.json", "us-ca/counties/upcoming.json",
-      "us-ca/counties/index.json", "us-ca/counties/latest.json", "us-ca/votes/index.json", "us/members.json"]);
+      "us-ca/counties/index.json", "counties/index.json", "us-ca/counties/latest.json", "us-ca/votes/index.json", "us/members.json"]);
   }
-  function loadStates(parts, params, c) { return need(c, ["manifest.json", "geo/states.json", "legislatures.json"]); }
+  function loadStates(parts, params, c) { return need(c, ["manifest.json", "geo/states.json", "legislatures.json", "counties/index.json"]); }
   function loadState(parts, params, c) {
     var code = STATE_CODES[parts[0]];
     var list = ["manifest.json", "geo/states.json", "us/members.json", "us/latest.json"];
@@ -1921,14 +2243,25 @@
     var code = STATE_CODES[parts[0]];
     if (!code || NO_LEGISLATURE[code]) return need(c, ["manifest.json", "geo/states.json"]);
     if (code !== "CA") {
-      return need(c, ["manifest.json", "geo/states.json", "us/members.json", "us/latest.json", "geo/us-" + lc(code) + "/counties.json", "us-" + lc(code) + "/members.json"]).then(function (r) {
+      var folder = "us-" + lc(code) + "/counties/";
+      return need(c, ["manifest.json", "geo/states.json", "us/members.json", "us/latest.json", "geo/us-" + lc(code) + "/counties.json", "us-" + lc(code) + "/members.json",
+        "us-ca/counties/index.json", "counties/index.json"]).then(function (r) {
+        var g = ((r[4] && r[4].counties) || []).filter(function (x) { return x.slug === parts[1]; })[0];
+        var listed = g && ((r[7] && r[7].counties) || []).some(function (e) { return e.fips === g.fips; });
+        // A county board on Legistar: its record and the month of votes the page shows.
+        var board = listed ? c.get(folder + g.fips + "/board.json").then(function (bd) {
+          var months = ((bd && bd.vote_months) || []).map(function (m) { return m.month; });
+          var month = params.get("month") && months.indexOf(params.get("month")) >= 0 ? params.get("month") : months[months.length - 1];
+          return month ? c.get(folder + g.fips + "/votes-" + month + ".json") : null;
+        }) : null;
         // Navigation draws the page first and lets the view fetch the roll calls; a prefetch on
         // focus or touch fetches them too.
         var cs = currentSession(r[3]);
-        return cs && !c.nav && !c.light ? need(c, ["house", "senate"].reduce(function (a, h) { return a.concat(["us/votes/" + cs.congress + "-" + cs.session + "-" + h + ".json", big("us/records/" + h + "-" + cs.congress + ".json")]); }, [])) : null;
+        var roll = cs && !c.nav && !c.light ? need(c, ["house", "senate"].reduce(function (a, h) { return a.concat(["us/votes/" + cs.congress + "-" + cs.session + "-" + h + ".json", big("us/records/" + h + "-" + cs.congress + ".json")]); }, [])) : null;
+        return Promise.all([board, roll]);
       });
     }
-    return need(c, ["manifest.json", "geo/us-ca/counties.json", "us-ca/counties/index.json", "us/members.json", "us-ca/members.json"]).then(function (r) {
+    return need(c, ["manifest.json", "geo/us-ca/counties.json", "us-ca/counties/index.json", "counties/index.json", "us/members.json", "us-ca/members.json"]).then(function (r) {
       var g = ((r[1] && r[1].counties) || []).filter(function (x) { return x.slug === parts[1]; })[0];
       if (!g) return null;
       return c.get("us-ca/counties/" + g.fips + "/board.json").then(function (board) {
@@ -1941,11 +2274,24 @@
   function loadMember(parts, params, c) {
     var id = parts[1];
     var stCode = stateMemberCode(id);
-    if (stCode) return need(c, ["manifest.json", "geo/states.json", "us-" + lc(stCode) + "/members.json", "geo/us-" + lc(stCode) + "/counties.json"]);
-    var base = ["manifest.json", "us-ca/counties/index.json"];
+    if (stCode) {
+      var st = "us-" + lc(stCode);
+      return need(c, ["manifest.json", "geo/states.json", st + "/members.json", "geo/" + st + "/counties.json", "legislatures.json"]).then(function (r) {
+        var row = ((r[4] && r[4].states) || {})[stCode];
+        var m = r[2] && r[2].members.filter(function (x) { return x.id === id; })[0];
+        if (!m || !row || !row.votes) return null;
+        return c.get(st + "/votes/index.json").then(function (idx) {
+          var body = idx ? bodyWithVotes(idx, m) : null;
+          if (!body) return null;
+          var pick = statePick(idx, body, params);
+          return need(c, [big(st + "/records/" + body.split("-")[2] + "-" + pick.session + ".json"), pick.shard && st + "/votes/" + pick.session + "/" + pick.shard.file]);
+        });
+      });
+    }
+    var base = ["manifest.json", "us-ca/counties/index.json", "counties/index.json", "geo/states.json"];
     if (/^ca-(asm|sen)-/.test(id)) {
       return need(c, base.concat(["us-ca/members.json", "us-ca/votes/index.json"])).then(function (r) {
-        var ca = r[2], idx = r[3];
+        var ca = r[4], idx = r[5];
         var m = ca && ca.members.filter(function (x) { return x.id === id; })[0];
         if (!m || !idx) return null;
         var pick = memberMonth(idx, m.body, params);
@@ -1954,16 +2300,16 @@
         return need(c, [big("us-ca/records/" + h + "-" + ca.session + "-" + pick.year + ".json"), "us-ca/votes/" + ca.session + "-" + h + "-" + pick.month + ".json"]);
       });
     }
-    var co = idOfCounty(id);
-    if (co) {
-      return need(c, base.concat(["us-ca/counties/" + co + "/board.json"])).then(function (r) {
-        var months = ((r[2] && r[2].vote_months) || []).map(function (x) { return x.month; });
+    var folder = countyFolder(id);
+    if (folder) {
+      return need(c, base.concat([folder + "/board.json"])).then(function (r) {
+        var months = ((r[4] && r[4].vote_months) || []).map(function (x) { return x.month; });
         var month = params.get("month") && months.indexOf(params.get("month")) >= 0 ? params.get("month") : months[months.length - 1];
-        return month ? c.get("us-ca/counties/" + co + "/votes-" + month + ".json") : null;
+        return month ? c.get(folder + "/votes-" + month + ".json") : null;
       });
     }
     return need(c, base.concat(["us/members.json"])).then(function (r) {
-      var us = r[2];
+      var us = r[4];
       var m = us && us.members.filter(function (x) { return x.id === id; })[0];
       if (!m) return null;
       var house = m.body === "us-house" ? "house" : "senate";
@@ -1972,21 +2318,41 @@
   }
   function loadVoteRoute(parts, params, c) {
     var f = voteFile(parts[1]);
-    return need(c, ["manifest.json", "us-ca/counties/index.json", f && f.rel, f && f.members]);
+    return need(c, ["manifest.json", "us-ca/counties/index.json", "counties/index.json", "geo/states.json", f && f.rel, f && f.members]);
   }
   function loadBillRoute(parts, params, c) {
     var id = parts[1];
     var f = billFile(id);
-    return need(c, ["manifest.json", "us-ca/counties/index.json", f && f.rel]).then(function (r) {
+    return need(c, ["manifest.json", "us-ca/counties/index.json", "counties/index.json", "geo/states.json", f && f.rel]).then(function (r) {
       if (!f) return null;
       if (f.ca) return c.get("us-ca/votes/" + f.session + "/" + id + ".json");
-      return need(c, ((r[2] && r[2].vote_ids) || []).map(function (vid) { return "us/votes/" + vid + ".json"; }));
+      var b = f.national ? r[4] && r[4].bills && r[4].bills[id] : r[4];
+      var ids = (b && b.vote_ids) || [];
+      if (f.national) {
+        // one month file holds every vote of a chamber in that month
+        var files = [];
+        ids.forEach(function (vid) { var vf = stateVoteFile(vid); if (vf && files.indexOf(vf.rel) < 0) files.push(vf.rel); });
+        return need(c, files);
+      }
+      return need(c, ids.map(function (vid) { return "us/votes/" + vid + ".json"; }));
     });
   }
   function loadVotes(parts, params, c) {
     var level = params.get("level") || "federal";
-    return need(c, ["manifest.json", "us-ca/counties/index.json", "us-ca/votes/index.json", "us/members.json"]).then(function (r) {
-      var caIdx = r[2], us = r[3];
+    var stCode = (params.get("state") || "CA").toUpperCase();
+    return need(c, ["manifest.json", "us-ca/counties/index.json", "counties/index.json", "us-ca/votes/index.json", "us/members.json", "geo/states.json", "legislatures.json"]).then(function (r) {
+      var caIdx = r[3], us = r[4], leg = (r[6] && r[6].states) || {};
+      if (level === "state" && stCode !== "CA" && STATE_CODES_SET[stCode] && leg[stCode] && leg[stCode].votes) {
+        var st = "us-" + lc(stCode);
+        return c.get(st + "/votes/index.json").then(function (idx) {
+          var bodies = [];
+          ((idx && idx.shards) || []).forEach(function (x) { if (bodies.indexOf(x.body) < 0) bodies.push(x.body); });
+          bodies.sort();
+          var bd = params.get("body") && bodies.indexOf(params.get("body")) >= 0 ? params.get("body") : bodies[0];
+          var pick = bd ? statePick(idx, bd, params) : null;
+          return pick && pick.shard ? c.get(st + "/votes/" + pick.session + "/" + pick.shard.file) : null;
+        });
+      }
       if (level === "federal" && us) {
         var body = params.get("body") === "us-senate" ? "senate" : "house";
         var sess = params.get("session");
@@ -2005,6 +2371,25 @@
     if ((params.get("level") || "federal") === "federal") {
       return need(c, ["manifest.json", "us/members.json"]).then(function (r) { return r[1] ? c.get("us/bills/" + r[1].congress + "/index.json") : null; });
     }
+    var stCode = (params.get("state") || "CA").toUpperCase();
+    if (stCode !== "CA" && STATE_CODES_SET[stCode]) {
+      var st = "us-" + lc(stCode);
+      return need(c, ["manifest.json", "geo/states.json", "legislatures.json"]).then(function (r) {
+        var row = ((r[2] && r[2].states) || {})[stCode];
+        if (!row || !row.bills) return need(c, ["us-ca/members.json"]);
+        return c.get(st + "/votes/index.json").then(function (vidx) {
+          var sessions = ((vidx && vidx.sessions) || []).slice().sort(function (a, b) { return (a.start || "").localeCompare(b.start || ""); });
+          var ids = sessions.map(function (x) { return x.id; });
+          var regular = sessions.filter(function (x) { return x.classification === "primary"; });
+          var session = params.get("session") && ids.indexOf(params.get("session")) >= 0 ? params.get("session") : (regular.length ? regular[regular.length - 1] : sessions[sessions.length - 1] || {}).id;
+          return session ? c.get(st + "/bills/" + session + "/index.json").then(function (idx) {
+            var types = idx ? Object.keys(idx.types).sort(function (a, b) { return idx.types[b].bills - idx.types[a].bills || a.localeCompare(b); }) : [];
+            var type = params.get("type") && types.indexOf(params.get("type")) >= 0 ? params.get("type") : types[0];
+            return type ? c.get(st + "/bills/" + session + "/" + idx.types[type].file) : null;
+          }) : null;
+        });
+      });
+    }
     return need(c, ["manifest.json", "us-ca/members.json"]).then(function (r) {
       var session = r[1] && r[1].session;
       return session ? c.get("us-ca/bills/" + session + "/index.json").then(function (idx) {
@@ -2014,12 +2399,12 @@
       }) : null;
     });
   }
-  function loadUpcoming(parts, params, c) { return need(c, ["manifest.json", "us/upcoming.json", "us-ca/upcoming.json", "us-ca/counties/upcoming.json", "us-ca/counties/index.json"]); }
+  function loadUpcoming(parts, params, c) { return need(c, ["manifest.json", "us/upcoming.json", "us-ca/upcoming.json", "us-ca/counties/upcoming.json", "counties/upcoming.json", "us-ca/counties/index.json", "counties/index.json"]); }
   function loadSearch(parts, params, c) {
     if (!(params.get("q") || "").trim()) return need(c, ["manifest.json"]);
     return need(c, ["manifest.json", "search/us.json", big("search/us-ca.json"), big("search/states.json"), "geo/states.json", "geo/counties.json"]);
   }
-  function loadSources(parts, params, c) { return need(c, ["manifest.json", "us-ca/counties/index.json"]); }
+  function loadSources(parts, params, c) { return need(c, ["manifest.json", "us-ca/counties/index.json", "counties/index.json", "geo/states.json"]); }
 
   // ---------- routes ----------
   function one(name) { return function (p) { return p[0] === name && p.length === 1; }; }

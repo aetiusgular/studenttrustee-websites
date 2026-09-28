@@ -1,6 +1,9 @@
 /* Legislation section. Loaded after site.css.
    Level colours are tints behind ink text (all above 12:1); the level word is always present,
    so colour is never the only signal. */
+/* An element the script hides stays hidden, whatever display its class gives it (a "Show more"
+   button once everything is shown, for one). */
+[hidden]{display:none !important}
 :root{
   --lvl-federal-bg:#e4ecfa; --lvl-federal-line:#1f4e9c;
   --lvl-state-bg:#fbefd0;   --lvl-state-line:#8a5a00;

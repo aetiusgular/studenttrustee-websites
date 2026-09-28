@@ -71,7 +71,7 @@ test.describe("keyboard walkthrough", () => {
     await tabTo(page, () => document.activeElement && document.activeElement.id === "cv-body", 200);
     const before = page.url();
     await page.keyboard.press("ArrowDown");
-    await expect(page.locator("#votes p.count[role=status]")).toContainText("match the filters");
+    await expect(page.locator("#congress-votes p.count[role=status]")).toContainText("match the filters");
     expect(await page.evaluate(() => document.activeElement.id)).toBe("cv-body");
     expect(page.url()).toBe(before);
   });

@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       targets:
-        description: "Space-separated targets: all boundaries geo federal california counties states"
+        description: "Space-separated targets: all boundaries geo federal california counties states legistar openstates sizes"
         default: "all"
       allow_shrink:
         description: "Publish even if a record count fell sharply (only after checking why)"
@@ -43,7 +43,9 @@ jobs:
     # Pinned: ubuntu-latest moves to a new release in October 2026, and a new image can lack
     # the Python build this job asks for.
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    # A usual night takes well under an hour. The first night with an Open States key downloads
+    # every state's session files, so the ceiling leaves room for that.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
         with:
@@ -80,6 +82,9 @@ jobs:
           PUBINFO_DIR: ${{ runner.temp }}
           TARGETS: ${{ inputs.targets || 'all' }}
           ALLOW_SHRINK: ${{ inputs.allow_shrink && '1' || '' }}
+          # Open States bulk data (every other state's bills and votes). Free key; without it that
+          # step records "not configured" and the rest runs as before.
+          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
         run: python3 -m tools.legislation.refresh $TARGETS
 
       - name: Validate

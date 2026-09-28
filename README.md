@@ -73,12 +73,13 @@ it; `/legislature` redirects to `/legislation/calendars/`.
 | Federal | Clerk of the House roll-call XML; Senate LIS vote XML and member file; GovInfo Bill Status XML; docs.house.gov Bills This Week; senate.gov hearings and floor schedule; Senate Daily Press Gallery; congress-legislators (CC0) for member identity; Voteview (UCLA) only when senate.gov refuses the job | every roll call of the current Congress with each member's position; every bill that got a roll call, with sponsors, cosponsors, committees, actions and summary; each member's record; what is scheduled |
 | State (California) | The Legislature's nightly database export (LegInfo pubinfo, about 1.1 GB) | every bill of the session, every floor and committee vote with positions, each legislator's record, the Daily File and committee hearings |
 | County (California) | Granicus Legistar public API for the 17 counties that use it; the official board pages for the other 41 | meetings, agenda actions and each supervisor's vote for the last 90 days where the county publishes them; links and a nightly reachability check everywhere else |
-| State (the other 49 states, DC, Puerto Rico) | Open States current-legislator files (public domain, no key) | every legislator with party, district, contact and official page; chamber sizes and vacancies; the counties each district covers |
-| County (everywhere else) | Census Bureau 2020 county list and 2024 district relationship files; Wikidata for each county's website, checked weekly | a page for each of 3,163 counties and county equivalents with the congressional and state districts that overlap it, who holds them, the governing body and its website, and the latest roll calls of the county's members of Congress |
+| State (the other 49 states, DC, Puerto Rico) | Open States current-legislator files (public domain, no key); Open States per-session bulk files (public domain; listed only through Open States' free API, so they need a key) | every legislator with party, district, contact and official page; chamber sizes and vacancies; the counties each district covers. Once the key is set: every bill and every floor and committee vote of the current regular session and any special session since, with each legislator's position and record |
+| County (everywhere else) | Census Bureau 2020 county list and 2024 district relationship files; Wikidata for each county's website, checked weekly; Granicus Legistar public API for the 68 county governments found on it (60 by the probe, 8 checked by hand) | a page for each of 3,163 counties and county equivalents with the congressional and state districts that overlap it, who holds them, the governing body and its website, and the latest roll calls of the county's members of Congress; for the Legistar counties, meetings, agenda actions and each member's vote for the last 90 days |
 
 People move from the table of states to a state, then to a county. Search covers states, every
-county, federal and state legislators in every state, and federal and California bills; county
-supervisors and agenda items are searched on each county's page. The vote list filters by level, chamber, county board, session or month, and result; the
+county, federal and state legislators in every state, and federal and California bills; other
+states' bills are listed on each state's bills page, and county supervisors and agenda items are
+searched on each county's page. The vote list filters by level, chamber, county board, session or month, and result; the
 bill list by level, type and status; the schedule by level; each legislator's record by their
 position and by question or bill. Every record is marked federal, state or county in words, not
 only in colour, links to its official page, and shows when its source last changed it.
@@ -86,7 +87,8 @@ only in colour, links to its official page, and shows when its source last chang
 and the counts; the Sources page shows it.
 
 **tools/legislation/**: the pipeline. `refresh.py` runs the targets (`boundaries geo federal
-california counties states`); each is independent. `validate.py` then checks that every index row points
+california counties states legistar openstates sizes`); each is independent, and `sizes` runs last
+to measure what the others wrote. `validate.py` then checks that every index row points
 at a real record and every position names a known member, and applies the shrink guard described
 below. The workflow publishes only if validation passes.
 
@@ -114,6 +116,15 @@ below. The workflow publishes only if validation passes.
   previous file, so a truncated download cannot empty a state's pages.
 - County websites outside California are checked a seventh at a time, so each is checked once a
   week; an `http` address is tried as `https` first and published that way when it answers.
+- Every county outside California is tried on Legistar once a month, a thirtieth each night (see
+  caveat 6), so a county that moves to Legistar is picked up within a month.
+- Other states' bills and votes: Open States publishes one file per legislative session and says
+  when each last changed. The job downloads a session's file only when it has changed, so a quiet
+  night costs a couple of API requests (the list of jurisdictions, 52 to a page).
+- GitHub Pages serves at most 1 GB. `sizes` measures the published records each night; past
+  800 MB it leaves committee votes out of the states with the most votes (California aside),
+  largest first, and those states' pages say so; past 950 MB the night is not published. The
+  `OPENSTATES_TRIM` variable (for example `TX,NY`) does the same by hand.
 - If the job stops for any reason, every Legislation page says so once the records are more than
   36 hours old.
 - GitHub emails a failed run to the person who last changed the workflow's schedule, or who last
@@ -169,24 +180,43 @@ choice costs.
    the date of each vote, not the time. The small daily incremental files were not used because
    they do not record deletions.
 
-6. **County votes come only from counties that publish through Legistar's public API.** Seventeen
-   counties do; most publish each supervisor's vote, and the ones that publish agenda actions
-   without roll calls are labelled that way. The other 41 counties link to their official board
-   pages, which the job checks every night. Legistar is the only free, structured feed that many
-   counties share; the rest publish PDFs or use platforms whose robots.txt forbids automated
-   crawling. *Caveats:* most large counties have no votes here, including Los Angeles (its votes
-   are in Statement of Proceedings PDFs), San Francisco (its Legistar API stopped updating in
-   2020), Sacramento, Orange, Riverside, Alameda and Santa Clara. County records cover the last
-   90 days. Tuolumne's CivicClerk system publishes structured votes and is the next county worth
-   adding.
+6. **County votes come only from counties that publish through Legistar's public API.** In
+   California, 17 of 58 counties do; most publish each supervisor's vote, and the ones that
+   publish agenda actions without roll calls are labelled that way. The other 41 link to their
+   official board pages, which the job checks every night. Elsewhere, the job finds county
+   governments on Legistar itself: it tries names built from each county's name and website
+   (harriscountytx, kingcounty, cook-county) and keeps a name only when the Legistar site links
+   the county's own website, its title names the county and state (or a county name no other
+   county has), or the name spells out the county and state. A full run on 28 September 2026 found
+   60, including Harris, King, Cook, Miami-Dade, Fulton, Wake and Milwaukee; 8 consolidated
+   governments and independent cities were added by hand (`tools/legislation/legistar-seed.json`:
+   Nashville, Louisville, Jacksonville, Denver, Palm Beach, Mecklenburg, Alexandria, Richmond).
+   Legistar is the only free, structured feed that many counties share; the rest publish PDFs or
+   use platforms whose robots.txt forbids automated crawling. *Caveats:* most counties have no
+   votes here, including Los Angeles (Statement of Proceedings PDFs), San Francisco (its Legistar
+   API stopped updating in 2020) and many large ones on other platforms. A county whose Legistar
+   name is not built from its name (a city-county such as Indianapolis) is only found if someone
+   adds it to the seed file; a name another county could claim (clark, fulton) is left out unless
+   the Legistar site links one of them. County records cover the last 90 days. Tuolumne's
+   CivicClerk system publishes structured votes and is the next California county worth adding.
 
-7. **Legislators outside California come from Open States.** Open States (Plural) collects every
-   legislature's members from its website and publishes them as they change, in the public domain, with no
-   key. No official source covers all states in one format. *Caveats:* it is a third party, not
+7. **Legislators, bills and votes outside California come from Open States.** Open States
+   (Plural) collects every legislature's members, bills and roll calls from its website and
+   publishes them in the public domain. No official source covers all states in one format.
+   Legislators come from files that need no key. Bills and votes come from its bulk files, one per
+   session (CSV format 2.1), which are free downloads but are listed only through its API, so the
+   nightly job needs a free key in the `OPENSTATES_API_KEY` secret; without it that step records
+   "not configured" and the pages say votes are not collected yet. The key is sent only as a
+   request header and is never written to a file or a log. *Caveats:* it is a third party, not
    the official record, and every page that uses it says so and links the legislature's own page.
    A broken collector can leave a state out of date; the Sources page shows when each file last
-   changed. Votes of those legislatures are not collected yet: that needs Open States' bulk files,
-   which are free but need an account and an API key.
+   changed. Open States gathers a state's votes from that legislature's journals and websites, so
+   coverage varies: some states publish committee votes, some only floor votes, and a few publish
+   little of either. A voter Open States could not match to a legislator keeps the name the
+   legislature wrote. The job keeps the current regular session and the special sessions since it,
+   not earlier ones. Bills keep their latest 25 actions and up to 12 sponsors, with a link to the
+   legislature's page for the rest. Committee votes may be left out of the largest states to stay
+   under the 1 GB hosting limit (see How the records stay current).
 
 8. **Districts are matched to counties by the Census relationship files.** A county lists every
    district that covers part of its land, from the Census Bureau's 2024 files, and the legislators
@@ -228,7 +258,11 @@ On `localhost` the Legislation section reads the records from `studenttrustee/da
 everywhere else it reads them from GitHub Pages.
 
 To regenerate records instead of pulling them: `python3 -m tools.legislation.refresh federal`
-(or `california`, `counties`, `geo`, `all`). California downloads the 1.1 GB export; set
+(or `california`, `counties`, `geo`, `states`, `legistar`, `openstates`, `sizes`, `all`).
+`openstates` needs `OPENSTATES_API_KEY` in the environment; `LEGIS_STATES=TX,OH` limits it (and
+`states`) to a few states. `python3 -m
+tools.legislation.legistar --probe-all` tries every county on Legistar at once (about ten minutes)
+instead of a thirtieth a night. California downloads the 1.1 GB export; set
 `PUBINFO_ZIP=/path/to/pubinfo_daily_Sat.zip` to reuse one you already have. `LEGIS_LIMIT=5` keeps
 federal and county runs short while testing.
 
@@ -256,7 +290,8 @@ reports console errors and failed requests.
 
 - `volunteer/_headers` is absent; the volunteer site has no Content-Security-Policy yet, and its
   text contrast is below AAA.
-- The county, address and state-vote limits under [Choices and caveats](#choices-and-caveats).
+- Other states' bills and votes wait for an Open States API key (see caveat 7).
+- The county and address limits under [Choices and caveats](#choices-and-caveats).
 
 ## Roster freshness
 

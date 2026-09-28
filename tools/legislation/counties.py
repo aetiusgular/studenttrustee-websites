@@ -1,12 +1,13 @@
 """
 County boards of supervisors.
 
-For counties on Granicus Legistar (11 confirmed), the public Web API
+For counties on Granicus Legistar (17 of 58), the public Web API
 (https://webapi.legistar.com/v1/{client}/...) gives meetings, agenda items,
 per-supervisor votes and the current office holders as JSON with
 *LastModifiedUtc timestamps. Every other county gets a link-only record from
 counties-sources.json; each URL is checked so the site can say plainly when a
-county page is unreachable.
+county page is unreachable. The Legistar collection itself is in legistar.py, which does the same
+for counties in other states.
 
 Output under data/legislation/us-ca/counties/:
   index.json                     every county: coverage, links, counts, next meeting
@@ -16,36 +17,18 @@ Output under data/legislation/us-ca/counties/:
 """
 import json
 import os
-import re
-from collections import defaultdict
-from datetime import date, datetime, timedelta
 
-from . import writer
-from .common import Http, Manifest, iso, clock, clock_note, FetchError, UTC
+from . import legistar, writer
+from .common import FetchError, Http, Manifest, today
 
-API = 'https://webapi.legistar.com/v1/%s/%s'
 SOURCES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'counties-sources.json')
-LOOKBACK_DAYS = 90
 AHEAD_DAYS = 45
-# Each county names its vote values differently (seen: Aye/Ayes/AYE/Yes, Nay/Noes/NO/No, Absent,
-# NOT PRESENT, Recuse/Recused, Abstain/Abstained). Anything unrecognised is kept as O (other).
-VOTE_CODES = {'AYE': 'Y', 'AYES': 'Y', 'YES': 'Y', 'YEA': 'Y', 'YEAS': 'Y',
-              'NO': 'N', 'NOES': 'N', 'NAY': 'N', 'NAYS': 'N',
-              'ABSTAIN': 'A', 'ABSTAINED': 'A', 'ABSTENTION': 'A',
-              'ABSENT': 'X', 'EXCUSED': 'X', 'NOT VOTING': 'X', 'NOT PRESENT': 'X', 'DID NOT VOTE': 'X',
-              'RECUSED': 'R', 'RECUSE': 'R', 'RECUSAL': 'R', 'PRESENT': 'P'}
-
-
-def vote_code(label):
-    return VOTE_CODES.get(' '.join((label or '').upper().split()), 'O')
-LIMIT = int(os.environ.get('LEGIS_LIMIT', '0') or 0)
-
-
-def today():
-    """Test hook: LEGIS_TODAY=YYYY-MM-DD pins the clock."""
-    t = os.environ.get('LEGIS_TODAY')
-    return date.fromisoformat(t) if t else date.today()
-CODE_LABELS = {'Y': 'aye', 'N': 'no', 'A': 'abstain', 'X': 'absent or not voting', 'R': 'recused', 'P': 'present', 'O': 'other', '-': 'not on this roll'}
+LIMIT = legistar.LIMIT
+vote_code = legistar.vote_code
+sitting = legistar.sitting
+CODE_LABELS = legistar.CODE_LABELS
+VOTE_COLUMNS = legistar.VOTE_COLUMNS
+LATEST_COLUMNS = legistar.LATEST_COLUMNS
 
 
 def load_sources():
@@ -53,151 +36,25 @@ def load_sources():
         return json.load(fh)['counties']
 
 
-def utc(value):
-    """Legistar '2026-09-03T21:48:39.187' (UTC, no offset) or '2026-09-01T00:00:00' dates."""
-    if not value:
-        return None
-    m = re.match(r'(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})', value)
-    if not m:
-        return value
-    return iso(datetime.strptime(m.group(1) + 'T' + m.group(2), '%Y-%m-%dT%H:%M:%S').replace(tzinfo=UTC))
-
-
-def sitting(body_name):
-    """'BOARD OF SUPERVISORS - LAND USE' -> 'Land Use'; the plain board -> ''."""
-    n = ' '.join((body_name or '').split())
-    low = n.lower()
-    if low == 'board of supervisors':
-        return ''
-    rest = re.sub(r'(?i)^board of supervisors\s*[-:–]?\s*', '', n)
-    rest = re.sub(r'(?i)\s*of the board of supervisors$', '', rest)
-    return rest.title() if rest.isupper() else rest
-
-
-def legistar_board(http, client, fips, county_name):
-    """Meetings, items, votes and members for one Legistar client. Raises on hard failure."""
-    bodies, _ = http.get_json(API % (client, 'bodies?$top=500'), ttl=24 * 3600)
-    # The board itself plus the sittings Legistar files under it ("Board of Supervisors - Land Use",
-    # "Special Meeting of the Board of Supervisors"); the primary body comes first.
+def ca_boards(bodies):
+    """The Board of Supervisors plus the sittings Legistar files under it ("Board of Supervisors -
+    Land Use", "Special Meeting of the Board of Supervisors"); the primary body first."""
     def is_board(b):
         name = ' '.join((b.get('BodyName') or '').lower().split())
         return b.get('BodyActiveFlag', 1) and (name == 'board of supervisors' or name.startswith('board of supervisors') or name.endswith('of the board of supervisors'))
     boards = [b for b in bodies if is_board(b)]
     boards.sort(key=lambda b: (0 if ' '.join((b.get('BodyName') or '').lower().split()) == 'board of supervisors' else 1 if (b.get('BodyTypeName') or '') == 'Primary Legislative Body' else 2, b['BodyId']))
+    return boards
+
+
+def legistar_board(http, client, fips, county_name):
+    """Meetings, items, votes and members for one California county on Legistar."""
+    bodies, _ = http.get_json(legistar.API % (client, 'bodies?$top=500'), ttl=24 * 3600)
+    boards = ca_boards(bodies)
     if not boards:
         raise RuntimeError('%s: no Board of Supervisors body in Legistar (%d bodies)' % (client, len(bodies)))
-    body_id = boards[0]['BodyId']
-
-    since = (today() - timedelta(days=LOOKBACK_DAYS)).isoformat()
-    events = []
-    for b in boards:
-        try:
-            evs, _ = http.get_json(API % (client, "events?$filter=EventBodyId eq %d and EventDate ge datetime'%s'&$orderby=EventDate desc&$top=200" % (b['BodyId'], since)), ttl=0)
-        except FetchError as e:
-            if b is boards[0]:
-                raise
-            print('   %s: %s events skipped: %s' % (client, b.get('BodyName'), e))
-            continue
-        for ev in evs:
-            ev['_body_name'] = (b.get('BodyName') or '').strip()
-        events += evs
-    events.sort(key=lambda ev: ev.get('EventDate') or '', reverse=True)
-    if LIMIT:
-        events = events[:max(2, LIMIT // 5)]
-    # the API ignores $filter on officerecords, so the current members are picked out here
-    records, _ = http.get_json(API % (client, "bodies/%d/officerecords?$filter=OfficeRecordEndDate ge datetime'%s'&$top=100" % (body_id, today().isoformat())), ttl=24 * 3600)
-    today_s = today().isoformat()
-    members = {}
-    for r in sorted(records, key=lambda r: r.get('OfficeRecordStartDate') or ''):
-        pid = r.get('OfficeRecordPersonId')
-        start, end = (r.get('OfficeRecordStartDate') or '')[:10], (r.get('OfficeRecordEndDate') or '')[:10]
-        if not pid or (end and end < today_s) or (start and start > today_s):
-            continue
-        mid = 'ca-%s-bos-%s' % (fips, pid)
-        members[mid] = {'id': mid, 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                        'name': ' '.join((r.get('OfficeRecordFullName') or '').split()), 'first': r.get('OfficeRecordFirstName'), 'last': r.get('OfficeRecordLastName'),
-                        'title': (r.get('OfficeRecordTitle') or '').strip() or 'Supervisor', 'state': 'CA', 'county': county_name,
-                        'term_start': start or None, 'term_end': end or None,
-                        'ids': {'legistar_person': pid}, 'urls': {'official': 'https://%s.legistar.com/People.aspx' % client},
-                        'source_updated_at': utc(r.get('OfficeRecordLastModifiedUtc'))}
-    name_to_id = {' '.join(m['name'].lower().split()): mid for mid, m in members.items()}
-
-    meetings, votes, matters = [], [], {}
-    far = (today() + timedelta(days=400)).isoformat()
-    for ev in events:
-        ev_date = (ev.get('EventDate') or '')[:10]
-        eid = ev['EventId']
-        if not ev_date or ev_date > far:
-            continue     # Legistar template events dated 2099 and the like
-        if (ev.get('EventAgendaStatusName') or '').strip().lower() == 'hidden':
-            continue     # not public yet (Humboldt posts future meetings this way)
-        meeting = {'id': 'ca-%s-bos-meeting-%s' % (fips, eid), 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                   'kind': 'meeting', 'date': ev_date, 'time': clock(ev.get('EventTime')), 'time_note': clock_note(ev.get('EventTime')), 'tz': 'America/Los_Angeles',
-                   'title': ('%s Board of Supervisors' % county_name.replace(' County', '') if fips != '06075' else 'San Francisco Board of Supervisors') + (' (%s)' % sitting(ev['_body_name']) if sitting(ev['_body_name']) else ''),
-                   'location': (ev.get('EventLocation') or '').strip() or None,
-                   'status': 'scheduled' if ev_date >= today_s else 'held',
-                   'official_url': ev.get('EventInSiteURL') or ('https://%s.legistar.com/Calendar.aspx' % client),
-                   'agenda_url': ev.get('EventAgendaFile'), 'minutes_url': ev.get('EventMinutesFile'),
-                   'source': {'id': 'legistar-' + client, 'name': '%s Legistar' % county_name, 'url': API % (client, 'events/%s' % eid)},
-                   'source_updated_at': utc(ev.get('EventLastModifiedUtc')), 'items': 0, 'votes': 0}
-        past = ev_date < today_s
-        try:
-            items, _ = http.get_json(API % (client, 'events/%s/eventitems?AgendaNote=1&MinutesNote=1&Attachments=0' % eid), ttl=(7 * 24 * 3600 if past and ev.get('EventMinutesFile') else 0))
-        except FetchError as e:
-            print('   %s event %s items skipped: %s' % (client, eid, e))
-            items = []
-        meeting['items'] = len(items)
-        for it in items:
-            action = (it.get('EventItemActionName') or '').strip()
-            passed_flag = it.get('EventItemPassedFlagName')
-            mid = it.get('EventItemMatterId')
-            if mid and mid not in matters:
-                matters[mid] = {'id': 'ca-%s-bos-matter-%s' % (fips, mid), 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                                'label': (it.get('EventItemMatterFile') or '').strip() or ('Item %s' % mid), 'title': (it.get('EventItemTitle') or '').strip(),
-                                'type': (it.get('EventItemMatterType') or '').strip() or None, 'status': (it.get('EventItemMatterStatus') or '').strip() or None,
-                                'official_url': 'https://%s.legistar.com/LegislationDetail.aspx?ID=%s' % (client, mid), 'vote_ids': [],
-                                'source': {'id': 'legistar-' + client, 'name': '%s Legistar' % county_name, 'url': API % (client, 'matters/%s' % mid)},
-                                'source_updated_at': utc(it.get('EventItemLastModifiedUtc'))}
-            if not action and not passed_flag:
-                continue
-            positions, labels = [], {}
-            if past:
-                try:
-                    vrows, _ = http.get_json(API % (client, 'eventitems/%s/votes' % it['EventItemId']), ttl=30 * 24 * 3600)
-                except FetchError:
-                    vrows = []
-                for vr in vrows:
-                    label = (vr.get('VoteValueName') or '').strip()
-                    code = vote_code(label)
-                    labels.setdefault(code, label)
-                    pid = vr.get('VotePersonId')
-                    member = 'ca-%s-bos-%s' % (fips, pid) if pid else name_to_id.get(' '.join((vr.get('VotePersonName') or '').lower().split()), 'ca-%s-bos-unknown' % fips)
-                    if member not in members and pid:
-                        members[member] = {'id': member, 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                                           'name': ' '.join((vr.get('VotePersonName') or '').split()), 'title': 'Supervisor (former)', 'state': 'CA', 'county': county_name,
-                                           'ids': {'legistar_person': pid}, 'urls': {}, 'provisional': True}
-                    positions.append([member, code])
-            yes = sum(1 for p in positions if p[1] == 'Y'); no = sum(1 for p in positions if p[1] == 'N')
-            other = len(positions) - yes - no
-            result = passed_flag or action
-            vote = {'id': 'ca-%s-bos-vote-%s-%s' % (fips, ev_date.replace('-', ''), it['EventItemId']), 'level': 'county', 'jurisdiction': 'us-ca-%s' % fips, 'body': 'ca-%s-bos' % fips,
-                    'meeting_id': meeting['id'], 'date': ev_date, 'time': meeting['time'], 'tz': 'America/Los_Angeles',
-                    'question': action or ('Passed' if passed_flag == 'Pass' else result), 'title': ('%s: %s' % ((it.get('EventItemMatterFile') or '').strip(), (it.get('EventItemTitle') or '').strip())).strip(': '),
-                    'agenda_number': (it.get('EventItemAgendaNumber') or '').strip() or None,
-                    'result': result, 'passed': (passed_flag or '').lower().startswith('pass') or bool(re.search(r'adopt|approv|pass|carried', action, re.I)),
-                    'tally': {'yes': yes, 'no': no, 'present': 0, 'not_voting': other}, 'recorded': bool(positions),
-                    'mover': (it.get('EventItemMover') or '').strip() or None, 'seconder': (it.get('EventItemSeconder') or '').strip() or None,
-                    'bill_id': matters[mid]['id'] if mid in matters else None, 'bill_label': matters[mid]['label'] if mid in matters else None,
-                    'labels': labels, 'positions': positions,
-                    'official_url': meeting['minutes_url'] or meeting['official_url'],
-                    'source': {'id': 'legistar-' + client, 'name': '%s Legistar' % county_name, 'url': API % (client, 'eventitems/%s/votes' % it['EventItemId'])},
-                    'source_updated_at': utc(it.get('EventItemLastModifiedUtc'))}
-            votes.append(vote)
-            meeting['votes'] += 1
-            if mid in matters:
-                matters[mid]['vote_ids'].append(vote['id'])
-        meetings.append(meeting)
-    return members, meetings, votes, matters
+    title = '%s Board of Supervisors' % county_name.replace(' County', '') if fips != '06075' else 'San Francisco Board of Supervisors'
+    return legistar.collect_board(http, client, 'CA', fips, county_name, boards, title, 'Supervisor', 'America/Los_Angeles')
 
 
 def check_url(http, url):
@@ -219,44 +76,7 @@ VOTE_COLUMNS = ['id', 'date', 'meeting_id', 'agenda_number', 'question', 'matter
 
 
 def write_county(fips, rec, members, meetings, votes, matters):
-    """board.json plus one compact vote file per month. positions is a string in board member order."""
-    order = [m['id'] for m in members]
-    by_month = defaultdict(list)
-    for v in votes:
-        by_month[v['date'][:7]].append(v)
-    keep = {'board.json'}
-    months = []
-    for month, vs in sorted(by_month.items()):
-        vs.sort(key=lambda v: (v['date'], v['id']), reverse=True)
-        rows = []
-        used = set()
-        for v in vs:
-            pos = dict(v['positions'])
-            rows.append([v['id'], v['date'], v['meeting_id'], v['agenda_number'], v['question'], v['bill_id'], v['result'], v['passed'],
-                         v['tally']['yes'], v['tally']['no'], v['tally']['not_voting'], ''.join(pos.get(mid, '-') for mid in order),
-                         v['mover'], v['seconder'], v['source_updated_at']])
-            if v['bill_id']:
-                used.add(v['bill_id'])
-        name = 'votes-%s.json' % month
-        keep.add(name)
-        months.append({'file': name, 'month': month, 'votes': len(vs), 'recorded': sum(1 for v in vs if v['recorded'])})
-        writer.write_json('us-ca/counties/%s/%s' % (fips, name), {
-            'columns': VOTE_COLUMNS, 'members': order, 'codes': CODE_LABELS, 'rows': rows,
-            'matters': {m['id']: m for m in matters.values() if m['id'] in used}})
-    rec['members'] = members
-    rec['meetings'] = meetings
-    rec['vote_months'] = months
-    rec['counts'] = {'meetings': len(meetings), 'votes': len(votes), 'matters': len(matters)}
-    writer.write_json('us-ca/counties/%s/board.json' % fips, rec)
-    if not LIMIT:
-        writer.remove_stale('us-ca/counties/%s' % fips, keep)
-    by_id = {m['id']: m for m in matters.values()}
-    return [[v['id'], v['date'], rec['body'], rec['county'], v['question'], (by_id.get(v['bill_id']) or {}).get('label'),
-             ((by_id.get(v['bill_id']) or {}).get('title') or '')[:160], v['result'], v['passed'],
-             v['tally']['yes'], v['tally']['no'], v['tally']['not_voting'], v['recorded']] for v in votes]
-
-
-LATEST_COLUMNS = ['id', 'date', 'body', 'county', 'question', 'matter_label', 'matter_title', 'result', 'passed', 'yes', 'no', 'other', 'recorded']
+    return legistar.write_board('us-ca/counties/%s' % fips, rec, members, meetings, votes, matters)
 
 
 def links_only(http, src, rec, entry, manifest, sid):

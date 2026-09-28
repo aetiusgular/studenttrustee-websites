@@ -7,6 +7,7 @@ Integrity checks for data/legislation/. Returns a list of failure strings.
 - every state's county file: each county in exactly one state, the district keys it names are in
   that state's district table, board links are http(s); every state's legislators: unique ids,
   district keys the county files know, search rows that point at real legislators
+- every county board outside California: its record exists and its ids carry its county's prefix
 - shrink guard: a count that only grows during a Congress or a session may not fall by more than
   20 percent from one night to the next (a feed returning an empty page must not wipe the site's
   data), unless ALLOW_SHRINK=1. A new Congress or session starts its counts again, so the guard
@@ -14,6 +15,7 @@ Integrity checks for data/legislation/. Returns a list of failure strings.
   calendars and only fail if they halve. Upcoming counts are not guarded: a recess empties them.
 """
 import os
+import re
 
 from . import writer
 
@@ -23,6 +25,7 @@ SHRINK_LIMITS = {
     'ca_members': 0.8, 'ca_bills': 0.8, 'ca_votes': 0.8, 'ca_counties': 0.8,
     'ca_county_votes': 0.5, 'ca_county_meetings': 0.5,
     'us_counties': 0.95, 'st_members': 0.8,
+    'us_county_votes': 0.5, 'st_votes': 0.8,
 }
 
 
@@ -155,6 +158,100 @@ def national_checks():
     return failures[:200]
 
 
+def county_board_checks():
+    """Every county board outside California in counties/index.json has its board.json, and every
+    vote and member in it carries that county's id prefix."""
+    failures = []
+    idx = _load('counties/index.json')
+    for e in (idx or {}).get('counties') or []:
+        folder = 'us-%s/counties/%s' % (e['state'].lower(), e['fips'])
+        board = _load(folder + '/board.json')
+        if board is None:
+            failures.append('counties/index.json lists %s but %s/board.json is missing' % (e['fips'], folder))
+            continue
+        prefix = '%s-%s-bos' % (e['state'].lower(), e['fips'])
+        bad = [m['id'] for m in board.get('members') or [] if not m['id'].startswith(prefix)]
+        for mo in board.get('vote_months') or []:
+            month = _load('%s/%s' % (folder, mo['file'])) or {}
+            bad += [r[0] for r in month.get('rows') or [] if not r[0].startswith(prefix + '-vote-')]
+            if len(month.get('members') or []) and any(len(r[11]) != len(month['members']) for r in month.get('rows') or []):
+                failures.append('%s/%s: a positions string does not match the member list' % (folder, mo['file']))
+        if bad:
+            failures.append('%s: %d ids without the prefix %s (e.g. %s)' % (folder, len(bad), prefix, bad[0]))
+    return failures
+
+
+# The shapes the page reads ids with (legislation.js stateBillFile and stateVoteFile).
+STATE_BILL_ID = re.compile(r'^([a-z]{2})-([A-Za-z0-9_-]+)-([A-Z]+)(\d+)(-[0-9a-z]+)?$')
+STATE_VOTE_ID = re.compile(r'^([a-z]{2})-([A-Za-z0-9_-]+)-(upper|lower|legislature)-(\d{4})(\d{2})\d{2}-([0-9a-f]{8})$')
+
+
+def state_vote_checks():
+    """Other states' bills and votes (openstates.py). The page finds a record's file from its id
+    alone, so every id must lead to the file that holds it, and every positions string must match
+    its file's member list."""
+    failures = []
+    root = writer.path('')
+    if not os.path.isdir(root):
+        return failures
+    for d in sorted(os.listdir(root)):
+        if not (d.startswith('us-') and len(d) == 5) or d == 'us-ca':
+            continue
+        st = d[3:]
+        idx = _load(d + '/votes/index.json')
+        for e in (idx or {}).get('shards') or []:
+            rel = '%s/votes/%s/%s' % (d, e['session'], e['file'])
+            month = _load(rel)
+            if month is None:
+                failures.append('%s/votes/index.json lists %s, which is missing' % (d, rel))
+                continue
+            cols = month.get('columns') or []
+            n = len(month.get('members') or [])
+            for r in month.get('rows') or []:
+                row = dict(zip(cols, r))
+                m = STATE_VOTE_ID.match(row.get('id') or '')
+                if not m or 'us-%s/votes/%s/%s-%s-%s.json' % m.group(1, 2, 3, 4, 5) != rel:
+                    failures.append('%s: vote id %s does not lead to this file' % (rel, row.get('id')))
+                    break
+                if row.get('positions') and len(row['positions']) != n:
+                    failures.append('%s: a positions string does not match the member list' % rel)
+                    break
+                if row.get('bill_id') and not STATE_BILL_ID.match(row['bill_id']):
+                    failures.append('%s: bill id %s has the wrong shape' % (rel, row['bill_id']))
+                    break
+        bills = writer.path(d + '/bills')
+        if not os.path.isdir(bills):
+            continue
+        for sess in sorted(os.listdir(bills)):
+            folder = '%s/bills/%s' % (d, sess)
+            if not os.path.isdir(writer.path(folder)):
+                continue
+            for name in sorted(os.listdir(writer.path(folder))):
+                if name.startswith('index') or not name.endswith('.json'):
+                    continue
+                for bid, b in ((_load('%s/%s' % (folder, name)) or {}).get('bills') or {}).items():
+                    m = STATE_BILL_ID.match(bid)
+                    if not m or (m.group(1), m.group(2), '%s-%02d.json' % (m.group(3), int(m.group(4)) // 100)) != (st, sess, name):
+                        failures.append('%s/%s: bill id %s does not lead to this file' % (folder, name, bid))
+                        break
+                    bad = [v for v in b.get('vote_ids') or [] if not STATE_VOTE_ID.match(v)]
+                    if bad:
+                        failures.append('%s/%s: %s has a vote id of the wrong shape (%s)' % (folder, name, bid, bad[0]))
+                        break
+    return failures[:200]
+
+
+def size_failures():
+    """GitHub Pages refuses a site over 1 GB; the records must stay under 950 MB (sizes.py trims at 800)."""
+    from . import sizes
+    total, folders, _ = sizes.measure()
+    if total > sizes.FAIL_AT:
+        biggest = sorted(folders.items(), key=lambda kv: -kv[1])[:5]
+        return ['the records are %.0f MB, over the %d MB limit (largest: %s)' % (total / 1e6, sizes.FAIL_AT // 10 ** 6,
+                ', '.join('%s %.0f MB' % (k, v / 1e6) for k, v in biggest))]
+    return []
+
+
 def run():
     failures = []
     manifest = _load('manifest.json')
@@ -187,5 +284,8 @@ def run():
                         failures.append('vote %s references missing bill %s' % (row[0], row[11]))
     failures += california_checks()
     failures += national_checks()
+    failures += county_board_checks()
+    failures += state_vote_checks()
+    failures += size_failures()
     failures += shrink_failures(manifest)
     return failures

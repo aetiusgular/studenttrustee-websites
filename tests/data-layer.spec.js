@@ -17,6 +17,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const DATA = path.join(here, "..", "studenttrustee", "data", "legislation");
 const read = (rel) => { try { return JSON.parse(fs.readFileSync(path.join(DATA, rel), "utf8")); } catch { return null; } };
 const hasData = !!read("manifest.json");
+// A state outside California whose bills and votes are published (Open States bulk data), if any.
+const legs = read("legislatures.json");
+const VST = legs && Object.keys(legs.states).filter((k) => k !== "CA" && legs.states[k].votes > 0).sort()[0];
+const VSUM = VST && read(`us-${VST.toLowerCase()}/summary.json`);
+const VSLUG = VST && ((read("geo/states.json") || { states: [] }).states.find((s) => s.code === VST) || {}).slug;
 
 function dataRequests(page) {
   const seen = [];
@@ -25,6 +30,14 @@ function dataRequests(page) {
 }
 async function ready(page) {
   await page.waitForSelector("#app:not([aria-busy])", { timeout: 30_000 });
+}
+// Waits until the browser has finished downloading every one of these records files (prefetch runs
+// two at a time at low priority, so on a busy machine the last ones can take a moment).
+async function downloaded(page, rels) {
+  await expect.poll(() => page.evaluate((want) => {
+    const done = performance.getEntriesByType("resource").map((e) => e.name.split("/data/legislation/")[1]);
+    return want.filter((r) => !done.includes(r));
+  }, rels), { timeout: 10_000 }).toEqual([]);
 }
 // The pages under test prefetch on hover; the phone project has no hover, so these run on desktop.
 function desktopOnly(testInfo) { test.skip(testInfo.project.name !== "desktop-1440", "pointer hover is a desktop behaviour"); }
@@ -41,7 +54,7 @@ test.describe("data layer", () => {
     const target = page.locator("#app a", { hasText: /^Texas$/ }).first();
     await target.hover();
     await expect.poll(() => seen.length, { timeout: 5_000 }).toBeGreaterThan(0);
-    await page.waitForLoadState("networkidle");
+    await downloaded(page, ["us-tx/summary.json", "geo/us-tx/counties.json", "us/members.json", "us/latest.json"]);
     const before = seen.length;
     await target.click();
     await expect(page).toHaveURL(/\/legislation\/texas\/$/);
@@ -131,6 +144,34 @@ test.describe("data layer", () => {
     await expect(page.locator(".err button")).toHaveText("Reload the page");
   });
 
+  test("an address that points outside the records folder requests nothing from it", async ({ page }) => {
+    const seen = dataRequests(page);
+    await page.goto("/legislation/bill/tx-..%2F..%2Fx-SB1/");
+    await ready(page);
+    await expect(page.locator("h1")).toHaveText("Not found");
+    expect(seen.filter((r) => /SB-00\.json$|\.\./.test(r))).toEqual([]);
+  });
+
+  test("a resting pointer on another state's vote fetches its month of votes, and the click fetches nothing new", async ({ page }, testInfo) => {
+    desktopOnly(testInfo);
+    test.skip(!(VSUM && VSUM.latest && VSUM.latest.length && VSLUG), "no other state's votes published");
+    await page.goto(`/legislation/${VSLUG}/`);
+    await ready(page);
+    await page.waitForTimeout(300);
+    const seen = dataRequests(page);
+    const target = page.locator(`#app a[href="/legislation/vote/${VSUM.latest[0].id}/"]`).first();
+    await target.hover();
+    await expect.poll(() => seen.some((r) => r.includes("/votes/")), { timeout: 5_000 }).toBe(true);
+    const month = seen.find((r) => r.includes("/votes/"));
+    await downloaded(page, [month, `us-${VST.toLowerCase()}/members.json`]);
+    const before = seen.length;
+    await target.click();
+    await expect(page).toHaveURL(new RegExp(`/legislation/vote/${VSUM.latest[0].id}/$`));
+    await ready(page);
+    await page.waitForTimeout(300);
+    expect(seen.slice(before), "files fetched after the click").toEqual([]);
+  });
+
   test("record links that are not http(s) are shown as text", async ({ page }) => {
     const us = read("us/members.json");
     const m = us.members.find((x) => x.body === "us-senate" && !x.former && !x.provisional);
@@ -153,6 +194,10 @@ test.describe("data layer", () => {
 test.describe("data budget", () => {
   test.skip(!hasData || !read("geo/us-tx/counties.json"), "no national records checked out");
   const budgets = [["/legislation/texas/", 100], ["/legislation/texas/travis/", 100], ["/legislation/states/", 30], ["/legislation/", 120]];
+  if (VSUM && VSUM.latest && VSUM.latest.length) {
+    budgets.push([`/legislation/votes/?level=state&state=${VST}`, 120]);
+    budgets.push([`/legislation/vote/${VSUM.latest[0].id}/`, 120]);
+  }
   for (const [url, kb] of budgets) {
     test(`${url} is drawn with under ${kb} KB of JSON`, async ({ page }, testInfo) => {
       desktopOnly(testInfo);
@@ -199,6 +244,11 @@ test.describe("security headers", () => {
 
   const routes = ["/legislation/", "/legislation/states/", "/legislation/california/", "/legislation/texas/", "/legislation/votes/?level=state",
     "/legislation/bills/?level=federal", "/legislation/upcoming/", "/legislation/search/?q=water", "/legislation/sources/", "/legislation/calendars/"];
+  if (VSUM && VSUM.latest && VSUM.latest.length) {
+    routes.push(`/legislation/votes/?level=state&state=${VST}`, `/legislation/bills/?level=state&state=${VST}`, `/legislation/vote/${VSUM.latest[0].id}/`);
+    const withBill = VSUM.latest.find((v) => v.bill_id);
+    if (withBill) routes.push(`/legislation/bill/${withBill.bill_id}/`);
+  }
   for (const url of routes) {
     test(`no CSP or Trusted Types violation on ${url}`, async ({ page }) => {
       const problems = [];

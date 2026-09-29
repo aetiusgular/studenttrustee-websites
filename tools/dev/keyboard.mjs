@@ -1,5 +1,5 @@
-// Keyboard walkthrough of the Legislation section: skip link, tab order, choosing a state,
-// following links with Enter, focus after navigation, Back, and "Show more". Dev aid only.
+// Keyboard walkthrough of the Legislation section: skip link, tab order, a state's tile, a door,
+// a level chip, focus after navigation, Back, and "Show more". Dev aid only.
 //   node tools/dev/keyboard.mjs http://127.0.0.1:8100
 import { chromium } from "@playwright/test";
 const base = process.argv[2] || "http://127.0.0.1:8100";
@@ -18,19 +18,21 @@ const order = [];
 for (let i = 0; i < 16; i++) { await p.keyboard.press("Tab"); order.push(await active()); }
 log("tab order:\n  " + order.join("\n  "));
 
-// choose California with the keyboard and press Go
-await p.focus("#state-pick");
-await p.keyboard.type("Calif");
-await p.keyboard.press("Tab"); log("after select, focus:", await active());
+// open California from its tile with Enter
+await p.focus('.usmap a[href="/legislation/california/"]');
 await p.keyboard.press("Enter"); await settle();
 log("url:", p.url(), "| focus:", await active());
 
-// follow the first county link with Enter
-const county = await p.$("#counties ul.cols a");
-await county.focus(); await p.keyboard.press("Enter"); await settle();
-log("url:", p.url(), "| focus:", await active());
+// a door, then a level chip (focus stays on the chip; the count is announced)
+await p.focus('.pdoor[href="/legislation/california/representatives/"]');
+await p.keyboard.press("Enter"); await settle();
+log("door:", p.url(), "| focus:", await active());
+await p.goBack(); await settle();
+await p.focus('.chip[data-level="state"]');
+await p.keyboard.press("Enter"); await settle();
+log("chip:", p.url(), "| focus:", await active(), "| announced:", await p.textContent("#status"));
 
-// Back returns to California
+// Back returns to the page before
 await p.goBack(); await settle();
 log("after Back:", p.url(), "| h1:", await p.textContent("h1"));
 
@@ -42,7 +44,7 @@ log("after Show more, focus:", await active(), "| count:", await p.textContent("
 
 // position filter buttons on a vote page toggle aria-pressed
 await p.goto(base + "/legislation/votes/?level=federal"); await settle();
-await p.click("ul.votes h3 a"); await settle();
+await p.click(".vrow h3 a"); await settle();
 const pressed = await p.$$eval("fieldset button", (bs) => bs.map((x) => x.textContent + "=" + x.getAttribute("aria-pressed")));
 log("vote page", p.url(), "| filters:", pressed.join(", "));
 const second = (await p.$$("fieldset button"))[1];

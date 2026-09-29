@@ -253,7 +253,7 @@ def main(check=False):
     # sitemap + robots. lastmod is the roster verification date so the file only changes when the data does.
     lastmod = site['last_verified']
     urls = [('/', '1.0'), ('/map', '0.9'), ('/districts/', '0.9'), ('/legislation/', '0.9'), ('/legislation/calendars/', '0.7'),
-            ('/legislation/states/', '0.8'), ('/legislation/california/', '0.8'), ('/legislation/votes/', '0.7'), ('/legislation/bills/', '0.7'),
+            ('/legislation/california/', '0.8'), ('/legislation/california/representatives/', '0.7'), ('/legislation/votes/', '0.7'), ('/legislation/bills/', '0.7'),
             ('/legislation/upcoming/', '0.7'), ('/legislation/sources/', '0.5'), ('/about', '0.6'), ('/accessibility', '0.3')]
     urls += [('/districts/%s/' % d['slug'], '0.8') for d in districts]
     body = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']

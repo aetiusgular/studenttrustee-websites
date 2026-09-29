@@ -2,6 +2,9 @@
 // dev server (which applies studenttrustee/_headers and serves the records from
 // studenttrustee/data/legislation/):
 //   - intent prefetch: a resting pointer fetches the next page's files, so the click needs none;
+//   - older addresses land on the new ones, and Back after one goes to the page before;
+//   - filters: unknown values are ignored and fetch nothing; a level chip keeps focus and announces
+//     the count; the drawer changes nothing until Apply; Show more loads older months in order;
 //   - Save-Data turns prefetch off;
 //   - leaving a page aborts the requests only that page wanted;
 //   - a 5xx is retried once, a 404 on a required file and a newer schema are reported;
@@ -22,6 +25,8 @@ const legs = read("legislatures.json");
 const VST = legs && Object.keys(legs.states).filter((k) => k !== "CA" && legs.states[k].votes > 0).sort()[0];
 const VSUM = VST && read(`us-${VST.toLowerCase()}/summary.json`);
 const VSLUG = VST && ((read("geo/states.json") || { states: [] }).states.find((s) => s.code === VST) || {}).slug;
+// A California county board that publishes its votes.
+const CA_BOARD = ((read("us-ca/counties/index.json") || { counties: [] }).counties.find((c) => c.coverage === "votes") || null);
 
 // Every records request the page makes from now on, in order. seen.pending() counts the ones that have
 // not finished; a 404 counts as finished (the records on the data branch can trail the code by a night).
@@ -59,11 +64,11 @@ test.describe("data layer", () => {
 
   test("a resting pointer prefetches the next page, and the click fetches nothing new", async ({ page }, testInfo) => {
     desktopOnly(testInfo);
-    await page.goto("/legislation/states/");
+    await page.goto("/legislation/");
     await ready(page);
     await page.waitForTimeout(300);
     const seen = dataRequests(page);
-    const target = page.locator("#app a", { hasText: /^Texas$/ }).first();
+    const target = page.locator('.usmap a[href="/legislation/texas/"]');
     await target.hover();
     await expect.poll(() => seen.length, { timeout: 5_000 }).toBeGreaterThan(0);
     await settled(seen);
@@ -80,11 +85,11 @@ test.describe("data layer", () => {
     await page.addInitScript(() => {
       Object.defineProperty(Object.getPrototypeOf(navigator), "connection", { configurable: true, get: () => ({ saveData: true, effectiveType: "4g" }) });
     });
-    await page.goto("/legislation/states/");
+    await page.goto("/legislation/");
     await ready(page);
     await page.waitForTimeout(300);
     const seen = dataRequests(page);
-    await page.locator("#app a", { hasText: /^Texas$/ }).first().hover();
+    await page.locator('.usmap a[href="/legislation/texas/"]').hover();
     await page.waitForTimeout(600);
     expect(seen).toEqual([]);
   });
@@ -113,7 +118,7 @@ test.describe("data layer", () => {
     await page.click("#go-member");
     await expect.poll(() => page.evaluate(() => document.getElementById("app").getAttribute("aria-busy"))).toBe("true");
     await page.waitForTimeout(300);
-    await page.click(".leg-nav a[href='/legislation/sources/']");
+    await page.click("#app a[href='/legislation/sources/']");
     await ready(page);
     await expect.poll(() => failed.length, { timeout: 5_000 }).toBeGreaterThan(0);
     expect(failed[0]).toMatch(/ABORT|cancel/i);
@@ -167,7 +172,7 @@ test.describe("data layer", () => {
   test("a resting pointer on another state's vote fetches its month of votes, and the click fetches nothing new", async ({ page }, testInfo) => {
     desktopOnly(testInfo);
     test.skip(!(VSUM && VSUM.latest && VSUM.latest.length && VSLUG), "no other state's votes published");
-    await page.goto(`/legislation/${VSLUG}/`);
+    await page.goto(`/legislation/${VSLUG}/?level=state`);
     await ready(page);
     await page.waitForTimeout(300);
     const seen = dataRequests(page);
@@ -181,6 +186,104 @@ test.describe("data layer", () => {
     await ready(page);
     await page.waitForTimeout(300);
     expect(seen.slice(before), "files fetched after the click").toEqual([]);
+  });
+
+  // Every address the section used before layout D, and where it lands.
+  const OLD = [
+    ["/legislation/states/", "/legislation/", "Who voted for what, in every state."],
+    ["/legislation/texas/legislators/", "/legislation/texas/representatives/", "Texas"],
+    ["/legislation/votes/?level=state", "/legislation/california/?level=state", "California"],
+    ["/legislation/votes/?level=state&state=TX&result=passed", "/legislation/texas/?level=state&result=passed", "Texas"],
+    ["/legislation/votes/?level=county", "/legislation/california/?level=county", "California"],
+    ["/legislation/bills/?level=state&state=TX", "/legislation/texas/bills/", "Texas"],
+    ["/legislation/bills/?level=state&type=SB", "/legislation/california/bills/?type=SB", "California"],
+  ];
+  if (CA_BOARD) OLD.push([`/legislation/votes/?level=county&county=${CA_BOARD.fips}`, `/legislation/california/${CA_BOARD.slug}/?level=county`, CA_BOARD.county]);
+  for (const [from, to, h1] of OLD) {
+    test(`the old address ${from} lands on ${to}`, async ({ page }) => {
+      await page.goto(from);
+      await ready(page);
+      expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(to);
+      await expect(page.locator("h1")).toHaveText(h1);
+    });
+  }
+
+  test("Back after an in-app link to an old address goes to the page before it", async ({ page }) => {
+    await page.goto("/legislation/texas/");
+    await ready(page);
+    await page.evaluate(() => {
+      const a = document.createElement("a");
+      a.href = "/legislation/votes/?level=state&state=TX";
+      a.id = "old-link";
+      a.textContent = "old";
+      document.getElementById("app").prepend(a);
+    });
+    await page.click("#old-link");
+    await expect(page).toHaveURL(/\/legislation\/texas\/\?level=state$/);
+    await ready(page);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/legislation\/texas\/$/);
+    await ready(page);
+    await expect(page.locator("#results")).toHaveText("Latest votes in Texas, newest first");
+  });
+
+  test("filter values the page does not know are ignored, and nothing is requested for them", async ({ page }) => {
+    const seen = dataRequests(page);
+    await page.goto("/legislation/texas/?level=nowhere&body=..%2F..%2Fsecret&month=2026-13&result=maybe");
+    await ready(page);
+    await settled(seen);
+    await expect(page.locator("#results")).toHaveText("Latest votes in Texas, newest first");
+    await expect(page.locator('.chip[aria-current="true"]')).toHaveText("All levels");
+    await expect(page.locator("#more-btn")).toHaveText("More filters");
+    expect(seen.filter((r) => /nowhere|secret|2026-13|maybe|\.\./.test(r))).toEqual([]);
+  });
+
+  test("a level chip narrows the list, keeps focus on itself and announces the new count", async ({ page }) => {
+    await page.goto("/legislation/california/");
+    await ready(page);
+    await page.locator('.chip[data-level="state"]').click();
+    await expect(page).toHaveURL(/\/legislation\/california\/\?level=state$/);
+    await ready(page);
+    await expect.poll(() => page.evaluate(() => document.activeElement && document.activeElement.getAttribute("data-level"))).toBe("state");
+    await expect(page.locator("#status")).toHaveText("Latest state votes in California, newest first");
+    const levels = await page.locator(".vrow .vr-level").allTextContents();
+    expect(levels.length).toBeGreaterThan(0);
+    expect(levels.every((x) => /state/i.test(x))).toBe(true);
+  });
+
+  test("the filter drawer changes nothing until Apply, then says how many filters are on", async ({ page }) => {
+    await page.goto("/legislation/california/");
+    await ready(page);
+    const heading = await page.locator("#results").textContent();
+    await page.locator("#more-btn").click();
+    await expect(page.locator("#filters")).toBeVisible();
+    await page.selectOption("#f-result", "passed");
+    await page.selectOption("#f-body", "ca-senate");
+    await page.waitForTimeout(300);
+    await expect(page).toHaveURL(/\/legislation\/california\/$/);
+    await expect(page.locator("#results")).toHaveText(heading);
+    await page.locator("#filters button[type=submit]").click();
+    await expect(page).toHaveURL(/\/legislation\/california\/\?level=state&body=ca-senate&result=passed$/);
+    await ready(page);
+    await expect.poll(() => page.evaluate(() => document.activeElement && document.activeElement.id)).toBe("results");
+    await expect(page.locator("#results")).toHaveText("Latest votes of the California Senate that passed, newest first");
+    await expect(page.locator("#more-btn")).toHaveText("More filters (2 on)");
+    const metas = await page.locator(".vrow .vr-meta").allTextContents();
+    expect(metas.every((m) => m.includes("California Senate"))).toBe(true);
+    await page.locator("#filters button", { hasText: "Clear all" }).click();
+    await expect(page).toHaveURL(/\/legislation\/california\/\?level=state$/);
+  });
+
+  test("Show more loads older months and keeps the list newest first", async ({ page }) => {
+    await page.goto("/legislation/california/?level=state");
+    await ready(page);
+    const first = await page.locator(".vrow").count();
+    await page.locator(".show-more button").click();
+    await expect.poll(() => page.locator(".vrow").count(), { timeout: 30_000 }).toBeGreaterThan(first);
+    const dates = await page.locator(".vrow time").evaluateAll((els) => els.map((t) => t.getAttribute("datetime").slice(0, 10)));
+    expect(dates.every((d, i) => i === 0 || dates[i - 1] >= d)).toBe(true);
+    // focus moves to the first row added
+    await expect.poll(() => page.evaluate((n) => { const rows = document.querySelectorAll(".vrow"); return rows[n] && rows[n].contains(document.activeElement); }, first)).toBe(true);
   });
 
   test("record links that are not http(s) are shown as text", async ({ page }) => {
@@ -204,9 +307,13 @@ test.describe("data layer", () => {
 // transfer GitHub Pages would send (the dev server does not compress).
 test.describe("data budget", () => {
   test.skip(!hasData || !read("geo/us-tx/counties.json"), "no national records checked out");
-  const budgets = [["/legislation/texas/", 100], ["/legislation/texas/travis/", 100], ["/legislation/states/", 30], ["/legislation/", 120]];
+  // The map, then every door of a state and a county, each under 100 KB (the plan's budget).
+  const budgets = [["/legislation/", 30], ["/legislation/texas/", 100], ["/legislation/texas/representatives/", 100], ["/legislation/texas/upcoming/", 100],
+    ["/legislation/texas/travis/", 100], ["/legislation/texas/travis/representatives/", 100], ["/legislation/california/", 100], ["/legislation/california/representatives/", 100],
+    ["/legislation/california/upcoming/", 100]];
+  if (CA_BOARD) budgets.push([`/legislation/california/${CA_BOARD.slug}/`, 100]);
   if (VSUM && VSUM.latest && VSUM.latest.length) {
-    budgets.push([`/legislation/votes/?level=state&state=${VST}`, 120]);
+    budgets.push([`/legislation/${VSLUG}/?level=state`, 100]);
     budgets.push([`/legislation/vote/${VSUM.latest[0].id}/`, 120]);
   }
   for (const [url, kb] of budgets) {
@@ -253,10 +360,11 @@ test.describe("security headers", () => {
     expect(JSON.stringify(json)).toContain('"/legislation/*"');
   });
 
-  const routes = ["/legislation/", "/legislation/states/", "/legislation/california/", "/legislation/texas/", "/legislation/votes/?level=state",
+  const routes = ["/legislation/", "/legislation/california/", "/legislation/california/?level=state&month=2026-08", "/legislation/texas/", "/legislation/texas/representatives/",
+    "/legislation/texas/upcoming/", "/legislation/texas/travis/", "/legislation/california/bills/", "/legislation/texas/sources/", "/legislation/votes/?level=federal",
     "/legislation/bills/?level=federal", "/legislation/upcoming/", "/legislation/search/?q=water", "/legislation/sources/", "/legislation/calendars/"];
   if (VSUM && VSUM.latest && VSUM.latest.length) {
-    routes.push(`/legislation/votes/?level=state&state=${VST}`, `/legislation/bills/?level=state&state=${VST}`, `/legislation/vote/${VSUM.latest[0].id}/`);
+    routes.push(`/legislation/${VSLUG}/?level=state`, `/legislation/${VSLUG}/bills/`, `/legislation/vote/${VSUM.latest[0].id}/`);
     const withBill = VSUM.latest.find((v) => v.bill_id);
     if (withBill) routes.push(`/legislation/bill/${withBill.bill_id}/`);
   }

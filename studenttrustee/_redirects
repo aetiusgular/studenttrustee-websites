@@ -1,6 +1,10 @@
 # Netlify redirects. The old calendars page moved into the Legislation section.
 /legislature            /legislation/calendars/   301
 /legislature.html       /legislation/calendars/   301
+# The Legislation section's older addresses (before the state pages had doors). The page rewrites
+# the ones that need the records to translate (the state and county vote lists) itself.
+/legislation/states/                  /legislation/                          301
+/legislation/:state/legislators/      /legislation/:state/representatives/   301
 # The Legislation section is one page that routes on the path (see assets/legislation.js).
 # A 200 rewrite only applies where no file exists, so /legislation/calendars/ still serves its own page.
 /legislation/*          /legislation/index.html   200

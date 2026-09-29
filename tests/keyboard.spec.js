@@ -1,7 +1,8 @@
-// Keyboard walkthrough of the national pages: the states table, a state, a county, with the
-// keyboard alone. Checks that every step is reachable with Tab, that Enter follows links, that
-// focus lands on the new page's heading after each navigation, that filters change the list in
-// place without moving focus or changing the address, and that focus is always visible.
+// Keyboard walkthrough of the Legislation section in layout D: the map of states, a state's doors,
+// the county picker, the level chips and the filter drawer, with the keyboard alone. Checks that
+// every step is reachable with Tab, that Enter follows links, that focus lands where the page
+// says it will (the heading after a new place, the result count after a door or Apply, the chip
+// itself after a chip), that the drawer changes nothing until Apply, and that focus is always visible.
 import { test, expect } from "@playwright/test";
 import fs from "node:fs";
 import path from "node:path";
@@ -13,7 +14,7 @@ const hasNational = fs.existsSync(path.join(here, "..", "studenttrustee", "data"
 async function ready(page) { await page.waitForSelector("#app:not([aria-busy])", { timeout: 30_000 }); }
 
 // Press Tab until the focused element matches, failing after `limit` presses.
-async function tabTo(page, matches, limit = 80) {
+async function tabTo(page, matches, limit = 120) {
   for (let i = 0; i < limit; i++) {
     await page.keyboard.press("Tab");
     const hit = await page.evaluate(matches);
@@ -29,67 +30,115 @@ async function focusVisible(page) {
     return (cs.outlineStyle !== "none" && parseFloat(cs.outlineWidth) > 0) || (cs.boxShadow && cs.boxShadow !== "none");
   });
 }
+const activeId = (page) => page.evaluate(() => document.activeElement && document.activeElement.id);
 
 test.describe("keyboard walkthrough", () => {
   test.skip(!hasNational, "no national records checked out");
 
-  test("states table, Texas, Travis County, and the county's vote filters", async ({ page }, testInfo) => {
+  test("map, Texas, its doors, Travis County, a level chip and the filter drawer", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name === "phone-390", "the phone layout is walked through in the next test");
-    await page.goto("/legislation/states/");
+    await page.goto("/legislation/");
     await ready(page);
 
     // The skip link is the first stop and moves focus to the main content.
     await page.keyboard.press("Tab");
     await expect(page.locator(":focus")).toHaveText("Skip to content");
     await page.keyboard.press("Enter");
-    await expect.poll(() => page.evaluate(() => document.activeElement && document.activeElement.id)).toBe("main");
+    await expect.poll(() => activeId(page)).toBe("main");
 
-    await tabTo(page, () => document.activeElement && document.activeElement.id === "place-q");
+    // The tiles run west to east, row by row; Texas is on the last row.
+    await tabTo(page, () => document.activeElement && document.activeElement.matches('.usmap a[href="/legislation/texas/"]'));
     expect(await focusVisible(page)).toBe(true);
-    await page.keyboard.type("tex");
-    await expect(page.locator("#place-q + .hint + .count, .finder .count").first()).toContainText("1 of 56");
-    await expect(page).toHaveURL(/\/legislation\/states\/(#main)?$/);
-
-    await tabTo(page, () => document.activeElement && document.activeElement.textContent === "Texas");
-    expect(await focusVisible(page)).toBe(true);
+    await expect(page.locator(":focus")).toContainText("Texas");
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL(/\/legislation\/texas\/$/);
     await ready(page);
-    await expect.poll(() => page.evaluate(() => document.activeElement && document.activeElement.id)).toBe("page-title");
+    await expect.poll(() => activeId(page)).toBe("page-title");
     await expect(page.locator("h1")).toHaveText("Texas");
 
-    await tabTo(page, () => document.activeElement && document.activeElement.id === "county-q", 400);
-    await page.keyboard.type("travis");
-    await expect(page.locator("#counties .count")).toHaveText(/^1 of 254 counties shown$/);
-    await tabTo(page, () => document.activeElement && document.activeElement.textContent === "Travis County");
+    // A door: focus moves to the new list's count, and the door is marked as the current one.
+    await tabTo(page, () => document.activeElement && document.activeElement.matches(".pdoor") && /Who represents me/.test(document.activeElement.textContent));
+    expect(await focusVisible(page)).toBe(true);
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/legislation\/texas\/representatives\/$/);
+    await ready(page);
+    await expect.poll(() => activeId(page)).toBe("results");
+    await expect(page.locator('.pdoor[aria-current="page"]')).toContainText("Who represents me");
+
+    // The county picker changes nothing until Show.
+    await tabTo(page, () => document.activeElement && document.activeElement.id === "rep-county");
+    const before = page.url();
+    await page.keyboard.type("Travis");
+    expect(page.url()).toBe(before);
+    await page.keyboard.press("Tab");
+    await expect(page.locator(":focus")).toHaveText("Show");
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/legislation\/texas\/travis\/representatives\/$/);
+    await ready(page);
+    await expect(page.locator("h1")).toHaveText("Travis County");
+    await expect.poll(() => activeId(page)).toBe("results");
+
+    // Back to the votes door, then a level chip: focus stays on the chip and the count is announced.
+    await tabTo(page, () => document.activeElement && document.activeElement.matches(".pdoor") && /How they voted/.test(document.activeElement.textContent));
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL(/\/legislation\/texas\/travis\/$/);
     await ready(page);
-    await expect.poll(() => page.evaluate(() => document.activeElement && document.activeElement.id)).toBe("page-title");
+    await tabTo(page, () => document.activeElement && document.activeElement.matches('.chip[data-level="federal"]'));
+    expect(await focusVisible(page)).toBe(true);
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/legislation\/texas\/travis\/\?level=federal$/);
+    await ready(page);
+    await expect.poll(() => page.evaluate(() => document.activeElement && document.activeElement.getAttribute("data-level"))).toBe("federal");
+    await expect(page.locator('.chip[data-level="federal"]')).toHaveAttribute("aria-current", "true");
+    await expect(page.locator("#status")).toContainText("federal votes");
 
-    // Filters change the list in place: focus stays on the control and the address does not change.
-    await tabTo(page, () => document.activeElement && document.activeElement.id === "cv-body", 200);
-    const before = page.url();
+    // The drawer: a disclosure button; its fields change nothing until Apply, which moves focus
+    // to the count and keeps the drawer open.
+    await tabTo(page, () => document.activeElement && document.activeElement.id === "more-btn");
+    await expect(page.locator("#more-btn")).toHaveAttribute("aria-expanded", "false");
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#more-btn")).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator("#filters")).toBeVisible();
+    await tabTo(page, () => document.activeElement && document.activeElement.id === "f-result", 10);
+    const url = page.url();
+    const heading = await page.locator("#results").textContent();
     await page.keyboard.press("ArrowDown");
-    await expect(page.locator("#congress-votes p.count[role=status]")).toContainText("match the filters");
-    expect(await page.evaluate(() => document.activeElement.id)).toBe("cv-body");
-    expect(page.url()).toBe(before);
+    expect(await page.inputValue("#f-result")).toBe("passed");
+    expect(page.url()).toBe(url);
+    await expect(page.locator("#results")).toHaveText(heading);
+    await tabTo(page, () => document.activeElement && document.activeElement.textContent === "Apply", 10);
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/legislation\/texas\/travis\/\?level=federal&result=passed$/);
+    await ready(page);
+    await expect.poll(() => activeId(page)).toBe("results");
+    await expect(page.locator("#results")).toContainText("that passed");
+    await expect(page.locator("#more-btn")).toHaveText("More filters (1 on)");
+    await expect(page.locator("#more-btn")).toHaveAttribute("aria-expanded", "true");
   });
 
-  test("on a phone the vote filters open from a button that says how many are on", async ({ page }, testInfo) => {
+  test("on a phone the doors stack and the filters open from a button that says how many are on", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "phone-390", "phone layout only");
-    await page.goto("/legislation/texas/travis/");
+    await page.goto("/legislation/california/");
     await ready(page);
-    const toggle = page.locator("button.filter-toggle");
-    await expect(page.locator("#cv-filters")).toBeHidden();
+    // the three doors are one column, each a full-width target
+    const boxes = await page.locator(".pdoor").evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ x: Math.round(r.x), w: Math.round(r.width), h: Math.round(r.height) })));
+    expect(new Set(boxes.map((b) => b.x)).size).toBe(1);
+    for (const b of boxes) expect(b.h).toBeGreaterThanOrEqual(44);
+    const toggle = page.locator("#more-btn");
+    await expect(page.locator("#filters")).toBeHidden();
     await toggle.focus();
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
     await page.keyboard.press("Enter");
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await expect(page.locator("#cv-filters")).toBeVisible();
+    await expect(page.locator("#filters")).toBeVisible();
     await page.keyboard.press("Tab");
-    expect(await page.evaluate(() => document.activeElement.id)).toBe("cv-body");
+    expect(await activeId(page)).toBe("f-county");
+    await page.focus("#f-month");
     await page.keyboard.press("ArrowDown");
-    await expect(toggle).toHaveText("Filter votes (1 on)");
+    await page.locator("#filters button[type=submit]").focus();
+    await page.keyboard.press("Enter");
+    await ready(page);
+    await expect(page).toHaveURL(/\/legislation\/california\/\?month=\d{4}-\d{2}$/);
+    await expect(toggle).toHaveText("More filters (1 on)");
   });
 });

@@ -26,50 +26,59 @@ function legislationPages() {
   const read = (rel) => { try { return JSON.parse(fs.readFileSync(path.join(DATA, rel), "utf8")); } catch { return null; } };
   if (!read("manifest.json")) return [];
   const ready = (sel) => `#app:not([aria-busy]) ${sel}`;
+  // Layout D: the map of states; a state's three doors, its bills and sources; a county's doors.
+  // "open" names a control the test presses before the scan (the filter drawer).
   const pages = [
-    { name: "leg-overview", url: "/legislation/", ready: ready(".sec") },
-    { name: "leg-states", url: "/legislation/states/", ready: ready("table.states") },
-    { name: "leg-california", url: "/legislation/california/", ready: ready("#counties") },
-    { name: "leg-other-state", url: "/legislation/texas/", ready: ready(".sec") },
+    { name: "leg-map", url: "/legislation/", ready: ready(".map-wrap") },
+    { name: "leg-california", url: "/legislation/california/", ready: ready("#results") },
+    { name: "leg-california-drawer", url: "/legislation/california/?level=state", ready: ready("#results"), open: "#more-btn" },
+    { name: "leg-california-representatives", url: "/legislation/california/representatives/", ready: ready(".rep-group") },
+    { name: "leg-california-upcoming", url: "/legislation/california/upcoming/", ready: ready("#results") },
+    { name: "leg-california-bills", url: "/legislation/california/bills/?type=SB", ready: ready("#results") },
     { name: "leg-votes-federal", url: "/legislation/votes/?level=federal", ready: ready("form.filters") },
-    { name: "leg-votes-state", url: "/legislation/votes/?level=state", ready: ready("form.filters") },
-    { name: "leg-votes-county", url: "/legislation/votes/?level=county", ready: ready("form.filters") },
     { name: "leg-bills-federal", url: "/legislation/bills/?level=federal", ready: ready("form.filters") },
-    { name: "leg-bills-state", url: "/legislation/bills/?level=state&type=SB", ready: ready("form.filters") },
     { name: "leg-upcoming", url: "/legislation/upcoming/", ready: ready("form.filters") },
     { name: "leg-search", url: "/legislation/search/?q=school", ready: ready(".sec") },
     { name: "leg-sources", url: "/legislation/sources/", ready: ready("table.tbl") },
     { name: "leg-not-found", url: "/legislation/nowhere/at-all/", ready: ready("p") },
   ];
-  // Every state outside California: a state page, its legislators, a county with a board link, a
-  // county with no county government, a legislator, and a territory with no legislature.
+  // Every state outside California: its doors, its sources, a county with a board link and its
+  // representatives, a county with no county government, a territory with no legislature.
   if (read("geo/us-tx/counties.json")) {
-    pages.push({ name: "leg-legislators", url: "/legislation/texas/legislators/", ready: ready("ul.people") });
-    pages.push({ name: "leg-county-national", url: "/legislation/texas/travis/", ready: ready("#congress-votes:not([aria-busy]) .count") });
-    pages.push({ name: "leg-territory", url: "/legislation/guam/", ready: ready(".sec") });
+    pages.push({ name: "leg-other-state", url: "/legislation/texas/", ready: ready("#results") });
+    pages.push({ name: "leg-other-state-representatives", url: "/legislation/texas/representatives/", ready: ready(".rep-group") });
+    pages.push({ name: "leg-other-state-upcoming", url: "/legislation/texas/upcoming/", ready: ready("#results") });
+    pages.push({ name: "leg-other-state-sources", url: "/legislation/texas/sources/", ready: ready("table.tbl") });
+    pages.push({ name: "leg-county-national", url: "/legislation/texas/travis/", ready: ready("#results") });
+    pages.push({ name: "leg-county-representatives", url: "/legislation/texas/travis/representatives/", ready: ready(".rep-group") });
+    pages.push({ name: "leg-territory", url: "/legislation/guam/", ready: ready("#results") });
     pages.push({ name: "leg-search-place", url: "/legislation/search/?q=travis", ready: ready(".sec") });
   }
-  if (read("geo/us-ct/counties.json")) pages.push({ name: "leg-county-no-government", url: "/legislation/connecticut/fairfield/", ready: ready("#board") });
-  // A county board outside California that publishes on Legistar, and one of its votes.
+  if (read("geo/us-ct/counties.json")) pages.push({ name: "leg-county-no-government", url: "/legislation/connecticut/fairfield/", ready: ready("#results") });
+  // A county board outside California that publishes on Legistar, its upcoming meetings, and one of its votes.
   const national = read("counties/index.json");
   const statesFile = read("geo/states.json");
   const board = national && national.counties.find((c) => c.coverage === "votes" && c.slug);
   const stateRow = board && statesFile && statesFile.states.find((s) => s.code === board.state);
-  if (board && stateRow) pages.push({ name: "leg-county-board-national", url: `/legislation/${stateRow.slug}/${board.slug}/`, ready: ready("#votes") });
+  if (board && stateRow) {
+    pages.push({ name: "leg-county-board-national", url: `/legislation/${stateRow.slug}/${board.slug}/?level=county`, ready: ready("#results") });
+    pages.push({ name: "leg-county-board-upcoming", url: `/legislation/${stateRow.slug}/${board.slug}/upcoming/`, ready: ready("#results") });
+  }
   const natLatest = read("counties/latest.json");
   if (natLatest && natLatest.rows.length) pages.push({ name: "leg-vote-county-national", url: `/legislation/vote/${natLatest.rows[0][0]}/`, ready: ready("dl.facts") });
   const tx = read("us-tx/members.json");
   if (tx && tx.members.length) pages.push({ name: "leg-legislator-other-state", url: `/legislation/legislator/${tx.members[0].id}/`, ready: ready("dl.facts") });
   // Other states' bills and votes (Open States bulk data), once the nightly job has published some:
-  // that state's votes and bills lists, a vote, its bill, and a legislator with votes on record.
+  // that state's votes and bills, a vote, its bill, and a legislator with votes on record.
   const legs = read("legislatures.json");
   const vst = legs && Object.keys(legs.states).filter((k) => k !== "CA" && legs.states[k].votes > 0).sort()[0];
   const vsum = vst && read(`us-${vst.toLowerCase()}/summary.json`);
-  if (vsum && vsum.latest && vsum.latest.length) {
+  const vslug = vst && statesFile && (statesFile.states.find((s) => s.code === vst) || {}).slug;
+  if (vsum && vsum.latest && vsum.latest.length && vslug) {
     const st = vst.toLowerCase();
     const v = vsum.latest.find((x) => x.bill_id) || vsum.latest[0];
-    pages.push({ name: "leg-votes-other-state", url: `/legislation/votes/?level=state&state=${vst}`, ready: ready("form.filters") });
-    pages.push({ name: "leg-bills-other-state", url: `/legislation/bills/?level=state&state=${vst}`, ready: ready("form.filters") });
+    pages.push({ name: "leg-votes-other-state", url: `/legislation/${vslug}/?level=state`, ready: ready("#results") });
+    pages.push({ name: "leg-bills-other-state", url: `/legislation/${vslug}/bills/`, ready: ready("#results") });
     pages.push({ name: "leg-vote-other-state", url: `/legislation/vote/${v.id}/`, ready: ready("dl.facts") });
     if (v.bill_id) pages.push({ name: "leg-bill-other-state", url: `/legislation/bill/${v.bill_id}/`, ready: ready("dl.facts") });
     const vidx = read(`us-${st}/votes/index.json`);
@@ -82,7 +91,7 @@ function legislationPages() {
   const col = (d, k) => d.columns.indexOf(k);
   const usLatest = read("us/latest.json");
   if (usLatest && usLatest.rows.length) {
-    pages.push({ name: "leg-vote-federal", url: `/legislation/vote/${usLatest.rows[0][0]}/`, ready: ready("dl.facts") });
+    pages.push({ name: "leg-vote-federal", url: `/legislation/vote/${usLatest.rows[0][0]}/?state=TX`, ready: ready("dl.facts") });
     const withBill = usLatest.rows.find((r) => r[col(usLatest, "bill_id")]);
     if (withBill) pages.push({ name: "leg-bill-federal", url: `/legislation/bill/${withBill[col(usLatest, "bill_id")]}/`, ready: ready("dl.facts") });
   }
@@ -102,12 +111,13 @@ function legislationPages() {
     const voting = counties.counties.find((c) => c.coverage === "votes");
     const linksOnly = counties.counties.find((c) => c.coverage === "links");
     if (voting) {
-      pages.push({ name: "leg-county-votes", url: `/legislation/california/${voting.slug}/`, ready: ready("#votes") });
-      const board = read(`us-ca/counties/${voting.fips}/board.json`);
-      const sup = board && board.members.find((m) => !m.provisional);
+      pages.push({ name: "leg-county-votes", url: `/legislation/california/${voting.slug}/?level=county`, ready: ready("#results") });
+      pages.push({ name: "leg-county-upcoming", url: `/legislation/california/${voting.slug}/upcoming/`, ready: ready("#results") });
+      const cboard = read(`us-ca/counties/${voting.fips}/board.json`);
+      const sup = cboard && cboard.members.find((m) => !m.provisional);
       if (sup) pages.push({ name: "leg-legislator-county", url: `/legislation/legislator/${sup.id}/`, ready: ready("dl.facts") });
     }
-    if (linksOnly) pages.push({ name: "leg-county-links", url: `/legislation/california/${linksOnly.slug}/`, ready: ready("#votes") });
+    if (linksOnly) pages.push({ name: "leg-county-links", url: `/legislation/california/${linksOnly.slug}/`, ready: ready("#results") });
     const coLatest = read("us-ca/counties/latest.json");
     if (coLatest && coLatest.rows.length) pages.push({ name: "leg-vote-county", url: `/legislation/vote/${coLatest.rows[0][0]}/`, ready: ready("dl.facts") });
   }
@@ -183,6 +193,7 @@ for (const p of PAGES) {
     const allowed = baseline[key] || {};
     await page.goto(p.url, { waitUntil: "load" });
     if (p.ready) await page.waitForSelector(p.ready, { timeout: 30_000 });
+    if (p.open) await page.click(p.open);
     await page.waitForTimeout(p.settle || 500);
 
     const axe = await new AxeBuilder({ page }).withTags(AXE_TAGS)
@@ -213,6 +224,7 @@ test.describe("reflow at 320 px (WCAG 1.4.10)", () => {
     test(`${p.name}: no horizontal scroll at 320 px`, async ({ page }) => {
       await page.goto(p.url, { waitUntil: "load" });
       if (p.ready) await page.waitForSelector(p.ready, { timeout: 30_000 });
+      if (p.open) await page.click(p.open);
       await page.waitForTimeout(p.settle ? 1500 : 300);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       const allowed = (baseline[p.name] || {}).reflow320 ?? 0;

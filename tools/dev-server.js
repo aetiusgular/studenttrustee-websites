@@ -73,12 +73,27 @@ function localiseData(html, url) {
     .split("\n").filter((l) => !(l.includes('rel="preconnect"') && l.includes(origin))).join("\n");
 }
 
+// Like Netlify: rules are tried in order and the first match wins; a trailing slash does not
+// matter; "/*" ends a rule with a splat and ":name" matches one path segment, and both can be used
+// in the target (":splat", ":name").
 function matchRedirect(rules, pathname) {
+  const trim = (x) => (x.length > 1 ? x.replace(/\/+$/, "") : x);
   for (const r of rules) {
     if (r.from.endsWith("/*")) {
       const base = r.from.slice(0, -1);
       if (pathname.startsWith(base)) return { ...r, to: r.to.replace(":splat", pathname.slice(base.length)) };
-    } else if (r.from === pathname) return r;
+      continue;
+    }
+    const names = [];
+    const re = new RegExp("^" + trim(r.from).split("/").map((seg) => {
+      if (seg.startsWith(":")) { names.push(seg.slice(1)); return "([^/]+)"; }
+      return seg.replace(/[.+?^${}()|[\]\\]/g, "\\$&");
+    }).join("/") + "$");
+    const m = re.exec(trim(pathname));
+    if (!m) continue;
+    let to = r.to;
+    names.forEach((n, i) => { to = to.split(":" + n).join(m[i + 1]); });
+    return { ...r, to };
   }
   return null;
 }
@@ -94,7 +109,7 @@ export function serve(folder, port) {
     const extra = headersFor(headerRules, pathname);
     const rule = matchRedirect(rules, pathname);
     if (rule && rule.status !== 200) {
-      res.writeHead(rule.status, { ...extra, Location: rule.to }); res.end(); return;
+      res.writeHead(rule.status, { ...extra, Location: rule.to + url.search }); res.end(); return;
     }
     // Like Netlify, a 200 rewrite without "!" only applies when no file exists at the path.
     const candidates = [pathname, pathname + ".html", path.join(pathname, "index.html")];

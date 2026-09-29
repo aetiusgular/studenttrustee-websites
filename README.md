@@ -68,6 +68,30 @@ snapshot only when the source has changed, which then lands on `main` as a norma
 router in `assets/legislation.js`. Netlify's `_redirects` sends every `/legislation/...` address to
 it; `/legislature` redirects to `/legislation/calendars/`.
 
+The layout is option D of Nick's "Legislation tab options" (wireframes in the Paper file
+"StudentTrustee.net wireframes", page "04 Nick's layout D"). Addresses name places, and the last
+part names a door; filters are query parameters and never name a page:
+
+| Address | What it shows |
+|---------|---------------|
+| `/legislation/` | every state on a tile map (A to Z on phones), shaded by how many levels have votes |
+| `/legislation/{state}/` | How they voted: federal roll calls, the legislature's votes and county board votes, newest first |
+| `/legislation/{state}/representatives/` | Who represents me: senators, representatives, both chambers, with contact details |
+| `/legislation/{state}/upcoming/` | What's coming up: floor sessions, hearings and board meetings by day |
+| `/legislation/{state}/bills/`, `/sources/` | the legislature's bills; where the state's records come from |
+| `/legislation/{state}/{county}/` (and `representatives/`, `upcoming/`) | the same doors narrowed to a county |
+| `/legislation/vote/{id}/`, `/bill/{id}/`, `/legislator/{id}/` | one record (`?state=TX` on a federal vote shows Texas's members) |
+| `/legislation/votes/`, `/bills/`, `/upcoming/`, `/search/`, `/sources/` | the national lists and tools |
+
+Filters: `level=federal|state|county`, `body=` (`us-house`, `us-tx-upper`, `ca-assembly`, `tx-48201-bos`),
+`result=passed|failed`, `month=YYYY-MM`, and `session`, `type`, `status`, `q` on the bills pages.
+Each value is checked against the place's own lists and an unknown one is ignored, never fetched.
+The older addresses still work: `/legislation/states/` and `/legislation/{state}/legislators/` are
+301s in `_redirects`, and the old state and county vote and bill lists
+(`/legislation/votes/?level=state&state=TX`, `?level=county&county=48201`) are rewritten by the page
+with `history.replaceState`, so Back never lands on the old address. The validator fails a night
+that gives a county a slug the doors use (`representatives`, `upcoming`, `bills`, `sources`).
+
 | Level   | Where it comes from | What is shown |
 |---------|---------------------|---------------|
 | Federal | Clerk of the House roll-call XML; Senate LIS vote XML and member file; GovInfo Bill Status XML; docs.house.gov Bills This Week; senate.gov hearings and floor schedule; Senate Daily Press Gallery; congress-legislators (CC0) for member identity; Voteview (UCLA) only when senate.gov refuses the job | every roll call of the current Congress with each member's position; every bill that got a roll call, with sponsors, cosponsors, committees, actions and summary; each member's record; what is scheduled |
@@ -76,12 +100,14 @@ it; `/legislature` redirects to `/legislation/calendars/`.
 | State (the other 49 states, DC, Puerto Rico) | Open States current-legislator files (public domain, no key); Open States per-session bulk files (public domain; listed only through Open States' free API, so they need a key) | every legislator with party, district, contact and official page; chamber sizes and vacancies; the counties each district covers. Once the key is set: every bill and every floor and committee vote of the current regular session and any special session since, with each legislator's position and record |
 | County (everywhere else) | Census Bureau 2020 county list and 2024 district relationship files; Wikidata for each county's website, checked weekly; Granicus Legistar public API for the 68 county governments found on it (60 by the probe, 8 checked by hand) | a page for each of 3,163 counties and county equivalents with the congressional and state districts that overlap it, who holds them, the governing body and its website, and the latest roll calls of the county's members of Congress; for the Legistar counties, meetings, agenda actions and each member's vote for the last 90 days |
 
-People move from the table of states to a state, then to a county. Search covers states, every
-county, federal and state legislators in every state, and federal and California bills; other
-states' bills are listed on each state's bills page, and county supervisors and agenda items are
-searched on each county's page. The vote list filters by level, chamber, county board, session or month, and result; the
-bill list by level, type and status; the schedule by level; each legislator's record by their
-position and by question or bill. Every record is marked federal, state or county in words, not
+People move from the map to a state, then to one of its doors or a county. A state's votes are
+one list merging the three levels: the first page draws from each level's latest-votes file, and
+Show more loads older months, a level at a time, so the whole list stays newest first. Level chips
+change the list at once (focus stays on the chip and the count is announced); the More filters
+drawer (county, body, result, month, votes or bills) changes nothing until Apply. Search covers
+states, every county, federal and state legislators in every state, and federal and California
+bills; other states' bills are on each state's bills page, and county supervisors and agenda items
+on each county's page. Each legislator's record filters by their position and by question or bill. Every record is marked federal, state or county in words, not
 only in colour, links to its official page, and shows when its source last changed it.
 `manifest.json` records, for every source, when it was last checked, whether that check worked,
 and the counts; the Sources page shows it.
@@ -279,9 +305,12 @@ npm run check           # all of the above
 `tests/a11y-baseline.json` lists the accessibility failures still tolerated per page. Every page of
 the main site and the Legislation section is at zero. The volunteer site is not yet in scope.
 `tests/data-layer.spec.js` checks the Legislation section's data layer (prefetch, Save-Data,
-aborts, retries, schema checks, link safety, Trusted Types, the data budget per page) and
-`tests/keyboard.spec.js` walks a state and a county with the keyboard alone. The dev server
-applies `studenttrustee/_headers`, so the tests run under the production security policy.
+aborts, retries, schema checks, link safety, Trusted Types, the data budget per page: 30 KB for the
+map, 100 KB for each door), the old addresses and where they land, and the filters (unknown values
+ignored, chips, the drawer, Show more); `tests/keyboard.spec.js` walks the map, a state's doors,
+a county, a level chip and the drawer with the keyboard alone. The dev server applies
+`studenttrustee/_headers` and `_redirects` (including `:placeholder` rules), so the tests run under
+the production security policy and redirects.
 `node tools/dev/keyboard.mjs http://127.0.0.1:8100` walks the Legislation section with the
 keyboard, and `node tools/dev/routes.mjs http://127.0.0.1:8100 /legislation/ ...` loads routes and
 reports console errors and failed requests.

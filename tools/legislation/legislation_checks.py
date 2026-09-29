@@ -8,6 +8,8 @@ Integrity checks for data/legislation/. Returns a list of failure strings.
   that state's district table, board links are http(s); every state's legislators: unique ids,
   district keys the county files know, search rows that point at real legislators
 - every county board outside California: its record exists and its ids carry its county's prefix
+- no county's slug is one of the words the site's addresses use for a state's pages
+  (/legislation/{state}/representatives/ is a page, so no county may be called "representatives")
 - shrink guard: a count that only grows during a Congress or a session may not fall by more than
   20 percent from one night to the next (a feed returning an empty page must not wipe the site's
   data), unless ALLOW_SHRINK=1. A new Congress or session starts its counts again, so the guard
@@ -101,6 +103,15 @@ def california_checks():
     return failures
 
 
+# The last part of /legislation/{state}/{word}/ that names one of the state's pages, not a county.
+RESERVED_SLUGS = ('representatives', 'upcoming', 'bills', 'sources', 'legislators')
+
+
+def county_slug_failures(st, counties):
+    return ['%s: the county %s has the slug %r, which names a page of the state' % (st, c.get('name'), c.get('slug'))
+            for c in counties or [] if c.get('slug') in RESERVED_SLUGS]
+
+
 def national_checks():
     failures = []
     states = (_load('geo/states.json') or {}).get('states') or []
@@ -118,6 +129,7 @@ def national_checks():
         if len(counties) != s['counties']:
             failures.append('%s: geo/states.json says %d counties, the county file has %d' % (st, s['counties'], len(counties)))
         tables = geo.get('districts') or {}
+        failures += county_slug_failures(st, counties)
         slugs = set()
         for c in counties:
             fips = c.get('fips') or ''
@@ -150,6 +162,7 @@ def national_checks():
             table = tables.get('upper' if m.get('chamber') in ('upper', 'legislature') else 'lower') or {}
             if m.get('district_key') and m['district_key'] not in table:
                 failures.append('%s: %s has district key %s, not in the county file' % (st, m['id'], m['district_key']))
+    failures += county_slug_failures('CA', (_load('geo/us-ca/counties.json') or {}).get('counties'))
     search = _load('search/states.json')
     if search is not None:
         stray = [r[1] for r in search.get('rows') or [] if r[0] == 'member' and r[1] not in seen_ids]

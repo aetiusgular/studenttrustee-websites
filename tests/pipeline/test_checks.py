@@ -45,6 +45,17 @@ class ShrinkGuard(unittest.TestCase):
             os.environ.pop('ALLOW_SHRINK', None)
 
 
+class CountySlugs(unittest.TestCase):
+    def test_a_county_may_not_take_the_name_of_a_state_page(self):
+        from tools.legislation.legislation_checks import county_slug_failures
+        ok = [{'name': 'Travis County', 'slug': 'travis'}, {'name': 'Harris County', 'slug': 'harris'}]
+        self.assertEqual(county_slug_failures('TX', ok), [])
+        bad = ok + [{'name': 'Upcoming County', 'slug': 'upcoming'}]
+        self.assertEqual(len(county_slug_failures('TX', bad)), 1)
+        self.assertIn('upcoming', county_slug_failures('TX', bad)[0])
+        self.assertEqual(county_slug_failures('TX', None), [])
+
+
 class Boundaries(unittest.TestCase):
     def test_congress_changes_on_3_january(self):
         from tools.legislation.federal import congress_for_date, sessions_of_current_congress

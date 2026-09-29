@@ -77,8 +77,12 @@
       var init = { signal: ctrl.signal };
       if (entry.low) init.priority = "low";
       return fetch(DATA + rel, init).then(function (r) {
-        if (r.status === 404) return MISSING;
-        if (!r.ok) throw ApiError(r.status >= 500 ? "server" : "http", rel, r.status);
+        if (!r.ok) {
+          // The body of an error is never read; cancel it so the connection is free for the next file.
+          if (r.body) r.body.cancel().catch(function () {});
+          if (r.status === 404) return MISSING;
+          throw ApiError(r.status >= 500 ? "server" : "http", rel, r.status);
+        }
         return r.json().catch(function (e) {
           if (ctrl.signal.aborted) throw e;
           throw ApiError("format", rel);

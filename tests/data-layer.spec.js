@@ -23,21 +23,33 @@ const VST = legs && Object.keys(legs.states).filter((k) => k !== "CA" && legs.st
 const VSUM = VST && read(`us-${VST.toLowerCase()}/summary.json`);
 const VSLUG = VST && ((read("geo/states.json") || { states: [] }).states.find((s) => s.code === VST) || {}).slug;
 
+// Every records request the page makes from now on, in order. seen.pending() counts the ones that have
+// not finished; a 404 counts as finished (the records on the data branch can trail the code by a night).
 function dataRequests(page) {
   const seen = [];
-  page.on("request", (r) => { const u = r.url(); if (u.includes("/data/legislation/")) seen.push(u.split("/data/legislation/")[1]); });
+  const done = new Set();
+  const isData = (r) => r.url().includes("/data/legislation/");
+  page.on("request", (r) => { if (isData(r)) seen.push(r.url().split("/data/legislation/")[1]); });
+  page.on("requestfinished", (r) => { if (isData(r)) done.add(r); });
+  page.on("requestfailed", (r) => { if (isData(r)) done.add(r); });
+  // an error response is final once it arrives; its body is not needed
+  page.on("response", (res) => { if (isData(res.request()) && res.status() >= 400) done.add(res.request()); });
+  Object.defineProperty(seen, "pending", { enumerable: false, value: () => seen.length - done.size });
   return seen;
 }
 async function ready(page) {
   await page.waitForSelector("#app:not([aria-busy])", { timeout: 30_000 });
 }
-// Waits until the browser has finished downloading every one of these records files (prefetch runs
-// two at a time at low priority, so on a busy machine the last ones can take a moment).
-async function downloaded(page, rels) {
-  await expect.poll(() => page.evaluate((want) => {
-    const done = performance.getEntriesByType("resource").map((e) => e.name.split("/data/legislation/")[1]);
-    return want.filter((r) => !done.includes(r));
-  }, rels), { timeout: 10_000 }).toEqual([]);
+// Waits until every records request so far has finished and none has started for 400 ms. Prefetch
+// runs two at a time at low priority, so on a busy machine the last files can take a moment. Response
+// events are used, not Resource Timing: Chromium records no timing entry for a fetch that gets a 404.
+async function settled(seen) {
+  await expect.poll(async () => {
+    if (seen.pending() > 0) return "waiting for " + seen.pending() + " request(s)";
+    const n = seen.length;
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    return seen.length === n && seen.pending() <= 0 ? "settled" : "more requests started";
+  }, { timeout: 15_000 }).toBe("settled");
 }
 // The pages under test prefetch on hover; the phone project has no hover, so these run on desktop.
 function desktopOnly(testInfo) { test.skip(testInfo.project.name !== "desktop-1440", "pointer hover is a desktop behaviour"); }
@@ -54,7 +66,7 @@ test.describe("data layer", () => {
     const target = page.locator("#app a", { hasText: /^Texas$/ }).first();
     await target.hover();
     await expect.poll(() => seen.length, { timeout: 5_000 }).toBeGreaterThan(0);
-    await downloaded(page, ["us-tx/summary.json", "geo/us-tx/counties.json", "us/members.json", "us/latest.json"]);
+    await settled(seen);
     const before = seen.length;
     await target.click();
     await expect(page).toHaveURL(/\/legislation\/texas\/$/);
@@ -162,8 +174,7 @@ test.describe("data layer", () => {
     const target = page.locator(`#app a[href="/legislation/vote/${VSUM.latest[0].id}/"]`).first();
     await target.hover();
     await expect.poll(() => seen.some((r) => r.includes("/votes/")), { timeout: 5_000 }).toBe(true);
-    const month = seen.find((r) => r.includes("/votes/"));
-    await downloaded(page, [month, `us-${VST.toLowerCase()}/members.json`]);
+    await settled(seen);
     const before = seen.length;
     await target.click();
     await expect(page).toHaveURL(new RegExp(`/legislation/vote/${VSUM.latest[0].id}/$`));
@@ -255,7 +266,14 @@ test.describe("security headers", () => {
       await page.addInitScript(() => {
         document.addEventListener("securitypolicyviolation", (e) => console.error("CSP violation: " + e.violatedDirective + " " + e.blockedURI));
       });
-      page.on("console", (m) => { if (m.type() === "error") problems.push(m.text()); });
+      page.on("console", (m) => {
+        if (m.type() !== "error") return;
+        // A records file the published data does not have yet is a 404 here. The page treats an
+        // optional file as absent and reports a required one itself (tested above), so these are not
+        // security problems. Any other console error, and every CSP or Trusted Types report, counts.
+        if (/^Failed to load resource: the server responded with a status of 404/.test(m.text()) && (m.location().url || "").includes("/data/legislation/")) return;
+        problems.push(m.text());
+      });
       page.on("pageerror", (e) => problems.push(e.message));
       await page.goto(url);
       if (!/calendars/.test(url)) await ready(page);

@@ -1,0 +1,145 @@
+name: Nightly data refresh
+
+# Pulls the official sources, keeps the legislation records on the `data` branch (last
+# night's copy is where tonight's run starts), and deploys them to GitHub Pages, which the
+# site reads (Settings > Pages > Source: GitHub Actions). A nightly refresh therefore never
+# triggers a Netlify production deploy (on Netlify's credit-based free plan every production
+# deploy costs credits). District boundaries still live on main; they change about once a
+# year, and only then does this job commit to main.
+#
+# Pages is deployed by actions/deploy-pages rather than served from the branch, because
+# commits pushed with the workflow's GITHUB_TOKEN do not trigger a GitHub Pages build.
+#
+# 06:30 UTC is 23:30 Pacific in summer and 22:30 in winter: after the California
+# Legislature's ~21:20 PT pubinfo drop and after the day's congressional roll calls.
+
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+    inputs:
+      targets:
+        description: "Space-separated targets: all boundaries geo federal california counties states legistar openstates sizes"
+        default: "all"
+      allow_shrink:
+        description: "Publish even if a record count fell sharply (only after checking why)"
+        type: boolean
+        default: false
+      publish_only:
+        description: "Only deploy the records already on the data branch, without refreshing"
+        type: boolean
+        default: false
+
+# Pushes the data branch and, rarely, boundary changes to main. The deploy job sets its own.
+permissions:
+  contents: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    # Pinned: ubuntu-latest moves to a new release in October 2026, and a new image can lack
+    # the Python build this job asks for.
+    runs-on: ubuntu-24.04
+    # A usual night takes well under an hour. The first night with an Open States key downloads
+    # every state's session files, so the ceiling leaves room for that.
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      # Last night's records: the pipeline keeps the last good copy of any source that
+      # fails tonight, and the validator compares tonight's counts with these.
+      - name: Check out the published records (data branch)
+        uses: actions/checkout@v4
+        with:
+          ref: data
+          path: studenttrustee/data/legislation
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: python3 -m pip install -r requirements.txt
+
+      # Small HTTP responses only. The 1.1 GB California dump is downloaded to the runner's
+      # temp directory (PUBINFO_DIR) so it is never saved into this cache.
+      - name: Restore HTTP cache
+        if: ${{ !inputs.publish_only }}
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: data-refresh-cache-${{ github.run_id }}
+          restore-keys: data-refresh-cache-
+
+      - name: Refresh
+        if: ${{ !inputs.publish_only }}
+        env:
+          PUBINFO_DIR: ${{ runner.temp }}
+          TARGETS: ${{ inputs.targets || 'all' }}
+          ALLOW_SHRINK: ${{ inputs.allow_shrink && '1' || '' }}
+          # Open States bulk data (every other state's bills and votes). Free key; without it that
+          # step records "not configured" and the rest runs as before.
+          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
+        run: python3 -m tools.legislation.refresh $TARGETS
+
+      - name: Validate
+        env:
+          ALLOW_SHRINK: ${{ inputs.allow_shrink && '1' || '' }}
+        run: python3 -m tools.legislation.validate
+
+      - name: Keep tonight's records on the data branch
+        working-directory: studenttrustee/data/legislation
+        run: |
+          git config user.name "studenttrustee-bot"
+          git config user.email "studenttrustee-bot@users.noreply.github.com"
+          touch .nojekyll
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no record changes"
+            exit 0
+          fi
+          # One commit with no parent: the branch is a snapshot, not a history.
+          # The manifest inside it records when every source last changed and was checked.
+          tree=$(git write-tree)
+          commit=$(git commit-tree "$tree" -m "data: nightly refresh $(date -u +%Y-%m-%d)")
+          git push --force origin "$commit:refs/heads/data"
+
+      - name: Package the records for GitHub Pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: studenttrustee/data/legislation
+
+      - name: Commit boundary changes to main (rare)
+        if: ${{ !inputs.publish_only }}
+        run: |
+          git config user.name "studenttrustee-bot"
+          git config user.email "studenttrustee-bot@users.noreply.github.com"
+          git add studenttrustee/data/districts.geojson
+          if git diff --cached --quiet; then
+            echo "boundaries unchanged"
+          else
+            git commit -m "data: district boundaries changed upstream"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+  deploy:
+    needs: refresh
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write      # deploy to GitHub Pages
+      id-token: write   # lets Pages verify the deployment comes from this workflow
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the records to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

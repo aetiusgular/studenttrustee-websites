@@ -1,0 +1,12 @@
+/* Accessibility statement. Loaded after site.css. */
+main{max-width:760px;margin:0 auto;padding:36px 20px 40px}
+h1{font-size:40px;line-height:1.06;margin:0 0 20px}
+h2{font-size:20px;letter-spacing:-.02em;margin:34px 0 10px}
+p, li{font-size:15.5px;color:var(--text-secondary);line-height:1.6}
+p{margin:0 0 14px}
+p.lead{font-size:17px;color:var(--text-primary)}
+ul{margin:0 0 14px;padding-left:1.2em}
+li{margin:0 0 8px}
+main a{text-decoration:underline;text-underline-offset:3px}
+.stamp{margin-top:34px;font-size:13px;color:var(--text-muted)}
+@media (max-width:620px){ main{padding:22px 16px 40px} h1{font-size:32px} }

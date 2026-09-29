@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="preload" href="/data/districts.geojson" as="fetch" crossorigin="anonymous">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<link rel="stylesheet" href="/assets/map.css">
+{%- endblock %}
+{% block header %}
+<header class="toolbar">
+  <a class="st-home" href="/" aria-label="StudentTrustee.net home"><img src="/brand/poppy-symbol.png" alt="" width="512" height="512"></a>
+  <div class="brand">
+    <h1>California Student Trustees</h1>
+    <p>Community college district boundaries <span class="sep">·</span> SSCCC Regions I–X</p>
+  </div>
+  <div class="grow"></div>
+  <nav class="bar" aria-label="Site">
+    {%- for href, label in nav %}
+    <a class="btn navlink" href="{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a>
+    {%- endfor %}
+    <button type="button" class="btn only-narrow" id="btn-side" aria-controls="side" aria-expanded="false">List</button>
+    <button type="button" class="btn" id="btn-table" aria-pressed="false" aria-controls="sheet">Table view</button>
+  </nav>
+</header>
+{%- endblock %}
+{% block body %}
+<main id="main" tabindex="-1">
+  <aside id="side" aria-label="Districts and regions">
+    <div class="search"><label class="visually-hidden" for="q">Search trustee, district, college, email</label><input id="q" type="search" placeholder="Search trustee, district, college, email…" autocomplete="off"></div>
+    <div class="legend">
+      <div class="legend-head">
+        <h2>SSCCC Region</h2>
+        <button type="button" id="reset">Show all</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="list" id="list"></div>
+    <footer class="srcs">
+      Roster as of <b>{{ roster_as_of }}</b>, with corrections through <b>{{ corrections_through }}</b>. District boundaries: Foundation for California Community
+      Colleges GIS · Regions: <a href="https://ssccc.org/regions" target="_blank" rel="noopener">SSCCC</a>
+      · Basemap: Esri / OpenStreetMap. The map is a visual aid: every district is also in this list and on the
+      <a href="/districts/">Districts</a> pages. <a href="/accessibility">Accessibility</a>.
+    </footer>
+  </aside>
+  <div class="mapwrap">
+    <section id="map" aria-label="Map of California community college districts"></section>
+    <div class="banner" id="banner" role="status" aria-live="polite"><span class="spin"></span><span id="banner-t">Loading district boundaries…</span></div>
+    <dialog class="intro" id="intro" aria-labelledby="intro-h">
+      <h2 id="intro-h">Who holds the seat in your district?</h2>
+      <p>Every one of California's <b>72 community college districts</b> is run by a locally elected
+      board, and every board seats a <b>student trustee</b> elected by that district's students. This
+      map draws the real boundaries and shows who holds each seat right now.</p>
+      <ul>
+        <li><b>Click a district</b> for its trustee, colleges, and region.</li>
+        <li><b>Colors are <a href="https://ssccc.org/regions" target="_blank" rel="noopener">SSCCC regions</a></b> (I–X). Click one in the legend to isolate it.</li>
+        <li><b>Search</b> by person, district, or college. <b>Table view</b> lists everyone at once.</li>
+      </ul>
+      <button type="button" class="btn primary" id="intro-go" autofocus>Open the map</button>
+    </dialog>
+    <div class="sheet" id="sheet">
+      <div class="bar">
+        <h2>All student trustees</h2>
+        <span id="t-count" class="count"></span>
+        <div class="grow"></div>
+        <button type="button" class="btn" id="t-close">Close</button>
+      </div>
+      <div class="scroll"><table id="tbl"><caption class="visually-hidden">Every student trustee, by last name</caption></table></div>
+    </div>
+  </div>
+</main>
+{%- endblock %}
+{% block footer %}{% endblock %}
+{% block scripts %}
+<script type="application/json" id="roster">{{ roster_json|safe }}</script>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/assets/map.js"></script>
+{%- endblock %}

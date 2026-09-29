@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/assets/districts.css">
+{%- endblock %}
+{% block main %}
+<p class="crumb"><a href="/">Home</a> &rsaquo; Districts</p>
+<h1>All {{ districts|length }} districts.</h1>
+<p class="cols">Every California community college district, grouped by the ten regions the Community College League uses, with the student trustee who holds each board seat. Each district has its own page.</p>
+{%- for r in regions %}
+{%- set grp = districts|selectattr("region", "equalto", r)|list %}
+{%- if grp %}
+<div class="grp">
+<h2><span class="sw" style="background:{{ region_hex[r] }}"></span>Region {{ r }} &middot; {{ region_name[r] }} &middot; {{ grp|length }} districts</h2>
+<ul>
+{%- for d in grp %}
+<li><a href="/districts/{{ d.slug }}/"><span class="t">{{ d.name }}</span><span class="who">{{ d.who }}</span></a></li>
+{%- endfor %}
+</ul></div>
+{%- endif %}
+{%- endfor %}
+{%- endblock %}

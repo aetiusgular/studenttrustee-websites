@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/assets/districts.css">
+{%- endblock %}
+{% block main %}
+<p class="crumb"><a href="/">Home</a> &rsaquo; <a href="/districts/">Districts</a> &rsaquo; {{ d.name }}</p>
+<p class="eyebrow"><span class="sw" style="background:{{ region_hex[d.region] }}"></span>Region {{ d.region }} &middot; {{ region_name[d.region] }}</p>
+<h1>{{ d.name }}</h1>
+<p class="cols">{% for c in d.colleges %}{{ c }}{% if not loop.last %} &middot; {% endif %}{% endfor %}</p>
+{%- if d.trustees %}
+<h2>{{ "Student trustee" if d.trustees|length == 1 else "Student trustees" }}</h2>
+<div class="rows">
+{%- for p in d.trustees %}
+<div class="row"><p class="n">{{ p.first }} {{ p.last }}</p><dl>
+{%- if p.email %}<dt>Email</dt><dd><a href="mailto:{{ p.email }}">{{ p.email }}</a></dd>{% else %}<dt>Email</dt><dd class="unk">Not listed yet</dd>{% endif %}
+<dt>District</dt><dd>{{ d.name }}</dd>
+{%- if p.college %}<dt>College</dt><dd>{{ p.college }}</dd>{% endif %}
+</dl></div>
+{%- endfor %}
+</div>
+{%- elif d.seat == "vacant" %}
+<p class="none">The district lists this seat as vacant.{% if d.seatSource %} <a href="{{ d.seatSource }}" target="_blank" rel="noopener">Board page &#8599;</a>{% endif %}</p>
+{%- else %}
+<p class="none">No student trustee is listed for this district in the current roster. If the seat is filled, the district board page below is the place to check.</p>
+{%- endif %}
+<h2>Where to go next</h2>
+<div class="out">
+<a href="/map#d={{ d.slug }}"><span class="k">Map</span><span>See this district on the map</span></a>
+{%- if d.web %}
+<a href="{{ d.web }}" target="_blank" rel="noopener"><span class="k">District</span><span>District website &#8599;</span></a>
+{%- endif %}
+{%- if d.board %}
+<a href="{{ d.board }}" target="_blank" rel="noopener"><span class="k">Governance</span><span>Board of Trustees &#8599;</span></a>
+{%- endif %}
+</div>
+<nav class="sibs" aria-label="Neighbouring districts">
+{%- if prev %}<a href="/districts/{{ prev.slug }}/">&larr; {{ prev.name }}</a>{% else %}<span></span>{% endif %}
+{%- if next %}<a class="r" href="/districts/{{ next.slug }}/">{{ next.name }} &rarr;</a>{% endif %}
+</nav>
+<script type="application/ld+json">{{ json_ld|safe }}</script>
+{%- endblock %}

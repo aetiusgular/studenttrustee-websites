@@ -7,4 +7,17 @@ _superseded/
 
 # local build scratch
 *.zip
+!tests/pipeline/fixtures/*.zip
 node_modules/
+
+# the legislation records live on the data branch (published by GitHub Pages);
+# tools/pull-data.sh fetches a copy here for local work and tests
+studenttrustee/data/legislation/
+
+# tooling
+playwright-report/
+test-results/
+.cache/
+__pycache__/
+*.pyc
+.venv/

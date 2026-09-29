@@ -1,0 +1,776 @@
+<floorschedule congress-num="119" week-date="2026-09-14" create-date="2026-09-08T13:05:07.540" orig-publish-date="2026-09-08T19:08:32.013" update-date="2026-09-15T11:20:08.180">
+  <current-status>R</current-status>
+  <language>en-us</language>
+  <copyright>Pursuant to Title 17 Section 105 of the United States Code, this file is not subject to copyright protection and is in the public domain.</copyright>
+  <publish-dates>
+    <publish-date date="2026-09-08T19:08:32.013" />
+    <publish-date date="2026-09-09T13:40:19.393" />
+    <publish-date date="2026-09-10T15:22:42.973" />
+    <publish-date date="2026-09-10T15:57:37.167" />
+    <publish-date date="2026-09-10T17:52:44.590" />
+    <publish-date date="2026-09-10T20:30:20.350" />
+    <publish-date date="2026-09-11T11:14:46.943" />
+    <publish-date date="2026-09-11T12:10:32.780" />
+    <publish-date date="2026-09-11T12:11:10.063" />
+    <publish-date date="2026-09-11T12:14:43.603" />
+    <publish-date date="2026-09-11T14:01:16.207" />
+    <publish-date date="2026-09-11T18:43:10.110" />
+    <publish-date date="2026-09-14T09:35:22.687" />
+    <publish-date date="2026-09-14T20:34:26.243" />
+    <publish-date date="2026-09-14T20:50:09.023" />
+    <publish-date date="2026-09-14T21:17:53.140" />
+    <publish-date date="2026-09-15T09:28:14.610" />
+    <publish-date date="2026-09-15T11:20:08.180" />
+  </publish-dates>
+  <category type="Items that may be considered under suspension of the rules" sort-order="1">
+    <floor-items>
+      <floor-item id="409734" add-date="2026-09-08T13:06:15.623" remove-date="" sort-order="1" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 283 </legis-num>
+        <floor-text>Illegal Red Snapper 
+and Tuna Enforcement Act, as amended</floor-text>
+        <updates>
+          <update-date date="2026-09-08T17:25:29.857" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/S283_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:06:15.630" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409735" add-date="2026-09-08T13:07:03.147" remove-date="" sort-order="2" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 759 </legis-num>
+        <floor-text>Modernizing Access to Our Public Oceans Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119s759es.pdf" doc-type="PDF" add-date="2026-09-08T13:07:03.150" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409736" add-date="2026-09-08T13:07:18.723" remove-date="" sort-order="3" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 309</legis-num>
+        <floor-text>National Law Enforcement Officers Remembrance, Support and Community Outreach Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h309_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:07:18.713" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409737" add-date="2026-09-08T13:07:36.933" remove-date="" sort-order="4" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 4931 </legis-num>
+        <floor-text>National Park System Long-Term Lease Investment Act, as amended</floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h4931_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:07:36.920" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409738" add-date="2026-09-08T13:07:52.427" remove-date="" sort-order="5" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 5063</legis-num>
+        <floor-text>Safe Beaches, Safe Swimmers Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h5063_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:07:52.417" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409739" add-date="2026-09-08T13:08:09.037" remove-date="" sort-order="6" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 6021 </legis-num>
+        <floor-text>Archie Cavanaugh Migratory Bird Treaty Amendment Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h6021_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:08:09.043" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409740" add-date="2026-09-08T13:08:23.540" remove-date="" sort-order="7" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 8121 </legis-num>
+        <floor-text>To designate the Christiansted Bandstand at the Christiansted National Historic Site, St. Croix, Virgin Islands, as the “Peter G. Thurland, Sr., Bandstand”., as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h8121_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:08:23.540" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409741" add-date="2026-09-08T13:08:38.020" remove-date="" sort-order="8" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 8454 </legis-num>
+        <floor-text>To provide for the transfer of administrative jurisdiction over certain Federal land in the State of California, and for other purposes., as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h8454_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:08:38.013" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409742" add-date="2026-09-08T13:08:57.933" remove-date="" sort-order="9" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 741 </legis-num>
+        <floor-text>Stronger Engagement for Indian Health Needs Act of 2025, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h741NR_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:08:57.933" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409743" add-date="2026-09-08T13:09:12.630" remove-date="" sort-order="10" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 240 </legis-num>
+        <floor-text>Crow Tribe Water Rights Settlement Amendments Act of 2025, as amended</floor-text>
+        <updates>
+          <update-date date="2026-09-08T17:29:18.980" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/S240_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:09:12.633" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409744" add-date="2026-09-08T13:09:27.880" remove-date="" sort-order="11" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 2406 </legis-num>
+        <floor-text>National Oceanic and Atmospheric Administration Sexual Harassment and Assault Prevention Improvements Act of 2025, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H2406_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:09:27.880" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409745" add-date="2026-09-08T13:09:54.230" remove-date="" sort-order="12" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 550 </legis-num>
+        <floor-text>To provide for the equitable settlement of certain Indian land disputes regarding land in Illinois, and for other purposes. </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119s550es.pdf" doc-type="PDF" add-date="2026-09-08T13:09:54.217" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409746" add-date="2026-09-08T13:10:11.067" remove-date="" sort-order="13" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 6893 </legis-num>
+        <floor-text>Chesapeake Bay Watershed Advancement for Training, Education, Restoration, and Science (WATERS) Act, as amended </floor-text>
+        <updates>
+          <update-date date="2026-09-08T17:22:13.017" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H6893_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T17:22:13.007" sort-order="2" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409747" add-date="2026-09-08T13:10:26.687" remove-date="" sort-order="14" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 7889 </legis-num>
+        <floor-text>Advancing Water Research and Collaboration Act of 2025, as amended</floor-text>
+        <updates>
+          <update-date date="2026-09-11T12:10:51.263" publish-date="2026-09-11T12:11:10.063">
+            <explanatory-notes doc-modified="True" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H7889SUS_02_xml.pdf" doc-type="PDF" add-date="2026-09-11T12:10:51.253" sort-order="2" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409748" add-date="2026-09-08T13:10:41.380" remove-date="" sort-order="15" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 8658 </legis-num>
+        <floor-text>Indian Health Service Emergency Claims Parity Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h8658nr_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:10:41.370" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409749" add-date="2026-09-08T13:10:57.950" remove-date="" sort-order="16" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S.790 </legis-num>
+        <floor-text>A bill to redesignate the National Historic Trails Interpretive Center in Casper, Wyoming, as the "Barbara L. Cubin National Historic Trails Interpretive Center". </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119s790es.pdf" doc-type="PDF" add-date="2026-09-08T13:10:57.947" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409792" add-date="2026-09-08T13:42:16.297" remove-date="" sort-order="17" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 3276 </legis-num>
+        <floor-text>Local Communities &amp; Bird Habitat Stewardship Act of 2026, as amended </floor-text>
+        <updates>
+          <update-date date="2026-09-08T13:43:36.490" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False">Sort order changed.</explanatory-notes>
+          </update-date>
+          <update-date date="2026-09-08T13:43:40.253" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False">Sort order changed.</explanatory-notes>
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h3276_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:42:16.297" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409793" add-date="2026-09-08T13:42:35.487" remove-date="" sort-order="18" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 3925</legis-num>
+        <floor-text>Yuhaaviatam of San Manuel Nation Land Exchange Act, as amended </floor-text>
+        <updates>
+          <update-date date="2026-09-08T13:44:05.230" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False">Sort order changed.</explanatory-notes>
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h3925_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:42:35.490" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409794" add-date="2026-09-08T13:42:51.943" remove-date="" sort-order="19" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 603 </legis-num>
+        <floor-text>A bill to designate the General George C. Marshall House in the Commonwealth of Virginia, as an affiliated area of the National Park System, and for other purposes. </floor-text>
+        <updates>
+          <update-date date="2026-09-08T13:44:36.490" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False">Sort order changed.</explanatory-notes>
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119s603es.pdf" doc-type="PDF" add-date="2026-09-08T13:42:51.937" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409795" add-date="2026-09-08T13:43:06.573" remove-date="" sort-order="20" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 4219 </legis-num>
+        <floor-text>National Wildlife Refuge System Invasive Species Strike Team Act of 2025, as amended </floor-text>
+        <updates>
+          <update-date date="2026-09-08T13:45:00.740" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False">Sort order changed.</explanatory-notes>
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H4219_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:43:06.573" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409750" add-date="2026-09-08T13:11:22.107" remove-date="" sort-order="21" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 2317</legis-num>
+        <floor-text>Northern Nevada Economic Development and Conservation Act of 2025, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H2317NR_RH_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:11:22.103" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409751" add-date="2026-09-08T13:11:54.713" remove-date="" sort-order="22" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9497</legis-num>
+        <floor-text>Water Resources Development Act of 2026, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/9497Sus_01_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:11:54.700" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409752" add-date="2026-09-08T13:12:11.090" remove-date="" sort-order="23" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9086 </legis-num>
+        <floor-text>Foreign Service Modernization Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H9086_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:12:11.083" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409753" add-date="2026-09-08T13:12:26.813" remove-date="" sort-order="24" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 7730 </legis-num>
+        <floor-text>Bankruptcy Threshold Adjustment Act of 2026 </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h7730_rh_xml (1).pdf" doc-type="PDF" add-date="2026-09-08T13:12:26.813" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409754" add-date="2026-09-08T13:12:43.963" remove-date="" sort-order="25" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 7834</legis-num>
+        <floor-text>Safe Cloud Storage Act, as amended </floor-text>
+        <updates>
+          <update-date date="2026-09-08T17:21:53.377" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/HR 7834 Suspension Text.pdf" doc-type="PDF" add-date="2026-09-08T17:21:53.383" sort-order="2" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409755" add-date="2026-09-08T13:13:09.053" remove-date="" sort-order="26" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9191</legis-num>
+        <floor-text>National Fossil Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h9191_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:13:09.043" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409756" add-date="2026-09-08T13:13:24.390" remove-date="" sort-order="27" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 5109 </legis-num>
+        <floor-text>TWICE Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H5109_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:13:24.387" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409757" add-date="2026-09-08T13:13:42.953" remove-date="" sort-order="28" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 5517 </legis-num>
+        <floor-text>Northern Border Security Enhancement and Review Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H5517_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:13:42.953" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409758" add-date="2026-09-08T13:14:02.357" remove-date="" sort-order="29" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 7436</legis-num>
+        <floor-text>Department of Homeland Security Intelligence and Analysis Training Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H7436_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:14:02.343" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409759" add-date="2026-09-08T13:14:20.280" remove-date="" sort-order="30" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 7443 </legis-num>
+        <floor-text>I&amp;A Mission Reorientation Act of 2026, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H7443_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:14:20.267" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409760" add-date="2026-09-08T13:14:35.020" remove-date="" sort-order="31" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9327 </legis-num>
+        <floor-text>PEARL Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H9327_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:14:35.030" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409761" add-date="2026-09-08T13:14:50.517" remove-date="" sort-order="32" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9382 </legis-num>
+        <floor-text>NEXUS for Families Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/HR9382 (KennedyNY) NEXUS.pdf" doc-type="PDF" add-date="2026-09-08T13:14:50.517" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409762" add-date="2026-09-08T13:15:07.173" remove-date="" sort-order="33" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9394 </legis-num>
+        <floor-text>Civil Preparedness for Agroterrorism Exercise Act of 2026</floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/HR9394 (Strong) Aggroterrorism.pdf" doc-type="PDF" add-date="2026-09-08T13:15:07.160" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409763" add-date="2026-09-08T13:15:24.683" remove-date="" sort-order="34" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9496 </legis-num>
+        <floor-text>End Tax Penalties on American Hostages Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/AINS-to-HR-9496.pdf" doc-type="PDF" add-date="2026-09-08T13:15:24.683" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409764" add-date="2026-09-08T13:15:47.680" remove-date="" sort-order="35" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9498 </legis-num>
+        <floor-text>Taxpayer Advocate Participation Act </floor-text>
+        <updates>
+          <update-date date="2026-09-09T13:40:10.773" publish-date="2026-09-09T13:40:19.393">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H9498_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-09T13:40:10.777" sort-order="2" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409765" add-date="2026-09-08T13:16:02.463" remove-date="" sort-order="36" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9501 </legis-num>
+        <floor-text>AI Tax Integrity Act of 2026 </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/AINS-to-HR-9501.pdf" doc-type="PDF" add-date="2026-09-08T13:16:02.460" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409766" add-date="2026-09-08T13:16:16.700" remove-date="" sort-order="37" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9499 </legis-num>
+        <floor-text>Protecting Taxpayers from Ghost Preparers Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H9499_RH_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:16:16.700" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409767" add-date="2026-09-08T13:17:57.297" remove-date="" sort-order="38" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9360 </legis-num>
+        <floor-text>Advisory Committee on the Records of Congress Sunset Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 9360 ANS.pdf" doc-type="PDF" add-date="2026-09-08T13:17:57.290" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409768" add-date="2026-09-08T13:18:11.467" remove-date="" sort-order="39" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9342 </legis-num>
+        <floor-text>GPO Modernization Act of 2026, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 9342 ANS - Correct Doc.pdf" doc-type="PDF" add-date="2026-09-08T13:18:11.470" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409769" add-date="2026-09-08T13:18:34.640" remove-date="" sort-order="40" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 10204</legis-num>
+        <floor-text>Legislative Branch Agencies Clarification Act </floor-text>
+        <files>
+          <file doc-url="https://www.congress.gov/119/bills/hr10204/BILLS-119hr10204ih.pdf" doc-type="PDF" add-date="2026-09-08T13:18:34.640" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409770" add-date="2026-09-08T13:18:59.050" remove-date="" sort-order="41" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 766</legis-num>
+        <floor-text>Billion Dollar Boondoggle Act of 2025</floor-text>
+        <files>
+          <file doc-url="https://www.congress.gov/119/bills/s766/BILLS-119s766es.pdf" doc-type="PDF" add-date="2026-09-08T13:18:59.037" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409771" add-date="2026-09-08T13:19:23.060" remove-date="" sort-order="42" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 7365</legis-num>
+        <floor-text>To designate the facility of the United States Postal Service located at 1225 Kempsville Road in Virginia Beach, Virginia, as the "Colonel Edward Shames Post Office Building". </floor-text>
+        <files>
+          <file doc-url="https://www.congress.gov/119/bills/hr7365/BILLS-119hr7365ih.pdf" doc-type="PDF" add-date="2026-09-08T13:19:23.053" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409772" add-date="2026-09-08T13:19:45.790" remove-date="" sort-order="43" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9570</legis-num>
+        <floor-text>To designate the facility of the United States Postal Service located at 117 West Lovett Street in Charlotte, Michigan, as the "Francis C. Flaherty Post Office Building".</floor-text>
+        <files>
+          <file doc-url="https://www.congress.gov/119/bills/hr9570/BILLS-119hr9570ih.pdf" doc-type="PDF" add-date="2026-09-08T13:19:45.787" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409773" add-date="2026-09-08T13:20:09.357" remove-date="" sort-order="44" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 6006</legis-num>
+        <floor-text>To designate the facility of the United States Postal Service located at 401 North Elm Street in Tuskegee, Alabama, as the "Tuskegee Airmen Memorial Post Office". </floor-text>
+        <files>
+          <file doc-url="https://www.congress.gov/119/bills/hr6006/BILLS-119hr6006ih.pdf" doc-type="PDF" add-date="2026-09-08T13:20:09.360" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409774" add-date="2026-09-08T13:20:26.387" remove-date="" sort-order="45" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 2978 </legis-num>
+        <floor-text>GUARD Act, as amended</floor-text>
+        <updates>
+          <update-date date="2026-09-08T13:21:00.610" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-14T21:17:30.120" publish-date="2026-09-14T21:17:53.140">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h2978fs_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:21:00.610" sort-order="2" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409775" add-date="2026-09-08T13:20:50.187" remove-date="" sort-order="46" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 8278 </legis-num>
+        <floor-text>Fostering the Use of Technology to Uphold Regulatory Effectiveness in Supervision Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119hr8278rh (1).pdf" doc-type="PDF" add-date="2026-09-08T13:20:50.183" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409790" add-date="2026-09-08T13:29:07.520" remove-date="" sort-order="47" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 10167 </legis-num>
+        <floor-text>Common Cents Act </floor-text>
+        <updates>
+          <update-date date="2026-09-08T13:29:13.487" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False">Sort order changed.</explanatory-notes>
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119hr10167ih.pdf" doc-type="PDF" add-date="2026-09-08T13:29:07.520" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409776" add-date="2026-09-08T13:21:38.573" remove-date="" sort-order="48" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 10159 </legis-num>
+        <floor-text>To authorize the Secretary of the Army to convey to the State of North Carolina a certain parcel of real property located at Fort Bragg, North Carolina, on which the State shall construct a veterans' State home, and for other purposes. </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119hr10159ih.pdf" doc-type="PDF" add-date="2026-09-08T13:21:38.580" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409777" add-date="2026-09-08T13:21:55.107" remove-date="" sort-order="49" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 195 </legis-num>
+        <floor-text>American Music Tourism Act of 2025 </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/S. 195 American Music Tourism Act.pdf" doc-type="PDF" add-date="2026-09-08T13:21:55.110" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409778" add-date="2026-09-08T13:22:12.487" remove-date="" sort-order="50" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>S. 2398 </legis-num>
+        <floor-text>Kay Hagan Tick Reauthorization Act</floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/S.2398, Kay Hagan Tick Act.pdf" doc-type="PDF" add-date="2026-09-08T13:22:12.487" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409779" add-date="2026-09-08T13:22:30.827" remove-date="" sort-order="51" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 979 </legis-num>
+        <floor-text>AM Radio for Every Vehicle Act of 2025, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 979, AM Radio for Every Vehicle Act.pdf" doc-type="PDF" add-date="2026-09-08T13:22:30.827" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409780" add-date="2026-09-08T13:22:46.803" remove-date="" sort-order="52" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 6633</legis-num>
+        <floor-text>High-Capacity Grid Act, as amended</floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 6633, High-Capacity Grid Act.pdf" doc-type="PDF" add-date="2026-09-08T13:22:46.807" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409781" add-date="2026-09-08T13:23:06.180" remove-date="" sort-order="53" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9332 </legis-num>
+        <floor-text>Load Forecasting Enhancement Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 9332, Load Forecasting Enhancement Act.pdf" doc-type="PDF" add-date="2026-09-08T13:23:06.183" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409782" add-date="2026-09-08T13:23:23.027" remove-date="" sort-order="54" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9339 </legis-num>
+        <floor-text>Affordable Innovation for the Grid Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 9339, Affordable Innovation for the Grid Act.pdf" doc-type="PDF" add-date="2026-09-08T13:23:23.027" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409783" add-date="2026-09-08T13:23:40.427" remove-date="" sort-order="55" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9616</legis-num>
+        <floor-text>EMRTAI Authorization Act of 2026 </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 9616, Environmental Monitoring and Remediation Technology Assessment Imitative (EMRTAI) Act of 2026.pdf" doc-type="PDF" add-date="2026-09-08T13:23:40.423" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409784" add-date="2026-09-08T13:23:58.493" remove-date="" sort-order="56" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9617</legis-num>
+        <floor-text>CHARM Act </floor-text>
+        <updates>
+          <update-date date="2026-09-08T17:34:00.220" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-08T19:01:23.317" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h9617_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T19:01:23.317" sort-order="3" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409785" add-date="2026-09-08T13:24:21.427" remove-date="" sort-order="57" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 9615 </legis-num>
+        <floor-text>BRACE Act </floor-text>
+        <updates>
+          <update-date date="2026-09-08T17:34:15.603" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-08T19:01:33.140" publish-date="2026-09-08T19:08:32.013">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h9615_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T19:01:33.137" sort-order="3" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409786" add-date="2026-09-08T13:24:47.797" remove-date="" sort-order="58" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 2140</legis-num>
+        <floor-text>Diesel Emissions Reduction Act of 2025 </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 2140, Diesel Emissions Reduction Act of 2025.pdf" doc-type="PDF" add-date="2026-09-08T13:24:47.787" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409787" add-date="2026-09-08T13:25:10.850" remove-date="" sort-order="59" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 1266</legis-num>
+        <floor-text>Combating Illicit Xylazine Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 1266,  Combating Illicit Xylazine Act.pdf" doc-type="PDF" add-date="2026-09-08T13:25:10.850" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409788" add-date="2026-09-08T13:25:26.353" remove-date="" sort-order="60" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 2004 </legis-num>
+        <floor-text>Tyler’s Law </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 2004, Tyler's Law.pdf" doc-type="PDF" add-date="2026-09-08T13:25:26.353" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409789" add-date="2026-09-08T13:25:45.527" remove-date="" sort-order="61" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 8005 </legis-num>
+        <floor-text>Stop Pills That Kill Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 8005, Stop Pills that Kill Act.pdf" doc-type="PDF" add-date="2026-09-08T13:25:45.523" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409791" add-date="2026-09-08T13:41:59.273" remove-date="" sort-order="62" publish-date="2026-09-08T19:08:32.013">
+        <legis-num>H.R. 2846 </legis-num>
+        <floor-text>To amend title II of the Public Health Service Act to include as an additional right or privilege of commissioned officers of the Public Health Service (and their beneficiaries) certain leave provided under title 10, United States Code to commissioned officers of the Army (or their beneficiaries). </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/h2846_rh_xml.pdf" doc-type="PDF" add-date="2026-09-08T13:41:59.283" sort-order="1" publish-date="2026-09-08T19:08:32.013" />
+        </files>
+      </floor-item>
+      <floor-item id="409799" add-date="2026-09-10T15:20:38.203" remove-date="" sort-order="63" publish-date="2026-09-10T15:22:42.973">
+        <legis-num>S. 2403 </legis-num>
+        <floor-text>Retire through Ownership Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/4. BILLS-119s2403es.pdf" doc-type="PDF" add-date="2026-09-10T15:20:38.207" sort-order="1" publish-date="2026-09-10T15:22:42.973" />
+        </files>
+      </floor-item>
+      <floor-item id="409800" add-date="2026-09-10T15:20:53.627" remove-date="" sort-order="64" publish-date="2026-09-10T15:22:42.973">
+        <legis-num>H.R. 8775 </legis-num>
+        <floor-text>Ending Predator Access to Union Power Act, as amended </floor-text>
+        <updates>
+          <update-date date="2026-09-10T17:50:57.383" publish-date="2026-09-10T17:52:44.590">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/HR8775_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-10T17:50:57.390" sort-order="2" publish-date="2026-09-10T15:22:42.973" />
+        </files>
+      </floor-item>
+      <floor-item id="409801" add-date="2026-09-10T15:21:14.137" remove-date="" sort-order="65" publish-date="2026-09-10T15:22:42.973">
+        <legis-num>H.R. 9723</legis-num>
+        <floor-text>Fit Future Act, as amended </floor-text>
+        <updates>
+          <update-date date="2026-09-10T17:51:11.380" publish-date="2026-09-10T17:52:44.590">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-15T11:19:56.990" publish-date="2026-09-15T11:20:08.180">
+            <explanatory-notes doc-modified="True" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H9723_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-15T11:19:56.957" sort-order="3" publish-date="2026-09-10T15:22:42.973" />
+        </files>
+      </floor-item>
+      <floor-item id="409802" add-date="2026-09-10T15:21:28.740" remove-date="" sort-order="66" publish-date="2026-09-10T15:22:42.973">
+        <legis-num>H.R. 7890 </legis-num>
+        <floor-text>Science of Reading Act of 2026, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/9. BILLS-119hr7890rh.pdf" doc-type="PDF" add-date="2026-09-10T15:21:28.740" sort-order="1" publish-date="2026-09-10T15:22:42.973" />
+        </files>
+      </floor-item>
+      <floor-item id="409803" add-date="2026-09-10T15:21:46.760" remove-date="" sort-order="67" publish-date="2026-09-10T15:22:42.973">
+        <legis-num>H.R. 4646 </legis-num>
+        <floor-text>Whistleblower Protection Act of 2025, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILLS-119hr4646rh.pdf" doc-type="PDF" add-date="2026-09-10T15:21:46.750" sort-order="1" publish-date="2026-09-10T15:22:42.973" />
+        </files>
+      </floor-item>
+      <floor-item id="409806" add-date="2026-09-10T20:24:59.597" remove-date="" sort-order="68" publish-date="2026-09-10T20:30:20.350">
+        <legis-num>H.R. 9340</legis-num>
+        <floor-text>Ratepayer Protection Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H.R. 9340, Ratepayer Protection Act.pdf" doc-type="PDF" add-date="2026-09-10T20:24:59.610" sort-order="1" publish-date="2026-09-10T20:30:20.350" />
+        </files>
+      </floor-item>
+      <floor-item id="409807" add-date="2026-09-10T20:25:14.233" remove-date="" sort-order="69" publish-date="2026-09-10T20:30:20.350">
+        <legis-num>H.R. 9500 </legis-num>
+        <floor-text>Tax Relief for Fraud Victims Act, as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H9500_SUS_xml[14][79][53][96][92].pdf" doc-type="PDF" add-date="2026-09-10T20:25:14.230" sort-order="1" publish-date="2026-09-10T20:30:20.350" />
+        </files>
+      </floor-item>
+      <floor-item id="409808" add-date="2026-09-10T20:27:48.760" remove-date="" sort-order="70" publish-date="2026-09-10T20:30:20.350">
+        <legis-num>H.R. 8193 </legis-num>
+        <floor-text>To designate the facility of the United States Postal Service located at 189 East Main Street in Xenia, Ohio, as the "Gilman 'Gil' Whitney Post Office Building"., as amended </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/H8193_SUS_xml.pdf" doc-type="PDF" add-date="2026-09-10T20:27:48.753" sort-order="1" publish-date="2026-09-10T20:30:20.350" />
+        </files>
+      </floor-item>
+      <floor-item id="409809" add-date="2026-09-10T20:28:26.577" remove-date="" sort-order="71" publish-date="2026-09-10T20:30:20.350">
+        <legis-num>H.R. 1342</legis-num>
+        <floor-text>Stopping Political Discrimination in Disaster Assistance Act </floor-text>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/HR 1342.pdf" doc-type="PDF" add-date="2026-09-10T20:28:26.580" sort-order="1" publish-date="2026-09-10T20:30:20.350" />
+        </files>
+      </floor-item>
+    </floor-items>
+  </category>
+  <category type="Items that may be considered pursuant to a rule" sort-order="4">
+    <floor-items>
+      <floor-item id="409796" add-date="2026-09-10T12:55:52.677" remove-date="" sort-order="63" publish-date="2026-09-10T15:57:37.167">
+        <legis-num>H.J. Res. 210</legis-num>
+        <floor-text>Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Environmental Protection Agency relating to "California State Nonroad Engine Pollution Control Standards; Ocean-Going Vessels At-Berth; Notice of Decision".</floor-text>
+        <updates>
+          <update-date date="2026-09-10T12:56:01.197" publish-date="2026-09-10T15:57:37.167">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-10T13:01:57.873" publish-date="2026-09-10T15:57:37.167">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hjres210ih/pdf/BILLS-119hjres210ih.pdf" doc-type="PDF" add-date="2026-09-10T12:55:52.687" sort-order="1" publish-date="2026-09-10T15:57:37.167" />
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hjres210ih/xml/BILLS-119hjres210ih.xml" doc-type="XML" add-date="2026-09-10T13:01:57.867" sort-order="3" publish-date="2026-09-10T15:57:37.167" />
+        </files>
+      </floor-item>
+      <floor-item id="409797" add-date="2026-09-10T12:57:00.863" remove-date="" sort-order="64" publish-date="2026-09-10T15:57:37.167">
+        <legis-num>H.J. Res. 213</legis-num>
+        <floor-text>Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule issued by the Environmental Protection Agency relating to the "California State Nonroad Engine Pollution Control Standards; Commercial Harbor Craft Regulations; Notice of Decision".</floor-text>
+        <updates>
+          <update-date date="2026-09-10T13:02:43.137" publish-date="2026-09-10T15:57:37.167">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hjres213ih/pdf/BILLS-119hjres213ih.pdf" doc-type="PDF" add-date="2026-09-10T12:57:00.860" sort-order="1" publish-date="2026-09-10T15:57:37.167" />
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hjres213ih/xml/BILLS-119hjres213ih.xml" doc-type="XML" add-date="2026-09-10T13:02:43.133" sort-order="3" publish-date="2026-09-10T15:57:37.167" />
+        </files>
+      </floor-item>
+      <floor-item id="409798" add-date="2026-09-10T12:57:55.870" remove-date="" sort-order="65" publish-date="2026-09-10T15:57:37.167">
+        <legis-num>H.R. 9576</legis-num>
+        <floor-text>National Fraud Enforcement Division Act of 2026</floor-text>
+        <updates>
+          <update-date date="2026-09-10T13:01:28.927" publish-date="2026-09-10T15:57:37.167">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hr9576ih/pdf/BILLS-119hr9576ih.pdf" doc-type="PDF" add-date="2026-09-10T12:57:55.873" sort-order="1" publish-date="2026-09-10T15:57:37.167" />
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hr9576ih/xml/BILLS-119hr9576ih.xml" doc-type="XML" add-date="2026-09-10T13:01:28.923" sort-order="3" publish-date="2026-09-10T15:57:37.167" />
+        </files>
+        <floor-subitems>
+          <floor-subitem id="503901" add-date="2026-09-10T15:34:30.263" remove-date="" sort-order="1" publish-date="2026-09-10T15:57:37.167">
+            <legis-num />
+            <floor-text>Rules Committee Print 119-41 – Showing the text of the H.R. 9576, as introduced, with modifications</floor-text>
+            <updates>
+              <update-date date="2026-09-10T15:45:00.133" publish-date="2026-09-10T15:57:37.167">
+                <explanatory-notes doc-modified="False" />
+              </update-date>
+            </updates>
+            <files>
+              <file doc-url="http://docs.house.gov/billsthisweek/20260914/RCP_H9576_xml.pdf" doc-type="PDF" add-date="2026-09-10T15:45:00.130" sort-order="1" publish-date="" />
+            </files>
+          </floor-subitem>
+          <floor-subitem id="503902" add-date="2026-09-10T15:45:31.387" remove-date="" sort-order="2" publish-date="2026-09-10T15:57:37.167">
+            <legis-num />
+            <floor-text>Comparative Print – Showing the differences between H.R. 9576 and Rules Committee Print 119-41</floor-text>
+            <files>
+              <file doc-url="http://docs.house.gov/billsthisweek/20260914/BILL-TO-BILL_BILLS-119hr9576ih (1)_to_RCP_H9576_xml.pdf" doc-type="PDF" add-date="2026-09-10T15:45:31.383" sort-order="1" publish-date="" />
+            </files>
+          </floor-subitem>
+        </floor-subitems>
+      </floor-item>
+      <floor-item id="409805" add-date="2026-09-10T15:28:21.827" remove-date="" sort-order="67" publish-date="2026-09-10T15:57:37.167">
+        <legis-num>H.R. 10326</legis-num>
+        <floor-text>PROOF Act</floor-text>
+        <updates>
+          <update-date date="2026-09-10T15:48:36.740" publish-date="2026-09-10T15:57:37.167">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-10T15:57:09.120" publish-date="2026-09-10T15:57:37.167">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-14T09:35:13.980" publish-date="2026-09-14T09:35:22.687">
+            <explanatory-notes doc-modified="True" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="http://docs.house.gov/billsthisweek/20260914/PROOF_ACT_xml.pdf" doc-type="PDF" add-date="2026-09-10T15:48:36.737" sort-order="1" publish-date="2026-09-10T15:57:37.167" />
+        </files>
+      </floor-item>
+      <floor-item id="409810" add-date="2026-09-11T10:50:22.943" remove-date="" sort-order="68" publish-date="2026-09-11T11:14:46.943">
+        <legis-num>Senate amendments to H.R. 5334</legis-num>
+        <floor-text>Lindsey O. Graham Sanctioning Russia and Iran Act of 2026</floor-text>
+        <updates>
+          <update-date date="2026-09-11T12:10:24.687" publish-date="2026-09-11T12:10:32.780">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-11T12:11:15.683" publish-date="2026-09-11T12:14:43.603">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-11T12:14:33.057" publish-date="2026-09-11T12:14:43.603">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="https://www.congress.gov/119/bills/hr5334/BILLS-119hr5334eas.pdf" doc-type="PDF" add-date="2026-09-11T10:50:22.963" sort-order="1" publish-date="2026-09-11T11:14:46.943" />
+          <file doc-url="https://www.congress.gov/119/bills/hr5334/BILLS-119hr5334eas.xml" doc-type="XML" add-date="2026-09-11T10:50:22.963" sort-order="2" publish-date="2026-09-11T11:14:46.943" />
+        </files>
+      </floor-item>
+    </floor-items>
+  </category>
+  <category type="Items that may be considered" sort-order="5">
+    <floor-items>
+      <floor-item id="409811" add-date="2026-09-11T14:00:40.067" remove-date="" sort-order="1" publish-date="2026-09-11T14:01:16.207">
+        <legis-num>H. Con. Res. 93</legis-num>
+        <floor-text>Directing the President, pursuant to section 5(c) of the War Powers Resolution, to remove United States Armed Forces from hostilities with Iran</floor-text>
+        <files>
+          <file doc-url="https://www.congress.gov/119/bills/hconres93/BILLS-119hconres93ih.pdf" doc-type="PDF" add-date="2026-09-11T14:00:40.080" sort-order="1" publish-date="2026-09-11T14:01:16.207" />
+        </files>
+      </floor-item>
+      <floor-item id="409812" add-date="2026-09-14T10:05:48.980" remove-date="" sort-order="2" publish-date="2026-09-14T20:34:26.243">
+        <legis-num>H. Res. 1530</legis-num>
+        <floor-text>Providing for consideration of the bill (H.R. 9576) to establish the National Fraud Enforcement Division of the Department of Justice; providing for consideration of the bill (H.R. 10326) to enhance information-sharing capabilities between Federal law enforcement and State agencies to detect, investigate, and prosecute fraud in certain Federal programs, and to protect individual privacy; providing for consideration of the joint resolution (H.J. Res. 210) providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Environmental Protection Agency relating to ‘‘California State Nonroad Engine Pollution Control Standards; Ocean-Going Vessels At-Berth; Notice of Decision’’; providing for consideration of the joint resolution (H.J. Res. 213) providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule issued by the Environmental Protection Agency relating to the ‘‘California State Nonroad Engine Pollution Control Standards; Commercial Harbor Craft Regulations; Notice of Decision’’; and providing for consideration of the Senate amendments to the bill (H.R. 5334) to amend the Internal Revenue Code of 1986 to allow early childhood educators to take the educator expense deduction, and for other purposes.</floor-text>
+        <updates>
+          <update-date date="2026-09-14T20:32:54.413" publish-date="2026-09-14T20:34:26.243">
+            <explanatory-notes doc-modified="False" />
+          </update-date>
+          <update-date date="2026-09-14T20:49:31.107" publish-date="2026-09-14T20:50:09.023">
+            <explanatory-notes doc-modified="True">Res. number added</explanatory-notes>
+          </update-date>
+          <update-date date="2026-09-15T09:26:33.587" publish-date="2026-09-15T09:28:14.610">
+            <explanatory-notes doc-modified="True">GPO Version</explanatory-notes>
+          </update-date>
+        </updates>
+        <files>
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hres1530rh/pdf/BILLS-119hres1530rh.pdf" doc-type="PDF" add-date="2026-09-15T09:26:33.540" sort-order="2" publish-date="2026-09-14T20:34:26.243" />
+          <file doc-url="https://www.govinfo.gov/content/pkg/BILLS-119hres1530rh/xml/BILLS-119hres1530rh.xml" doc-type="XML" add-date="2026-09-15T09:26:33.543" sort-order="3" publish-date="2026-09-14T20:34:26.243" />
+        </files>
+        <floor-subitems>
+          <floor-subitem id="503903" add-date="2026-09-14T10:06:20.090" remove-date="" sort-order="1" publish-date="2026-09-14T20:34:26.243">
+            <legis-num />
+            <floor-text>H. Rept. 119-825 – Report from the Committee on Rules to accompany H. Res. 1530</floor-text>
+            <updates>
+              <update-date date="2026-09-14T20:33:11.663" publish-date="2026-09-14T20:34:26.243">
+                <explanatory-notes doc-modified="False" />
+              </update-date>
+              <update-date date="2026-09-14T20:49:47.837" publish-date="2026-09-14T20:50:09.023">
+                <explanatory-notes doc-modified="True">Rept. number added</explanatory-notes>
+              </update-date>
+              <update-date date="2026-09-15T09:26:59.540" publish-date="2026-09-15T09:28:14.610">
+                <explanatory-notes doc-modified="True">GPO Version</explanatory-notes>
+              </update-date>
+            </updates>
+            <files>
+              <file doc-url="https://www.govinfo.gov/content/pkg/CRPT-119hrpt825/pdf/CRPT-119hrpt825.pdf" doc-type="PDF" add-date="2026-09-15T09:26:59.490" sort-order="2" publish-date="" />
+            </files>
+          </floor-subitem>
+        </floor-subitems>
+      </floor-item>
+    </floor-items>
+  </category>
+</floorschedule>

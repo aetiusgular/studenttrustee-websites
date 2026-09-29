@@ -1,0 +1,31 @@
+{
+  "name": "studenttrustee-websites",
+  "private": true,
+  "version": "1.0.0",
+  "description": "studenttrustee.net and volunteer.studenttrustee.net: static sites, template build, nightly legislation data",
+  "type": "module",
+  "scripts": {
+    "build": "python3 tools/build.py",
+    "check:build": "python3 tools/build.py && git diff --quiet --exit-code -- studenttrustee || (echo 'Committed output differs from a fresh build. Run npm run build and commit.' && exit 1)",
+    "lint:html": "html-validate \"studenttrustee/**/*.html\" \"volunteer/**/*.html\"",
+    "lint:js": "eslint .",
+    "lint:py": "python3 -m pyflakes tools tests",
+    "lint": "npm run lint:html && npm run lint:js && npm run lint:py",
+    "serve": "node tools/dev-server.js",
+    "test:a11y": "playwright test",
+    "test:a11y:report": "playwright show-report",
+    "check": "npm run lint && npm run check:build && npm run test:pipeline && npm run test:a11y",
+    "test:pipeline": "python3 -m unittest discover -s tests/pipeline -t ."
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.56.0",
+    "eslint": "^10.11.0",
+    "eslint-plugin-html": "^8.2.1",
+    "html-validate": "^11.16.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

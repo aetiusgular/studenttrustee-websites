@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+{%- if canonical %}
+<link rel="canonical" href="{{ canonical }}">
+{%- endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="studenttrustee.net">
+{%- if canonical %}
+<meta property="og:url" content="{{ canonical }}">
+{%- endif %}
+<meta property="og:title" content="{{ og_title or title }}">
+<meta property="og:description" content="{{ og_description or description }}">
+<meta property="og:image" content="{{ site.origin }}/brand/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
+{%- block head_meta %}{% endblock %}
+<link rel="icon" href="/brand/poppy-p6.ico" sizes="48x48">
+<link rel="icon" href="/brand/poppy-p6.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" sizes="180x180" href="/brand/poppy-180-p6.png">
+<link rel="mask-icon" href="/brand/poppy-mask-p6.svg" color="#CC480D">
+<link rel="manifest" href="/site-p6.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+{%- block head %}{% endblock %}
+</head>
+<body{% if body_class %} class="{{ body_class }}"{% endif %}>
+<a class="skip-link" href="#main">Skip to content</a>
+{%- block header %}
+<header class="top">
+  <div class="mark"><a href="/" aria-label="StudentTrustee.net home"><img class="st-wordmark" src="/brand/logo-wordmark.png" alt="StudentTrustee.net" width="1015" height="127"></a></div>
+  <div class="grow"></div>
+  <nav aria-label="Site">
+    {%- for href, label in nav %}
+    <a href="{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a>
+    {%- endfor %}
+  </nav>
+</header>
+{%- endblock %}
+{%- block body %}
+<main id="main" tabindex="-1">
+{%- block main %}{% endblock %}
+</main>
+{%- endblock %}
+{%- block footer %}
+<footer class="site-footer">
+  {%- block footer_extra %}{% endblock %}
+  <p>Maintained by {{ site.maintainer }}. {% if roster_stamp %}Roster verified {{ roster_stamp }}. {% endif %}For site corrections, <a class="fix" href="mailto:{{ site.corrections_email }}?subject=Student%20Trustee%20Website%20Update">please reach out</a> with updated information. <a href="/accessibility">Accessibility</a>.</p>
+</footer>
+{%- endblock %}
+{%- block scripts %}{% endblock %}
+</body>
+</html>

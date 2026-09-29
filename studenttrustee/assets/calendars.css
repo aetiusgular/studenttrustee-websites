@@ -1,0 +1,67 @@
+/* Calendars page (/legislation/calendars/). Loaded after site.css. */
+main{max-width:1000px;margin:0 auto;padding:36px 20px 40px}
+h1{font-size:40px;line-height:1.06;margin:0 0 6px}
+.tagline{margin:0 0 26px;font-size:15px;color:var(--text-muted)}
+.lede{font-size:15px;color:var(--text-secondary);max-width:60ch;margin:0 0 30px}
+.lede a{text-decoration:underline;text-underline-offset:3px}
+.crumb{font-size:13px;color:var(--text-muted);margin:0 0 14px}
+.crumb a{text-decoration:underline;text-underline-offset:3px}
+.grp{margin:0 0 30px}
+.grp h2{margin:0 0 10px}
+.card{text-decoration:none;padding:16px 0}
+.card .t{display:block;font-size:15px;font-weight:640;color:var(--text-primary);letter-spacing:-.018em}
+.card .arr{color:var(--text-muted);font-weight:400}
+.card .d{display:block;font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.45}
+h2.big{font-size:20px;font-weight:650;letter-spacing:-.015em;margin:44px 0 4px;text-transform:none;color:var(--text-primary)}
+.sub, p.sub{font-size:13.5px;color:var(--text-muted);margin:0 0 18px}
+.next{
+  display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;
+  background:var(--surface-1);border:1px solid var(--accent);
+  padding:13px 15px;margin:0 0 20px;
+}
+.next b{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-primary)}
+.next .n{font-size:15px;font-weight:640}
+.next .c{font-size:13px;color:var(--text-secondary)}
+ul.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--rule)}
+.ev{display:flex;gap:16px;padding:11px 0 11px 18px;position:relative}
+.ev::before{content:"";position:absolute;left:-5px;top:19px;width:8px;height:8px;border-radius:50%;background:var(--rule)}
+.ev.past .what h3,.ev.past .what p,.ev.past .when .d{color:var(--text-muted)}
+.ev.is-next::before{background:var(--accent);box-shadow:0 0 0 3px var(--plane),0 0 0 5px var(--accent)}
+.when{flex:none;width:132px}
+.when .d{display:block;font-size:13.5px;font-weight:640;font-variant-numeric:tabular-nums}
+.when .tag{display:block}
+.what h3{margin:0;font-size:14.5px;font-weight:600}
+.what p{margin:2px 0 0;font-size:13px;color:var(--text-secondary)}
+.ev[data-kind="major"] .what h3{font-weight:680}
+/* --- Congress comparison --- */
+ul.cmp{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.crow{display:grid;grid-template-columns:190px 1fr 1fr;gap:0 18px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.crow .per h3{margin:0;font-size:14.5px;font-weight:660;letter-spacing:-.018em}
+.crow .per .w{display:block;margin-top:3px;font-size:12.5px;color:var(--text-muted);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.crow .ch{border-left:1px solid var(--rule);padding-left:18px}
+.crow .cl{display:block;margin-bottom:3px}
+.crow .ch p{margin:0;font-size:13.5px;color:var(--text-primary);line-height:1.45}
+.crow .why{grid-column:1 / -1;margin:12px 0 0;padding-top:11px;border-top:1px solid var(--rule);font-size:13px;color:var(--text-secondary);line-height:1.5}
+.crow .unconf{
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
+  color:var(--text-muted);border:1px solid var(--rule);border-radius:20px;
+  padding:1px 6px;margin-left:5px;vertical-align:1px;
+}
+ul.earlier{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+ul.earlier li{display:flex;gap:14px;align-items:baseline;font-size:13px;border-left:2px solid var(--rule);padding:2px 0 2px 12px;color:var(--text-secondary)}
+ul.earlier b{flex:none;width:118px;color:var(--text-primary);font-weight:640;font-variant-numeric:tabular-nums}
+@media (max-width:620px){ ul.earlier li{flex-direction:column;gap:2px} ul.earlier b{width:auto} }
+ul.same{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+ul.same li{display:flex;gap:9px;align-items:baseline;font-size:13px;border:1px dashed var(--rule);padding:9px 12px}
+ul.same b{font-variant-numeric:tabular-nums;font-weight:640;white-space:nowrap}
+ul.same span{color:var(--text-secondary)}
+.srcnote{margin:16px 0 0;font-size:12.5px;color:var(--text-muted);line-height:1.6;border-left:2px solid var(--rule);padding-left:12px}
+.srcnote b{color:var(--text-secondary);font-weight:640}
+@media (max-width:760px){
+  .crow{grid-template-columns:1fr;gap:0}
+  .crow .per{margin-bottom:10px}
+  .crow .ch{border-left:0;padding-left:0;margin-top:9px}
+}
+@media (max-width:620px){
+  .when{width:96px} main{padding:22px 15px 40px} h1{font-size:32px}
+}

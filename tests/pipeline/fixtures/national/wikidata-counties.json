@@ -1,0 +1,131 @@
+{
+ "head": {
+  "vars": [
+   "fips",
+   "site"
+  ]
+ },
+ "results": {
+  "bindings": [
+   {
+    "fips": {
+     "type": "literal",
+     "value": "48301"
+    },
+    "site": {
+     "type": "uri",
+     "value": "https://www.co.loving.tx.us/"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "16001"
+    },
+    "site": {
+     "type": "uri",
+     "value": "http://www.adaweb.net"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "48453"
+    },
+    "site": {
+     "type": "uri",
+     "value": "https://www.traviscountytx.gov/"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "06013"
+    },
+    "site": {
+     "type": "uri",
+     "value": "https://www.contracosta.ca.gov/"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "31055"
+    },
+    "site": {
+     "type": "uri",
+     "value": "https://www.douglascounty-ne.gov/"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "23003"
+    },
+    "site": {
+     "type": "uri",
+     "value": "https://aroostook.me.us/"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "11001"
+    },
+    "site": {
+     "type": "uri",
+     "value": "https://dc.gov/"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "02020"
+    },
+    "site": {
+     "type": "uri",
+     "value": "https://www.muni.org"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "33001"
+    },
+    "site": {
+     "type": "uri",
+     "value": "http://www.belknapcounty.org"
+    }
+   },
+   {
+    "fips": {
+     "type": "literal",
+     "value": "72001"
+    },
+    "site": {
+     "type": "uri",
+     "value": "http://www.adjuntas.com"
+    }
+   },
+   {
+    "item": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q486366"
+    },
+    "fips": {
+     "type": "literal",
+     "value": "16021"
+    },
+    "site": {
+     "type": "uri",
+     "value": "http://www.boundarycountyid.org"
+    },
+    "itemLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Boundary County"
+    }
+   }
+  ]
+ }
+}

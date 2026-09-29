@@ -1,0 +1,86 @@
+{
+ "counties": {
+  "08031": {
+   "body": {
+    "id": 138,
+    "name": "City Council"
+   },
+   "client": "denver",
+   "confirmed_by": "checked by hand: the site is titled City and County of Denver",
+   "name": "Denver County",
+   "state": "CO"
+  },
+  "12031": {
+   "body": {
+    "id": 138,
+    "name": "City Council"
+   },
+   "client": "jaxcityc",
+   "confirmed_by": "checked by hand: the City of Jacksonville is Duval County's consolidated government",
+   "name": "Duval County",
+   "state": "FL"
+  },
+  "12099": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "client": "pbc",
+   "confirmed_by": "checked by hand: the site is titled Palm Beach County, FL",
+   "name": "Palm Beach County",
+   "state": "FL"
+  },
+  "21111": {
+   "body": {
+    "id": 138,
+    "name": "Metro Council"
+   },
+   "client": "louisville",
+   "confirmed_by": "checked by hand: Louisville Metro Government, the consolidated city and county, links louisvilleky.gov",
+   "name": "Jefferson County",
+   "state": "KY"
+  },
+  "37119": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "client": "mecklenburg",
+   "confirmed_by": "checked by hand: the site links mecknc.gov",
+   "name": "Mecklenburg County",
+   "state": "NC"
+  },
+  "47037": {
+   "body": {
+    "id": 138,
+    "name": "Metropolitan Council"
+   },
+   "client": "nashville",
+   "confirmed_by": "checked by hand: the site is titled Metropolitan Nashville and Davidson County, TN",
+   "name": "Davidson County",
+   "state": "TN"
+  },
+  "51510": {
+   "body": {
+    "id": 138,
+    "name": "City Council Legislative Meeting"
+   },
+   "client": "alexandria",
+   "confirmed_by": "checked by hand: the site links alexandriava.gov",
+   "name": "Alexandria city",
+   "state": "VA"
+  },
+  "51760": {
+   "body": {
+    "id": 138,
+    "name": "City Council"
+   },
+   "client": "richmondva",
+   "confirmed_by": "checked by hand: the site links rva.gov",
+   "name": "Richmond city",
+   "state": "VA"
+  }
+ },
+ "note": "County governments on Legistar that the nightly probe cannot find by name, checked by hand on 2026-09-28: consolidated city-counties and independent cities. The nightly job collects these as well as the ones the probe finds.",
+ "schema_version": 1
+}

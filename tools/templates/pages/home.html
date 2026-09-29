@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head_meta %}
+<meta name="google-site-verification" content="C_yLH5rpH3KM2_BNJooKPzpKXx3TGde2hibJOba_aqc">
+{%- endblock %}
+{% block head %}
+<link rel="stylesheet" href="/assets/home.css">
+{%- endblock %}
+{% block main %}
+  <div class="hero">
+    <div>
+      <h1>Find the student trustee for your district.</h1>
+      <p class="sub">California has 72 community college districts. Each is run by a locally elected
+      board, and each board seats a student trustee elected by that district's students. Search the map
+      for your district, see who holds the seat, and which seats still need to be filled.</p>
+      <p class="ctas"><a class="cta" href="/map">Find your district</a>
+      <a class="cta2" href="{{ nav_legislation_href }}">{{ nav_legislation_cta }}</a></p>
+    </div>
+    <img class="st-lockup" src="/brand/logo-full.png" alt="StudentTrustee.net, connections made easy" width="820" height="848">
+  </div>
+
+  <div class="stats">
+    <p class="tally"><b>{{ stats.trustees }}</b> student trustees across <b>{{ stats.filled }}</b> of the {{ stats.districts }} districts.
+    <b>{{ stats.empty }}</b> districts have no student trustee listed. {{ stats.vacant_sentence }}
+    <span id="freshness" data-verified="{{ site.last_verified }}">This information is up to date as of {{ verified_stamp }}.</span></p>
+  </div>
+
+  <div class="doors">
+    <a class="door" href="/map"><span class="k">01 &middot; Map</span>
+      <h2 class="dh">District map</h2><p>Explore all 72 districts, shown with their actual boundaries and
+      current student trustees. Search by trustee, district, or college. Districts without a listed
+      trustee appear as vacant.</p></a>
+    <a class="door" href="{{ nav_legislation_href }}"><span class="k">02 &middot; Reference</span>
+      <h2 class="dh">{{ door_legislation_title }}</h2><p>{{ door_legislation_text }}</p></a>
+    <a class="door" href="/about"><span class="k">03 &middot; Who</span>
+      <h2 class="dh">About</h2><p>Learn who created and maintains this resource, why it was built, and how it
+      helps students navigate community college governance.</p></a>
+  </div>
+{%- endblock %}
+{% block scripts %}
+<script src="/assets/home.js"></script>
+{%- endblock %}

@@ -5,283 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Legislative Calendars · California &amp; Congress | Who Represents You</title>
 <meta name="description" content="The 2026 California legislative calendar, a House-vs-Senate comparison of the congressional calendar, and direct links to find your state and federal representatives.">
+<link rel="canonical" href="https://studenttrustee.net/legislation/calendars/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="studenttrustee.net">
+<meta property="og:url" content="https://studenttrustee.net/legislation/calendars/">
 <meta property="og:title" content="Legislative Calendars · California &amp; Congress">
 <meta property="og:description" content="2026 California session deadlines, where the House and Senate calendars differ, and how to find your representatives.">
-<meta name="theme-color" content="#ffffff">
-<style>
-  :root{
-    /* Monochrome chrome. Region hues are the only colour on the page — they carry data. */
-    --surface-1:#ffffff; --plane:#f6f6f6; --panel:#ffffff;
-    --text-primary:#0a0a0a; --text-secondary:#4a4a4a; --text-muted:#8a8a8a;
-    --rule:#e3e3e3; --ring:rgba(0,0,0,0.16); --shadow:0 1px 2px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.09);
-    --accent:#0a0a0a; --gold:#0a0a0a; --none:#b0b0b0;
-    --r1:#eda100; --r2:#4a3aa7; --r3:#1baf7a; --r4:#9c27b0; --r5:#008300;
-    --r6:#e87ba4; --r7:#2a78d6; --r8:#eb6834; --r9:#0e8fae; --r10:#e34948;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{
-    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-    background:var(--plane); color:var(--text-primary);
-    -webkit-font-smoothing:antialiased; line-height:1.5;
-  }
-  header{
-    position:sticky; top:0; z-index:10;
-    display:flex; align-items:center; gap:16px; padding:10px 20px;
-    background:var(--surface-1); border-bottom:1px solid var(--rule);
-    border-top:2px solid var(--text-primary);
-  }
-  .brand h1{font-size:15px;margin:0;font-weight:650;letter-spacing:-.01em}
-  .brand p{margin:0;font-size:11.5px;color:var(--text-muted)}
-  .brand a.home{color:var(--accent);text-decoration:underline;text-underline-offset:2px;font-weight:600}
-  .brand a.home:hover{text-decoration:underline}
-  .grow{flex:1}
-  nav a{
-    font-size:12.5px;color:var(--text-secondary);text-decoration:none;
-    border:1px solid var(--rule);border-radius:8px;padding:6px 11px;margin-left:6px;
-    display:inline-block;background:var(--panel);white-space:nowrap;
-  }
-  nav a:hover{color:var(--text-primary)}
-  nav a[aria-current]{background:var(--text-primary);border-color:var(--text-primary);color:var(--surface-1);font-weight:640}
-  button.btn{
-    font:inherit;font-size:12.5px;color:var(--text-secondary);background:var(--panel);
-    border:1px solid var(--rule);border-radius:8px;padding:6px 11px;cursor:pointer;margin-left:6px;
-  }
-  main{max-width:1000px;margin:0 auto;padding:30px 20px 80px}
-  .lede{font-size:15px;color:var(--text-secondary);max-width:60ch;margin:0 0 30px}
-  .grp{margin:0 0 30px}
-  .grp h2{
-    font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);
-    font-weight:600;margin:0 0 10px;
-  }
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px}
-  .card{
-    display:block;padding:14px 15px;border-radius:11px;text-decoration:none;
-    background:var(--surface-1);border:1px solid var(--rule);
-  }
-  .card:hover{border-color:var(--accent)}
-  .card .t{display:block;font-size:14px;font-weight:640;color:var(--text-primary)}
-  .card .arr{color:var(--text-muted);font-weight:400}
-  .card .d{display:block;font-size:12.5px;color:var(--text-secondary);margin-top:4px;line-height:1.45}
-  .card.hero{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
-  h2.big{font-size:20px;font-weight:650;letter-spacing:-.015em;margin:44px 0 4px;text-transform:none;color:var(--text-primary)}
-  .sub{font-size:13px;color:var(--text-muted);margin:0 0 18px}
-  .next{
-    display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;
-    background:var(--surface-1);border:1px solid var(--accent);border-radius:11px;
-    padding:13px 15px;margin:0 0 20px;
-  }
-  .next b{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-primary)}
-  .next .n{font-size:15px;font-weight:640}
-  .next .c{font-size:12.5px;color:var(--text-secondary)}
-  ul.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--rule);}
-  .ev{display:flex;gap:16px;padding:11px 0 11px 18px;position:relative}
-  .ev::before{
-    content:"";position:absolute;left:-5px;top:19px;width:8px;height:8px;border-radius:50%;
-    background:var(--rule);
-  }
-  .ev.past{opacity:.42}
-  .ev.is-next::before{background:var(--accent);box-shadow:0 0 0 3px var(--plane),0 0 0 5px var(--accent)}
-  .when{flex:none;width:132px}
-  .when .d{display:block;font-size:13px;font-weight:640;font-variant-numeric:tabular-nums}
-  .when .tag{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600}
-  .ev[data-kind="major"] .tag{color:var(--r10)}
-  .ev[data-kind="budget"] .tag{color:var(--r5)}
-  .ev[data-kind="recess"] .tag,.ev[data-kind="session"] .tag{color:var(--r7)}
-  .ev[data-kind="election"] .tag{color:var(--r2)}
-  .what h3{margin:0;font-size:14px;font-weight:600}
-  .what p{margin:2px 0 0;font-size:12.5px;color:var(--text-secondary)}
-  .ev[data-kind="major"] .what h3{font-weight:680}
-  /* --- Congress comparison --- */
-  ul.cmp{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-  .crow{
-    display:grid;grid-template-columns:190px 1fr 1fr;gap:0 18px;
-    background:var(--surface-1);border:1px solid var(--rule);border-radius:11px;padding:14px 16px;
-  }
-  .crow .per h3{margin:0;font-size:14px;font-weight:660;letter-spacing:-.01em}
-  .crow .per .w{
-    display:block;margin-top:3px;font-size:11.5px;color:var(--text-muted);
-    font-variant-numeric:tabular-nums;letter-spacing:.01em;
-  }
-  .crow .ch{border-left:1px solid var(--rule);padding-left:18px}
-  .crow .cl{
-    display:block;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
-    font-weight:700;color:var(--text-muted);margin-bottom:3px;
-  }
-  .crow .ch p{margin:0;font-size:13px;color:var(--text-primary);line-height:1.45}
-  .crow .why{
-    grid-column:1 / -1;margin:12px 0 0;padding-top:11px;border-top:1px solid var(--rule);
-    font-size:12.5px;color:var(--text-secondary);line-height:1.5;
-  }
-  .crow .unconf{
-    font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
-    color:var(--text-muted);border:1px solid var(--rule);border-radius:20px;
-    padding:1px 5px;margin-left:5px;vertical-align:1px;
-  }
-  ul.earlier{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
-  ul.earlier li{
-    display:flex;gap:14px;align-items:baseline;font-size:12.5px;
-    border-left:2px solid var(--rule);padding:2px 0 2px 12px;color:var(--text-secondary);
-  }
-  ul.earlier b{
-    flex:none;width:118px;color:var(--text-primary);font-weight:640;
-    font-variant-numeric:tabular-nums;
-  }
-  @media (max-width:620px){ ul.earlier li{flex-direction:column;gap:2px} ul.earlier b{width:auto} }
-  ul.same{
-    list-style:none;margin:16px 0 0;padding:0;
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;
-  }
-  ul.same li{
-    display:flex;gap:9px;align-items:baseline;font-size:12.5px;
-    border:1px dashed var(--rule);border-radius:9px;padding:9px 12px;
-  }
-  ul.same b{font-variant-numeric:tabular-nums;font-weight:640;white-space:nowrap}
-  ul.same span{color:var(--text-secondary)}
-  .srcnote{
-    margin:16px 0 0;font-size:12px;color:var(--text-muted);line-height:1.6;
-    border-left:2px solid var(--rule);padding-left:12px;
-  }
-  .srcnote b{color:var(--text-secondary);font-weight:640}
-  @media (max-width:760px){
-    .crow{grid-template-columns:1fr;gap:0}
-    .crow .per{margin-bottom:10px}
-    .crow .ch{border-left:0;padding-left:0;margin-top:9px}
-  }
-  footer{
-    border-top:1px solid var(--rule);margin-top:46px;padding-top:16px;
-    font-size:11.5px;color:var(--text-muted);line-height:1.6;
-  }
-  footer a{color:var(--text-secondary)}
-  footer a.home{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
-  @media (max-width:620px){
-    .when{width:96px} main{padding:22px 15px 60px} .brand p{display:none}
-  }
-
-/* ============ expression layer ============ */
-
-/* 1. Nothing is a rounded card. Edges are hairlines, not boxes. */
-.card, .door, .crow, .pri, .facts, .contact, .soc, .strip, .strip div,
-.next, ul.same li, .more a, .figure, .hero img, .pop, .intro,
-.btn, button.btn, nav a, header a.nv, .cta, .enter, .search input,
-.search button, input, .sheet, aside, .rw {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-/* 2. Type carries the structure: larger, tighter, more confident. */
-h1 { letter-spacing: -.042em !important; font-weight: 680 !important; }
-h2.big, .hero h2 { letter-spacing: -.03em !important; font-weight: 660 !important; }
-.door h3, .card .t, .crow .per h3 { letter-spacing: -.018em !important; }
-
-/* 3. Micro-labels are uppercase and letterspaced — the counterweight to big type. */
-.grp h2, main .stat span, .strip span, .eyebrow, .door .k, .crow .cl,
-.when .tag, .sub, .contact .l, .soc .l {
-  text-transform: uppercase;
-  letter-spacing: .13em !important;
-  font-size: 10px !important;
-  font-weight: 650 !important;
-}
-/* ...except where it would wreck a sentence. */
-.sub, p.sub { text-transform: none; letter-spacing: 0 !important; font-size: 13px !important;
-              font-weight: 400 !important; }
-
-/* 4. Point at one thing, everything else recedes. */
-.doors:hover .door:not(:hover),
-.cards:hover .card:not(:hover),
-ul.cmp:hover .crow:not(:hover),
-.pris:hover .pri:not(:hover),
-.socials:hover .soc:not(:hover) { opacity: .34; }
-.door, .card, .crow, .pri, .soc { transition: opacity .22s ease, border-color .22s ease; }
-
-/* 5. Hairline rules instead of borders where a full box is too much. */
-.stats { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-
-/* 6. Buttons: flat, letterspaced, no chrome. */
-.cta, .enter, .search button {
-  text-transform: uppercase; letter-spacing: .12em; font-size: 12px !important; font-weight: 650;
-}
-.btn, button.btn, nav a { letter-spacing: .04em; }
-
-/* 6b. The map header is a toolbar: it must stay on one line.
-   Scoped to the map only. On the other pages the same rule was clipping
-   the page title, so here the heading is allowed to wrap. */
-header .brand { min-width: 0; }
-header .brand h1, header .brand p {
-  white-space: normal; overflow: visible; text-overflow: clip;
-}
-header .stat span { text-transform: none; letter-spacing: 0; }
-/* below this width the toolbar buttons need the room more than the counters do */
-@media (max-width: 1280px) { header .stats { display: none; } }
-
-/* 7. The map's own surfaces join the ground rather than floating above it. */
-.leaflet-container { background: var(--plane) !important; }
-.leaflet-control-zoom a { border-radius: 0 !important; }
-
-/* ===== comment pass: light only, no boxes, stacked lists ===== */
-footer a.fix{color:inherit;text-decoration:underline;text-underline-offset:2px}
-footer a.fix:hover{color:inherit}
-
-/* #1 + #7: box grids become stacked rows separated by hairlines. */
-.doors,.pris,.cards,.socials{
-  display:block !important;grid-template-columns:none !important;gap:0 !important;
-  border-top:1px solid var(--rule);margin-top:34px;
-}
-.door,.pri,.card,.soc{
-  display:block !important;background:none !important;border:0 !important;
-  border-bottom:1px solid var(--rule) !important;padding:18px 0 !important;margin:0 !important;
-}
-.door:hover,.pri:hover,.card:hover,.soc:hover{background:none !important;border-color:var(--rule) !important}
-/* non-clickable rows get no pointer affordance at all */
-.pri{cursor:default}
-.pris:hover .pri:not(:hover){opacity:1 !important}
-/* clickable rows still signal, but with type not chrome */
-a.door:hover .t,a.door:hover h3,a.card:hover .t,a.soc:hover .h{text-decoration:underline;text-underline-offset:3px}
-
-/* #5: contact block is plain text, always present, never a button. */
-.contact{
-  display:block !important;background:none !important;border:0 !important;
-  border-top:1px solid var(--rule) !important;border-bottom:1px solid var(--rule) !important;
-  padding:18px 0 !important;
-}
-.contact:hover{background:none !important}
-
-/* ---- brand logo integration (added; nothing above this line was changed) ---- */
-.mark img.st-wordmark{display:block;height:22px;width:auto}
-.st-home{display:inline-flex;align-items:center;flex:none;margin-right:12px;text-decoration:none;line-height:0}
-.st-home img{display:block;height:26px;width:auto}
-@media (max-width:640px){.mark img.st-wordmark{height:18px}.st-home img{height:21px}.st-home{margin-right:9px}}
-</style>
 <meta property="og:image" content="https://studenttrustee.net/brand/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/brand/poppy-p6.ico" sizes="48x48">
 <link rel="icon" href="/brand/poppy-p6.svg" sizes="any" type="image/svg+xml">
 <link rel="apple-touch-icon" sizes="180x180" href="/brand/poppy-180-p6.png">
 <link rel="mask-icon" href="/brand/poppy-mask-p6.svg" color="#CC480D">
 <link rel="manifest" href="/site-p6.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/calendars.css">
 </head>
 <body>
-<header>
-  <a class="st-home" href="/" aria-label="StudentTrustee.net home"><img src="/brand/poppy-symbol.png" alt="" width="512" height="512"></a>
-  <div class="brand">
-    <h1>California Legislature</h1>
-    <p>Session calendars &amp; who represents you</p>
-  </div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="mark"><a href="/" aria-label="StudentTrustee.net home"><img class="st-wordmark" src="/brand/logo-wordmark.png" alt="StudentTrustee.net" width="1015" height="127"></a></div>
   <div class="grow"></div>
-  <nav>
+  <nav aria-label="Site">
     <a href="/">Home</a>
     <a href="/map">District map</a>
     <a href="/districts/">Districts</a>
-    <a href="/legislature" aria-current="page">Legislature</a>
+    <a href="/legislation/" aria-current="page">Legislation</a>
     <a href="/about">About</a>
   </nav>
 </header>
+<main id="main" tabindex="-1">
+  <p class="crumb"><a href="/legislation/">Legislation</a> › Calendars</p>
+  <h1>Legislative calendars</h1>
+  <p class="tagline">Session deadlines &amp; who represents you</p>
+  <p class="lede">Looking for votes? <a href="/legislation/">The Legislation section</a> has bills, roll calls and each legislator's record at the federal, state and county levels.</p>
 
-<main>
   <p class="lede">Knowing who represents your district and when key decisions are being made is
   essential to effective advocacy. Use the resources below to find your state and federal
   representatives, follow legislative calendars, and identify the right time to engage. All links
@@ -324,38 +85,14 @@ a.door:hover .t,a.door:hover h3,a.card:hover .t,a.soc:hover .h{text-decoration:u
     official machine-readable list, and anything I could not confirm is marked. Both official calendars
     are linked under <em>Federal · calendars</em> above; check them before you book travel.
   </p>
-
-  <footer>
-    California dates come from the 2026 Tentative Legislative Calendar. Congressional dates come from
+</main>
+<footer class="site-footer">
+  <p>California dates come from the 2026 Tentative Legislative Calendar. Congressional dates come from
     the Senate's own 2026 schedule and the House Majority Leader's calendar, reissued in March 2026.
     All of it is tentative. Floor schedules move for funding fights, conference, and elections, so check
-    the official PDFs before you rely on a date. Links verified August 2026.
-    <p class="maint">Maintained by Nick Bonasera, Student Trustee, Contra Costa Community College District. For site corrections, <a class="fix" href="mailto:studenttrustee@4cd.edu?subject=Student%20Trustee%20Website%20Update">please reach out</a> with updated information.</p>
-  </footer>
-</main>
-
-<script>
-(function(){
-  var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  var today = new Date(); today.setHours(0,0,0,0);
-  var evs = [].slice.call(document.querySelectorAll(".ev"));
-  var next = null;
-  evs.forEach(function(el){
-    var p = el.dataset.date.split("-");
-    var d = new Date(+p[0], +p[1]-1, +p[2]);
-    el.querySelector(".when .d").textContent = MON[d.getMonth()] + " " + d.getDate();
-    if (d < today) el.classList.add("past");
-    else if (!next) { next = {el: el, date: d}; el.classList.add("is-next"); }
-  });
-  if (next){
-    var days = Math.round((next.date - today) / 86400000);
-    document.getElementById("next-name").textContent =
-      next.el.querySelector(".what h3").textContent;
-    document.getElementById("next-when").textContent =
-      days === 0 ? "today" : days === 1 ? "tomorrow" : "in " + days + " days";
-    document.getElementById("next").hidden = false;
-  }
-})();
-</script>
+    the official PDFs before you rely on a date. Links verified August 2026.</p>
+  <p>Maintained by Nick Bonasera, Student Trustee, Contra Costa Community College District. Roster verified 23 September 2026. For site corrections, <a class="fix" href="mailto:studenttrustee@4cd.edu?subject=Student%20Trustee%20Website%20Update">please reach out</a> with updated information. <a href="/accessibility">Accessibility</a>.</p>
+</footer>
+<script src="/assets/calendars.js"></script>
 </body>
 </html>

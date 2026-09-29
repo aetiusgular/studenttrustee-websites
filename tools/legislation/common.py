@@ -1,0 +1,282 @@
+"""
+Shared plumbing for the data pipeline: cached HTTP, the manifest, time helpers.
+
+Every network call goes through Http.get(), which keeps a copy of each
+response under .cache/ (persisted between nightly runs by actions/cache) and
+revalidates with ETag / If-Modified-Since. Sources that never change once
+published (a finished roll call) get a long ttl; indexes get ttl=0.
+
+The manifest (studenttrustee/data/legislation/manifest.json) records, per
+source, when it was last checked successfully, when the source itself last
+changed, and whether the most recent attempt failed. The site reads it to
+show freshness and to warn when a feed is behind.
+"""
+import hashlib
+import json
+import os
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SITE = os.path.join(ROOT, 'studenttrustee')
+DATA_DIR = os.path.join(SITE, 'data', 'legislation')
+CACHE_DIR = os.path.join(ROOT, '.cache')
+USER_AGENT = 'studenttrustee.net data pipeline (+https://studenttrustee.net; studenttrustee@4cd.edu)'
+PACIFIC = ZoneInfo('America/Los_Angeles')
+EASTERN = ZoneInfo('America/New_York')
+UTC = timezone.utc
+
+
+def today():
+    """Today's date; LEGIS_TODAY=YYYY-MM-DD pins it for tests."""
+    from datetime import date
+    t = os.environ.get('LEGIS_TODAY')
+    return date.fromisoformat(t) if t else date.today()
+
+
+def now_iso():
+    return datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def iso(dt):
+    """ISO 8601 with offset, seconds precision."""
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=UTC)
+    s = dt.isoformat(timespec='seconds')
+    return s.replace('+00:00', 'Z')
+
+
+def http_date_to_iso(value):
+    if not value:
+        return None
+    try:
+        from email.utils import parsedate_to_datetime
+        return iso(parsedate_to_datetime(value).astimezone(UTC))
+    except Exception:
+        return None
+
+
+class FetchError(Exception):
+    pass
+
+
+class Http:
+    """requests.Session with an on-disk cache and polite retries.
+
+    When a request fails and an earlier copy is in the cache, the earlier copy is returned
+    (meta['stale'] is True and the URL is recorded in self.stale_served), so one bad night
+    at a source never removes records the site already had."""
+
+    def __init__(self, cache_dir=CACHE_DIR, timeout=60, retries=3):
+        import requests
+        self.session = requests.Session()
+        self.session.headers['User-Agent'] = USER_AGENT
+        self.cache_dir = cache_dir
+        self.timeout = timeout
+        self.retries = retries
+        self.calls = 0
+        self.stale_served = []
+        os.makedirs(cache_dir, exist_ok=True)
+
+    def _paths(self, url):
+        key = hashlib.sha1(url.encode()).hexdigest()
+        return os.path.join(self.cache_dir, key + '.body'), os.path.join(self.cache_dir, key + '.json')
+
+    def get(self, url, ttl=0, headers=None, params=None):
+        """Return (bytes, meta). ttl is seconds a cached copy is trusted without revalidation."""
+        if params:
+            from urllib.parse import urlencode
+            url = url + ('&' if '?' in url else '?') + urlencode(params)
+        body_path, meta_path = self._paths(url)
+        meta = {}
+        if os.path.exists(meta_path) and os.path.exists(body_path):
+            with open(meta_path, encoding='utf-8') as fh:
+                meta = json.load(fh)
+            age = time.time() - meta.get('fetched_epoch', 0)
+            if ttl and age < ttl:
+                with open(body_path, 'rb') as fh:
+                    return fh.read(), dict(meta, from_cache=True)
+        req_headers = dict(headers or {})
+        if meta.get('etag'):
+            req_headers['If-None-Match'] = meta['etag']
+        if meta.get('last_modified'):
+            req_headers['If-Modified-Since'] = meta['last_modified']
+        last_exc = None
+        for attempt in range(self.retries):
+            try:
+                self.calls += 1
+                r = self.session.get(url, headers=req_headers, timeout=self.timeout)
+                if r.status_code == 304 and os.path.exists(body_path):
+                    meta['fetched_epoch'] = time.time()
+                    meta['fetched_at'] = now_iso()
+                    with open(meta_path, 'w', encoding='utf-8') as fh:
+                        json.dump(meta, fh)
+                    with open(body_path, 'rb') as fh:
+                        return fh.read(), dict(meta, from_cache=True)
+                if r.status_code in (429, 500, 502, 503, 504):
+                    raise FetchError('HTTP %s' % r.status_code)
+                if r.status_code >= 400:
+                    raise FetchError('HTTP %s for %s' % (r.status_code, url))
+                meta = {'url': url, 'status': r.status_code, 'etag': r.headers.get('ETag'),
+                        'last_modified': r.headers.get('Last-Modified'), 'fetched_at': now_iso(),
+                        'fetched_epoch': time.time(), 'content_type': r.headers.get('Content-Type')}
+                with open(body_path, 'wb') as fh:
+                    fh.write(r.content)
+                with open(meta_path, 'w', encoding='utf-8') as fh:
+                    json.dump(meta, fh)
+                return r.content, dict(meta, from_cache=False)
+            except FetchError as e:
+                last_exc = e
+                if 'HTTP 4' in str(e) and '429' not in str(e):
+                    return self._stale_or_raise(url, body_path, meta, e)
+            except Exception as e:  # connection errors, timeouts
+                last_exc = e
+            time.sleep(1.5 * (attempt + 1))
+        return self._stale_or_raise(url, body_path, meta, last_exc)
+
+    def _stale_or_raise(self, url, body_path, meta, exc):
+        if os.path.exists(body_path):
+            self.stale_served.append(url)
+            with open(body_path, 'rb') as fh:
+                return fh.read(), dict(meta, from_cache=True, stale=True, error=str(exc)[:200])
+        raise FetchError('%s: %s' % (url, exc))
+
+    def get_text(self, url, ttl=0, encoding='utf-8', **kw):
+        body, meta = self.get(url, ttl=ttl, **kw)
+        return body.decode(encoding, 'replace'), meta
+
+    def get_json(self, url, ttl=0, **kw):
+        body, meta = self.get(url, ttl=ttl, **kw)
+        return json.loads(body.decode('utf-8', 'replace')), meta
+
+
+class Manifest:
+    PATH = os.path.join(DATA_DIR, 'manifest.json')
+    SCHEMA_VERSION = 1
+
+    def __init__(self):
+        self.data = {'schema_version': self.SCHEMA_VERSION, 'generated_at': None, 'sources': {}, 'counts': {}}
+        try:
+            with open(self.PATH, encoding='utf-8') as fh:
+                old = json.load(fh)
+            if isinstance(old, dict):
+                self.data['sources'] = old.get('sources', {}) or {}
+                self.data['counts'] = old.get('counts', {}) or {}
+                self.data['previous_counts'] = dict(old.get('counts', {}) or {})
+                self.data['count_scopes'] = dict(old.get('count_scopes', {}) or {})
+                self.data['previous_count_scopes'] = dict(old.get('count_scopes', {}) or {})
+        except (FileNotFoundError, ValueError):
+            pass
+
+    def source(self, sid):
+        return self.data['sources'].setdefault(sid, {})
+
+    def describe(self, sid, name, url, level, official=True, license=None):
+        s = self.source(sid)
+        s.update({'name': name, 'url': url, 'level': level, 'official': official})
+        if license:
+            s['license'] = license
+        return s
+
+    def ok(self, sid, source_updated_at=None, note=None):
+        s = self.source(sid)
+        s['status'] = 'ok'
+        s['last_success_at'] = now_iso()
+        s['last_checked_at'] = s['last_success_at']
+        if source_updated_at:
+            s['source_updated_at'] = source_updated_at
+        s.pop('error', None)
+        if note:
+            s['note'] = note
+
+    def partial(self, sid, message, source_updated_at=None, note=None):
+        """Checked, but some requests failed and earlier copies were used for them."""
+        s = self.source(sid)
+        s['status'] = 'partial'
+        s['last_checked_at'] = now_iso()
+        s['error'] = str(message)[:500]
+        if source_updated_at:
+            s['source_updated_at'] = source_updated_at
+        if note:
+            s['note'] = note
+
+    def error(self, sid, message):
+        s = self.source(sid)
+        s['status'] = 'error' if not s.get('last_success_at') else 'stale'
+        s['last_checked_at'] = now_iso()
+        s['error'] = str(message)[:500]
+
+    def count(self, key, value, scope=None):
+        """scope names what the count covers (a Congress, a session). When it changes, the count
+        starts again from zero and the validator does not compare it with the night before."""
+        self.data['counts'][key] = value
+        if scope is not None:
+            self.data.setdefault('count_scopes', {})[key] = str(scope)
+
+    def save(self):
+        self.data['generated_at'] = now_iso()
+        os.makedirs(os.path.dirname(self.PATH), exist_ok=True)
+        with open(self.PATH, 'w', encoding='utf-8', newline='\n') as fh:
+            json.dump(self.data, fh, ensure_ascii=False, indent=1, sort_keys=True)
+            fh.write('\n')
+
+
+def et_to_iso(date_str, time_str=None, fmt_date='%d-%b-%Y', fmt_time='%I:%M %p'):
+    """House Clerk dates ('16-Sep-2026', '7:05 PM') are Eastern Time."""
+    try:
+        if time_str:
+            dt = datetime.strptime(date_str.strip() + ' ' + time_str.strip(), fmt_date + ' ' + fmt_time)
+        else:
+            dt = datetime.strptime(date_str.strip(), fmt_date)
+        return iso(dt.replace(tzinfo=EASTERN))
+    except ValueError:
+        return None
+
+
+def senate_datetime_to_iso(value):
+    """Senate LIS: 'September 24, 2026,  01:45 PM' (Eastern)."""
+    if not value:
+        return None
+    v = ' '.join(value.replace(',', ' ').split())
+    for fmt in ('%B %d %Y %I:%M %p', '%B %d %Y'):
+        try:
+            return iso(datetime.strptime(v, fmt).replace(tzinfo=EASTERN))
+        except ValueError:
+            continue
+    return None
+
+
+def clock(value):
+    """'14:00:00', '14:00', '1:30 p.m.', '01:30   PM' -> '14:00', '13:30' (24-hour, so it sorts).
+    Anything that is not a clock time ('Upon adjournment') -> None; see clock_note()."""
+    import re
+    if not value:
+        return None
+    v = ' '.join(str(value).replace('.', '').upper().split())
+    m = re.match(r'^(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?$', v)
+    if not m:
+        return None
+    h, mi, ap = int(m.group(1)), int(m.group(2)), m.group(3)
+    if ap == 'PM' and h < 12:
+        h += 12
+    elif ap == 'AM' and h == 12:
+        h = 0
+    if h > 23 or mi > 59:
+        return None
+    return '%02d:%02d' % (h, mi)
+
+
+def clock_note(value):
+    """The original text when it is not a clock time ('Upon adjournment of session'), else None."""
+    if not value or clock(value):
+        return None
+    return ' '.join(str(value).split()) or None
+
+
+def slugify(s):
+    import re
+    import unicodedata
+    s = unicodedata.normalize('NFD', (s or '').lower())
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
+    return re.sub(r'[^a-z0-9]+', '-', s).strip('-')

@@ -1,0 +1,726 @@
+{
+ "clients": {
+  "01003": {
+   "body": {
+    "id": 138,
+    "name": "Baldwin County Commission Regular"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "baldwincountyal",
+   "confirmed_by": "links baldwincountyal.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Baldwin County",
+   "state": "AL"
+  },
+  "02195": {
+   "body": {
+    "id": 138,
+    "name": "Borough Assembly"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "petersburg",
+   "confirmed_by": "links ci.petersburg.ak.us",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Petersburg Borough",
+   "state": "AK"
+  },
+  "04019": {
+   "body": {
+    "id": 138,
+    "name": "Board of Supervisors"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "pima",
+   "confirmed_by": "links pima.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Pima County",
+   "state": "AZ"
+  },
+  "08035": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners Business Meeting"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "douglascounty",
+   "confirmed_by": "titled Douglas County, Colorado",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Douglas County",
+   "state": "CO"
+  },
+  "08101": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "pueblocounty",
+   "confirmed_by": "titled Pueblo County, Colorado",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Pueblo County",
+   "state": "CO"
+  },
+  "12001": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "alachua",
+   "confirmed_by": "titled Alachua County, FL",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Alachua County",
+   "state": "FL"
+  },
+  "12011": {
+   "body": {
+    "id": 138,
+    "name": "County Commission"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "broward",
+   "confirmed_by": "links broward.org",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Broward County",
+   "state": "FL"
+  },
+  "12015": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "charlottecountyfl",
+   "confirmed_by": "links charlottecountyfl.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Charlotte County",
+   "state": "FL"
+  },
+  "12053": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "hernandocountyfl",
+   "confirmed_by": "links hernandocounty.us",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Hernando County",
+   "state": "FL"
+  },
+  "12061": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "ircgov",
+   "confirmed_by": "titled Indian River County, Florida",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Indian River County",
+   "state": "FL"
+  },
+  "12085": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "martin",
+   "confirmed_by": "links martin.fl.us",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Martin County",
+   "state": "FL"
+  },
+  "12086": {
+   "body": {
+    "id": 138,
+    "name": "BOARD OF COUNTY COMMISSIONERS"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "miamidade",
+   "confirmed_by": "links miamidade.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Miami-Dade County",
+   "state": "FL"
+  },
+  "12103": {
+   "body": {
+    "id": 213,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "pinellas",
+   "confirmed_by": "titled Pinellas County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Pinellas County",
+   "state": "FL"
+  },
+  "12105": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "polkcountyfl",
+   "confirmed_by": "named with the county and state",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Polk County",
+   "state": "FL"
+  },
+  "12117": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "seminolecountyfl",
+   "confirmed_by": "titled SEMINOLE COUNTY, FLORIDA",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Seminole County",
+   "state": "FL"
+  },
+  "13089": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "dekalbcountyga",
+   "confirmed_by": "links dekalbcountyga.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "DeKalb County",
+   "state": "GA"
+  },
+  "13121": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "fulton",
+   "confirmed_by": "links fultoncountyga.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Fulton County",
+   "state": "GA"
+  },
+  "13285": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "troup",
+   "confirmed_by": "titled Troup County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Troup County",
+   "state": "GA"
+  },
+  "17031": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "cook-county",
+   "confirmed_by": "links cookcountyil.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Cook County",
+   "state": "IL"
+  },
+  "17043": {
+   "body": {
+    "id": 138,
+    "name": "DuPage County Board"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "dupage",
+   "confirmed_by": "links dupagecounty.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "DuPage County",
+   "state": "IL"
+  },
+  "17063": {
+   "body": {
+    "id": 138,
+    "name": "Grundy County Board"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "grundycountyil",
+   "confirmed_by": "titled Grundy County, IL",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Grundy County",
+   "state": "IL"
+  },
+  "17097": {
+   "body": {
+    "id": 24,
+    "name": "Lake County Board"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "lakecounty",
+   "confirmed_by": "links lakecountyil.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Lake County",
+   "state": "IL"
+  },
+  "20173": {
+   "body": {
+    "id": 138,
+    "name": "Board of Sedgwick County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "sedgwickcounty",
+   "confirmed_by": "links sedgwickcounty.org",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Sedgwick County",
+   "state": "KS"
+  },
+  "22089": {
+   "body": {
+    "id": 1,
+    "name": "Parish Council"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "stcharlesgov",
+   "confirmed_by": "titled St. Charles Parish, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "St. Charles Parish",
+   "state": "LA"
+  },
+  "24031": {
+   "body": {
+    "id": 222,
+    "name": "County Council"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "montgomerycountymd",
+   "confirmed_by": "links montgomerycountymd.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Montgomery County",
+   "state": "MD"
+  },
+  "24033": {
+   "body": {
+    "id": 138,
+    "name": "County Council"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "princegeorgescountymd",
+   "confirmed_by": "named with the county and state",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Prince George's County",
+   "state": "MD"
+  },
+  "26049": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "geneseecountymi",
+   "confirmed_by": "named with the county and state",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Genesee County",
+   "state": "MI"
+  },
+  "27109": {
+   "body": {
+    "id": 190,
+    "name": "Olmsted County Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "olmstedcounty",
+   "confirmed_by": "titled Olmsted County, MN",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Olmsted County",
+   "state": "MN"
+  },
+  "27123": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "ramseycountymn",
+   "confirmed_by": "named with the county and state",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Ramsey County",
+   "state": "MN"
+  },
+  "28047": {
+   "body": {
+    "id": 138,
+    "name": "Board of Supervisors"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "harrison",
+   "confirmed_by": "titled Harrison County, MS",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Harrison County",
+   "state": "MS"
+  },
+  "32003": {
+   "body": {
+    "id": 138,
+    "name": "Clark County Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "clark",
+   "confirmed_by": "links clarkcountynv.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Clark County",
+   "state": "NV"
+  },
+  "34031": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners Regular Meeting"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "passaiccountynj",
+   "confirmed_by": "links passaiccountynj.org",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Passaic County",
+   "state": "NJ"
+  },
+  "36039": {
+   "body": {
+    "id": 138,
+    "name": "Greene County Legislature"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "greenegovernment",
+   "confirmed_by": "links greenegovernment.com",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Greene County",
+   "state": "NY"
+  },
+  "36091": {
+   "body": {
+    "id": 138,
+    "name": "Board of Supervisors"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "saratogacountyny",
+   "confirmed_by": "links saratogacountyny.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Saratoga County",
+   "state": "NY"
+  },
+  "36105": {
+   "body": {
+    "id": 138,
+    "name": "County Legislature"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "sullivancountyny",
+   "confirmed_by": "named with the county and state",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Sullivan County",
+   "state": "NY"
+  },
+  "36109": {
+   "body": {
+    "id": 138,
+    "name": "Tompkins County Legislature"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "tompkinscountyny",
+   "confirmed_by": "titled Tompkins County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Tompkins County",
+   "state": "NY"
+  },
+  "36119": {
+   "body": {
+    "id": 138,
+    "name": "Board of Legislators"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "westchestercountyny",
+   "confirmed_by": "titled Westchester County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Westchester County",
+   "state": "NY"
+  },
+  "37009": {
+   "body": {
+    "id": 138,
+    "name": "County Commission"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "ashecounty",
+   "confirmed_by": "links ashecountygov.com",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Ashe County",
+   "state": "NC"
+  },
+  "37063": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "durhamcounty",
+   "confirmed_by": "links dconc.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Durham County",
+   "state": "NC"
+  },
+  "37071": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "gaston",
+   "confirmed_by": "links gastongov.com",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Gaston County",
+   "state": "NC"
+  },
+  "37081": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "guilford",
+   "confirmed_by": "titled Guilford County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Guilford County",
+   "state": "NC"
+  },
+  "37161": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "rutherfordcountync",
+   "confirmed_by": "links rutherfordcountync.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Rutherford County",
+   "state": "NC"
+  },
+  "37179": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "unioncountync",
+   "confirmed_by": "titled Union County, NC",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Union County",
+   "state": "NC"
+  },
+  "37183": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "wake",
+   "confirmed_by": "titled Wake County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Wake County",
+   "state": "NC"
+  },
+  "39083": {
+   "body": {
+    "id": 138,
+    "name": "Board of Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "knoxcountyoh",
+   "confirmed_by": "named with the county and state",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Knox County",
+   "state": "OH"
+  },
+  "40027": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "clevelandcountyok",
+   "confirmed_by": "titled Cleveland County, OK",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Cleveland County",
+   "state": "OK"
+  },
+  "40109": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "oklahomacounty",
+   "confirmed_by": "links oklahomacounty.org",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Oklahoma County",
+   "state": "OK"
+  },
+  "48039": {
+   "body": {
+    "id": 138,
+    "name": "Commissioners Court"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "brazoriacountytx",
+   "confirmed_by": "titled Brazoria County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Brazoria County",
+   "state": "TX"
+  },
+  "48167": {
+   "body": {
+    "id": 138,
+    "name": "Commissioners Court"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "galvestoncountytx",
+   "confirmed_by": "titled GALVESTON COUNTY, TEXAS",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Galveston County",
+   "state": "TX"
+  },
+  "48201": {
+   "body": {
+    "id": 138,
+    "name": "Commissioners Court"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "harriscountytx",
+   "confirmed_by": "links harriscountytx.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Harris County",
+   "state": "TX"
+  },
+  "48303": {
+   "body": {
+    "id": 1221,
+    "name": "Commissioners Court Work Session"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "lubbockcounty",
+   "confirmed_by": "titled Lubbock County, TX",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Lubbock County",
+   "state": "TX"
+  },
+  "51003": {
+   "body": {
+    "id": 138,
+    "name": "Board of Supervisors"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "albemarle",
+   "confirmed_by": "links albemarle.org",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Albemarle County",
+   "state": "VA"
+  },
+  "51025": {
+   "body": {
+    "id": 138,
+    "name": "County Board of Supervisors"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "brunswickcounty",
+   "confirmed_by": "titled Brunswick County, VA",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Brunswick County",
+   "state": "VA"
+  },
+  "53033": {
+   "body": {
+    "id": 1,
+    "name": "Metropolitan King County Council"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "kingcounty",
+   "confirmed_by": "links kingcounty.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "King County",
+   "state": "WA"
+  },
+  "53061": {
+   "body": {
+    "id": 201,
+    "name": "Council Meeting"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "snohomish",
+   "confirmed_by": "links snohomishcountywa.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Snohomish County",
+   "state": "WA"
+  },
+  "53067": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "thurstoncountywa",
+   "confirmed_by": "titled Thurston County, WA",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Thurston County",
+   "state": "WA"
+  },
+  "53073": {
+   "body": {
+    "id": 138,
+    "name": "Council"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "whatcom",
+   "confirmed_by": "titled Whatcom County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Whatcom County",
+   "state": "WA"
+  },
+  "55025": {
+   "body": {
+    "id": 138,
+    "name": "County Board"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "dane",
+   "confirmed_by": "links countyofdane.com",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Dane County",
+   "state": "WI"
+  },
+  "55079": {
+   "body": {
+    "id": 138,
+    "name": "Milwaukee County Board of Supervisors"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "milwaukeecounty",
+   "confirmed_by": "links county.milwaukee.gov",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Milwaukee County",
+   "state": "WI"
+  },
+  "56021": {
+   "body": {
+    "id": 138,
+    "name": "Board of County Commissioners"
+   },
+   "checked_at": "2026-09-28T08:48:33Z",
+   "client": "laramiecounty",
+   "confirmed_by": "titled Laramie County, the only county of that name",
+   "found_at": "2026-09-28T08:48:33Z",
+   "name": "Laramie County",
+   "state": "WY"
+  }
+ },
+ "note": "Counties found on Legistar by tools.legislation.legistar --probe-all on 2026-09-28. Used only until the data branch has its own geo/legistar.json.",
+ "schema_version": 1
+}

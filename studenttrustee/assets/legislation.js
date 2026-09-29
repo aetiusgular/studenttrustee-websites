@@ -66,7 +66,7 @@
 
   function ApiError(kind, rel, httpStatus) {
     var msg = kind === "timeout" ? "The records service did not answer within " + (TIMEOUT / 1000) + " seconds."
-      : kind === "network" ? "The records service could not be reached. Check the connection, then try again."
+      : kind === "network" ? "The site that holds the legislation records did not answer. If other websites open, that site is down or has not published the records yet. Try again in a few minutes."
       : kind === "server" ? "The records service had an error (HTTP " + httpStatus + "). Try again in a minute."
       : kind === "http" ? "The records service refused the request (HTTP " + httpStatus + ")."
       : kind === "missing" ? "A file this page needs has not been published (" + rel + ")."
@@ -488,8 +488,12 @@
     return el("div", { class: "err", role: "alert" },
       el("h2", null, "This page could not be loaded"),
       el("p", null, kind ? e.message : "Something went wrong while building this page."),
-      el("p", { class: "row wrap" }, retry, " ", link(BASE, "Back to all states")));
+      el("p", { class: "row wrap" }, retry, " ", link(BASE, "Back to all states")),
+      kind === "schema" ? null : [el("p", null, "You can also use the official sources directly:"),
+        el("ul", { class: "plain err-links" }, OFFICIAL_SOURCES.map(function (o) { return el("li", null, ext(o[1], o[0])); }))]);
   }
+  var OFFICIAL_SOURCES = [["U.S. House roll-call votes (Clerk of the House)", "https://clerk.house.gov/Votes"], ["U.S. Senate roll-call votes", "https://www.senate.gov/legislative/votes_new.htm"],
+    ["California bills and votes (LegInfo)", "https://leginfo.legislature.ca.gov/"], ["Your elected officials at every level (USA.gov)", "https://www.usa.gov/elected-officials"]];
   // The job runs every night. If the newest records are more than a day and a half old it has
   // stopped (a failed check, a disabled schedule), and every page says so.
   var STALE_HOURS = 36;
@@ -985,7 +989,11 @@
     if (!p) return Promise.resolve(null);
     return Promise.all([states(), legislatures(), countyIndex(), manifest(), NO_LEGISLATURE[p.code] ? null : get("geo/us-" + lc(p.code) + "/counties.json", true)]).then(function (r) {
       var s = STATE_INFO[p.code];
-      return s ? buildScope(p, s, r[1], r[2], r[4], r[3]) : null;
+      if (!s) return null;
+      // Before the first nightly run with the national files, a state outside California has no
+      // county file yet, so a county's address can only say when its page will appear.
+      if (p.county && !r[4]) return { pending: true, s: s, slug: p.slug };
+      return buildScope(p, s, r[1], r[2], r[4], r[3]);
     });
   }
   function boardFolder(sc) { return "us-" + sc.st + "/counties/" + sc.county.fips; }
@@ -1068,6 +1076,10 @@
   function viewPlace(parts, params, ui) {
     return placeScope(parts).then(function (sc) {
       if (!sc) return notFound();
+      if (sc.pending) {
+        return { title: sc.s.name, crumbs: [["All states", BASE], [sc.s.name, href([sc.slug])], "County"],
+          body: el("p", { class: "note" }, "County pages for " + sc.s.name + " appear after the next nightly update of the records. ", link(href([sc.slug]), sc.s.name + "'s page"), " has its members of Congress and their votes now.") };
+      }
       var door = sc.door;
       var content = door === "votes" ? votesDoor(sc, params, ui) : door === "representatives" ? repsDoor(sc, params) : door === "upcoming" ? upcomingDoor(sc, params)
         : door === "bills" ? billsDoor(sc, params) : sourcesDoor(sc);

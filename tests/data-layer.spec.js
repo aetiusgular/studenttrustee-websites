@@ -159,6 +159,34 @@ test.describe("data layer", () => {
     await ready(page);
     await expect(page.locator(".err")).toContainText("newer format");
     await expect(page.locator(".err button")).toHaveText("Reload the page");
+    await expect(page.locator(".err-links")).toHaveCount(0);
+  });
+
+  // In production the records come from another site (GitHub Pages). If that site is down or has
+  // never been published, the browser gets no usable answer at all, which is a network error.
+  test("when the records site cannot be reached, the page says so and links the official sources", async ({ page }) => {
+    await page.route("**/data/legislation/**", (route) => route.abort("connectionrefused"));
+    await page.goto("/legislation/");
+    await ready(page);
+    await expect(page.locator(".err h2")).toHaveText("This page could not be loaded");
+    await expect(page.locator(".err")).toContainText("that site is down or has not published the records yet");
+    await expect(page.locator(".err button")).toHaveText("Try again");
+    const links = page.locator(".err-links a");
+    await expect(links).toHaveCount(4);
+    for (const href of await links.evaluateAll((els) => els.map((a) => a.href))) expect(href).toMatch(/^https:\/\//);
+    for (const h of await links.evaluateAll((els) => els.map((a) => a.getBoundingClientRect().height))) expect(h).toBeGreaterThanOrEqual(44);
+  });
+
+  test("before a state's county file is published, its county addresses say when they will appear", async ({ page }) => {
+    await page.route("**/data/legislation/geo/us-tx/counties.json", (route) => route.fulfill({ status: 404, body: "" }));
+    for (const url of ["/legislation/texas/travis/", "/legislation/texas/travis/representatives/"]) {
+      await page.goto(url);
+      await ready(page);
+      await expect(page.locator(".err")).toHaveCount(0);
+      await expect(page.locator("h1")).toHaveText("Texas");
+      await expect(page.locator("#app .note")).toContainText("County pages for Texas appear after the next nightly update of the records.");
+      await expect(page.locator('#app .note a[href="/legislation/texas/"]')).toHaveCount(1);
+    }
   });
 
   test("an address that points outside the records folder requests nothing from it", async ({ page }) => {

@@ -145,3 +145,20 @@ jobs:
       - name: Deploy the records to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      # The site reads every Legislation page from here. If the records do not answer (Pages
+      # switched off, the wrong source, an empty artifact), fail the run so the owner is emailed,
+      # rather than leaving the pages to say "could not be loaded" to every visitor.
+      - name: Check that the records answer
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          for i in 1 2 3 4 5 6; do
+            if curl -fsS -o /dev/null "${PAGE_URL}manifest.json" && curl -fsS -o /dev/null "${PAGE_URL}geo/states.json"; then
+              echo "records answer at ${PAGE_URL}"
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::The records do not answer at ${PAGE_URL}manifest.json after the deploy. Check Settings > Pages (Source: GitHub Actions)."
+          exit 1

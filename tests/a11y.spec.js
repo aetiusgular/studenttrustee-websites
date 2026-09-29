@@ -27,7 +27,8 @@ function legislationPages() {
   if (!read("manifest.json")) return [];
   const ready = (sel) => `#app:not([aria-busy]) ${sel}`;
   // Layout D: the map of states; a state's three doors, its bills and sources; a county's doors.
-  // "open" names a control the test presses before the scan (the filter drawer).
+  // "open" names a control the test presses before the scan (the filter drawer); "abort" and
+  // "missing" make the matching records requests fail or answer 404.
   const pages = [
     { name: "leg-map", url: "/legislation/", ready: ready(".map-wrap") },
     { name: "leg-california", url: "/legislation/california/", ready: ready("#results") },
@@ -41,6 +42,10 @@ function legislationPages() {
     { name: "leg-search", url: "/legislation/search/?q=school", ready: ready(".sec") },
     { name: "leg-sources", url: "/legislation/sources/", ready: ready("table.tbl") },
     { name: "leg-not-found", url: "/legislation/nowhere/at-all/", ready: ready("p") },
+    // The records site cannot be reached (production reads it from GitHub Pages), and a county
+    // address in a state whose county file has not been published yet.
+    { name: "leg-records-down", url: "/legislation/", ready: ready(".err-links"), abort: "**/data/legislation/**" },
+    { name: "leg-county-pending", url: "/legislation/texas/travis/", ready: ready(".note"), missing: "**/data/legislation/geo/us-tx/counties.json" },
   ];
   // Every state outside California: its doors, its sources, a county with a board link and its
   // representatives, a county with no county government, a territory with no legislature.
@@ -221,6 +226,8 @@ for (const p of PAGES) {
   test(`${p.name}: WCAG AAA scan and layout`, async ({ page }, testInfo) => {
     const key = p.name;
     const allowed = baseline[key] || {};
+    if (p.abort) await page.route(p.abort, (route) => route.abort("connectionrefused"));
+    if (p.missing) await page.route(p.missing, (route) => route.fulfill({ status: 404, body: "" }));
     await page.goto(p.url, { waitUntil: "load" });
     if (p.ready) await page.waitForSelector(p.ready, { timeout: 30_000 });
     if (p.open) await page.click(p.open);
@@ -252,6 +259,8 @@ test.describe("reflow at 320 px (WCAG 1.4.10)", () => {
   test.use({ viewport: { width: 320, height: 640 } });
   for (const p of PAGES) {
     test(`${p.name}: no horizontal scroll at 320 px`, async ({ page }) => {
+      if (p.abort) await page.route(p.abort, (route) => route.abort("connectionrefused"));
+      if (p.missing) await page.route(p.missing, (route) => route.fulfill({ status: 404, body: "" }));
       await page.goto(p.url, { waitUntil: "load" });
       if (p.ready) await page.waitForSelector(p.ready, { timeout: 30_000 });
       if (p.open) await page.click(p.open);

@@ -196,10 +196,12 @@ choice costs.
    workflow deploys to Pages itself (`actions/deploy-pages`) instead of letting Pages serve the
    `data` branch, because GitHub does not start a Pages build for commits pushed with the
    workflow's own token; a branch-served site would have stayed on the first snapshot.
-   *Caveats:* the section depends on a second host; if GitHub Pages is down, the Legislation pages
-   show an error while the rest of the site works. The repository must stay public (Pages for a
-   private repository needs a paid GitHub plan). The `data` branch keeps no history: each night
-   replaces it, and the manifest records when each source last changed.
+   *Caveats:* the section depends on a second host; if GitHub Pages is down, or has never been
+   deployed, the Legislation pages show an error with links to the official sources while the rest
+   of the site works. After each deploy the job checks that the records answer; if they do not,
+   the run fails and GitHub sends its usual failure email. The repository must stay public (Pages
+   for a private repository needs a paid GitHub plan). The `data` branch keeps no history: each
+   night replaces it, and the manifest records when each source last changed.
 
 2. **Senate votes come from senate.gov, with Voteview as the fallback.** senate.gov sometimes
    refuses requests from cloud servers such as GitHub's runners. When it does, votes already

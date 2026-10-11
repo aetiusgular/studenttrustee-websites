@@ -35,7 +35,7 @@ that branch every night, and deploys the same files to GitHub Pages
    have no Settings tab. There is no branch to pick; the workflow does the deploying.
 3. Merge the Legislation work into `main`, then run Actions > Nightly data refresh > Run workflow
    with **Only deploy the records already on the data branch** ticked. The records appear at
-   `https://nbonasera.github.io/studenttrustee-websites/` a minute or two later. Until that first
+   `https://aetiusgular.github.io/studenttrustee-websites/` a minute or two later. Until that first
    deploy finishes, the Legislation pages show a loading error. The other states' legislators and
    county pages appear after the first full run (the nightly schedule, or Run workflow with
    nothing ticked); until then those pages say they are coming.

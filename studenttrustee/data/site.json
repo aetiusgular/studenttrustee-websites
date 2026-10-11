@@ -7,5 +7,7 @@
   "maintainer": "Nick Bonasera, Student Trustee, Contra Costa Community College District",
   "corrections_email": "studenttrustee@4cd.edu",
   "legislation_data_url": "https://aetiusgular.github.io/studenttrustee-websites/",
+  "civic_api_key": "",
+  "_civic_api_key": "Google Civic Information API key for the Elections section's ballot lookup, restricted to this site's referrer. Empty hides the Your ballot door.",
   "accessibility_reviewed": "2026-09-28"
 }

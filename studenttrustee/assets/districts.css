@@ -1,7 +1,7 @@
 /* Districts index and the 72 district pages. Loaded after site.css. */
 main{max-width:1080px;margin:0 auto;padding:44px 24px 0}
 .crumb{font-size:12px;text-transform:uppercase;letter-spacing:.13em;font-weight:650;color:var(--text-muted);margin:0 0 26px}
-.crumb a{text-decoration:none;display:inline-flex;align-items:center;min-height:var(--min-target)}
+.crumb a{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:var(--min-target);min-width:var(--min-target)}
 .crumb a:hover{text-decoration:underline;text-underline-offset:3px}
 .eyebrow{display:flex;align-items:center;gap:8px;margin:0 0 12px}
 .sw{width:9px;height:9px;flex:none;display:inline-block}

@@ -46,7 +46,7 @@ REGION_HEX = {
 
 # Nav is defined once. /legislature (the old calendars page) redirects to /legislation/calendars/.
 NAV = [('/', 'Home'), ('/map', 'District map'), ('/districts/', 'Districts'),
-       ('/legislation/', 'Legislation'), ('/about', 'About')]
+       ('/legislation/', 'Legislation'), ('/elections/', 'Elections'), ('/about', 'About')]
 
 
 def slug(s):
@@ -135,7 +135,12 @@ def check_csp(site):
     trusted = "; require-trusted-types-for 'script'; trusted-types 'none'"
     for csp in policies[1:]:
         if csp != policies[0] + trusted:
-            sys.exit("studenttrustee/_headers: the /legislation/* policy must be the site policy followed by%s" % trusted)
+            sys.exit("studenttrustee/_headers: the /legislation/* and /elections/* policies must be the site policy followed by%s" % trusted)
+    # The Elections section's ballot lookup is the one browser call to a third party; it needs its host in connect-src.
+    if site.get('civic_api_key'):
+        connect = next((part for part in policies[0].split(';') if part.strip().startswith('connect-src')), '')
+        if 'https://www.googleapis.com' not in connect.split():
+            sys.exit('studenttrustee/_headers: connect-src must include https://www.googleapis.com while site.json sets civic_api_key')
 
 
 def data_origin(url):
@@ -213,6 +218,13 @@ def main(check=False):
            og_description='Who represents every state and county, how Congress, the California Legislature and county boards have voted, with every record linked to its source and stamped with when it last changed.',
            canonical=origin + '/legislation/')
 
+    render('pages/elections.html', 'elections/index.html', current='/elections/', body_class='leg-page',
+           title='Elections · Who Is on the Ballot, and When | studenttrustee.net',
+           description='Every state\'s next election and deadlines, every race for Congress with the people running, California\'s county and community college board seats, certified results, and your own ballot by address.',
+           og_title='Elections · who is on the ballot, and when',
+           og_description='Election dates and deadlines for every state, every federal race with its candidates, California college board seats, and certified results, refreshed nightly from official sources.',
+           canonical=origin + '/elections/')
+
     render('pages/calendars.html', 'legislation/calendars/index.html', current='/legislation/',
            title='Legislative Calendars · California & Congress | Who Represents You',
            description='The 2026 California legislative calendar, a House-vs-Senate comparison of the congressional calendar, and direct links to find your state and federal representatives.',
@@ -254,7 +266,8 @@ def main(check=False):
     lastmod = site['last_verified']
     urls = [('/', '1.0'), ('/map', '0.9'), ('/districts/', '0.9'), ('/legislation/', '0.9'), ('/legislation/calendars/', '0.7'),
             ('/legislation/california/', '0.8'), ('/legislation/california/representatives/', '0.7'), ('/legislation/votes/', '0.7'), ('/legislation/bills/', '0.7'),
-            ('/legislation/upcoming/', '0.7'), ('/legislation/sources/', '0.5'), ('/about', '0.6'), ('/accessibility', '0.3')]
+            ('/legislation/upcoming/', '0.7'), ('/legislation/sources/', '0.5'), ('/elections/', '0.9'), ('/elections/california/', '0.8'),
+            ('/elections/races/', '0.6'), ('/elections/sources/', '0.5'), ('/about', '0.6'), ('/accessibility', '0.3')]
     urls += [('/districts/%s/' % d['slug'], '0.8') for d in districts]
     body = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for path, pri in urls:
@@ -283,7 +296,7 @@ def main(check=False):
             sys.exit(1)
         print('build output is fresh (%d files)' % len(outputs))
     else:
-        print('%d files written: %d district pages + index, home, map, legislation, calendars, about, accessibility, sitemap, robots'
+        print('%d files written: %d district pages + index, home, map, legislation, elections, calendars, about, accessibility, sitemap, robots'
               % (len(outputs), len(districts)))
         print('%d trustees across %d of %d districts' % (trustees, filled, len(districts)))
 

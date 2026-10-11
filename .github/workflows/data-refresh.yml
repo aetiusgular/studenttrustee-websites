@@ -85,6 +85,8 @@ jobs:
           # Open States bulk data (every other state's bills and votes). Free key; without it that
           # step records "not configured" and the rest runs as before.
           OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
+          FEC_API_KEY: ${{ secrets.FEC_API_KEY }}
+          GOOGLE_CIVIC_API_KEY: ${{ secrets.GOOGLE_CIVIC_API_KEY }}
         run: python3 -m tools.legislation.refresh $TARGETS
 
       - name: Validate

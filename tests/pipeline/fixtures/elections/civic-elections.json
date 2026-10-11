@@ -1,0 +1,10 @@
+{
+ "kind": "civicinfo#electionsQueryResponse",
+ "elections": [
+  {"id": "2000", "name": "VIP Test Election", "electionDay": "2030-06-06", "ocdDivisionId": "ocd-division/country:us"},
+  {"id": "9100", "name": "California General Election", "electionDay": "2026-11-03", "ocdDivisionId": "ocd-division/country:us/state:ca"},
+  {"id": "9101", "name": "Texas General Election", "electionDay": "2026-11-03", "ocdDivisionId": "ocd-division/country:us/state:tx"},
+  {"id": "9050", "name": "Louisiana Open Primary", "electionDay": "2026-10-24", "ocdDivisionId": "ocd-division/country:us/state:la"},
+  {"id": "9102", "name": "U.S. General Election", "electionDay": "2026-11-03", "ocdDivisionId": "ocd-division/country:us"}
+ ]
+}

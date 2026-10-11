@@ -28,6 +28,7 @@ SHRINK_LIMITS = {
     'ca_county_votes': 0.5, 'ca_county_meetings': 0.5,
     'us_counties': 0.95, 'st_members': 0.8,
     'us_county_votes': 0.5, 'st_votes': 0.8,
+    'el_federal_candidates': 0.8, 'el_federal_races': 0.8,
 }
 
 
@@ -254,6 +255,43 @@ def state_vote_checks():
     return failures[:200]
 
 
+def election_checks():
+    """Every federal race row in the index has its state file, every candidate has an id and a
+    name, every race id carries its state, deadlines are dates, and the calendar is sorted."""
+    failures = []
+    idx = _load('elections/us/federal-index.json')
+    if not idx:
+        return failures
+    files = {}
+    for row in idx.get('rows') or []:
+        rid, st = row[0], row[1]
+        if st not in files:
+            files[st] = _load('elections/us-%s/federal.json' % st.lower()) or {}
+        races = {r['id']: r for r in files[st].get('races') or []}
+        if rid not in races:
+            failures.append('elections: index row %s has no race in us-%s/federal.json' % (rid, st.lower()))
+            continue
+        if not rid.endswith('president') and ('-%s-' % st.lower()) not in rid:
+            failures.append('elections: race %s does not carry its state %s' % (rid, st))
+        for c in races[rid]['candidates']:
+            if not c.get('id') or not c.get('name'):
+                failures.append('elections: race %s has a candidate without an id or name' % rid)
+                break
+    states = _load('elections/states.json') or {}
+    for s in states.get('states') or []:
+        for k in ('registration', 'mail_request', 'mail_return', 'early_start', 'early_end'):
+            v = (s.get('deadlines') or {}).get(k)
+            if v is not None and not re.match(r'^\d{4}-\d{2}-\d{2}$', str(v)):
+                failures.append('elections: %s %s is not a date: %r' % (s.get('code'), k, v))
+        if s.get('site') and not str(s['site']).startswith('https://'):
+            failures.append('elections: %s site is not https' % s.get('code'))
+    cal = _load('elections/calendar.json') or {}
+    dates = [r.get('date') for r in cal.get('elections') or []]
+    if dates != sorted(dates):
+        failures.append('elections: calendar is not in date order')
+    return failures[:200]
+
+
 def size_failures():
     """GitHub Pages refuses a site over 1 GB; the records must stay under 950 MB (sizes.py trims at 800)."""
     from . import sizes
@@ -299,6 +337,7 @@ def run():
     failures += national_checks()
     failures += county_board_checks()
     failures += state_vote_checks()
+    failures += election_checks()
     failures += size_failures()
     failures += shrink_failures(manifest)
     return failures

@@ -1,0 +1,9 @@
+{
+ "api_version": "1.0",
+ "pagination": {"count": 4, "page": 1, "pages": 2, "per_page": 3},
+ "results": [
+  {"candidate_id": "H2TX12001", "name": "GRANGER, KAY", "party": "REP", "party_full": "REPUBLICAN PARTY", "office": "H", "office_full": "House", "state": "TX", "district": "12", "incumbent_challenge": "I", "incumbent_challenge_full": "Incumbent", "candidate_status": "C", "election_years": [2024, 2026], "cycles": [2024, 2026], "has_raised_funds": true, "first_file_date": "2021-03-01", "last_file_date": "2026-07-15"},
+  {"candidate_id": "H6TX12002", "name": "DOE, JANE", "party": "DEM", "party_full": "DEMOCRATIC PARTY", "office": "H", "office_full": "House", "state": "TX", "district": "12", "incumbent_challenge": "C", "candidate_status": "C", "election_years": [2026], "cycles": [2026], "has_raised_funds": false, "first_file_date": "2026-01-10", "last_file_date": "2026-01-10"},
+  {"candidate_id": "S6TX00001", "name": "CORNYN, JOHN", "party": "REP", "party_full": "REPUBLICAN PARTY", "office": "S", "office_full": "Senate", "state": "TX", "district": "00", "incumbent_challenge": "I", "candidate_status": "C", "election_years": [2020, 2026], "cycles": [2020, 2022, 2024, 2026], "has_raised_funds": true, "first_file_date": "2001-05-01", "last_file_date": "2026-09-30"}
+ ]
+}

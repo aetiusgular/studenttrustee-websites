@@ -48,6 +48,30 @@ If the Pages address ever changes (a custom domain, or a renamed repository), up
 `legislation_data_url` in `studenttrustee/data/site.json` and the `connect-src` entry of the
 Content-Security-Policy in `studenttrustee/_headers`. The build refuses to run if the two disagree.
 
+### One-time setup for the Elections section
+
+The Elections pages (`/elections/`) read `elections/*` from the same records host, written by
+`tools/legislation/elections.py` as part of the nightly refresh. Two free keys fill them in; without
+them the pages still work, with the general election date only and no federal candidates:
+
+1. **FEC** (every federal race and its candidates): sign up at https://api.data.gov/signup/ and add
+   the key as the repository secret `FEC_API_KEY`.
+2. **Google Civic Information** (the election calendar, and the "Your ballot" door): in a Google
+   Cloud project, enable the Civic Information API and create two keys. One, unrestricted, goes in
+   the repository secret `GOOGLE_CIVIC_API_KEY` for the nightly calendar. The other, restricted to
+   the HTTP referrer `https://studenttrustee.net/*`, goes in `civic_api_key` in
+   `studenttrustee/data/site.json`; it is public by design (the browser calls the API with it) and
+   the referrer restriction is what keeps it from being used elsewhere. An empty `civic_api_key`
+   hides the ballot door. While it is set, the site policy's `connect-src` must include
+   `https://www.googleapis.com`; the build checks.
+
+Each state's election office, site and the cycle's deadlines are in
+`tools/legislation/election-sites.json`, by hand, with the date they were last checked. A deadline
+that is `null` makes the page say "See the official site" rather than guess. California's community
+college board seats are entered by hand each cycle in `studenttrustee/data/legislation/elections/us-ca/colleges.json`
+on the data branch (one district per row: seats, candidates, the registrar's list); certified results
+go in `elections/us-{st}/results.json` the same way until a feed exists.
+
 ## What is here
 
 **studenttrustee/**: the landing page, the 72-district map, the district pages, the Legislation

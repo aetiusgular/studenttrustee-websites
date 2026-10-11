@@ -1,0 +1,92 @@
+/* Elections section. Loaded after site.css and legislation.css, which carry the page frame, the
+   tile map, the doors, the chips and the row grid. This file adds only what the Elections pages
+   draw differently: the date on each tile, the deadlines strip, candidate lists, the address form.
+   Contrast: ink #111111, secondary #404040 (10.4:1), muted #525252 (7.8:1), fail red #9a1c1c
+   (7.6:1) on white; white and #e6e6e6 on #111111. Urgency is written on the tile, never shown by
+   shade alone. */
+
+/* ---- tiles with the next election date ---- */
+.tile.etile{gap:2px}
+.tile.etile .when{font-size:13px;line-height:16px;color:var(--sec)}
+.tile.etile.soon{background:var(--ink);color:#ffffff}
+.tile.etile.soon .when{color:#e6e6e6}
+.tile.etile.sample{width:48px;height:48px}
+.tile.etile.sample .code{font-size:13px;line-height:15px}
+.tile.etile.sample .when{font-size:12px;line-height:14px}
+.usgrid .tile.etile{height:64px}
+.usgrid .tile.etile .code{font-size:16px;line-height:19px}
+
+/* ---- the address box on the map, and the ballot form ---- */
+.addr .privacy, .ballot-form .privacy{font-size:13px;line-height:19px;color:var(--sec);margin:8px 0 0;max-width:60ch}
+.ballot-form{margin:0 0 24px;padding:0 0 24px;border-bottom:1px solid var(--ink)}
+.ballot-form .search-row{display:flex;flex-wrap:wrap;gap:8px}
+.ballot-form .search-row input{flex:1 1 320px;max-width:560px;min-height:52px}
+.ballot-form .privacy{max-width:100ch}
+.ballot-h{font-family:var(--serif);font-weight:400;font-size:24px;line-height:30px;letter-spacing:0;margin:16px 0 4px}
+
+/* ---- the place head's right side: the next election ---- */
+.next-el{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right}
+.next-el .k, .dl-cell .k{font-size:13px;line-height:18px;font-weight:500;color:var(--sec);text-transform:none;letter-spacing:0}
+.next-el .d{font-family:var(--serif);font-size:28px;line-height:34px;letter-spacing:-.01em;color:var(--ink)}
+.next-el .m, .dl-cell .m{font-size:14px;line-height:20px;color:var(--sec)}
+
+/* ---- deadlines strip: four plain cells, date first ---- */
+.deadlines{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin:0 0 28px}
+.dl-cell{display:flex;flex-direction:column;gap:4px;padding:18px 24px;border-right:1px solid var(--line);min-width:0}
+.dl-cell:first-child{padding-left:0}
+.dl-cell:last-child{padding-right:0;border-right:0}
+.dl-cell .d{font-size:20px;line-height:26px;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.dl-cell .d.link{font-size:16px;line-height:22px;font-weight:400}
+.dl-cell .d .see{font-weight:400;font-size:16px;line-height:26px;color:var(--sec)}
+.dl-cell .d a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:var(--min-target)}
+.dl-cell .d.link{display:flex;align-items:center;min-height:var(--min-target)}
+.dl-cell .m.passed{color:var(--fail)}
+.pdoors.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+/* ---- race rows: the vote-row grid, with a candidate list in the middle ---- */
+.vrow.race{grid-template-columns:110px minmax(0,1fr) 150px 120px}
+.vrow.race .vr-main h3{font-size:17px;line-height:25px;font-weight:700;margin:0 0 6px}
+.vrow.race .vr-main h3 a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.vrow.race .vr-main .note{margin:0 0 6px}
+.vrow.race .vr-result{font-size:15px;line-height:22px;color:var(--ink);padding-top:2px}
+.vrow.race .vr-result.num{text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.vrow.race .vr-date{font-size:15px;line-height:22px;color:var(--sec);text-align:right;padding-top:2px;overflow-wrap:anywhere}
+.vrow.race .vr-date time{white-space:normal}
+.vrow.race .vr-date a{color:var(--sec);text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;justify-content:flex-end;min-height:var(--min-target);min-width:var(--min-target);margin-top:-11px}
+.cands{display:flex;flex-direction:column;gap:4px;margin:0}
+.cand{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 10px;font-size:15px;line-height:22px}
+.cand .nm{color:var(--ink)}
+.cand .nm.won{font-weight:600}
+.cand .nm.seat{font-weight:600}
+.cand .meta{font-size:14px;line-height:20px;color:var(--sec)}
+.cand .meta .cn{color:var(--ink);font-size:15px}
+.cand .meta a{color:var(--sec);text-decoration:underline;text-underline-offset:3px}
+.cands.big .cand{padding:8px 0;border-bottom:1px solid var(--line)}
+.lvl-local{background:var(--surface-1);border-color:var(--text-secondary)}
+.lvl-college{background:#f1e9f7;border-color:#5b3a86}
+.lvl-measure{background:#f3f3f3;border-color:#555555}
+.cols{columns:3;column-gap:32px}
+.cols li{break-inside:avoid;margin:0 0 8px;font-size:14px;line-height:20px}
+.cols a{color:var(--sec);text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:var(--min-target)}
+
+@media (max-width:1180px){
+  .deadlines{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dl-cell:nth-child(2){border-right:0;padding-right:0}
+  .dl-cell:nth-child(3){padding-left:0;border-top:1px solid var(--line)}
+  .dl-cell:nth-child(4){border-top:1px solid var(--line)}
+  .cols{columns:2}
+}
+@media (max-width:760px){
+  .next-el{align-items:flex-start;text-align:left}
+  .next-el .d{font-size:22px;line-height:28px}
+  .deadlines{grid-template-columns:minmax(0,1fr);margin-bottom:22px}
+  .dl-cell{padding:14px 0;border-right:0;border-top:1px solid var(--line)}
+  .dl-cell:first-child{border-top:0}
+  .dl-cell .d{font-size:18px;line-height:24px}
+  .pdoors.two{grid-template-columns:minmax(0,1fr)}
+  .vrow.race{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"level date" "main main" "result result"}
+  .vrow.race .vr-result{font-weight:400}
+  .vrow.race .vr-date{text-align:right}
+  .ballot-form .search-row .btn{flex:1 1 auto;justify-content:center}
+  .cols{columns:1}
+}

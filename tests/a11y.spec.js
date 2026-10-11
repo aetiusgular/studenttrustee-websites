@@ -124,6 +124,35 @@ function legislationPages() {
   return pages;
 }
 
+// The Elections section (assets/elections.js) renders from elections/* in the same records folder.
+// Pages that depend on a file are added only when it is there, so a checkout without the election
+// records still runs the rest.
+function electionPages() {
+  const DATA = path.join(here, "..", "studenttrustee", "data", "legislation");
+  const read = (rel) => { try { return JSON.parse(fs.readFileSync(path.join(DATA, rel), "utf8")); } catch { return null; } };
+  if (!read("manifest.json")) return [];
+  const ready = (sel) => `#app:not([aria-busy]) ${sel}`;
+  const pages = [
+    { name: "el-map", url: "/elections/", ready: ready(".map-wrap") },
+    { name: "el-state", url: "/elections/california/", ready: ready("#results") },
+    { name: "el-state-level-state", url: "/elections/california/?level=state", ready: ready("#results") },
+    { name: "el-state-colleges", url: "/elections/california/?level=college", ready: ready("#results") },
+    { name: "el-state-results", url: "/elections/california/results/", ready: ready("#results") },
+    { name: "el-ballot", url: "/elections/ballot/", ready: ready("form.ballot-form") },
+    { name: "el-state-ballot", url: "/elections/california/ballot/", ready: ready("form.ballot-form") },
+    { name: "el-races", url: "/elections/races/", ready: ready("#results") },
+    { name: "el-sources", url: "/elections/sources/", ready: ready("table.tbl") },
+    { name: "el-not-found", url: "/elections/nowhere/", ready: ready("p") },
+  ];
+  const idx = read("elections/us/federal-index.json");
+  if (idx && idx.rows.length) {
+    pages.push({ name: "el-race", url: `/elections/race/${idx.rows[0][0]}/`, ready: ready(".cands") });
+    const st = idx.rows[0][1].toLowerCase();
+    if (st !== "ca") pages.push({ name: "el-other-state", url: `/elections/${{ tx: "texas" }[st] || st}/`, ready: ready("#results") });
+  }
+  return pages;
+}
+
 const PAGES = [
   { name: "home", url: "/" },
   { name: "map", url: "/map", settle: 4000 },
@@ -134,6 +163,7 @@ const PAGES = [
   { name: "about", url: "/about" },
   { name: "accessibility", url: "/accessibility" },
   ...legislationPages(),
+  ...electionPages(),
   { name: "volunteer", url: "http://127.0.0.1:8101/", settle: 1500 },
 ];
 

@@ -1,0 +1,8 @@
+{
+ "api_version": "1.0",
+ "pagination": {"count": 4, "page": 2, "pages": 2, "per_page": 3},
+ "results": [
+  {"candidate_id": "S6TX00002", "name": "ALLRED, COLIN", "party": "DEM", "party_full": "DEMOCRATIC PARTY", "office": "S", "office_full": "Senate", "state": "TX", "district": "00", "incumbent_challenge": "C", "candidate_status": "C", "election_years": [2024, 2026], "cycles": [2024, 2026], "has_raised_funds": true, "first_file_date": "2023-05-03", "last_file_date": "2026-08-01"},
+  {"candidate_id": "P80000001", "name": "SOMEONE, FUTURE", "party": "IND", "party_full": "INDEPENDENT", "office": "P", "office_full": "President", "state": "TX", "district": "00", "incumbent_challenge": "O", "candidate_status": "C", "election_years": [2028], "cycles": [2028], "has_raised_funds": false, "first_file_date": "2026-02-02", "last_file_date": "2026-02-02"}
+ ]
+}

@@ -8,3 +8,5 @@
 # The Legislation section is one page that routes on the path (see assets/legislation.js).
 # A 200 rewrite only applies where no file exists, so /legislation/calendars/ still serves its own page.
 /legislation/*          /legislation/index.html   200
+# The Elections section is the same kind of page (see assets/elections.js).
+/elections/*            /elections/index.html     200

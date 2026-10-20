@@ -367,11 +367,23 @@
       el("p", { class: "row wrap" }, retry, " ", link(BASE, "Back to all states")));
   }
   var STALE_HOURS = 36;
+  // The election records' own age: the newest success among the election sources, since the
+  // manifest's generated_at also covers the legislation records, which refresh on their own.
+  function electionsAge(man) {
+    var newest = null;
+    Object.keys(man.sources || {}).forEach(function (k) {
+      var s = man.sources[k];
+      if ((s.level || "") !== "election" || !s.last_success_at) return;
+      if (!newest || Date.parse(s.last_success_at) > Date.parse(newest)) newest = s.last_success_at;
+    });
+    return newest || man.generated_at;
+  }
   function staleNotice(man) {
-    if (!man || !man.generated_at) return null;
-    var hours = (Date.now() - Date.parse(man.generated_at)) / 36e5;
+    var at = man && electionsAge(man);
+    if (!at) return null;
+    var hours = (Date.now() - Date.parse(at)) / 36e5;
     if (!(hours > STALE_HOURS)) return null;
-    return el("p", { class: "stale-all" }, el("strong", null, "Not refreshed since "), time(man.generated_at, true), el("strong", null, "."),
+    return el("p", { class: "stale-all" }, el("strong", null, "Not refreshed since "), time(at, true), el("strong", null, "."),
       " The nightly update has not run since then, so newer filings and dates are missing. Each state's page links its election office, which has the current version. ",
       link(href(["sources"]), "Source status"));
   }
@@ -532,12 +544,12 @@
         el("div", { class: "map-intro" },
           el("p", { class: "eyebrow" }, "Elections"),
           el("h1", { id: "page-title", tabindex: "-1" }, "Who is on the ballot, and when."),
-          el("p", { class: "intro" }, "Pick a state. Each one lists its next election and deadlines, every race for Congress with the people running, and, in California, every county and community college board seat. Records refresh every night from official sources."),
+          el("p", { class: "intro" }, "Pick a state. Each one lists its next election and deadlines and every race for Congress with the people running. California also has every statewide and legislative race, the Board of Supervisors contests and the community college board seats. Records refresh every night from official sources."),
           CIVIC_KEY ? addressForm("map-addr", null) : null,
           legendEl(st, cal)),
         el("div", { class: "map-wrap" }, geo, grid,
           el("p", { class: "terr" }, cal ? "Dates come from the Google Civic Information election list and each state's election office. Every state page links its official office for deadlines and the certified list of candidates." : "The election calendar has not been published yet; each state page links its election office.")));
-      var foot = footLine([el("span", null, "Last refresh ", time(man.generated_at, true)), link(href(["races"]), "Every federal race"),
+      var foot = footLine([el("span", null, "Last refresh ", time(electionsAge(man), true)), link(href(["races"]), "Every federal race"),
         link(href(["california"], { level: "college" }), "California college boards"), link(href(["sources"]), "Sources")]);
       return { title: "Who is on the ballot, and when.", docTitle: "Every state", head: head, body: foot };
     });
@@ -615,27 +627,80 @@
     return el("div", { class: "chips", role: "group", "aria-label": "Level" }, items.map(function (it) {
       var key = it[0] || "all";
       return el("a", { href: href([sc.slug], { level: it[0] }), class: "chip" + (it[2] ? " muted" : ""), "aria-current": (level || "") === it[0] ? "true" : null,
-        "data-level": key, "data-focus": '.chip[data-level="' + key + '"]', "data-announce": true }, it[1], it[2] ? " (" + it[2] + ")" : null);
+        "data-level": key, "data-focus": '.chip[data-level="' + key + '"]', "data-announce": true }, it[1], it[2] ? " (" + it[2] + ")" : null,
+        it[3] != null ? el("span", { class: "n" }, " " + it[3].toLocaleString()) : null);
     }));
   }
   function candidateLine(c) {
-    var bits = [party(c.party, c.party_full && c.party_full !== c.party_full.toUpperCase() ? c.party_full : null)];
+    // "Nonpartisan" says nothing on a nonpartisan office, so it is left out there.
+    var p = c.party === "NP" ? null : party(c.party, c.party_full && c.party_full !== c.party_full.toUpperCase() ? c.party_full : null);
+    var bits = [p];
     if (c.incumbent) bits.push("incumbent");
+    if (c.designation && !(c.incumbent && /^incumbent$/i.test(c.designation.trim()))) bits.push(c.designation);
     if (c.website && safeUrl(c.website)) bits.push(ext(c.website, "website", " (the candidate's own site)"));
     return el("li", { class: "cand" }, el("span", { class: "nm" }, personName(c.name)),
       el("span", { class: "meta" }, bits.filter(Boolean).map(function (b, i) { return [i ? " · " : null, b]; })));
   }
-  function raceRow(r, sc, extra) {
+  // Where a race's list comes from: the state's certified ballot, a county registrar, or the FEC.
+  function raceSource(r, fed) {
+    var lv = r.level || "federal";
+    if (lv === "county") return r.official_url ? ext(r.official_url, "Registrar's list", " (the county registrar's candidate list)") : null;
+    var ballot = fed && fed.ballot && fed.ballot.official_list_url;
+    if (ballot && (lv === "state" || r.candidates.some(function (c) { return c.designation; })))
+      return ext(ballot, "Certified list", " (the state's certified list of candidates)");
+    var u = r.official_url || (fed && fed.official_list_url);
+    return u ? ext(u, "FEC filings", " (the race's filings at the FEC)") : null;
+  }
+  // The part of a label that is not already said by the group heading above it.
+  function rowTitle(r) {
+    var t = r.label.replace(/^[^:]+:\s*/, "");
+    if (r.level === "county") t = t.replace(/^.+? County\s+/, "");
+    if (r.level === "state" && r.office === "SEN") t = "District " + (+r.district || r.district);
+    if (r.level === "state" && r.office === "ASM") t = "District " + (+r.district || r.district);
+    if (r.level === "state" && r.office === "BOE") t = "District " + (+r.district || r.district);
+    if (r.office === "RET") t = t.replace(/\s*\(retention\)$/, "");
+    return t;
+  }
+  function raceRow(r, sc, extra, fed, hTag) {
     var n = r.candidates.length;
     return el("li", { class: "vrow race" },
       el("span", { class: "vr-level" }, badge(r.level || "federal")),
       el("div", { class: "vr-main" },
-        el("h3", null, link(href(["race", r.id]), r.label.replace(/^[^:]+:\s*/, ""))),
-        r.area ? el("p", { class: "note" }, r.area) : null,
+        el(hTag || "h3", { class: "rt" }, link(href(["race", r.id]), rowTitle(r))),
+        r.area && r.level === "state" ? el("p", { class: "note" }, r.area) : null,
         el("ul", { class: "plain cands" }, r.candidates.map(candidateLine)),
         n === 0 ? el("p", { class: "note" }, "No candidate on file yet; see the state's certified list.") : null),
-      el("span", { class: "vr-result" }, extra || plural(n, "candidate", "candidates")),
-      el("span", { class: "vr-date" }, r.official_url ? ext(r.official_url, "FEC filings", " (the race's filings at the FEC)") : null));
+      el("span", { class: "vr-result" }, extra || (r.office === "RET" ? plural(n, "justice", "justices") + ", yes or no" : plural(n, "candidate", "candidates"))),
+      el("span", { class: "vr-date" }, raceSource(r, fed)));
+  }
+  // State races in the order the ballot prints them; county races by county.
+  var STATE_GROUPS = [
+    ["Statewide offices", function (r) { return ["SEN", "ASM", "BOE", "RET"].indexOf(r.office) < 0; }],
+    ["State Senate", function (r) { return r.office === "SEN"; }],
+    ["State Assembly", function (r) { return r.office === "ASM"; }],
+    ["Board of Equalization", function (r) { return r.office === "BOE"; }],
+    ["Courts: retention questions", function (r) { return r.office === "RET"; }]];
+  var STATE_ORDER = ["GOVERNOR", "LIEUTENANT-GOVERNOR", "SECRETARY-OF-STATE", "CONTROLLER", "TREASURER", "ATTORNEY-GENERAL", "INSURANCE-COMMISSIONER", "SUPERINTENDENT-OF-PUBLIC-INSTRUCTION"];
+  function countyOf(r) { var m = /^[^:]+:\s*(.+? County)\b/.exec(r.label); return m ? m[1] : "Other"; }
+  function groupedRaces(races, level, sc, fed) {
+    var groups;
+    if (level === "state") {
+      groups = STATE_GROUPS.map(function (g) {
+        var rs = races.filter(g[1]);
+        if (g[0] === "Statewide offices") rs.sort(function (a, b) { var i = STATE_ORDER.indexOf(a.office), j = STATE_ORDER.indexOf(b.office); return (i < 0 ? 99 : i) - (j < 0 ? 99 : j); });
+        else rs.sort(function (a, b) { return (+a.district || 0) - (+b.district || 0) || (a.label < b.label ? -1 : 1); });
+        return [g[0], rs];
+      });
+    } else {
+      var by = {};
+      races.forEach(function (r) { var c = countyOf(r); (by[c] = by[c] || []).push(r); });
+      groups = Object.keys(by).sort().map(function (c) { return [c, by[c].sort(function (a, b) { return (+a.district || 0) - (+b.district || 0); })]; });
+    }
+    return groups.filter(function (g) { return g[1].length; }).map(function (g) {
+      return el("section", { class: "race-group" },
+        el("div", { class: "grp-h" }, el("h3", null, g[0]), el("span", { class: "n" }, plural(g[1].length, "race", "races"))),
+        el("ul", { class: "plain vlist" }, g[1].map(function (r) { return raceRow(r, sc, null, fed, "h4"); })));
+    });
   }
   function officialListNote(sc, what) {
     return note(frag(what + " are not collected for " + sc.name + " yet. ", sc.row.site ? ext(sc.row.site, "The " + (sc.row.office || "state election office") + " lists them", " (the state's official election site)") : "The state's election office lists them", "."));
@@ -669,33 +734,62 @@
       return Promise.all([federal(sc.code), colleges(sc.code)]).then(function (r) {
         var fed = r[0], col = r[1];
         var level = ["federal", "state", "county", "college"].indexOf(params.get("level")) >= 0 ? params.get("level") : "";
-        var races = ((fed && fed.races) || []).map(function (x) { return Object.assign({ level: "federal", official_url: fed.official_list_url }, x); });
+        var all = ((fed && fed.races) || []).map(function (x) { return Object.assign({ level: "federal" }, x); });
+        var byLevel = function (lv) { return all.filter(function (x) { return x.level === lv; }); };
+        var fedR = byLevel("federal"), stR = byLevel("state"), ctyR = byLevel("county");
         var ccds = (col && col.districts) || [];
-        var items = [["", "All levels"], ["federal", "Federal"], ["state", "State", "not collected"], ["county", "County", "not collected"]];
-        if (sc.code === "CA") items.push(["college", "College boards", ccds.length ? null : "not entered"]);
+        var notes = (fed && fed.ballot && fed.ballot.level_notes) || {};
+        var certified = fed && fed.ballot && fed.ballot.certified_at;
+        var items = [["", "All levels"], ["federal", "Federal", null, fedR.length || null],
+          ["state", "State", stR.length ? null : "not collected", stR.length || null],
+          ["county", "County", ctyR.length ? null : "not collected", ctyR.length || null]];
+        if (sc.code === "CA") items.push(["college", "College boards", ccds.length ? null : "not entered", ccds.length || null]);
         var count, list;
+        var fromBallot = certified ? "the Secretary of State's certified list of candidates (" + fmtLong(certified) + ")" : "the state's certified list";
         if (level === "college") {
           count = ccds.length ? plural(ccds.length, "community college district has", "community college districts have") + " trustee seats on the ballot. Student trustees are elected by students on campus and are not on this ballot."
             : "College board seats for this cycle have not been entered yet. Student trustees are elected by students on campus and are not on this ballot.";
           list = el("ul", { class: "plain vlist" }, ccds.map(function (d) { return collegeRow(d, sc); }));
-        } else if (level === "state" || level === "county") {
+        } else if ((level === "state" && !stR.length) || (level === "county" && !ctyR.length)) {
           count = (level === "state" ? "State" : "County") + " races are not collected for " + sc.name + " yet.";
           list = officialListNote(sc, level === "state" ? "Statewide and legislative races" : "County races");
+        } else if (level === "state") {
+          count = plural(stR.length, "state race", "state races") + " on " + sc.name + " ballots, from " + fromBallot + "." +
+            (stR.some(function (x) { return x.office === "RET"; }) ? " Includes the Supreme Court and Court of Appeal retention questions." : "");
+          list = groupedRaces(stR, "state", sc, fed);
+        } else if (level === "county") {
+          count = plural(ctyR.length, "county race", "county races") + " on " + sc.name + " ballots, from county registrars' candidate lists. " +
+            (notes.county ? "Seats decided outright in the primary are not listed." : "") + (sc.code === "CA" ? " Glenn and Mendocino are not entered yet." : "");
+          list = groupedRaces(ctyR, "county", sc, fed);
         } else {
-          var senate = races.filter(function (r) { return r.office === "S"; }).length, house = races.filter(function (r) { return r.office === "H"; }).length;
-          count = races.length ? plural(races.length, "federal race", "federal races") + " in " + sc.name + (sc.nxt ? " on " + fmtLong(sc.nxt.date) : "") + ": " +
-              [senate ? plural(senate, "U.S. Senate seat", "U.S. Senate seats") : null, house ? plural(house, "U.S. House seat", "U.S. House seats") : null].filter(Boolean).join(" and ") + ". Candidates are those registered with the FEC; the state's certified list says who is on the ballot."
-            : fed ? "No federal races on file for " + sc.name + " this cycle." : "Federal candidates have not been published yet.";
-          if (level === "" ) count += " State and county races are not collected yet; the state's certified list has them.";
-          list = races.length ? el("ul", { class: "plain vlist" }, races.map(function (r) { return raceRow(r, sc); })) : null;
+          var senate = fedR.filter(function (x) { return x.office === "S"; }).length, house = fedR.filter(function (x) { return x.office === "H"; }).length;
+          var seats = [senate ? plural(senate, "U.S. Senate seat", "U.S. Senate seats") : null, house ? plural(house, "U.S. House seat", "U.S. House seats") : null].filter(Boolean).join(" and ");
+          var who = certified ? "Candidates are from " + fromBallot + "." : "Candidates are those registered with the FEC; the state's certified list says who is on the ballot.";
+          if (level === "federal") {
+            count = fedR.length ? plural(fedR.length, "federal race", "federal races") + " in " + sc.name + (sc.nxt ? " on " + fmtLong(sc.nxt.date) : "") + ": " + seats + ". " + who
+              : fed ? "No federal races on file for " + sc.name + " this cycle." : "Federal candidates have not been published yet.";
+          } else if (!stR.length && !ctyR.length) {
+            count = fedR.length ? plural(fedR.length, "federal race", "federal races") + " in " + sc.name + (sc.nxt ? " on " + fmtLong(sc.nxt.date) : "") + ": " + seats + ". " + who +
+                " State and county races are not collected yet; the state's certified list has them."
+              : fed ? "No federal races on file for " + sc.name + " this cycle." : "Federal candidates have not been published yet.";
+          } else {
+            var parts2 = [fedR.length ? fedR.length + " federal" : null, stR.length ? stR.length + " state" : null, ctyR.length ? ctyR.length + " county" : null].filter(Boolean);
+            count = plural(all.length, "race", "races") + " in " + sc.name + (sc.nxt ? " on " + fmtLong(sc.nxt.date) : "") + ": " + listWords(parts2) + ". " +
+              (certified ? "Federal and state candidates are from " + fromBallot + (ctyR.length ? "; county candidates from the county registrars' lists." : ".") : who);
+          }
+          var shown = level === "federal" ? fedR : all;
+          list = shown.length ? el("ul", { class: "plain vlist" }, shown.map(function (x) { return raceRow(x, sc, null, fed); })) : null;
         }
+        var freshBits = level === "college" ? null
+          : (level === "state" || level === "county") && certified ? [level === "state" ? "Certified list " : "State certified list ", time(certified), " · "]
+          : fed && fed.source_updated_at ? ["Newest FEC filing ", time(fed.source_updated_at), " · "] : null;
         var body = frag(deadlines(sc), doorsNav(sc),
           el("div", { class: "door-body" },
             el("div", { class: "controls" }, chipBar(sc, level, items)),
             el("p", { class: "results", id: "results", tabindex: "-1" }, count),
             el("h2", { class: "visually-hidden" }, level === "college" ? "College board seats" : "Races"),
             list,
-            el("p", { class: "fresh" }, fed && fed.source_updated_at ? ["Newest FEC filing ", time(fed.source_updated_at), " · "] : null, "Retrieved ", time(fed ? fed.retrieved_at : sc.row.site_checked_at, true))));
+            el("p", { class: "fresh" }, freshBits, "Retrieved ", time(fed ? fed.retrieved_at : sc.row.site_checked_at, true))));
         return { title: sc.name, docTitle: sc.name + ": who's running", head: placeHead(sc), body: body };
       });
     });
@@ -855,16 +949,36 @@
       if (!race || !STATE_NAME[code]) return notFound();
       var row = r[2].by[code] || {};
       var nxt = nextElection(r[1], code);
-      var body = frag(
-        el("p", { class: "lede" }, nxt ? "On the ballot " + fmtLong(nxt.date) + ". " : null, "Candidates are those registered with the Federal Election Commission for the " + fed.cycle + " cycle; registering is not the same as qualifying for the ballot. ",
-          row.site ? [ext(row.site, "The " + (row.office || "state election office") + "'s certified list", " (the state's official election site)"), " says who is on it."] : null),
-        section(plural(race.candidates.length, "candidate", "candidates"), el("ul", { class: "plain cands big" }, race.candidates.map(function (c) {
+      var lv = race.level || "federal";
+      var ballot = fed.ballot || null;
+      var onBallot = ballot && (lv !== "federal" || race.candidates.some(function (c) { return c.designation; }));
+      var ret = race.office === "RET";
+      var srcLink = lv === "county" ? (race.official_url ? ext(race.official_url, "The county registrar's candidate list", " (the county registrar's list)") : null)
+        : onBallot && ballot.official_list_url ? ext(ballot.official_list_url, "The certified list", " (the state's certified list of candidates)")
+        : row.site ? ext(row.site, "The " + (row.office || "state election office") + "'s certified list", " (the state's official election site)") : null;
+      var lede = el("p", { class: "lede" }, nxt ? "On the ballot " + fmtLong(nxt.date) + ". " : null,
+        lv === "county" ? "These are the candidates on the county registrar's list, with the ballot designation each one chose. "
+          : onBallot ? (ret ? "Voters answer yes or no on each justice; a justice stays in office with a majority of yes votes. "
+            : "These are the candidates on the Secretary of State's certified list, with the ballot designation each one chose. ")
+          : "Candidates are those registered with the Federal Election Commission for the " + fed.cycle + " cycle; registering is not the same as qualifying for the ballot. ",
+        srcLink ? [srcLink, " is the official word."] : null);
+      var topTwo = code === "CA" && !ret && lv !== "county" && race.candidates.length === 2
+        ? el("p", { class: "note" }, "California sends the top two from the June 2 primary to November, whatever their party. Ballot designations are the candidate's own words, as approved by the Secretary of State.") : null;
+      var body = frag(lede,
+        section(ret ? plural(race.candidates.length, "justice", "justices") : plural(race.candidates.length, "candidate", "candidates"), el("ul", { class: "plain cands big" }, race.candidates.map(function (c) {
+          var p = c.party === "NP" ? null : party(c.party, c.party_full && c.party_full !== c.party_full.toUpperCase() ? c.party_full : null);
+          var meta = lv === "federal" && !onBallot
+            ? [p, c.incumbent ? "incumbent" : null, c.raised ? "has raised money" : "no money raised yet", c.first_filed ? "first filed " + fmtLong(c.first_filed) : null]
+            : [p, c.incumbent ? "incumbent" : null, c.designation && !(c.incumbent && /^incumbent$/i.test(c.designation.trim())) ? "Ballot designation: " + c.designation : null];
           return el("li", { class: "cand" }, el("span", { class: "nm" }, personName(c.name)),
-            el("span", { class: "meta" }, [party(c.party, c.party_full && c.party_full !== c.party_full.toUpperCase() ? c.party_full : null), c.incumbent ? "incumbent" : null, c.raised ? "has raised money" : "no money raised yet", c.first_filed ? "first filed " + fmtLong(c.first_filed) : null].filter(Boolean).join(" · "),
+            el("span", { class: "meta" }, meta.filter(Boolean).join(" · "),
               c.fec_url ? [" · ", ext(c.fec_url, "FEC filings", " (the candidate's page at the FEC)")] : null));
-        }))),
-        el("p", { class: "fresh" }, fed.source_updated_at ? ["Newest filing ", time(fed.source_updated_at), " · "] : null, "Retrieved ", time(fed.retrieved_at, true)));
-      return { title: race.label, docTitle: race.label, crumbs: [["All states", BASE], [STATE_NAME[code], href([CODE_SLUG[code]])], race.label.replace(/^[^:]+:\s*/, "")], body: body };
+        }))), topTwo,
+        el("p", { class: "fresh" }, onBallot && ballot.certified_at ? ["Certified list ", time(ballot.certified_at), " · "] : fed.source_updated_at ? ["Newest filing ", time(fed.source_updated_at), " · "] : null, "Retrieved ", time(fed.retrieved_at, true)));
+      var crumbs = [["All states", BASE], [STATE_NAME[code], href([CODE_SLUG[code]])]];
+      if (lv !== "federal") crumbs.push([LEVEL_NAME[lv], href([CODE_SLUG[code]], { level: lv })]);
+      crumbs.push(rowTitle(race));
+      return { title: race.label, docTitle: race.label, crumbs: crumbs, body: body };
     });
   }
 

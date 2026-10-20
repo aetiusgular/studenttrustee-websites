@@ -45,8 +45,15 @@
 
 /* ---- race rows: the vote-row grid, with a candidate list in the middle ---- */
 .vrow.race{grid-template-columns:110px minmax(0,1fr) 150px 120px}
-.vrow.race .vr-main h3{font-size:17px;line-height:25px;font-weight:700;margin:0 0 6px}
-.vrow.race .vr-main h3 a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.vrow.race .vr-main .rt{font-size:17px;line-height:25px;font-weight:700;margin:0 0 6px}
+.vrow.race .vr-main .rt a{display:inline-flex;align-items:center;min-height:var(--min-target);color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+/* State races by office, county races by county: a serif heading on an ink rule, the count at the right. */
+.race-group{margin:20px 0 0}
+.grp-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:0 0 10px;border-bottom:1px solid var(--ink)}
+.grp-h h3{font-family:var(--serif);font-weight:400;font-size:25px;line-height:30px;letter-spacing:-.005em;color:var(--ink);margin:0}
+.grp-h .n{font-size:14px;line-height:20px;color:var(--sec);white-space:nowrap}
+.chip .n{color:var(--sec);margin-left:2px}
+.chip[aria-current] .n{color:#d9d9d9}
 .vrow.race .vr-main .note{margin:0 0 6px}
 .vrow.race .vr-result{font-size:15px;line-height:22px;color:var(--ink);padding-top:2px}
 .vrow.race .vr-result.num{text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
@@ -89,4 +96,5 @@
   .vrow.race .vr-date{text-align:right}
   .ballot-form .search-row .btn{flex:1 1 auto;justify-content:center}
   .cols{columns:1}
+  .grp-h h3{font-size:21px;line-height:26px}
 }

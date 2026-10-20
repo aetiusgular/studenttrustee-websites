@@ -141,6 +141,8 @@ function electionPages() {
     { name: "el-map", url: "/elections/", ready: ready(".map-wrap") },
     { name: "el-state", url: "/elections/california/", ready: ready("#results") },
     { name: "el-state-level-state", url: "/elections/california/?level=state", ready: ready("#results") },
+    { name: "el-state-level-county", url: "/elections/california/?level=county", ready: ready("#results") },
+    { name: "el-state-race", url: "/elections/race/2026-ca-governor/", ready: ready(".cands") },
     { name: "el-state-colleges", url: "/elections/california/?level=college", ready: ready("#results") },
     { name: "el-state-results", url: "/elections/california/results/", ready: ready("#results") },
     { name: "el-ballot", url: "/elections/ballot/", ready: ready("form.ballot-form") },
@@ -153,7 +155,10 @@ function electionPages() {
   if (idx && idx.rows.length) {
     pages.push({ name: "el-race", url: `/elections/race/${idx.rows[0][0]}/`, ready: ready(".cands") });
     const st = idx.rows[0][1].toLowerCase();
-    if (st !== "ca") pages.push({ name: "el-other-state", url: `/elections/${{ tx: "texas" }[st] || st}/`, ready: ready("#results") });
+    const geo = read("geo/states.json");
+    const row = geo && (geo.states || []).find((s) => s.code.toLowerCase() === st);
+    const slug = row ? row.name.toLowerCase().replace(/\s+/g, "-") : st;
+    if (st !== "ca") pages.push({ name: "el-other-state", url: `/elections/${slug}/`, ready: ready("#results") });
   }
   return pages;
 }

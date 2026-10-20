@@ -60,8 +60,9 @@ class Elections(unittest.TestCase):
     def setUp(self):
         from tools.legislation import common, writer, elections
         self.tmp = tempfile.mkdtemp()
-        self.saved = (common.DATA_DIR, writer.DATA_DIR, common.Manifest.PATH, elections.Http)
+        self.saved = (common.DATA_DIR, writer.DATA_DIR, common.Manifest.PATH, elections.Http, elections.BALLOTS_DIR)
         common.DATA_DIR = writer.DATA_DIR = self.tmp
+        elections.BALLOTS_DIR = os.path.join(self.tmp, 'ballots')   # no certified ballots unless a test writes one
         common.Manifest.PATH = os.path.join(self.tmp, 'manifest.json')
         elections.Http = FakeHttp
         os.environ['LEGIS_TODAY'] = '2026-10-10'
@@ -73,7 +74,7 @@ class Elections(unittest.TestCase):
 
     def tearDown(self):
         from tools.legislation import common, writer, elections
-        common.DATA_DIR, writer.DATA_DIR, common.Manifest.PATH, elections.Http = self.saved
+        common.DATA_DIR, writer.DATA_DIR, common.Manifest.PATH, elections.Http, elections.BALLOTS_DIR = self.saved
         for k in ('LEGIS_TODAY', 'LEGIS_STATES', 'LEGIS_NO_LINKCHECK', 'FEC_API_KEY', 'GOOGLE_CIVIC_API_KEY', 'ALLOW_SHRINK'):
             os.environ.pop(k, None)
         shutil.rmtree(self.tmp, ignore_errors=True)
@@ -178,6 +179,45 @@ class Elections(unittest.TestCase):
         from tools.legislation import legislation_checks
         self.run_main()
         self.assertEqual(legislation_checks.election_checks(), [])
+
+    def write_ballot(self, st, races):
+        from tools.legislation import elections
+        os.makedirs(elections.BALLOTS_DIR, exist_ok=True)
+        with open(os.path.join(elections.BALLOTS_DIR, '%s-2026.json' % st.lower()), 'w', encoding='utf-8') as fh:
+            json.dump({'state': st, 'cycle': 2026, 'certified_at': '2026-08-27', 'official_list_url': 'https://www.sos.example/list.pdf',
+                       'source': 'certified list', 'races': races}, fh)
+
+    def test_a_certified_ballot_survives_every_nightly_rewrite(self):
+        self.write_ballot('TX', [
+            {'id': '2026-tx-house-12', 'state': 'TX', 'level': 'federal', 'office': 'H', 'district': '12', 'label': 'Texas: U.S. House, district 12',
+             'candidates': [{'id': 'ballot-only', 'name': 'Pat Example', 'party': 'R', 'incumbent': False, 'designation': 'Rancher'}]},
+            {'id': '2026-tx-governor', 'state': 'TX', 'level': 'state', 'office': 'GOVERNOR', 'district': None, 'label': 'Texas: Governor',
+             'candidates': [{'id': '2026-tx-governor-a', 'name': 'A Person', 'party': 'D', 'incumbent': False}]},
+            {'id': '2026-tx-cty-x', 'state': 'TX', 'level': 'county', 'office': 'SUP', 'district': '1', 'label': 'Texas: X County',
+             'candidates': [{'id': '2026-tx-cty-x-b', 'name': 'B Person', 'party': 'NP', 'incumbent': True}]}])
+        for night in (1, 2):   # the second night starts from the first night's merged file
+            self.run_main()
+            tx = load(self.tmp, 'elections/us-tx/federal.json')
+            ids = [r['id'] for r in tx['races']]
+            self.assertEqual(ids, ['2026-tx-senate', '2026-tx-house-12', '2026-tx-governor', '2026-tx-cty-x'])
+            house = [r for r in tx['races'] if r['id'] == '2026-tx-house-12'][0]
+            self.assertEqual([c['name'] for c in house['candidates']], ['Pat Example'])
+            self.assertEqual(tx['ballot']['certified_at'], '2026-08-27')
+            idx = load(self.tmp, 'elections/us/federal-index.json')
+            self.assertEqual(sorted(r[0] for r in idx['rows']), ['2026-tx-house-12', '2026-tx-senate'])
+            states = {s['code']: s for s in load(self.tmp, 'elections/states.json')['states']}
+            self.assertEqual(states['TX']['federal_races'], 2)
+            self.assertEqual(states['TX']['federal_candidates'], 3)
+
+    def test_a_ballot_is_merged_without_an_fec_key(self):
+        os.environ.pop('FEC_API_KEY')
+        self.write_ballot('TX', [{'id': '2026-tx-governor', 'state': 'TX', 'level': 'state', 'office': 'GOVERNOR', 'district': None,
+                                  'label': 'Texas: Governor', 'candidates': [{'id': 'g-a', 'name': 'A Person', 'incumbent': False}]}])
+        self.run_main()
+        self.run_main()
+        tx = load(self.tmp, 'elections/us-tx/federal.json')
+        self.assertEqual([r['id'] for r in tx['races']], ['2026-tx-governor'])
+        self.assertEqual(load(self.tmp, 'elections/us/federal-index.json')['rows'], [])
 
 
 class Helpers(unittest.TestCase):

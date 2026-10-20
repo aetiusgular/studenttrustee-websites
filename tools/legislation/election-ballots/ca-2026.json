@@ -1,0 +1,6387 @@
+{
+ "_comment": "California's certified ballot for the cycle, hand-entered from the Secretary of State's Certified List of Candidates (federal and state races) and each county registrar's candidate list (county races). elections.py lays these over the FEC's registrations: a race here replaces the FEC race with the same id, and state and county races are added. Candidate ids are FEC ids where the candidate has one.",
+ "state": "CA",
+ "cycle": 2026,
+ "certified_at": "2026-08-27",
+ "official_list_url": "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+ "source": "California Secretary of State, Certified List of Candidates for the November 3, 2026 General Election (Aug 27, 2026) for federal and state races; FEC candidate master for incumbency and filing links; county registrars' candidate lists for county races",
+ "level_notes": {
+  "state": "From the Secretary of State's certified list; includes judicial retention questions",
+  "county": "Board of Supervisors contests on the November ballot, from each county registrar's candidate list; seats decided outright in the June 2 primary are not listed"
+ },
+ "races": [
+  {
+   "id": "2026-ca-house-01",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "01",
+   "label": "California: U.S. House, district 1",
+   "candidates": [
+    {
+     "id": "H6CA01285",
+     "name": "James Gallagher",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "01",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA01285/",
+     "designation": "United States Representative/Farmer"
+    },
+    {
+     "id": "H6CA01269",
+     "name": "Mike McGuire",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "01",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA01269/",
+     "designation": "California State Senator"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-02",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "02",
+   "label": "California: U.S. House, district 2",
+   "candidates": [
+    {
+     "id": "H2CA06259",
+     "name": "Jared Huffman",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "02",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA06259/",
+     "designation": "U.S. Representative"
+    },
+    {
+     "id": "H6CA02309",
+     "name": "Robin Littau",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "02",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA02309/",
+     "designation": "Enterprise Elementary School Board Member"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-03",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "03",
+   "label": "California: U.S. House, district 3",
+   "candidates": [
+    {
+     "id": "H0CA03078",
+     "name": "Ami Bera",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "03",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA03078/",
+     "designation": "United States Congressman"
+    },
+    {
+     "id": "H6CA03174",
+     "name": "Robb Tucker",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "03",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA03174/",
+     "designation": "County Supervisor/Businessman"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-04",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "04",
+   "label": "California: U.S. House, district 4",
+   "candidates": [
+    {
+     "id": "H8CA01109",
+     "name": "Mike Thompson",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "04",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA01109/",
+     "designation": "Member of Congress"
+    },
+    {
+     "id": "H6CA04222",
+     "name": "Eric Jones",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "04",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA04222/",
+     "designation": "Businessman/Nonprofit Executive"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-05",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "05",
+   "label": "California: U.S. House, district 5",
+   "candidates": [
+    {
+     "id": "H8CA04152",
+     "name": "Tom McClintock",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "05",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA04152/",
+     "designation": "United States Representative"
+    },
+    {
+     "id": "H6CA05377",
+     "name": "Michael Masuda",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "05",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA05377/",
+     "designation": "Foreign Affairs Officer"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-06",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "06",
+   "label": "California: U.S. House, district 6",
+   "candidates": [
+    {
+     "id": "H2CA03157",
+     "name": "Kevin Kiley",
+     "party": "NP",
+     "party_full": "No party preference",
+     "office": "H",
+     "district": "06",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA03157/",
+     "designation": "United States Representative"
+    },
+    {
+     "id": "H6CA03158",
+     "name": "Richard Pan",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "06",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA03158/",
+     "designation": "Doctor/Health Advocate"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-07",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "07",
+   "label": "California: U.S. House, district 7",
+   "candidates": [
+    {
+     "id": "H6CA05195",
+     "name": "Doris Matsui",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "07",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA05195/",
+     "designation": "U.S. Representative"
+    },
+    {
+     "id": "H6CA07175",
+     "name": "Mai Vang",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "07",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA07175/",
+     "designation": "Teacher/City Councilmember"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-08",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "08",
+   "label": "California: U.S. House, district 8",
+   "candidates": [
+    {
+     "id": "H0CA10149",
+     "name": "John Garamendi",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "08",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA10149/",
+     "designation": "Member of Congress"
+    },
+    {
+     "id": "H2CA00153",
+     "name": "Rudy Recile",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "08",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA00153/",
+     "designation": "Business Owner/Consultant"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-09",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "09",
+   "label": "California: U.S. House, district 9",
+   "candidates": [
+    {
+     "id": "H8CA10126",
+     "name": "Josh Harder",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "09",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA10126/",
+     "designation": "Father/Representative"
+    },
+    {
+     "id": "H4CA09101",
+     "name": "John McBride",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "09",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA09101/",
+     "designation": "Athletic Performance Coach"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-10",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "10",
+   "label": "California: U.S. House, district 10",
+   "candidates": [
+    {
+     "id": "H0CA10073",
+     "name": "Mark DeSaulnier",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "10",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA10073/",
+     "designation": "United States Congressman"
+    },
+    {
+     "id": "H6CA10187",
+     "name": "Jeff Frese",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "10",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA10187/",
+     "designation": "Small Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-11",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "11",
+   "label": "California: U.S. House, district 11",
+   "candidates": [
+    {
+     "id": "H6CA11268",
+     "name": "Connie Chan",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "11",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA11268/",
+     "designation": "San Francisco Supervisor"
+    },
+    {
+     "id": "H8CA11116",
+     "name": "Scott Wiener",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "11",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA11116/",
+     "designation": "State Senator"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-12",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "12",
+   "label": "California: U.S. House, district 12",
+   "candidates": [
+    {
+     "id": "H4CA12154",
+     "name": "Lateefah Simon",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "12",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA12154/",
+     "designation": "U.S. Representative"
+    },
+    {
+     "id": "H6CA12209",
+     "name": "Jamie Joyce",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "12",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA12209/",
+     "designation": "Nonprofit Executive Director"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-13",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "13",
+   "label": "California: U.S. House, district 13",
+   "candidates": [
+    {
+     "id": "H2CA13115",
+     "name": "Adam Gray",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "13",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA13115/",
+     "designation": "United States Representative/Educator"
+    },
+    {
+     "id": "H4CA09093",
+     "name": "Kevin Lincoln",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "13",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA09093/",
+     "designation": "Small Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-14",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "14",
+   "label": "California: U.S. House, district 14",
+   "candidates": [
+    {
+     "id": "H0CA15213",
+     "name": "Aisha Wahab",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "14",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA15213/",
+     "designation": "State Senator"
+    },
+    {
+     "id": "H6CA14163",
+     "name": "Melissa Hernandez",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "14",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA14163/",
+     "designation": "Healthcare Services Director"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-15",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "15",
+   "label": "California: U.S. House, district 15",
+   "candidates": [
+    {
+     "id": "H2CA14162",
+     "name": "Kevin Mullin",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "15",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA14162/",
+     "designation": "U.S. Representative"
+    },
+    {
+     "id": "H6CA15194",
+     "name": "Charles Hoelter",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "15",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA15194/",
+     "designation": "Retired Training Supervisor"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-16",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "16",
+   "label": "California: U.S. House, district 16",
+   "candidates": [
+    {
+     "id": "H4CA16197",
+     "name": "Sam Liccardo",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "16",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA16197/",
+     "designation": "United States Representative"
+    },
+    {
+     "id": "ca-name-peter-sundin-soul",
+     "name": "Peter Sundin Soulé",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "16",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": null,
+     "designation": "Investor"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-17",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "17",
+   "label": "California: U.S. House, district 17",
+   "candidates": [
+    {
+     "id": "H4CA12055",
+     "name": "Ro Khanna",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "17",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA12055/",
+     "designation": "United States Congressmember"
+    },
+    {
+     "id": "H0CA17193",
+     "name": "Ritesh Tandon",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "17",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA17193/",
+     "designation": "CEO/Entrepreneur/Researcher"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-18",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "18",
+   "label": "California: U.S. House, district 18",
+   "candidates": [
+    {
+     "id": "H4CA16049",
+     "name": "Zoe Lofgren",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "18",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA16049/",
+     "designation": "Congresswoman"
+    },
+    {
+     "id": "H6CA18172",
+     "name": "Shane Lewis",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "18",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA18172/",
+     "designation": "Electrical Test Engineer"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-19",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "19",
+   "label": "California: U.S. House, district 19",
+   "candidates": [
+    {
+     "id": "H6CA20152",
+     "name": "Jimmy Panetta",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "19",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA20152/",
+     "designation": "United States Representative"
+    },
+    {
+     "id": "H6CA19154",
+     "name": "Peter Coe Verbica",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "19",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA19154/",
+     "designation": "Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-20",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "20",
+   "label": "California: U.S. House, district 20",
+   "candidates": [
+    {
+     "id": "H4CA20181",
+     "name": "Vince Fong",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "20",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA20181/",
+     "designation": "United States Representative"
+    },
+    {
+     "id": "ca-name-sandra-van-scotter",
+     "name": "Sandra Van Scotter",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "20",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": null,
+     "designation": "Disability Community Advocate"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-21",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "21",
+   "label": "California: U.S. House, district 21",
+   "candidates": [
+    {
+     "id": "H4CA20082",
+     "name": "Jim Costa",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "21",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA20082/",
+     "designation": "Farmer/Representative"
+    },
+    {
+     "id": "H6CA13199",
+     "name": "Kyle Kirkland",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "21",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA13199/",
+     "designation": "Entrepreneur/Nonprofit CEO"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-22",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "22",
+   "label": "California: U.S. House, district 22",
+   "candidates": [
+    {
+     "id": "H2CA20094",
+     "name": "David G. Valadao",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "22",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA20094/",
+     "designation": "Congressman/Dairy Farmer"
+    },
+    {
+     "id": "H6CA22190",
+     "name": "Randy Villegas",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "22",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA22190/",
+     "designation": "Teacher/Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-23",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "23",
+   "label": "California: U.S. House, district 23",
+   "candidates": [
+    {
+     "id": "H0CA08135",
+     "name": "Jay Obernolte",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "23",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA08135/",
+     "designation": "Congressman/Business Owner"
+    },
+    {
+     "id": "H6CA23230",
+     "name": "Tessa Lynn Hodge",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "23",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA23230/",
+     "designation": "Social Worker/Businesswoman"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-24",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "24",
+   "label": "California: U.S. House, district 24",
+   "candidates": [
+    {
+     "id": "H6CA24303",
+     "name": "Salud Carbajal",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "24",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA24303/",
+     "designation": "Member of Congress"
+    },
+    {
+     "id": "H6CA24345",
+     "name": "Bob Smith",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "24",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA24345/",
+     "designation": "Defense Systems Engineer"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-25",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "25",
+   "label": "California: U.S. House, district 25",
+   "candidates": [
+    {
+     "id": "H2CA36439",
+     "name": "Raul Ruiz",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "25",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA36439/",
+     "designation": "Emergency Physician/Congressman"
+    },
+    {
+     "id": "H6CA25219",
+     "name": "Joe Males",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "25",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA25219/",
+     "designation": "Mayor Pro Tem"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-26",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "26",
+   "label": "California: U.S. House, district 26",
+   "candidates": [
+    {
+     "id": "H6CA26266",
+     "name": "Jacqui Irwin",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "26",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA26266/",
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "H6CA26241",
+     "name": "Sam Gallucci",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "26",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA26241/",
+     "designation": "Business Executive/Pastor"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-27",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "27",
+   "label": "California: U.S. House, district 27",
+   "candidates": [
+    {
+     "id": "H4CA27111",
+     "name": "George Whitesides",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "27",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA27111/",
+     "designation": "U.S. Representative/Father"
+    },
+    {
+     "id": "H6CA27306",
+     "name": "Jason Gibbs",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "27",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA27306/",
+     "designation": "City Councilmember/Engineer"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-28",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "28",
+   "label": "California: U.S. House, district 28",
+   "candidates": [
+    {
+     "id": "H0CA32101",
+     "name": "Judy Chu",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "28",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA32101/",
+     "designation": "United States Representative"
+    },
+    {
+     "id": "H4CA28127",
+     "name": "April A. Verlato",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "28",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA28127/",
+     "designation": "Small Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-29",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "29",
+   "label": "California: U.S. House, district 29",
+   "candidates": [
+    {
+     "id": "H4CA29141",
+     "name": "Luz Maria Rivas",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "29",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA29141/",
+     "designation": "Congresswoman"
+    },
+    {
+     "id": "ca-name-ang-lica-mar-a-due-as",
+     "name": "Angélica María Dueñas",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "29",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": null,
+     "designation": "Mother/Community Organizer"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-30",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "30",
+   "label": "California: U.S. House, district 30",
+   "candidates": [
+    {
+     "id": "H4CA30149",
+     "name": "Laura Friedman",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "30",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA30149/",
+     "designation": "Member, United States House of Representatives"
+    },
+    {
+     "id": "H6CA30250",
+     "name": "Scott Alan Meyers",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "30",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA30250/",
+     "designation": "Small Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-31",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "31",
+   "label": "California: U.S. House, district 31",
+   "candidates": [
+    {
+     "id": "H2CA39151",
+     "name": "Eric Ching",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "31",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA39151/",
+     "designation": "Entrepreneur"
+    },
+    {
+     "id": "H8CA39174",
+     "name": "Gil Cisneros",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "31",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA39174/",
+     "designation": "U.S. Congressman"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-32",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "32",
+   "label": "California: U.S. House, district 32",
+   "candidates": [
+    {
+     "id": "H6CA24113",
+     "name": "Brad Sherman",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "32",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA24113/",
+     "designation": "United States Congressman/Dad"
+    },
+    {
+     "id": "H4CA32137",
+     "name": "Larry Thompson",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "32",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA32137/",
+     "designation": "Attorney/Film Producer"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-33",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "33",
+   "label": "California: U.S. House, district 33",
+   "candidates": [
+    {
+     "id": "H2CA31125",
+     "name": "Pete Aguilar",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "33",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA31125/",
+     "designation": "United States Representative"
+    },
+    {
+     "id": "H6CA33114",
+     "name": "Stephanie M. Vargas",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "33",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA33114/",
+     "designation": "Chief Deputy Clerk"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-34",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "34",
+   "label": "California: U.S. House, district 34",
+   "candidates": [
+    {
+     "id": "H8CA34266",
+     "name": "Jimmy Gomez",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "34",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA34266/",
+     "designation": "U.S. Representative/Parent"
+    },
+    {
+     "id": "H6CA34286",
+     "name": "Angela Gonzales-Torres",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "34",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA34286/",
+     "designation": "Advocate For Justice"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-35",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "35",
+   "label": "California: U.S. House, district 35",
+   "candidates": [
+    {
+     "id": "H4CA35031",
+     "name": "Norma J. Torres",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "35",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA35031/",
+     "designation": "U.S. Representative"
+    },
+    {
+     "id": "H0CA35146",
+     "name": "Mike Cargile",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "35",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA35146/",
+     "designation": "Small Businessman"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-36",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "36",
+   "label": "California: U.S. House, district 36",
+   "candidates": [
+    {
+     "id": "H4CA33119",
+     "name": "Ted W. Lieu",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "36",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA33119/",
+     "designation": "United States Representative, 36th District"
+    },
+    {
+     "id": "H6CA36208",
+     "name": "Houston Brignano",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "36",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA36208/",
+     "designation": "Technology Executive"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-37",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "37",
+   "label": "California: U.S. House, district 37",
+   "candidates": [
+    {
+     "id": "H2CA37304",
+     "name": "Sydney Kamlager-Dove",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "37",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA37304/",
+     "designation": "U.S. Representative, 37th District"
+    },
+    {
+     "id": "H6CA37339",
+     "name": "Samantha Mota",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "37",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA37339/",
+     "designation": "Community Advocate"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-38",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "38",
+   "label": "California: U.S. House, district 38",
+   "candidates": [
+    {
+     "id": "H6CA38139",
+     "name": "Hilda Solis",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "38",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA38139/",
+     "designation": "County Supervisor"
+    },
+    {
+     "id": "H4CA31212",
+     "name": "Pedro Antonio Casas",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "38",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA31212/",
+     "designation": "No Ballot Designation"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-39",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "39",
+   "label": "California: U.S. House, district 39",
+   "candidates": [
+    {
+     "id": "H2CA43245",
+     "name": "Mark Takano",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "39",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA43245/",
+     "designation": "U.S. Congressman"
+    },
+    {
+     "id": "H6CA39145",
+     "name": "Steve Manos",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "39",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA39145/",
+     "designation": "Mayor/Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-40",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "40",
+   "label": "California: U.S. House, district 40",
+   "candidates": [
+    {
+     "id": "H2CA37023",
+     "name": "Ken Calvert",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "40",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA37023/",
+     "designation": "U.S. Representative"
+    },
+    {
+     "id": "H8CA39240",
+     "name": "Young Kim",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "40",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA39240/",
+     "designation": "United States Representative, 40th District"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-41",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "41",
+   "label": "California: U.S. House, district 41",
+   "candidates": [
+    {
+     "id": "H2CA38260",
+     "name": "Mitch Clemmons",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "41",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA38260/",
+     "designation": "Plumbing Contractor"
+    },
+    {
+     "id": "ca-name-linda-s-nchez",
+     "name": "Linda Sánchez",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "41",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": null,
+     "designation": "Congresswoman/Mom"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-42",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "42",
+   "label": "California: U.S. House, district 42",
+   "candidates": [
+    {
+     "id": "H2CA47188",
+     "name": "Robert Garcia",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "42",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA47188/",
+     "designation": "United States Congressman"
+    },
+    {
+     "id": "H0CA48172",
+     "name": "Brian Burley",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "42",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H0CA48172/",
+     "designation": "Trustee, Huntington Beach City School District"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-43",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "43",
+   "label": "California: U.S. House, district 43",
+   "candidates": [
+    {
+     "id": "H4CA23011",
+     "name": "Maxine Waters",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "43",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA23011/",
+     "designation": "United States Congresswoman"
+    },
+    {
+     "id": "H6CA43188",
+     "name": "Cristian Morales",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "43",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA43188/",
+     "designation": "Manufacturing Executive"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-44",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "44",
+   "label": "California: U.S. House, district 44",
+   "candidates": [
+    {
+     "id": "H6CA44103",
+     "name": "Nanette Diaz Barragan",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "44",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA44103/",
+     "designation": "U.S. Representative, 44th District"
+    },
+    {
+     "id": "H6CA44210",
+     "name": "Genevieve Angel",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "44",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA44210/",
+     "designation": "Family Nurse Practitioner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-45",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "45",
+   "label": "California: U.S. House, district 45",
+   "candidates": [
+    {
+     "id": "H4CA45170",
+     "name": "Derek Tran",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "45",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA45170/",
+     "designation": "Representative/Business Owner"
+    },
+    {
+     "id": "H6CA45191",
+     "name": "Chuong V. Vo",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "45",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA45191/",
+     "designation": "Retired Police Officer"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-46",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "46",
+   "label": "California: U.S. House, district 46",
+   "candidates": [
+    {
+     "id": "H6CA46116",
+     "name": "Lou Correa",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "46",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA46116/",
+     "designation": "United States Congressmember"
+    },
+    {
+     "id": "H4CA46137",
+     "name": "David Pan",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "46",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA46137/",
+     "designation": "Professor"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-47",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "47",
+   "label": "California: U.S. House, district 47",
+   "candidates": [
+    {
+     "id": "H4CA47085",
+     "name": "Dave Min",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "47",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H4CA47085/",
+     "designation": "United States Representative/Father"
+    },
+    {
+     "id": "ca-name-jenny-rae-le-roux",
+     "name": "Jenny Rae Le Roux",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "47",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": null,
+     "designation": "Entrepreneur/Investor"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-48",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "48",
+   "label": "California: U.S. House, district 48",
+   "candidates": [
+    {
+     "id": "H6CA49128",
+     "name": "Jim Desmond",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "48",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA49128/",
+     "designation": "San Diego County Supervisor"
+    },
+    {
+     "id": "ca-name-marni-von-wilpert",
+     "name": "Marni von Wilpert",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "48",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": null,
+     "designation": "Councilwoman/Health Advocate"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-49",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "49",
+   "label": "California: U.S. House, district 49",
+   "candidates": [
+    {
+     "id": "H8CA49058",
+     "name": "Mike Levin",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "49",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA49058/",
+     "designation": "U.S. Representative, 49th District"
+    },
+    {
+     "id": "H6CA49169",
+     "name": "Armen Kurdian",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "49",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA49169/",
+     "designation": "Retired Navy Captain"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-50",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "50",
+   "label": "California: U.S. House, district 50",
+   "candidates": [
+    {
+     "id": "H2CA52089",
+     "name": "Scott Peters",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "50",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA52089/",
+     "designation": "Member of Congress"
+    },
+    {
+     "id": "H6CA50324",
+     "name": "Steve Cohen",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "50",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA50324/",
+     "designation": "Television News Consultant"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-51",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "51",
+   "label": "California: U.S. House, district 51",
+   "candidates": [
+    {
+     "id": "H8CA49074",
+     "name": "Sara Jacobs",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "51",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H8CA49074/",
+     "designation": "U.S. Representative"
+    },
+    {
+     "id": "H6CA51140",
+     "name": "Ricardo Cabrera",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "51",
+     "incumbent": false,
+     "raised": false,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA51140/",
+     "designation": "Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-house-52",
+   "state": "CA",
+   "office": "H",
+   "office_name": "U.S. House",
+   "district": "52",
+   "label": "California: U.S. House, district 52",
+   "candidates": [
+    {
+     "id": "H2CA50026",
+     "name": "Juan Vargas",
+     "party": "D",
+     "party_full": "Democratic",
+     "office": "H",
+     "district": "52",
+     "incumbent": true,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H2CA50026/",
+     "designation": "Member of Congress"
+    },
+    {
+     "id": "H6CA52163",
+     "name": "Jeff Belle",
+     "party": "R",
+     "party_full": "Republican",
+     "office": "H",
+     "district": "52",
+     "incumbent": false,
+     "raised": true,
+     "fec_url": "https://www.fec.gov/data/candidate/H6CA52163/",
+     "designation": "Business Owner"
+    }
+   ],
+   "level": "federal"
+  },
+  {
+   "id": "2026-ca-governor",
+   "state": "CA",
+   "level": "state",
+   "office": "GOVERNOR",
+   "district": null,
+   "label": "California: Governor",
+   "candidates": [
+    {
+     "id": "2026-ca-governor-xavier-becerra",
+     "name": "Xavier Becerra",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Voting Rights Attorney"
+    },
+    {
+     "id": "2026-ca-governor-steve-hilton",
+     "name": "Steve Hilton",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-lieutenant-governor",
+   "state": "CA",
+   "level": "state",
+   "office": "LIEUTENANT-GOVERNOR",
+   "district": null,
+   "label": "California: Lieutenant Governor",
+   "candidates": [
+    {
+     "id": "2026-ca-lieutenant-governor-fiona-ma",
+     "name": "Fiona Ma",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "State Treasurer/CPA"
+    },
+    {
+     "id": "2026-ca-lieutenant-governor-gloria-romero",
+     "name": "Gloria Romero",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Educator/Businesswoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-secretary-of-state",
+   "state": "CA",
+   "level": "state",
+   "office": "SECRETARY-OF-STATE",
+   "district": null,
+   "label": "California: Secretary of State",
+   "candidates": [
+    {
+     "id": "2026-ca-secretary-of-state-shirley-n-weber",
+     "name": "Shirley N. Weber",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California Secretary of State"
+    },
+    {
+     "id": "2026-ca-secretary-of-state-donald-p-don-wagner",
+     "name": "Donald P. (Don) Wagner",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Orange County Supervisor"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-controller",
+   "state": "CA",
+   "level": "state",
+   "office": "CONTROLLER",
+   "district": null,
+   "label": "California: Controller",
+   "candidates": [
+    {
+     "id": "2026-ca-controller-malia-m-cohen",
+     "name": "Malia M. Cohen",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Controller/Mother"
+    },
+    {
+     "id": "2026-ca-controller-herb-w-morgan",
+     "name": "Herb W Morgan",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Chief Investment Officer"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-treasurer",
+   "state": "CA",
+   "level": "state",
+   "office": "TREASURER",
+   "district": null,
+   "label": "California: Treasurer",
+   "candidates": [
+    {
+     "id": "2026-ca-treasurer-eleni-kounalakis",
+     "name": "Eleni Kounalakis",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Lieutenant Governor of California"
+    },
+    {
+     "id": "2026-ca-treasurer-jennifer-hawks",
+     "name": "Jennifer Hawks",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Business Executive"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-attorney-general",
+   "state": "CA",
+   "level": "state",
+   "office": "ATTORNEY-GENERAL",
+   "district": null,
+   "label": "California: Attorney General",
+   "candidates": [
+    {
+     "id": "2026-ca-attorney-general-rob-bonta",
+     "name": "Rob Bonta",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California Attorney General"
+    },
+    {
+     "id": "2026-ca-attorney-general-michael-e-gates",
+     "name": "Michael E. Gates",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Deputy United States Attorney"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-insurance-commissioner",
+   "state": "CA",
+   "level": "state",
+   "office": "INSURANCE-COMMISSIONER",
+   "district": null,
+   "label": "California: Insurance Commissioner",
+   "candidates": [
+    {
+     "id": "2026-ca-insurance-commissioner-ben-allen",
+     "name": "Ben Allen",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "California State Senator"
+    },
+    {
+     "id": "2026-ca-insurance-commissioner-jane-kim",
+     "name": "Jane Kim",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Attorney/Consumer Advocate"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-superintendent-of-public-instruction",
+   "state": "CA",
+   "level": "state",
+   "office": "SUPERINTENDENT-OF-PUBLIC-INSTRUCTION",
+   "district": null,
+   "label": "California: Superintendent of Public Instruction",
+   "candidates": [
+    {
+     "id": "2026-ca-superintendent-of-public-instruction-richard-barrera",
+     "name": "Richard Barrera",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "State Superintendent Advisor"
+    },
+    {
+     "id": "2026-ca-superintendent-of-public-instruction-sonja-shaw",
+     "name": "Sonja Shaw",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "School District President"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-boe-1",
+   "state": "CA",
+   "level": "state",
+   "office": "BOE",
+   "district": "01",
+   "label": "California: Board of Equalization District 1",
+   "candidates": [
+    {
+     "id": "2026-ca-boe-1-nelson-esparza",
+     "name": "Nelson Esparza",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Teacher/Economist/Councilmember"
+    },
+    {
+     "id": "2026-ca-boe-1-shannon-grove",
+     "name": "Shannon Grove",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "State Senator/Businesswoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-boe-2",
+   "state": "CA",
+   "level": "state",
+   "office": "BOE",
+   "district": "02",
+   "label": "California: Board of Equalization District 2",
+   "candidates": [
+    {
+     "id": "2026-ca-boe-2-sally-j-lieber",
+     "name": "Sally J. Lieber",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Incumbent"
+    },
+    {
+     "id": "2026-ca-boe-2-john-pimentel",
+     "name": "John Pimentel",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Member, Board of Trustees, San Mateo County Community College District"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-boe-3",
+   "state": "CA",
+   "level": "state",
+   "office": "BOE",
+   "district": "03",
+   "label": "California: Board of Equalization District 3",
+   "candidates": [
+    {
+     "id": "2026-ca-boe-3-mike-gipson",
+     "name": "Mike Gipson",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "State Assemblymember/Father"
+    },
+    {
+     "id": "2026-ca-boe-3-samuel-p-sukaton",
+     "name": "Samuel P. Sukaton",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Labor Union Organizer"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-boe-4",
+   "state": "CA",
+   "level": "state",
+   "office": "BOE",
+   "district": "04",
+   "label": "California: Board of Equalization District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-boe-4-tom-umberg",
+     "name": "Tom Umberg",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Small Businessman/Senator"
+    },
+    {
+     "id": "2026-ca-boe-4-denis-bilodeau",
+     "name": "Denis Bilodeau",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Councilmember/Civil Engineer"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-02",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "02",
+   "label": "California: State Senate District 2",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-02-damon-connolly",
+     "name": "Damon Connolly",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-sen-02-tief-gibbs",
+     "name": "Tief Gibbs",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Businesswoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-04",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "04",
+   "label": "California: State Senate District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-04-jaron-brandon",
+     "name": "Jaron Brandon",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "County Supervisor"
+    },
+    {
+     "id": "2026-ca-sen-04-alexandra-duarte",
+     "name": "Alexandra Duarte",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Mother/Farmer"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-06",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "06",
+   "label": "California: State Senate District 6",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-06-sean-frame",
+     "name": "Sean Frame",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    },
+    {
+     "id": "2026-ca-sen-06-roger-niello",
+     "name": "Roger Niello",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "California State Senator"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-08",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "08",
+   "label": "California: State Senate District 8",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-08-angelique-ashby",
+     "name": "Angelique Ashby",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Senator"
+    },
+    {
+     "id": "2026-ca-sen-08-susan-a-mason",
+     "name": "Susan A Mason",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Nurse"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-10",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "10",
+   "label": "California: State Senate District 10",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-10-scott-sakakihara",
+     "name": "Scott Sakakihara",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Councilmember/Navy Officer"
+    },
+    {
+     "id": "2026-ca-sen-10-linda-r-price",
+     "name": "Linda R. Price",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Businesswoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-12",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "12",
+   "label": "California: State Senate District 12",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-12-nathan-magsig",
+     "name": "Nathan Magsig",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "County Supervisor/Businessman"
+    },
+    {
+     "id": "2026-ca-sen-12-william-brown-jr",
+     "name": "William Brown Jr.",
+     "party": "L",
+     "party_full": "Libertarian",
+     "incumbent": false,
+     "designation": "Social Worker/Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-14",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "14",
+   "label": "California: State Senate District 14",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-14-esmeralda-soria",
+     "name": "Esmeralda Soria",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-sen-14-darin-s-dupont",
+     "name": "Darin S. DuPont",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Councilman/Water Attorney"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-16",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "16",
+   "label": "California: State Senate District 16",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-16-melissa-hurtado",
+     "name": "Melissa Hurtado",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Senator"
+    },
+    {
+     "id": "2026-ca-sen-16-guillermo-asuncion-gonzalez",
+     "name": "Guillermo Asuncion Gonzalez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-18",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "18",
+   "label": "California: State Senate District 18",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-18-steve-padilla",
+     "name": "Steve Padilla",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Senator"
+    },
+    {
+     "id": "2026-ca-sen-18-art-hodges",
+     "name": "Art Hodges",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "CEO/Educator/Pastor"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-20",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "20",
+   "label": "California: State Senate District 20",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-20-caroline-menjivar",
+     "name": "Caroline Menjivar",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Senator"
+    },
+    {
+     "id": "2026-ca-sen-20-tony-rodriguez",
+     "name": "Tony Rodriguez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "No Ballot Designation"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-22",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "22",
+   "label": "California: State Senate District 22",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-22-susan-rubio",
+     "name": "Susan Rubio",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Senator/Teacher"
+    },
+    {
+     "id": "2026-ca-sen-22-mike-netter",
+     "name": "Mike Netter",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-24",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "24",
+   "label": "California: State Senate District 24",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-24-john-m-erickson",
+     "name": "John M. Erickson",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Councilmember"
+    },
+    {
+     "id": "2026-ca-sen-24-brian-goldsmith",
+     "name": "Brian Goldsmith",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-26",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "26",
+   "label": "California: State Senate District 26",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-26-sara-hernandez",
+     "name": "Sara Hernandez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Affordable Housing Advocate"
+    },
+    {
+     "id": "2026-ca-sen-26-sarah-rasc-n",
+     "name": "Sarah Rascón",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Environmental Protection Director"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-28",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "28",
+   "label": "California: State Senate District 28",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-28-lola-smallwood-cuevas",
+     "name": "Lola Smallwood-Cuevas",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Senator"
+    },
+    {
+     "id": "2026-ca-sen-28-joe-lisuzzo",
+     "name": "Joe Lisuzzo",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "LA Neighborhood Councilmember"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-30",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "30",
+   "label": "California: State Senate District 30",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-30-bob-j-archuleta",
+     "name": "Bob J. Archuleta",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Senator"
+    },
+    {
+     "id": "2026-ca-sen-30-araceli-martinez",
+     "name": "Araceli Martinez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-32",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "32",
+   "label": "California: State Senate District 32",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-32-tiffanie-tate",
+     "name": "Tiffanie Tate",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Doctor/Educator/Author"
+    },
+    {
+     "id": "2026-ca-sen-32-kelly-seyarto",
+     "name": "Kelly Seyarto",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "State Senator"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-34",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "34",
+   "label": "California: State Senate District 34",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-34-avelino-valencia",
+     "name": "Avelino Valencia",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-sen-34-rhonda-shader",
+     "name": "Rhonda Shader",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Local Small Businesswoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-36",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "36",
+   "label": "California: State Senate District 36",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-36-chris-duncan",
+     "name": "Chris Duncan",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Anti-Tariff Attorney"
+    },
+    {
+     "id": "2026-ca-sen-36-tony-strickland",
+     "name": "Tony Strickland",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "State Senator/Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-38",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "38",
+   "label": "California: State Senate District 38",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-38-catherine-s-blakespear",
+     "name": "Catherine S. Blakespear",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Senator"
+    },
+    {
+     "id": "2026-ca-sen-38-laura-bassett",
+     "name": "Laura Bassett",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-sen-40",
+   "state": "CA",
+   "level": "state",
+   "office": "SEN",
+   "district": "40",
+   "label": "California: State Senate District 40",
+   "candidates": [
+    {
+     "id": "2026-ca-sen-40-mara-elliott",
+     "name": "Mara Elliott",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Ethics Attorney"
+    },
+    {
+     "id": "2026-ca-sen-40-kristie-bruce-lane",
+     "name": "Kristie Bruce-Lane",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Businesswoman/Victims Advocate"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-01",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "01",
+   "label": "California: State Assembly District 1",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-01-dianna-margaret-james",
+     "name": "Dianna Margaret James",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Community Organizer"
+    },
+    {
+     "id": "2026-ca-asm-01-heather-hadwick",
+     "name": "Heather Hadwick",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Farmer/Assemblywoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-02",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "02",
+   "label": "California: State Assembly District 2",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-02-chris-rogers",
+     "name": "Chris Rogers",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-02-michael-greer",
+     "name": "Michael Greer",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Teacher"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-03",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "03",
+   "label": "California: State Assembly District 3",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-03-dom-belza",
+     "name": "Dom Belza",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Agricultural Businessman/Father"
+    },
+    {
+     "id": "2026-ca-asm-03-james-jamie-johansson",
+     "name": "James \"Jamie\" Johansson",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Farmer"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-04",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "04",
+   "label": "California: State Assembly District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-04-cecilia-m-aguiar-curry",
+     "name": "Cecilia M. Aguiar-Curry",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-05",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "05",
+   "label": "California: State Assembly District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-05-neva-parker",
+     "name": "Neva Parker",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Community Advocate"
+    },
+    {
+     "id": "2026-ca-asm-05-joe-patterson",
+     "name": "Joe Patterson",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Member of State Assembly, 5th District"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-06",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "06",
+   "label": "California: State Assembly District 6",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-06-maggy-krell",
+     "name": "Maggy Krell",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Constitutional Attorney/Assemblywoman"
+    },
+    {
+     "id": "2026-ca-asm-06-jagtar-singh",
+     "name": "Jagtar Singh",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Caregiver/Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-07",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "07",
+   "label": "California: State Assembly District 7",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-07-amy-l-slavensky",
+     "name": "Amy L. Slavensky",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Public School Educator"
+    },
+    {
+     "id": "2026-ca-asm-07-josh-hoover",
+     "name": "Josh Hoover",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Member of the State Assembly, 7th District"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-08",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "08",
+   "label": "California: State Assembly District 8",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-08-david-jariustokaeutulelei-tangipa",
+     "name": "David Jariustokaeutulelei Tangipa",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-09",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "09",
+   "label": "California: State Assembly District 9",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-09-matthew-adams",
+     "name": "Matthew Adams",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Teacher"
+    },
+    {
+     "id": "2026-ca-asm-09-heath-flora",
+     "name": "Heath Flora",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Father/Farmer/Assemblyman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-10",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "10",
+   "label": "California: State Assembly District 10",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-10-stephanie-nguyen",
+     "name": "Stephanie Nguyen",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-10-vinaya-singh",
+     "name": "Vinaya Singh",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Application Developer"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-11",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "11",
+   "label": "California: State Assembly District 11",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-11-lori-d-wilson",
+     "name": "Lori D Wilson",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember, 11th District"
+    },
+    {
+     "id": "2026-ca-asm-11-jenny-leilani-callison",
+     "name": "Jenny Leilani Callison",
+     "party": "NP",
+     "party_full": "No party preference",
+     "incumbent": false,
+     "designation": "Legislative Consultant"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-12",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "12",
+   "label": "California: State Assembly District 12",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-12-jackie-elward",
+     "name": "Jackie Elward",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Councilwoman/Educator"
+    },
+    {
+     "id": "2026-ca-asm-12-eric-lucan",
+     "name": "Eric Lucan",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "County Supervisor/Father"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-13",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "13",
+   "label": "California: State Assembly District 13",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-13-rhodesia-ransom",
+     "name": "Rhodesia Ransom",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-13-tom-patti",
+     "name": "Tom Patti",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Businessman/Father"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-14",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "14",
+   "label": "California: State Assembly District 14",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-14-buffy-wicks",
+     "name": "Buffy Wicks",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember/Mom"
+    },
+    {
+     "id": "2026-ca-asm-14-mark-rendon",
+     "name": "Mark Rendon",
+     "party": "G",
+     "party_full": "Green",
+     "incumbent": false,
+     "designation": "Teacher"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-15",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "15",
+   "label": "California: State Assembly District 15",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-15-anamarie-avila-farias",
+     "name": "Anamarie Avila Farias",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Member of the State Assembly, District 15"
+    },
+    {
+     "id": "2026-ca-asm-15-arthur-webb",
+     "name": "Arthur Webb",
+     "party": "NP",
+     "party_full": "No party preference",
+     "incumbent": false,
+     "designation": "Retired Technology Manager"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-16",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "16",
+   "label": "California: State Assembly District 16",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-16-rebecca-bauer-kahan",
+     "name": "Rebecca Bauer-Kahan",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember/Mother"
+    },
+    {
+     "id": "2026-ca-asm-16-joseph-a-rubay",
+     "name": "Joseph A. Rubay",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Businessman/Father"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-17",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "17",
+   "label": "California: State Assembly District 17",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-17-matt-haney",
+     "name": "Matt Haney",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-17-manuel-noris-barrera",
+     "name": "Manuel Noris-Barrera",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "No Ballot Designation"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-18",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "18",
+   "label": "California: State Assembly District 18",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-18-mia-bonta",
+     "name": "Mia Bonta",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember, Assembly District 18"
+    },
+    {
+     "id": "2026-ca-asm-18-andre-sandford",
+     "name": "Andre Sandford",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Housing Program Director"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-19",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "19",
+   "label": "California: State Assembly District 19",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-19-catherine-stefani",
+     "name": "Catherine Stefani",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-19-philip-louis-wing",
+     "name": "Philip Louis Wing",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Financial Advisor"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-20",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "20",
+   "label": "California: State Assembly District 20",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-20-liz-ortega",
+     "name": "Liz Ortega",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-20-patricia-muga",
+     "name": "Patricia Muga",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Real Estate Appraiser"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-21",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "21",
+   "label": "California: State Assembly District 21",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-21-diane-papan",
+     "name": "Diane Papan",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-21-jabra-j-muhawieh",
+     "name": "Jabra J Muhawieh",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Enrolled Agent/Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-22",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "22",
+   "label": "California: State Assembly District 22",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-22-juan-alanis",
+     "name": "Juan Alanis",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Assemblyman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-23",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "23",
+   "label": "California: State Assembly District 23",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-23-marc-berman",
+     "name": "Marc Berman",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-23-david-g-johnson",
+     "name": "David G. Johnson",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-24",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "24",
+   "label": "California: State Assembly District 24",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-24-alex-lee",
+     "name": "Alex Lee",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-24-max-hsia",
+     "name": "Max Hsia",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-25",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "25",
+   "label": "California: State Assembly District 25",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-25-ash-kalra",
+     "name": "Ash Kalra",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-25-himat-singh-bainiwal",
+     "name": "Himat Singh Bainiwal",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Attorney"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-26",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "26",
+   "label": "California: State Assembly District 26",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-26-patrick-ahrens",
+     "name": "Patrick Ahrens",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-26-tim-gorsulowsky",
+     "name": "Tim Gorsulowsky",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-27",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "27",
+   "label": "California: State Assembly District 27",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-27-brian-pacheco",
+     "name": "Brian Pacheco",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "County Supervisor/Farmer"
+    },
+    {
+     "id": "2026-ca-asm-27-mike-murphy",
+     "name": "Mike Murphy",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-28",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "28",
+   "label": "California: State Assembly District 28",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-28-gail-pellerin",
+     "name": "Gail Pellerin",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-28-carol-pefley",
+     "name": "Carol Pefley",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-29",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "29",
+   "label": "California: State Assembly District 29",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-29-robert-rivas",
+     "name": "Robert Rivas",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California Assembly Speaker"
+    },
+    {
+     "id": "2026-ca-asm-29-dennis-p-sanchez",
+     "name": "Dennis P. Sanchez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Businessman/Father"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-30",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "30",
+   "label": "California: State Assembly District 30",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-30-dawn-addis",
+     "name": "Dawn Addis",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember/Teacher"
+    },
+    {
+     "id": "2026-ca-asm-30-shannon-kessler",
+     "name": "Shannon Kessler",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Children's Advocate/Businesswoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-31",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "31",
+   "label": "California: State Assembly District 31",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-31-annalisa-perea",
+     "name": "Annalisa Perea",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "City Councilmember/Mother"
+    },
+    {
+     "id": "2026-ca-asm-31-jim-polsgrove",
+     "name": "Jim Polsgrove",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Engineering Technician"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-32",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "32",
+   "label": "California: State Assembly District 32",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-32-david-couch",
+     "name": "David Couch",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Kern County Supervisor"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-33",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "33",
+   "label": "California: State Assembly District 33",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-33-hipolito-angel-cerros",
+     "name": "Hipolito Angel Cerros",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Public Policy Fellow"
+    },
+    {
+     "id": "2026-ca-asm-33-alexandra-ali-macedo",
+     "name": "Alexandra (Ali) Macedo",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Cattlewoman/Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-34",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "34",
+   "label": "California: State Assembly District 34",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-34-randall-putz",
+     "name": "Randall Putz",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Mayor/Business Owner"
+    },
+    {
+     "id": "2026-ca-asm-34-charles-frederick-hughes",
+     "name": "Charles Frederick Hughes",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-35",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "35",
+   "label": "California: State Assembly District 35",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-35-andrae-gonzales",
+     "name": "Andrae Gonzales",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Councilmember/Nonprofit Director"
+    },
+    {
+     "id": "2026-ca-asm-35-saul-ayon",
+     "name": "Saul Ayon",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Mayor/Teacher"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-36",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "36",
+   "label": "California: State Assembly District 36",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-36-ida-s-obeso-martinez",
+     "name": "Ida S. Obeso-Martinez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Mayor/Nurse"
+    },
+    {
+     "id": "2026-ca-asm-36-jeff-gonzalez",
+     "name": "Jeff Gonzalez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Assemblymember/Father"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-37",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "37",
+   "label": "California: State Assembly District 37",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-37-gregg-hart",
+     "name": "Gregg Hart",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-37-sari-domingues",
+     "name": "Sari Domingues",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Business Analyst"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-38",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "38",
+   "label": "California: State Assembly District 38",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-38-steve-bennett",
+     "name": "Steve Bennett",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Member of the Assembly, 38th District"
+    },
+    {
+     "id": "2026-ca-asm-38-michael-macdonald",
+     "name": "Michael MacDonald",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "City Clerk"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-39",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "39",
+   "label": "California: State Assembly District 39",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-39-juan-carrillo",
+     "name": "Juan Carrillo",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-39-paul-andre-marsh",
+     "name": "Paul Andre Marsh",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Community Services Liaison"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-40",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "40",
+   "label": "California: State Assembly District 40",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-40-pilar-schiavo",
+     "name": "Pilar Schiavo",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-40-rickey-tracy-hayes-ii",
+     "name": "Rickey Tracy Hayes II",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Lineman/Entrepreneur/Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-41",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "41",
+   "label": "California: State Assembly District 41",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-41-john-harabedian",
+     "name": "John Harabedian",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-41-adam-christopher-vena",
+     "name": "Adam Christopher Vena",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Father/Sanitation Employee"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-42",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "42",
+   "label": "California: State Assembly District 42",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-42-deborah-klein-lopez",
+     "name": "Deborah Klein Lopez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "City Councilmember"
+    },
+    {
+     "id": "2026-ca-asm-42-ted-nordblum",
+     "name": "Ted Nordblum",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-43",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "43",
+   "label": "California: State Assembly District 43",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-43-celeste-rodriguez",
+     "name": "Celeste Rodriguez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-43-ricardo-benitez",
+     "name": "Ricardo Benitez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Plumber/Electrical Contractor"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-44",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "44",
+   "label": "California: State Assembly District 44",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-44-nicholas-nick-schultz",
+     "name": "Nicholas \"Nick\" Schultz",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-44-carolyn-daniels",
+     "name": "Carolyn Daniels",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Independent Contractor/Mother"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-45",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "45",
+   "label": "California: State Assembly District 45",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-45-james-c-ramos",
+     "name": "James C. Ramos",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember/Business Owner"
+    },
+    {
+     "id": "2026-ca-asm-45-greg-abdouch",
+     "name": "Greg Abdouch",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-46",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "46",
+   "label": "California: State Assembly District 46",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-46-jesse-gabriel",
+     "name": "Jesse Gabriel",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Member of the State Assembly, 46th District"
+    },
+    {
+     "id": "2026-ca-asm-46-tracey-schroeder",
+     "name": "Tracey Schroeder",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Teacher"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-47",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "47",
+   "label": "California: State Assembly District 47",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-47-leila-namvar",
+     "name": "Leila Namvar",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Civil Servant/Mom"
+    },
+    {
+     "id": "2026-ca-asm-47-greg-wallis",
+     "name": "Greg Wallis",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Member of the State Assembly"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-48",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "48",
+   "label": "California: State Assembly District 48",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-48-blanca-rubio",
+     "name": "Blanca Rubio",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember/Teacher"
+    },
+    {
+     "id": "2026-ca-asm-48-dan-t-tran",
+     "name": "Dan T. Tran",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Real Estate Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-49",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "49",
+   "label": "California: State Assembly District 49",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-49-mike-fong",
+     "name": "Mike Fong",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-49-long-david-liu",
+     "name": "Long David Liu",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Attorney/Father"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-50",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "50",
+   "label": "California: State Assembly District 50",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-50-robert-garcia",
+     "name": "Robert Garcia",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember/Educator"
+    },
+    {
+     "id": "2026-ca-asm-50-victoria-viveros-mageno",
+     "name": "Victoria Viveros Mageno",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Cucamonga School District Member Governing Board Area 1"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-51",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "51",
+   "label": "California: State Assembly District 51",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-51-colin-d-hernandez",
+     "name": "Colin D. Hernandez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Digital Communication Strategist"
+    },
+    {
+     "id": "2026-ca-asm-51-rick-chavez-zbur",
+     "name": "Rick Chavez Zbur",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California Assemblymember"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-52",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "52",
+   "label": "California: State Assembly District 52",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-52-jessica-caloza",
+     "name": "Jessica Caloza",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-52-andrea-lee-anderson",
+     "name": "Andrea Lee Anderson",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "No Ballot Designation"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-53",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "53",
+   "label": "California: State Assembly District 53",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-53-michelle-rodriguez",
+     "name": "Michelle Rodriguez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember/Mom"
+    },
+    {
+     "id": "2026-ca-asm-53-rafaela-romero",
+     "name": "Rafaela Romero",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Special Education Aide"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-54",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "54",
+   "label": "California: State Assembly District 54",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-54-mark-gonzalez",
+     "name": "Mark Gonzalez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Member of the State Assembly"
+    },
+    {
+     "id": "2026-ca-asm-54-alexandra-briseno",
+     "name": "Alexandra Briseno",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "No Ballot Designation"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-55",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "55",
+   "label": "California: State Assembly District 55",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-55-ashley-m-brown",
+     "name": "Ashley M. Brown",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "School Social Worker"
+    },
+    {
+     "id": "2026-ca-asm-55-isaac-g-bryan",
+     "name": "Isaac G. Bryan",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-56",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "56",
+   "label": "California: State Assembly District 56",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-56-lisa-calderon",
+     "name": "Lisa Calderon",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assembly Member/Mom"
+    },
+    {
+     "id": "2026-ca-asm-56-jessica-martinez",
+     "name": "Jessica Martinez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Teacher"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-57",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "57",
+   "label": "California: State Assembly District 57",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-57-sade-elhawary",
+     "name": "Sade Elhawary",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-57-constance-jewel-menzies",
+     "name": "Constance Jewel Menzies",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "In-Home Care Provider"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-58",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "58",
+   "label": "California: State Assembly District 58",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-58-clarissa-cervantes",
+     "name": "Clarissa Cervantes",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Councilmember/Businesswoman/Mother"
+    },
+    {
+     "id": "2026-ca-asm-58-leticia-castillo",
+     "name": "Leticia Castillo",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Assemblywoman/Licensed Psychotherapist"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-59",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "59",
+   "label": "California: State Assembly District 59",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-59-phillip-chen",
+     "name": "Phillip Chen",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Assemblyman/Business Owner"
+    },
+    {
+     "id": "2026-ca-asm-59-victor-hernandez",
+     "name": "Victor Hernandez",
+     "party": "G",
+     "party_full": "Green",
+     "incumbent": false,
+     "designation": "Account Sales Manager"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-60",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "60",
+   "label": "California: State Assembly District 60",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-60-corey-a-jackson",
+     "name": "Corey A Jackson",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assembly Member"
+    },
+    {
+     "id": "2026-ca-asm-60-ed-delgado",
+     "name": "Ed Delgado",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "City Council Member"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-61",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "61",
+   "label": "California: State Assembly District 61",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-61-tina-simone-mckinnor",
+     "name": "Tina Simone McKinnor",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-61-brian-lockwood",
+     "name": "Brian Lockwood",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "No Ballot Designation"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-62",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "62",
+   "label": "California: State Assembly District 62",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-62-jos-luis-solache",
+     "name": "José Luis Solache",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-62-paul-irving-jones",
+     "name": "Paul Irving Jones",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Retired Combat Marine"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-63",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "63",
+   "label": "California: State Assembly District 63",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-63-natasha-johnson",
+     "name": "Natasha Johnson",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Assemblywoman/Business Owner"
+    },
+    {
+     "id": "2026-ca-asm-63-kevin-akin",
+     "name": "Kevin Akin",
+     "party": "PAF",
+     "party_full": "Peace and Freedom",
+     "incumbent": false,
+     "designation": "No Ballot Designation"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-64",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "64",
+   "label": "California: State Assembly District 64",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-64-blanca-pacheco",
+     "name": "Blanca Pacheco",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblywoman"
+    },
+    {
+     "id": "2026-ca-asm-64-raul-ortiz-jr",
+     "name": "Raul Ortiz Jr.",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Pest Control Manager"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-65",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "65",
+   "label": "California: State Assembly District 65",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-65-ayanna-davis",
+     "name": "Ayanna Davis",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Educator/School Boardmember"
+    },
+    {
+     "id": "2026-ca-asm-65-lydia-a-guti-rrez",
+     "name": "Lydia A. Gutiérrez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Public School Teacher"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-66",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "66",
+   "label": "California: State Assembly District 66",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-66-sara-deen",
+     "name": "Sara Deen",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "School Boardmember/Businesswoman"
+    },
+    {
+     "id": "2026-ca-asm-66-paul-seo",
+     "name": "Paul Seo",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Mayor/Corruption Prosecutor"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-67",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "67",
+   "label": "California: State Assembly District 67",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-67-mark-pulido",
+     "name": "Mark Pulido",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "City Councilmember"
+    },
+    {
+     "id": "2026-ca-asm-67-paulo-morales",
+     "name": "Paulo Morales",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Law Enforcement Officer"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-68",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "68",
+   "label": "California: State Assembly District 68",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-68-jessie-lopez",
+     "name": "Jessie Lopez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "City Councilwoman"
+    },
+    {
+     "id": "2026-ca-asm-68-david-penaloza",
+     "name": "David Penaloza",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Councilmember/Dad/Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-69",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "69",
+   "label": "California: State Assembly District 69",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-69-carolyn-j-essex",
+     "name": "Carolyn J. Essex",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Legislative Policy Analyst"
+    },
+    {
+     "id": "2026-ca-asm-69-josh-lowenthal",
+     "name": "Josh Lowenthal",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Business Owner/Assemblymember"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-70",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "70",
+   "label": "California: State Assembly District 70",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-70-paula-swift",
+     "name": "Paula Swift",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    },
+    {
+     "id": "2026-ca-asm-70-tri-ta",
+     "name": "Tri Ta",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "California Assemblyman/Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-71",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "71",
+   "label": "California: State Assembly District 71",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-71-jj-galvez",
+     "name": "JJ Galvez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Appointed Director, Silverado-Modjeska Recreation and Park District"
+    },
+    {
+     "id": "2026-ca-asm-71-kate-sanchez",
+     "name": "Kate Sanchez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "California State Assemblywoman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-72",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "72",
+   "label": "California: State Assembly District 72",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-72-chris-kluwe",
+     "name": "Chris Kluwe",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "Businessman/Coach/Father"
+    },
+    {
+     "id": "2026-ca-asm-72-gracey-van-der-mark",
+     "name": "Gracey Van Der Mark",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Councilwoman/Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-73",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "73",
+   "label": "California: State Assembly District 73",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-73-cottie-petrie-norris",
+     "name": "Cottie Petrie-Norris",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-73-urson-russell",
+     "name": "Urson Russell",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Businessman"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-74",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "74",
+   "label": "California: State Assembly District 74",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-74-sergio-farias",
+     "name": "Sergio Farias",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "City Councilmember/Businessman"
+    },
+    {
+     "id": "2026-ca-asm-74-laurie-davies",
+     "name": "Laurie Davies",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Assemblywoman/Business Owner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-75",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "75",
+   "label": "California: State Assembly District 75",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-75-gerald-c-boursiquot",
+     "name": "Gerald C. Boursiquot",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": false,
+     "designation": "IT Contractor/Father"
+    },
+    {
+     "id": "2026-ca-asm-75-carl-demaio",
+     "name": "Carl DeMaio",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": true,
+     "designation": "Businessman/State Legislator"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-76",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "76",
+   "label": "California: State Assembly District 76",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-76-darshana-patel",
+     "name": "Darshana Patel",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-76-carrie-s-espinoza-villanueva",
+     "name": "Carrie S. Espinoza Villanueva",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "College Administration Support"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-77",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "77",
+   "label": "California: State Assembly District 77",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-77-tasha-boerner",
+     "name": "Tasha Boerner",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "California State Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-77-trinity-hannaway",
+     "name": "Trinity Hannaway",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Taxpayer Advocate"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-78",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "78",
+   "label": "California: State Assembly District 78",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-78-chris-ward",
+     "name": "Chris Ward",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Member of the State Assembly, 78th District"
+    },
+    {
+     "id": "2026-ca-asm-78-payton-galvez",
+     "name": "Payton Galvez",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Constituent Services Manager"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-79",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "79",
+   "label": "California: State Assembly District 79",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-79-lashae-sharp-collins",
+     "name": "LaShae Sharp-Collins",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Incumbent"
+    },
+    {
+     "id": "2026-ca-asm-79-andrew-lawson",
+     "name": "Andrew Lawson",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Spring Valley Community Planning Group Member"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-asm-80",
+   "state": "CA",
+   "level": "state",
+   "office": "ASM",
+   "district": "80",
+   "label": "California: State Assembly District 80",
+   "candidates": [
+    {
+     "id": "2026-ca-asm-80-david-a-alvarez",
+     "name": "David A. Alvarez",
+     "party": "D",
+     "party_full": "Democratic",
+     "incumbent": true,
+     "designation": "Assemblymember"
+    },
+    {
+     "id": "2026-ca-asm-80-alejandro-galicia",
+     "name": "Alejandro Galicia",
+     "party": "R",
+     "party_full": "Republican",
+     "incumbent": false,
+     "designation": "Business Owner/Commissioner"
+    }
+   ]
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-of-the-supreme-court",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice of the Supreme Court (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-of-the-supreme-court-kelli-m-evans",
+     "name": "Kelli M. Evans",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice of the Supreme Court"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-of-the-supreme-court-joshua-groban",
+     "name": "Joshua Groban",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice of the Supreme Court"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-one",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, First District, Division One (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-one-charles-a-smiley",
+     "name": "Charles A. Smiley",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-one-kathleen-m-banke",
+     "name": "Kathleen M. Banke",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-one-monique-langhorne-wilson",
+     "name": "Monique Langhorne Wilson",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-first-district-division-two",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, First District, Division Two (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-first-district-division-two-therese-m-stewart",
+     "name": "Therese M. Stewart",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-two",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, First District, Division Two (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-two-tara-m-desautels",
+     "name": "Tara M. Desautels",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-three",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, First District, Division Three (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-three-ioana-petrou",
+     "name": "Ioana Petrou",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-three-victor-a-rodriguez",
+     "name": "Victor A. Rodriguez",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-first-district-division-four",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, First District, Division Four (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-first-district-division-four-tracie-l-brown",
+     "name": "Tracie L. Brown",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-five",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, First District, Division Five (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-five-mark-simons",
+     "name": "Mark Simons",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-five-danny-y-chou",
+     "name": "Danny Y. Chou",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-first-district-division-five-gordon-burns",
+     "name": "Gordon Burns",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-one",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Second District, Division One (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-one-michelle-c-kim",
+     "name": "Michelle C. Kim",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-one-gregory-j-weingart",
+     "name": "Gregory J. Weingart",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-two",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Second District, Division Two (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-two-steve-goorvitch",
+     "name": "Steve Goorvitch",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-two-anne-richardson",
+     "name": "Anne Richardson",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-three",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, Second District, Division Three (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-three-rashida-a-adams",
+     "name": "Rashida A. Adams",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-three",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Second District, Division Three (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-three-mark-hanasono",
+     "name": "Mark Hanasono",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-four",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, Second District, Division Four (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-four-helen-zukin",
+     "name": "Helen Zukin",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-four",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Second District, Division Four (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-four-audra-m-mori",
+     "name": "Audra M. Mori",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-four-nicholas-daum",
+     "name": "Nicholas Daum",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-four-armen-tamzarian",
+     "name": "Armen Tamzarian",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-five",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, Second District, Division Five (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-five-brian-m-hoffstadt",
+     "name": "Brian M. Hoffstadt",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-six",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, Second District, Division Six (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-six-tari-l-cody",
+     "name": "Tari L. Cody",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-six",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Second District, Division Six (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-six-kenneth-r-yegan",
+     "name": "Kenneth R. Yegan",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-seven",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, Second District, Division Seven (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-second-district-division-seven-gonzalo-c-martinez",
+     "name": "Gonzalo C. Martinez",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-seven",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Second District, Division Seven (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-seven-natalie-stone",
+     "name": "Natalie Stone",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-eight",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Second District, Division Eight (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-eight-john-wiley",
+     "name": "John Wiley",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-eight-matthew-a-scherb",
+     "name": "Matthew A. Scherb",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-second-district-division-eight-victor-g-viramontes",
+     "name": "Victor G. Viramontes",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-administrative-presiding-justice-court-of-appeal-third-district",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Administrative Presiding Justice, Court of Appeal, Third District (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-administrative-presiding-justice-court-of-appeal-third-district-administrative-presiding-justice-laurie-earl",
+     "name": "Administrative Presiding Justice Laurie Earl",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-third-district",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Third District (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-third-district-shama-mesiwala",
+     "name": "Shama Mesiwala",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-third-district-david-b-sapp",
+     "name": "David B. Sapp",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-third-district-lauri-damrell",
+     "name": "Lauri Damrell",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-third-district-stacy-boulware-eurie",
+     "name": "Stacy Boulware Eurie",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-third-district-aimee-a-feinberg",
+     "name": "Aimee A. Feinberg",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-third-district-jonathan-renner",
+     "name": "Jonathan Renner",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Fourth District, Division One (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one-eran-m-bermudez",
+     "name": "Eran M. Bermudez",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one-jose-s-castillo",
+     "name": "Jose S. Castillo",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one-truc-t-do",
+     "name": "Truc T. Do",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one-san-diego-county-superior-court-judge-lisa-rodriguez",
+     "name": "San Diego County Superior Court Judge Lisa Rodriguez",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one-david-m-rubin",
+     "name": "David M. Rubin",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one-william-s-dato",
+     "name": "William S. Dato",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-one-julia-c-kelety",
+     "name": "Julia C. Kelety",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-two",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Fourth District, Division Two (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-two-corey-g-lee",
+     "name": "Corey G. Lee",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-two-michael-j-raphael",
+     "name": "Michael J. Raphael",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-presiding-justice-court-of-appeal-fourth-district-division-three",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Presiding Justice, Court of Appeal, Fourth District, Division Three (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-presiding-justice-court-of-appeal-fourth-district-division-three-joanne-motoike",
+     "name": "Joanne Motoike",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Presiding Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-three",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Fourth District, Division Three (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-three-nathan-r-scott",
+     "name": "Nathan R. Scott",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-three-juliet-o-macaulay",
+     "name": "Juliet O. Macaulay",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-three-martha-k-gooding",
+     "name": "Martha K. Gooding",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-three-thomas-a-delaney",
+     "name": "Thomas A. Delaney",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fourth-district-division-three-deborah-c-servino",
+     "name": "Deborah C. Servino",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-fifth-district",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Fifth District (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fifth-district-arlan-l-harrell",
+     "name": "Arlan L. Harrell",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fifth-district-sonny-s-sandhu",
+     "name": "Sonny S. Sandhu",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fifth-district-amy-k-guerra",
+     "name": "Amy K. Guerra",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fifth-district-kathleen-a-meehan",
+     "name": "Kathleen A. Meehan",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fifth-district-mark-w-snauffer",
+     "name": "Mark W. Snauffer",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-fifth-district-thomas-desantos",
+     "name": "Thomas Desantos",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-ret-associate-justice-court-of-appeal-sixth-district",
+   "state": "CA",
+   "level": "state",
+   "office": "RET",
+   "district": null,
+   "label": "California: Associate Justice, Court of Appeal, Sixth District (retention)",
+   "candidates": [
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-sixth-district-daniel-h-bromberg",
+     "name": "Daniel H. Bromberg",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-sixth-district-charles-e-wilson-ii",
+     "name": "Charles E. Wilson II",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-sixth-district-charles-f-adams",
+     "name": "Charles F. Adams",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-sixth-district-frederick-s-chung",
+     "name": "Frederick S. Chung",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Superior Court Judge"
+    },
+    {
+     "id": "2026-ca-ret-associate-justice-court-of-appeal-sixth-district-allison-marston-danner",
+     "name": "Allison Marston Danner",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Associate Justice"
+    }
+   ],
+   "area": "Retention question: voters answer yes or no on each justice; a justice stays in office with a majority of yes votes."
+  },
+  {
+   "id": "2026-ca-cty-san-francisco-sup2",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "2",
+   "label": "California: San Francisco County Board of Supervisors, District 2",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-francisco-sup2-nicholas-berg",
+     "name": "Nicholas Berg",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup2-guy-mccoy",
+     "name": "Guy McCoy",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup2-monthanus-ratanapakdee",
+     "name": "Monthanus Ratanapakdee",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup2-stephen-sherrill",
+     "name": "Stephen Sherrill",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "San Francisco County · 4 qualified; page does not print ballot designations or incumbent marks",
+   "official_url": "https://www.sf.gov/candidates-november-3-2026-general-election"
+  },
+  {
+   "id": "2026-ca-cty-san-francisco-sup4",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "4",
+   "label": "California: San Francisco County Board of Supervisors, District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-francisco-sup4-albert-chow",
+     "name": "Albert Chow",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup4-jeremy-julian-greco",
+     "name": "Jeremy Julian Greco",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup4-alan-wong",
+     "name": "Alan Wong",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "San Francisco County · 3 qualified",
+   "official_url": "https://www.sf.gov/candidates-november-3-2026-general-election"
+  },
+  {
+   "id": "2026-ca-cty-san-francisco-sup6",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "6",
+   "label": "California: San Francisco County Board of Supervisors, District 6",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-francisco-sup6-alex-behrend",
+     "name": "Alex Behrend",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup6-matt-dorsey",
+     "name": "Matt Dorsey",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "San Francisco County · 2 qualified",
+   "official_url": "https://www.sf.gov/candidates-november-3-2026-general-election"
+  },
+  {
+   "id": "2026-ca-cty-san-francisco-sup8",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "8",
+   "label": "California: San Francisco County Board of Supervisors, District 8",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-francisco-sup8-gary-mccoy",
+     "name": "Gary McCoy",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup8-michael-t-nguyen",
+     "name": "Michael T. Nguyen",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup8-darshini-patel",
+     "name": "Darshini Patel",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup8-emanuel-manny-yekutiel",
+     "name": "Emanuel \"Manny\" Yekutiel",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "San Francisco County · 4 qualified",
+   "official_url": "https://www.sf.gov/candidates-november-3-2026-general-election"
+  },
+  {
+   "id": "2026-ca-cty-san-francisco-sup10",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "10",
+   "label": "California: San Francisco County Board of Supervisors, District 10",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-pearci-pj-bastiany-iii",
+     "name": "Pearci \"PJ\" Bastiany III",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-dionjay-dj-brookter",
+     "name": "Dionjay (DJ) Brookter",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-deandra-bryant",
+     "name": "Deandra Bryant",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-theo-ellington",
+     "name": "Theo Ellington",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-j-r-eppler",
+     "name": "J.R. Eppler",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-ellsworth-ell-m-jennison-jr",
+     "name": "Ellsworth \"Ell\" M. Jennison, Jr.",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-mike-trouble-lin",
+     "name": "Mike Trouble Lin",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-jamo-muhammad",
+     "name": "Jamo Muhammad",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-jessica-pessecow",
+     "name": "Jessica Pessecow",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-san-francisco-sup10-shawn-m-richard",
+     "name": "Shawn M. Richard",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "San Francisco County · 10 qualified",
+   "official_url": "https://www.sf.gov/candidates-november-3-2026-general-election"
+  },
+  {
+   "id": "2026-ca-cty-san-mateo-sup5-short-term",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5 (Short Term)",
+   "label": "California: San Mateo County Board of Supervisors, District 5 (Short Term)",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-mateo-sup5-short-term-mark-nagales",
+     "name": "Mark Nagales",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Vice Mayor"
+    },
+    {
+     "id": "2026-ca-cty-san-mateo-sup5-short-term-juslyn-cabrera-manalo",
+     "name": "Juslyn Cabrera Manalo",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Daly City Councilmember"
+    }
+   ],
+   "area": "San Mateo County · Roster contest 4050, Member, Board of Supervisors, District 5 (Short Term), Vote for 1, On Ballot: Yes",
+   "official_url": "https://smcacre.gov/system/files/2026-09/52_candidateroster0903.pdf"
+  },
+  {
+   "id": "2026-ca-cty-solano-sup4",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "4",
+   "label": "California: Solano County Board of Supervisors, District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-solano-sup4-michael-mike-silva",
+     "name": "Michael \"Mike\" Silva",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Professor / Vacaville Councilmember"
+    },
+    {
+     "id": "2026-ca-cty-solano-sup4-john-carli",
+     "name": "John Carli",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Mayor, City of Vacaville"
+    }
+   ],
+   "area": "Solano County · ON THE BALLOT per Candidate Filed Log (as of 8/20/2026); June 2 certified primary: Silva 43.03%, Carli 34.67%, Juan P. Desmarais 22.31%",
+   "official_url": "https://content.solanocounty.gov/sites/default/files/2026-07/CANDIDATE_FILED_LOG_Nov_3_2026_7.13.26.pdf"
+  },
+  {
+   "id": "2026-ca-cty-sonoma-sup2",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "2",
+   "label": "California: Sonoma County Board of Supervisors, District 2",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-sonoma-sup2-joanna-paun",
+     "name": "Joanna Paun",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Trustee, Petaluma Jt. Union High School District, Area 5"
+    },
+    {
+     "id": "2026-ca-cty-sonoma-sup2-sylvia-lemus",
+     "name": "Sylvia Lemus",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Councilmember/Business Owner"
+    }
+   ],
+   "area": "Sonoma County · Runoff; June 2 certified district canvass: Paun 14,118, Lemus 8,572, Moreda 6,503, King 4,954 (no majority)",
+   "official_url": "https://sonomacounty.gov/administrative-support-and-fiscal-services/registrar-of-voters/elections/november-3-2026-general-election-candidates-on-the-ballot"
+  },
+  {
+   "id": "2026-ca-cty-sonoma-sup4",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "4",
+   "label": "California: Sonoma County Board of Supervisors, District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-sonoma-sup4-tom-schwedhelm",
+     "name": "Tom Schwedhelm",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    },
+    {
+     "id": "2026-ca-cty-sonoma-sup4-melanie-bagby",
+     "name": "Melanie Bagby",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Business Owner"
+    }
+   ],
+   "area": "Sonoma County · Runoff; June 2 certified district canvass: Bagby 11,719, Schwedhelm 9,794, Lands 9,397 (no majority)",
+   "official_url": "https://sonomacounty.gov/administrative-support-and-fiscal-services/registrar-of-voters/elections/november-3-2026-general-election-candidates-on-the-ballot"
+  },
+  {
+   "id": "2026-ca-cty-orange-sup4",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "4",
+   "label": "California: Orange County Board of Supervisors, District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-orange-sup4-tim-shaw",
+     "name": "Tim Shaw",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Orange County Board of Education Trustee"
+    },
+    {
+     "id": "2026-ca-cty-orange-sup4-connor-traut",
+     "name": "Connor Traut",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Mayor/Business Owner"
+    }
+   ],
+   "area": "Orange County · Incumbent Doug Chaffee is not a candidate; office went into the extended nomination period.",
+   "official_url": "https://ocvote.gov/fileadmin/user_upload/data/candlog/GEN2026/candlog.pdf"
+  },
+  {
+   "id": "2026-ca-cty-orange-sup5",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5",
+   "label": "California: Orange County Board of Supervisors, District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-orange-sup5-diane-dixon",
+     "name": "Diane Dixon",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "California State Assemblywoman"
+    },
+    {
+     "id": "2026-ca-cty-orange-sup5-katrina-foley",
+     "name": "Katrina Foley",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Orange County Supervisor/Businessowner"
+    }
+   ],
+   "area": "Orange County",
+   "official_url": "https://ocvote.gov/fileadmin/user_upload/data/candlog/GEN2026/candlog.pdf"
+  },
+  {
+   "id": "2026-ca-cty-imperial-sup1",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "1",
+   "label": "California: Imperial County Board of Supervisors, District 1",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-imperial-sup1-enrique-kiki-alvarado",
+     "name": "Enrique \"Kiki\" Alvarado",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Invesigator"
+    },
+    {
+     "id": "2026-ca-cty-imperial-sup1-jesus-eduardo-escobar",
+     "name": "Jesus Eduardo Escobar",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Incumbent"
+    }
+   ],
+   "area": "Imperial County · Listed as 'Board of Supervisors - District 1 RUN-OFF - Elect 1'.",
+   "official_url": "https://elections.imperialcounty.org/wp-content/uploads/2026/08/CandidateStatus_Website-.pdf"
+  },
+  {
+   "id": "2026-ca-cty-imperial-sup5",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5",
+   "label": "California: Imperial County Board of Supervisors, District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-imperial-sup5-john-hawk",
+     "name": "John Hawk",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Incumbent"
+    },
+    {
+     "id": "2026-ca-cty-imperial-sup5-patricia-patty-lizarraga",
+     "name": "Patricia \"Patty\" Lizarraga",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Retired Accountant Auditor"
+    }
+   ],
+   "area": "Imperial County · Listed as 'Board of Supervisors - District 5 RUN-OFF - Elect 1'.",
+   "official_url": "https://elections.imperialcounty.org/wp-content/uploads/2026/08/CandidateStatus_Website-.pdf"
+  },
+  {
+   "id": "2026-ca-cty-san-diego-sup4",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "4",
+   "label": "California: San Diego County Board of Supervisors, District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-diego-sup4-kristine-c-alessio",
+     "name": "Kristine C. Alessio",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Attorney"
+    },
+    {
+     "id": "2026-ca-cty-san-diego-sup4-monica-montgomery-steppe",
+     "name": "Monica Montgomery Steppe",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "San Diego County Supervisor"
+    }
+   ],
+   "area": "San Diego County",
+   "official_url": "https://www.sdvote.com/content/dam/rov/en/election/nov-3-2026-gubernatorial-general-election/candidate-list.pdf"
+  },
+  {
+   "id": "2026-ca-cty-san-diego-sup5",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5",
+   "label": "California: San Diego County Board of Supervisors, District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-diego-sup5-rebecca-jones",
+     "name": "Rebecca Jones",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "San Marcos Mayor/Businesswoman"
+    },
+    {
+     "id": "2026-ca-cty-san-diego-sup5-kyle-krahel",
+     "name": "Kyle Krahel",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ],
+   "area": "San Diego County",
+   "official_url": "https://www.sdvote.com/content/dam/rov/en/election/nov-3-2026-gubernatorial-general-election/candidate-list.pdf"
+  },
+  {
+   "id": "2026-ca-cty-sacramento-sup1",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "1",
+   "label": "California: Sacramento County Board of Supervisors, District 1",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-sacramento-sup1-eric-guerra",
+     "name": "Eric Guerra",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "CLEAN AIR BOARD"
+    },
+    {
+     "id": "2026-ca-cty-sacramento-sup1-flo-cofer",
+     "name": "Flo Cofer",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "EPIDEMIOLOGIST, PUBLIC HEALTH"
+    }
+   ],
+   "area": "Sacramento County · Only Board of Supervisors District 1 appears on the registrar's November roster (On Ballot: Yes). Districts 3 and 5 are not on the November roster; incumbent flags are not marked on this roster.",
+   "official_url": "https://elections.saccounty.gov/content/vre/us/en/campaign-services/candidate-report.html"
+  },
+  {
+   "id": "2026-ca-cty-el-dorado-sup4",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "4",
+   "label": "California: El Dorado County Board of Supervisors, District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-el-dorado-sup4-ted-gaines",
+     "name": "Ted Gaines",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    },
+    {
+     "id": "2026-ca-cty-el-dorado-sup4-gina-posey",
+     "name": "Gina Posey",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Community Volunteer"
+    }
+   ],
+   "area": "El Dorado County · Only County Supervisor 4th District appears on the November candidate list (On Ballot: Yes).",
+   "official_url": "https://www.eldoradocounty.ca.gov/files/assets/county/v/29/documents/government/elections/20261103/candidate-information/cfmcfmr009_nominationlist.pdf"
+  },
+  {
+   "id": "2026-ca-cty-yolo-sup3",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "3",
+   "label": "California: Yolo County Board of Supervisors, District 3",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-yolo-sup3-dotty-pritchard",
+     "name": "Dotty Pritchard",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "County Supervisor's Deputy"
+    },
+    {
+     "id": "2026-ca-cty-yolo-sup3-mayra-vega",
+     "name": "Mayra Vega",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Woodland Councilmember/Businessowner"
+    }
+   ],
+   "area": "Yolo County · Listed by the registrar under County Nonpartisan Offices - Runoff Election; District 3 is the only supervisor contest on the November ballot.",
+   "official_url": "https://ace.yolocounty.gov/395/County"
+  },
+  {
+   "id": "2026-ca-cty-shasta-sup5",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5",
+   "label": "California: Shasta County Board of Supervisors, District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-shasta-sup5-mike-w-gallagher",
+     "name": "Mike W. Gallagher",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "City Councilmember Anderson"
+    },
+    {
+     "id": "2026-ca-cty-shasta-sup5-chris-kelstrom",
+     "name": "Chris Kelstrom",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Incumbent Supervisor"
+    }
+   ],
+   "area": "Shasta County · Supervisor District 5 is the only supervisor contest on the November list (On Ballot: Yes).",
+   "official_url": "https://elections.shastacounty.gov/wp-content/uploads/2026/08/Final-Qualifed-Candidate-List-8-25-26.pdf"
+  },
+  {
+   "id": "2026-ca-cty-fresno-sup1",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "1",
+   "label": "California: Fresno County Board of Supervisors, District 1",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-fresno-sup1-maria-pacheco",
+     "name": "Maria Pacheco",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Mayor/Student"
+    },
+    {
+     "id": "2026-ca-cty-fresno-sup1-mike-karbassi",
+     "name": "Mike Karbassi",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Council President/Businessman"
+    }
+   ],
+   "area": "Fresno County · Runoff; incumbent Brian M. Pacheco not a candidate.",
+   "official_url": "https://www2.fresnocountyca.gov/2850/post/2026Nov/officesupforelectioncandidatelist.pdf"
+  },
+  {
+   "id": "2026-ca-cty-madera-sup5",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5",
+   "label": "California: Madera County Board of Supervisors, District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-madera-sup5-frank-bigelow",
+     "name": "Frank Bigelow",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Rancher/Businessman"
+    },
+    {
+     "id": "2026-ca-cty-madera-sup5-melanie-mel-barker",
+     "name": "Melanie \"Mel\" Barker",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Small Business Owner"
+    }
+   ],
+   "area": "Madera County · Incumbent Robert \"Bobby\" Macaulay not a candidate. No other supervisor district appears on the November list.",
+   "official_url": "https://votemadera.com/wp-content/uploads/2026/08/List-of-Candidates-08-12-2026.pdf"
+  },
+  {
+   "id": "2026-ca-cty-tulare-sup4",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "4",
+   "label": "California: Tulare County Board of Supervisors, District 4",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-tulare-sup4-ian-bakke",
+     "name": "Ian Bakke",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Business Owner"
+    },
+    {
+     "id": "2026-ca-cty-tulare-sup4-eddie-valero",
+     "name": "Eddie Valero",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "County Supervisor/Businessman"
+    }
+   ],
+   "area": "Tulare County · Runoff.",
+   "official_url": "https://tc-web.widen.net/s/dspbjgfnfv/novgenuocl"
+  },
+  {
+   "id": "2026-ca-cty-mariposa-sup1",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "1",
+   "label": "California: Mariposa County Board of Supervisors, District 1",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-mariposa-sup1-lisa-edelheit",
+     "name": "Lisa Edelheit",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-mariposa-sup1-stanley-bissmeyer",
+     "name": "Stanley Bissmeyer",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "Mariposa County · Runoff after June 2, 2026 primary (Lisa Edelheit 42.45%, Stanley Bissmeyer 32.78%, Adam McLane 24.76% per county Final Results Report https://www.mariposacounty.gov/DocumentCenter/View/102427/Final-Results-Report-PDF). Registrar list gives no ballot designations.",
+   "official_url": "https://www.mariposacounty.gov/DocumentCenter/View/96920/Candidates-and-Contact-Info-----Statewide-Direct-Primary-Election-June-2-2026"
+  },
+  {
+   "id": "2026-ca-cty-tuolumne-sup2",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "2",
+   "label": "California: Tuolumne County Board of Supervisors, District 2",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-tuolumne-sup2-juli-healy",
+     "name": "Juli Healy",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Business Owner"
+    },
+    {
+     "id": "2026-ca-cty-tuolumne-sup2-ryan-p-campbell",
+     "name": "Ryan P Campbell",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true,
+     "designation": "Incumbent"
+    }
+   ],
+   "area": "Tuolumne County · Runoff; only supervisor contest on the November list.",
+   "official_url": "https://tuolumnecounty.ca.gov/DocumentCenter/View/31665"
+  },
+  {
+   "id": "2026-ca-cty-calaveras-sup5",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5",
+   "label": "California: Calaveras County Board of Supervisors, District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-calaveras-sup5-clyde-clapp",
+     "name": "Clyde Clapp",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Retired Contractor"
+    },
+    {
+     "id": "2026-ca-cty-calaveras-sup5-bruce-giudici",
+     "name": "Bruce Giudici",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Non-profit Fiscal Officer"
+    }
+   ],
+   "area": "Calaveras County · Runoff; only supervisor contest on the November list.",
+   "official_url": "https://elections.calaverasgov.us/Portals/Elections/Documents/Candidates/qualified%20caniddate%20listcfmcfmr009_nominationlist.pdf?ver=we4iXWdmaw_7ZiEPp4gN7g%3d%3d"
+  },
+  {
+   "id": "2026-ca-cty-inyo-sup3",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "3",
+   "label": "California: Inyo County Board of Supervisors, District 3",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-inyo-sup3-scott-marcellin",
+     "name": "Scott Marcellin",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": true
+    },
+    {
+     "id": "2026-ca-cty-inyo-sup3-steven-orihuela",
+     "name": "Steven Orihuela",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "Inyo County · Listed by the registrar under Local Nonpartisan Offices - Runoff Contests (4-year term); incumbents marked with * on the list.",
+   "official_url": "https://drive.google.com/file/d/14LYwNQNcqtqcYlg2UUOPvJrhVIIVstvY/view?usp=sharing"
+  },
+  {
+   "id": "2026-ca-cty-san-benito-sup5",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "5",
+   "label": "California: San Benito County Board of Supervisors, District 5",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-san-benito-sup5-john-williams",
+     "name": "John Williams",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Retired Refrigeration Manager"
+    },
+    {
+     "id": "2026-ca-cty-san-benito-sup5-rodney-bianchi",
+     "name": "Rodney Bianchi",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Business Owner"
+    },
+    {
+     "id": "2026-ca-cty-san-benito-sup5-ignacio-velazquez",
+     "name": "Ignacio Velazquez",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false,
+     "designation": "Business Owner"
+    }
+   ],
+   "area": "San Benito County · County Supervisor, District 5 - Short Term (2-year term, vacancy); registrar lists Incumbent(s): Vacant. Names printed in uppercase on the registrar's list. No other supervisor district is on the November ballot per the registrar's candidate handbook and proof list.",
+   "official_url": "https://www.sanbenitocounty-ca-cre.gov/home/showpublisheddocument/16343/639237846936770000"
+  },
+  {
+   "id": "2026-ca-cty-sierra-sup2",
+   "state": "CA",
+   "level": "county",
+   "office": "SUP",
+   "district": "2",
+   "label": "California: Sierra County Board of Supervisors, District 2",
+   "candidates": [
+    {
+     "id": "2026-ca-cty-sierra-sup2-bryan-davey",
+     "name": "Bryan Davey",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    },
+    {
+     "id": "2026-ca-cty-sierra-sup2-sonya-meline",
+     "name": "Sonya Meline",
+     "party": "NP",
+     "party_full": "Nonpartisan",
+     "incumbent": false
+    }
+   ],
+   "area": "Sierra County · November runoff; June 2, 2026 primary per registrar's Statement of Vote: SONYA Z. MELINE 114, BRYAN DAVEY 102, MICHAEL OSTROM 23 of 239 votes. Registrar's list prints no ballot designations or incumbent flags.",
+   "official_url": "https://sierracounty.ca.gov/DocumentCenter/View/12086/Sierra-County-Local-Candidate-List"
+  }
+ ]
+}

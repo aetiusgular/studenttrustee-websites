@@ -23,6 +23,11 @@ Output (inside data/legislation/, which GitHub Pages publishes):
   elections/us-{st}/federal.json   that state's federal races and candidates
   elections/us/federal-index.json  every race in one table for the national list
 
+Certified ballots (election-ballots/{st}-{cycle}.json, hand-entered from the state's certified list of
+candidates and the county registrars' lists) are laid over the FEC records every night: a ballot race
+replaces the FEC race with the same id, and its state and county races are added with `level` set.
+Without this the FEC rewrite would drop them. The federal index and counts cover federal races only.
+
 A state whose federal candidate file loses more than a fifth of its candidates overnight keeps the
 previous file unless ALLOW_SHRINK=1 (the FEC API paging once returned an empty page).
 """
@@ -37,6 +42,7 @@ FEC_URL = 'https://api.open.fec.gov/v1/candidates/'
 FEC_KEY_ENV = 'FEC_API_KEY'
 FEC_PER_PAGE = 100
 SITES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'election-sites.json')
+BALLOTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'election-ballots')
 SCHEMA = 1
 SHRINK = 0.8
 SID_CIVIC = 'google-civic-elections'
@@ -187,6 +193,48 @@ def group_races(cycle, st, candidates):
     return out
 
 
+def is_federal(race):
+    return (race.get('level') or 'federal') == 'federal'
+
+
+def federal_counts(races):
+    fed = [r for r in races or [] if is_federal(r)]
+    return len(fed), sum(len(r['candidates']) for r in fed)
+
+
+def load_ballot(st, cycle):
+    path = os.path.join(BALLOTS_DIR, '%s-%d.json' % (st.lower(), cycle))
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding='utf-8') as fh:
+        return json.load(fh)
+
+
+def merge_ballot(st, cycle):
+    """Lay the state's certified ballot over its federal.json. Returns the number of ballot races, or 0."""
+    ballot = load_ballot(st, cycle)
+    if not ballot or not ballot.get('races'):
+        return 0
+    rel = 'elections/us-%s/federal.json' % st.lower()
+    f = writer.read_json(rel, {}) or {'schema_version': SCHEMA, 'state': st, 'cycle': cycle, 'races': []}
+    mine = {r['id'] for r in ballot['races']}
+    races = [r for r in f.get('races') or [] if r['id'] not in mine and is_federal(r)]
+    fec_by_id = {r['id']: r for r in f.get('races') or [] if is_federal(r)}
+    for r in ballot['races']:
+        r = dict(r)
+        if is_federal(r) and r['id'] in fec_by_id:
+            # keep the FEC's filing dates and links for the people on the certified list
+            fec = {c['id']: c for c in fec_by_id[r['id']]['candidates']}
+            r['candidates'] = [dict(fec.get(c['id'], {}), **{k: v for k, v in c.items() if v is not None}) for c in r['candidates']]
+        races.append(r)
+    order = {'federal': 0, 'state': 1, 'county': 2}
+    races.sort(key=lambda r: (order.get(r.get('level') or 'federal', 3), {'P': 0, 'S': 1, 'H': 2}.get(r.get('office'), 3), r.get('district') or '', r['id']))
+    f['races'] = races
+    f['ballot'] = {k: ballot.get(k) for k in ('certified_at', 'official_list_url', 'source', 'level_notes')}
+    writer.write_json(rel, f)
+    return len(ballot['races'])
+
+
 def next_election(rows, st, day):
     for r in rows:
         if r['date'] >= day.isoformat() and r['state'] in (st, 'US'):
@@ -255,21 +303,21 @@ def main(argv=None):
         print('   federal candidates: %s is not set' % FEC_KEY_ENV)
         for st in codes:
             old = writer.read_json('elections/us-%s/federal.json' % st.lower(), {}) or {}
-            fec_counts[st] = (len(old.get('races') or []), sum(len(r['candidates']) for r in old.get('races') or []))
+            fec_counts[st] = federal_counts(old.get('races'))
     else:
         for st in codes:
             rel = 'elections/us-%s/federal.json' % st.lower()
             old = writer.read_json(rel, {}) or {}
-            prev_n = sum(len(r['candidates']) for r in old.get('races') or []) if old.get('cycle') == cycle else 0
+            prev_n = federal_counts(old.get('races'))[1] if old.get('cycle') == cycle else 0
             try:
                 cands, lf = fec_candidates(http, fec_key, cycle, st)
             except Exception as e:
                 failed.append('%s: %s' % (st, str(e)[:80]))
-                fec_counts[st] = (len(old.get('races') or []), prev_n)
+                fec_counts[st] = (federal_counts(old.get('races'))[0], prev_n)
                 continue
             if prev_n > 20 and len(cands) < prev_n * SHRINK and not allow_shrink:
                 failed.append('%s: %d candidates, had %d; kept the previous file' % (st, len(cands), prev_n))
-                fec_counts[st] = (len(old.get('races') or []), prev_n)
+                fec_counts[st] = (federal_counts(old.get('races'))[0], prev_n)
                 continue
             races = group_races(cycle, st, cands)
             writer.write_json(rel, {'schema_version': SCHEMA, 'state': st, 'cycle': cycle, 'races': races,
@@ -288,11 +336,22 @@ def main(argv=None):
     if http.stale_served:
         print('   served from cache after errors: %d' % len(http.stale_served))
 
+    # 3b. Certified ballots over the FEC records
+    for st in codes:
+        n = merge_ballot(st, cycle)
+        if n:
+            print('   %s: %d races from the certified ballot' % (st, n))
+            if st in fec_counts:
+                f = writer.read_json('elections/us-%s/federal.json' % st.lower(), {}) or {}
+                fec_counts[st] = federal_counts(f.get('races'))
+
     # 4. The national race index and the states table
     index_rows = []
     for st in codes:
         f = writer.read_json('elections/us-%s/federal.json' % st.lower(), {}) or {}
         for r in f.get('races') or []:
+            if not is_federal(r):
+                continue
             inc = [c['name'] for c in r['candidates'] if c['incumbent']]
             index_rows.append([r['id'], st, r['office'], r['district'], r['label'], len(r['candidates']), inc[0] if inc else None])
     writer.write_json('elections/us/federal-index.json', {'schema_version': SCHEMA, 'cycle': cycle,

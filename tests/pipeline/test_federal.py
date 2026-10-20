@@ -169,5 +169,18 @@ class IdentityTests(unittest.TestCase):
         self.assertNotIn('former', members['P000145'])
 
 
+class UnknownVoters(unittest.TestCase):
+    def test_a_kept_vote_registers_members_who_have_left(self):
+        from tools.legislation.federal import register_unknown_voters
+        members = {'A000001': {'id': 'A000001'}}
+        votes = [{'body': 'us-house', 'positions': [['A000001', 'Y'], ['C001127', 'N']]},
+                 {'body': 'us-senate', 'positions': [['lis-S999', 'Y']]}]
+        self.assertEqual(register_unknown_voters(members, votes), 2)
+        self.assertTrue(members['C001127']['provisional'])
+        self.assertEqual(members['C001127']['body'], 'us-house')
+        self.assertEqual(members['lis-S999']['ids'], {'lis': 'S999'})
+        self.assertEqual(register_unknown_voters(members, votes), 0)
+
+
 if __name__ == '__main__':
     unittest.main()

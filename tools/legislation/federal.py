@@ -795,6 +795,23 @@ def build_bills(votes, congress):
     return bills
 
 
+def register_unknown_voters(members, votes):
+    """A vote kept from last night (its roll did not answer tonight) can name a member who has since
+    left office. Parsing registers such a member as provisional; a kept copy is not parsed, so do it
+    here, and resolve_departed names them from the historical file like any other former member."""
+    added = 0
+    for v in votes:
+        for mid, _ in v.get('positions') or []:
+            if mid in members:
+                continue
+            lis = mid[4:] if mid.startswith('lis-') else None
+            members[mid] = {'id': mid, 'level': 'federal', 'jurisdiction': 'us', 'body': v['body'], 'name': mid, 'last': mid,
+                            'party': None, 'state': None, 'district': None,
+                            'ids': {'lis': lis} if lis else {'bioguide': mid}, 'urls': {}, 'provisional': True}
+            added += 1
+    return added
+
+
 def main(argv=None):
     http = Http()
     manifest = Manifest()
@@ -816,6 +833,7 @@ def main(argv=None):
             print('   %s failed: %s' % (name, e))
             # keep what is already on disk for that chamber
             votes += _reload_existing(name, congress)
+    register_unknown_voters(members, votes)
     named = identity.resolve_departed(http, manifest, members, votes)
     if named:
         print('   %d former members named from the historical file' % named)

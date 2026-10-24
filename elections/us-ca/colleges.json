@@ -1,0 +1,3606 @@
+{
+ "schema_version": 1,
+ "generated_at": "2026-10-18T14:47:44Z",
+ "state": "CA",
+ "election": "2026-11-03",
+ "source": "County registrars' candidate lists for the November 3, 2026 general election; student trustees are elected on campus and are not on this ballot",
+ "districts": [
+  {
+   "name": "Allan Hancock Joint Community College District",
+   "county": "Ventura, Santa Barbara, San Luis Obispo",
+   "registrar_url": "https://clerkrecorder.venturacounty.gov/wp-content/uploads/2026/06/cfmcfmr001_contcanddataproof_08-17-2026-off-ballot.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Alejandra Enciso",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Gregory A. Pensa",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/allan-hancock-joint-ccd/"
+  },
+  {
+   "name": "Antelope Valley Community College District",
+   "county": "Los Angeles, Kern",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Ricardo Ortega",
+       "incumbent": false,
+       "designation": "CEO/Educational Advocate"
+      },
+      {
+       "name": "Newton Chelette",
+       "incumbent": false,
+       "designation": "Retired College Dean"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 002",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Ricardo Ortega",
+       "incumbent": false,
+       "designation": "CEO/Educational Advocate"
+      },
+      {
+       "name": "Newton Chelette",
+       "incumbent": false,
+       "designation": "Retired College Dean"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 004",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*michael R. Adams",
+       "incumbent": true,
+       "designation": "Governing Board Member"
+      },
+      {
+       "name": "Nashon T. Mitchell",
+       "incumbent": false,
+       "designation": "Workforce Development Specialist"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 005",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*barbara Gaines",
+       "incumbent": true,
+       "designation": "Governing Board Member, Antelope Valley Community College District"
+      },
+      {
+       "name": "Pamela Ford",
+       "incumbent": false,
+       "designation": "Classified Union President"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/antelope-valley-ccd/"
+  },
+  {
+   "name": "Barstow Community College District",
+   "county": "San Bernardino",
+   "registrar_url": "https://uploads.rov.sbcounty.gov/ROV/Elections/2026/1103/Report_CandidateList.pdf",
+   "seats": [
+    {
+     "name": "Governing Board Area A",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Yolanda B. Minor",
+       "incumbent": true,
+       "designation": "Barstow Community College District Member, Governing Board Area A"
+      },
+      {
+       "name": "Jerrad Schendel",
+       "incumbent": false,
+       "designation": "No Ballot Designation Requested"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/barstow-ccd/"
+  },
+  {
+   "name": "Butte-Glenn Community College District",
+   "county": "Butte",
+   "registrar_url": "https://buttevotes.ca.gov/DocumentCenter/View/4207/cfmcfmr029_candidatecertification",
+   "seats": [
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Shawn James",
+       "incumbent": false,
+       "designation": "Farmer"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "John S. Blacklock",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Kim McCall",
+       "incumbent": false,
+       "designation": "Retired Executive Assistant"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "John Nock",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/butte-glenn-ccd/"
+  },
+  {
+   "name": "Cabrillo Community College District",
+   "county": "Santa Cruz",
+   "registrar_url": "https://votescount.santacruzcountyca.gov/Home/Elections/November3,2026CaliforniaGeneralElection/ContactCandidates.aspx",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Melinda Newfarmer",
+       "incumbent": false
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Adam Spickler",
+       "incumbent": false
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5 (Short Term)",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Francisco Estrada",
+       "incumbent": false
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Milissa Ales-Barnicoat",
+       "incumbent": false,
+       "designation": "Chief Executive Officer"
+      },
+      {
+       "name": "Benjamin Finke",
+       "incumbent": false,
+       "designation": "Bus Operator"
+      },
+      {
+       "name": "Karen Cogswell",
+       "incumbent": false,
+       "designation": "Retired Business Owner"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/cabrillo-ccd/"
+  },
+  {
+   "name": "Cerritos Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 003",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*james Cody Birkey",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Sue Elhessen",
+       "incumbent": false,
+       "designation": "Retired Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 005",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*shin Liu",
+       "incumbent": true,
+       "designation": "Board Member/Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 007",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*zurich Z. Lewis",
+       "incumbent": true,
+       "designation": "Father/Governing Boardmember"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/cerritos-ccd/"
+  },
+  {
+   "name": "Chabot-Las Positas Community College District",
+   "county": "Alameda",
+   "registrar_url": "https://www.alamedacountyca.gov/rov_app/candidatelist (select General Election - 11/03/2026, election id 260)",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Linda Granger",
+       "incumbent": true,
+       "designation": "Education Administrator"
+      },
+      {
+       "name": "Cindy Rocha",
+       "incumbent": false,
+       "designation": "San Leandro Unified School District Board Trustee Area 3"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Mark Fay",
+       "incumbent": false,
+       "designation": "Airworthiness Engineer"
+      },
+      {
+       "name": "Wendy Huang",
+       "incumbent": false,
+       "designation": "Real Estate Investor"
+      },
+      {
+       "name": "Harris Mojadedi",
+       "incumbent": true,
+       "designation": "Chabot-Las Positas Governing Board Member"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Hal G. Gin",
+       "incumbent": true,
+       "designation": "Chabot-Las Positas College Trustee"
+      },
+      {
+       "name": "Joe Orlando Ramos",
+       "incumbent": false,
+       "designation": "Author/Adult Educator"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/chabot-las-positas-ccd/"
+  },
+  {
+   "name": "Citrus Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 001",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*anthony W. Contreras",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 003",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*cheryl Alexander",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/citrus-ccd/"
+  },
+  {
+   "name": "Coast Community College District",
+   "county": "Orange",
+   "registrar_url": "https://ocvote.gov/fileadmin/user_upload/data/candlog/GEN2026/candlog.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Joe Kalmick",
+       "incumbent": false,
+       "designation": "City of Seal Beach City Councilmember"
+      },
+      {
+       "name": "Ashton Kauwe",
+       "incumbent": false,
+       "designation": "Office Administrator"
+      },
+      {
+       "name": "Austin J. Edsell",
+       "incumbent": false,
+       "designation": "Educator/Finance Commissioner"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3, Short Term",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Kim Carr",
+       "incumbent": true,
+       "designation": "Appointed Trustee, Coast Community College District Governing Board"
+      },
+      {
+       "name": "James Cameron",
+       "incumbent": false,
+       "designation": "Businessman/Recording Artist"
+      },
+      {
+       "name": "Conrad Mazeika",
+       "incumbent": false,
+       "designation": "Nonprofit Executive"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Xerxez Megino Calilung",
+       "incumbent": false,
+       "designation": "Dentist"
+      },
+      {
+       "name": "Elizabeth \"Liz\" Dorn Parker",
+       "incumbent": true,
+       "designation": "Governing Board Member Coast Community College District, Trustee Area 5"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/coast-ccd/"
+  },
+  {
+   "name": "College of the Sequoias Community College District",
+   "county": "Tulare",
+   "registrar_url": "https://tc-web.widen.net/s/dspbjgfnfv/novgenuocl",
+   "seats": [
+    {
+     "name": "Ward 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Louis Lyons",
+       "incumbent": false,
+       "designation": "Attorney"
+      },
+      {
+       "name": "Robert Aguilar",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Ward 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "C. Kristina Roper",
+       "incumbent": false,
+       "designation": "Archaeologist"
+      },
+      {
+       "name": "Kenneth B. Nunes",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Ward 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Susie Nava",
+       "incumbent": false,
+       "designation": "Quality Assurance Specialist"
+      },
+      {
+       "name": "John Lehn",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/sequoias-ccd/"
+  },
+  {
+   "name": "Compton Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 001",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*andres Ramos",
+       "incumbent": true,
+       "designation": "Governing Board Member, Compton Community College District"
+      },
+      {
+       "name": "Skyy D. Fisher",
+       "incumbent": false,
+       "designation": "Vocational Rehabilitation Educator"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 002 (Special Election, unexpired term ending December 8, 2028)",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*nicole J. Jones",
+       "incumbent": true,
+       "designation": "Higher Education Administrator"
+      },
+      {
+       "name": "Adrian D. Cleveland",
+       "incumbent": false,
+       "designation": "Businesswoman/Union Leader"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 004",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Peter K. Parker",
+       "incumbent": false,
+       "designation": "Retired College Professor"
+      },
+      {
+       "name": "*juanita Doplemore",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 005",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*sharoni Denise Little",
+       "incumbent": true,
+       "designation": "Educator/Servant Leader"
+      },
+      {
+       "name": "Sharon R. Whitaker",
+       "incumbent": false,
+       "designation": "Early Childhood Educator"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/compton-ccd/"
+  },
+  {
+   "name": "Contra Costa Community College District",
+   "county": "Contra Costa",
+   "registrar_url": "https://www.contracostavote.gov/wp-content/uploads/8-27-26_candidatelist_detail_final.pdf",
+   "seats": [
+    {
+     "name": "Ward 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Raquel Donoso",
+       "incumbent": false,
+       "designation": "Education Program Director"
+      },
+      {
+       "name": "Cameron Sasai",
+       "incumbent": false,
+       "designation": "Councilmember/Policy Coordinator"
+      }
+     ]
+    },
+    {
+     "name": "Ward 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Becca Barrett",
+       "incumbent": true,
+       "designation": "Contra Costa Community College District, Governing Board Member, Ward 3"
+      },
+      {
+       "name": "Allyse Tanovitz",
+       "incumbent": false,
+       "designation": "Principal/Teacher/Mother"
+      }
+     ]
+    },
+    {
+     "name": "Ward 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Andy Li",
+       "incumbent": false
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/contra-costa-ccd/"
+  },
+  {
+   "name": "Desert Community College District",
+   "county": "Imperial, Riverside",
+   "registrar_url": "https://elections.imperialcounty.org/wp-content/uploads/2026/08/CandidateStatus_Website-.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": []
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Stone James",
+       "incumbent": false,
+       "designation": "Educator / Development Director"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/desert-ccd/"
+  },
+  {
+   "name": "El Camino Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 002",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*nilo Vega Michelin",
+       "incumbent": true,
+       "designation": "Governing Board Member, El Camino Community College District"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 005",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*myloc Dinh",
+       "incumbent": true,
+       "designation": "Appointed Governing Board Member, El Camino Community College District"
+      },
+      {
+       "name": "Keicy Chung",
+       "incumbent": false,
+       "designation": "Business Owner/Student"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/el-camino-ccd/"
+  },
+  {
+   "name": "Feather River Community College District",
+   "county": "Plumas",
+   "registrar_url": "https://www.plumascounty.us/DocumentCenter/View/53434",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": []
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": []
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": []
+    }
+   ],
+   "site_path": "/districts/feather-river-ccd/"
+  },
+  {
+   "name": "Foothill-De Anza Community College District",
+   "county": "Santa Clara",
+   "registrar_url": "https://files.santaclaracounty.gov/exjcpb1296/2026-09/qualified-list-of-local-candidates-9-28-26.pdf?VersionId=CM6jbwAVTLFIjLakj6hJku2l9KPAIxli",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Alexander Gvatua",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Liangfang \"Liang\" Chao",
+       "incumbent": false,
+       "designation": "City Councilmember/Technologist"
+      },
+      {
+       "name": "William \"Bill\" Wilson",
+       "incumbent": false,
+       "designation": "Educator"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/foothill-de-anza-ccd/"
+  },
+  {
+   "name": "Gavilan Joint Community College District",
+   "county": "Santa Clara, San Benito",
+   "registrar_url": "https://files.santaclaracounty.gov/exjcpb1296/2026-09/qualified-list-of-local-candidates-9-28-26.pdf?VersionId=CM6jbwAVTLFIjLakj6hJku2l9KPAIxli",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Kathy Chavez Napoli",
+       "incumbent": false,
+       "designation": "Mother/Businesswoman"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Shahida S. Merchant",
+       "incumbent": false,
+       "designation": "Scientist/College Educator"
+      },
+      {
+       "name": "Gabriel Gutierrez",
+       "incumbent": false,
+       "designation": "Governing Board Member, Gavilan Joint Community College District, Trustee Area 3"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Jeanie Wallace",
+       "incumbent": false,
+       "designation": "Gavilan Joint Community College District Board Member"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Irma C. Gonzalez",
+       "incumbent": false,
+       "designation": "Gavilan Joint Community College District Trustee"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/gavilan-joint-ccd/"
+  },
+  {
+   "name": "Grossmont-Cuyamaca Community College District",
+   "county": "San Diego",
+   "registrar_url": "https://www.sdvote.com/content/dam/rov/en/election/nov-3-2026-gubernatorial-general-election/candidate-list.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Cribbs, Rosangela",
+       "incumbent": false,
+       "designation": "Homemaker"
+      },
+      {
+       "name": "Gwin, Mary",
+       "incumbent": false,
+       "designation": "Community College Professor"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/grossmont-cuyamaca-ccd/"
+  },
+  {
+   "name": "Hartnell Community College District",
+   "county": "Monterey, San Benito",
+   "registrar_url": "https://www.countyofmonterey.gov/government/departments-a-h/elections/elections/candidate-list",
+   "seats": [
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Felicia Perez Kausin",
+       "incumbent": false,
+       "designation": "Sponsorship Director"
+      },
+      {
+       "name": "Patricia Coyt",
+       "incumbent": false,
+       "designation": "Community Volunteer"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Rosalie C. Sanchez",
+       "incumbent": false,
+       "designation": "Retired School Clerk"
+      },
+      {
+       "name": "Sofia Ramirez",
+       "incumbent": false,
+       "designation": "Parent/Executive Assistant"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "John Huerta Jr",
+       "incumbent": false,
+       "designation": "Farmworker Consultant"
+      },
+      {
+       "name": "Nancy Reyes",
+       "incumbent": false,
+       "designation": "Elementary School Secretary"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/hartnell-ccd/"
+  },
+  {
+   "name": "Imperial Community College District",
+   "county": "Imperial",
+   "registrar_url": "https://elections.imperialcounty.org/wp-content/uploads/2026/08/CandidateStatus_Website-.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Karla A. Sigmond *",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Betsy Lindbergh *",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Lizzie Cardenas",
+       "incumbent": false,
+       "designation": "Education Administrator"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Erik Ortega *",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/imperial-ccd/"
+  },
+  {
+   "name": "Kern Community College District",
+   "county": "Kern, San Bernardino, Tulare, Mono, Inyo",
+   "registrar_url": "https://www.kernvote.com/home/showpublisheddocument/25735/639248079733830000",
+   "seats": [
+    {
+     "name": "Governing Board Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Christina Scrivner",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Paula E. Bray",
+       "incumbent": false,
+       "designation": "Director"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Wesley Crawford Sr.",
+       "incumbent": false,
+       "designation": "Retired Funeral Technican"
+      },
+      {
+       "name": "Kyle Carter",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Christina Scrivner",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Paula E. Bray",
+       "incumbent": false,
+       "designation": "Director"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2 (Shared with Kern and Inyo)",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Christina Scrivner",
+       "incumbent": false
+      },
+      {
+       "name": "Paula Bray",
+       "incumbent": false
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Nan Gomez-Heitzeberg",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Douglas Thompson",
+       "incumbent": false,
+       "designation": "Retired Educator"
+      },
+      {
+       "name": "Paula Dahl",
+       "incumbent": false,
+       "designation": "College Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "John Corkins",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Juan Figueroa, Jr.",
+       "incumbent": false,
+       "designation": "Educational Program Director"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/kern-ccd/"
+  },
+  {
+   "name": "Lassen Community College District",
+   "county": "Modoc, Lassen",
+   "registrar_url": "https://www.countyofmodoc.gov/DocumentCenter/View/1627/Extended-Filing-Notice-PDF",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 2,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Sophia A. Wages",
+       "incumbent": true,
+       "designation": "INCUMBENT"
+      },
+      {
+       "name": "Robin M. Hanson",
+       "incumbent": true,
+       "designation": "PROGRAMS MANAGER/INCUMBENT"
+      },
+      {
+       "name": "Angela C Reed",
+       "incumbent": false,
+       "designation": "DOMESTIC VIOLENCE ADVOCATE"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Louis M. Hamilton",
+       "incumbent": true,
+       "designation": "INCUMBENT / RETIRED EDUCATOR"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/lassen-ccd/"
+  },
+  {
+   "name": "Long Beach Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 001",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*uduak-Joe E. Ntuk",
+       "incumbent": true,
+       "designation": "Governing Board Member, Long Beach Community College District, Trustee Area No. 1"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 003",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*sunny Zia",
+       "incumbent": true,
+       "designation": "Governing Board Member, Long Beach Community College District, Trustee Area No. 3"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 005",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Huy \"Henry\" Nguyen",
+       "incumbent": false,
+       "designation": "School District Administrator"
+      },
+      {
+       "name": "Susana Gonzalez Edmond",
+       "incumbent": false,
+       "designation": "Education Consultant/Businesswoman"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/long-beach-ccd/"
+  },
+  {
+   "name": "Los Angeles Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Seat 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*steven F. Veres",
+       "incumbent": true,
+       "designation": "Los Angeles Community College District, Member of the Board of Trustees"
+      },
+      {
+       "name": "Robert Payne",
+       "incumbent": false,
+       "designation": "Researcher/Writer/Environmentalist"
+      },
+      {
+       "name": "Kristina Irwin",
+       "incumbent": false,
+       "designation": "Parent/Business Owner"
+      },
+      {
+       "name": "Roy Payan",
+       "incumbent": false,
+       "designation": "Disabled Student Advocate"
+      },
+      {
+       "name": "Adriana Cabrera",
+       "incumbent": false,
+       "designation": "Educator"
+      }
+     ]
+    },
+    {
+     "name": "Seat 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Nancy Pearlman",
+       "incumbent": false,
+       "designation": "Environmentalist/Anthropologist/Educator"
+      },
+      {
+       "name": "Darryn Harris",
+       "incumbent": false,
+       "designation": "Community College Educator"
+      },
+      {
+       "name": "Adam Bruno",
+       "incumbent": false
+      },
+      {
+       "name": "Elaine Alaniz",
+       "incumbent": false,
+       "designation": "Healthcare Workforce Specialist"
+      },
+      {
+       "name": "Isidro J. Armenta",
+       "incumbent": false,
+       "designation": "Fire Department Employee"
+      },
+      {
+       "name": "Priscilla Umana",
+       "incumbent": false,
+       "designation": "ASL Educational Interpreter"
+      },
+      {
+       "name": "Jason R. Aula",
+       "incumbent": false,
+       "designation": "Business Owner/Journalist"
+      }
+     ]
+    },
+    {
+     "name": "Seat 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*gabriel Buelna",
+       "incumbent": true,
+       "designation": "Member of the Board of Trustees, Los Angeles Community College District, Seat 6"
+      },
+      {
+       "name": "Tonia Arey",
+       "incumbent": false,
+       "designation": "Realtor"
+      },
+      {
+       "name": "Randall Winston",
+       "incumbent": false,
+       "designation": "Architect"
+      },
+      {
+       "name": "Roberto David Lacarra",
+       "incumbent": false,
+       "designation": "Community College Professor"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/los-angeles-ccd/"
+  },
+  {
+   "name": "Los Rios Community College District",
+   "county": "Sacramento, Placer",
+   "registrar_url": "https://elections.saccounty.gov/content/vre/us/en/campaign-services/candidate-report.html",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Devon Graves",
+       "incumbent": false,
+       "designation": "EDUCATOR/RESEARCHER"
+      },
+      {
+       "name": "Magdalena T. Gonzalez",
+       "incumbent": false,
+       "designation": "PERSONNEL TECHNICIAN"
+      },
+      {
+       "name": "D'Andrea Chapman",
+       "incumbent": false,
+       "designation": "EDUCATION PROGRAMS CONSULTANT"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Oranit Limmaneeprasert",
+       "incumbent": false,
+       "designation": "COMMUNITY COLLEGE PROFESSOR"
+      },
+      {
+       "name": "Mark Gregg",
+       "incumbent": false,
+       "designation": "REGIONAL HOMEBUILDER/PARENT"
+      },
+      {
+       "name": "Paula Villescaz",
+       "incumbent": false,
+       "designation": "DEPUTY SECRETARY/MOTHER"
+      },
+      {
+       "name": "Tim Loree",
+       "incumbent": false,
+       "designation": "RETIRED BUSINESS OWNER"
+      },
+      {
+       "name": "Martin Ross",
+       "incumbent": false,
+       "designation": "WORKFORCE DEVELOPMENT DIRECTOR"
+      },
+      {
+       "name": "Sukdip \"Steve\" Chima",
+       "incumbent": false,
+       "designation": "PARENT"
+      },
+      {
+       "name": "Phil Davis",
+       "incumbent": false,
+       "designation": "RETIRED FIRE CHIEF"
+      },
+      {
+       "name": "Jonathan Brownell",
+       "incumbent": false,
+       "designation": "SENIOR PROJECT MANAGER"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Deborah V. Ortiz",
+       "incumbent": true,
+       "designation": "TRUSTEE, LOS RIOS COMMUNITY COLLEGE"
+      },
+      {
+       "name": "Zima Creason",
+       "incumbent": false,
+       "designation": "GOVERNING BOARD MEMBER, SAN JUAN UNIFIED SCHOOL DISTRICT"
+      },
+      {
+       "name": "Pearl Koven",
+       "incumbent": false,
+       "designation": "CONSTITUENT SERVICES SPECIALIST"
+      },
+      {
+       "name": "Keith Ellis",
+       "incumbent": false,
+       "designation": "STATE EMPLOYEE"
+      },
+      {
+       "name": "William Thomas Bernal",
+       "incumbent": false,
+       "designation": "CHAPLAIN"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/los-rios-ccd/"
+  },
+  {
+   "name": "Marin Community College District",
+   "county": "Marin",
+   "registrar_url": "https://www.marincounty.gov/departments/elections/november-3-2026-general-election/information-and-about-candidates-110326/status-local-candidates-office-11032026",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Crow, Suzanne Brown",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Treanor, Wanden Patricia",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Conti, Diana",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7, Short Term",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Deakyne, Jessica",
+       "incumbent": false,
+       "designation": "Chief Operating Officer"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/marin-ccd/"
+  },
+  {
+   "name": "Mendocino-Lake Community College District",
+   "county": "Lake",
+   "registrar_url": "https://www.lakecountyca.gov/DocumentCenter/View/17508",
+   "seats": [
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Derek Tippit",
+       "incumbent": false,
+       "designation": "Retired Military"
+      },
+      {
+       "name": "Lorree Ellen Lewis Crandell",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7 (PT) (2-year unexpired term)",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Amie S. Vanderwall",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/mendocino-lake-ccd/"
+  },
+  {
+   "name": "Merced Community College District",
+   "county": "Merced",
+   "registrar_url": "https://www.countyofmerced.com/DocumentCenter/View/48056/Candidates-List",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Mario Mendoza",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Mary Camper",
+       "incumbent": false,
+       "designation": "Realtor"
+      },
+      {
+       "name": "Rich Randall",
+       "incumbent": false,
+       "designation": "Teacher"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Sarai Jimenez-Robertson",
+       "incumbent": false,
+       "designation": "Teacher/Parent"
+      },
+      {
+       "name": "Joe G. Gutierrez",
+       "incumbent": true,
+       "designation": "Governing Board Member, Area 5"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Bob Geyer",
+       "incumbent": false,
+       "designation": "Businessman/Rancher/Educator"
+      },
+      {
+       "name": "John Pedrozo",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/merced-ccd/"
+  },
+  {
+   "name": "MiraCosta Community College District",
+   "county": "San Diego",
+   "registrar_url": "https://www.sdvote.com/content/dam/rov/en/election/nov-3-2026-gubernatorial-general-election/candidate-list.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Pedroza, Anna",
+       "incumbent": true,
+       "designation": "MiraCosta Community College Governing Board Member"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Cassar, Rick",
+       "incumbent": true,
+       "designation": "MiraCosta Community College Governing Board Member"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Aszterbaum, Joey",
+       "incumbent": false,
+       "designation": "Teacher"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 7",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Conklin, Heather",
+       "incumbent": true,
+       "designation": "Governing Board Member, MiraCosta Community College District"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/miracosta-ccd/"
+  },
+  {
+   "name": "Monterey Peninsula Community College District",
+   "county": "Monterey",
+   "registrar_url": "https://www.countyofmonterey.gov/government/departments-a-h/elections/elections/candidate-list",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Ben Strickland",
+       "incumbent": false,
+       "designation": "Security Officer/Entrepreneur"
+      },
+      {
+       "name": "Rosalyn Green",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Yuri Anderson",
+       "incumbent": false,
+       "designation": "Trustee, Area 2"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/monterey-peninsula-ccd/"
+  },
+  {
+   "name": "Mt. San Antonio Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 002",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*gary L. Chow",
+       "incumbent": true,
+       "designation": "Governing Board Member, Mt. San Antonio College"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 003",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*laura Luciana Santos",
+       "incumbent": true,
+       "designation": "College Board Member"
+      },
+      {
+       "name": "Armando Barajas",
+       "incumbent": false,
+       "designation": "School Principal/Coach"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 004",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*robert F. Hidalgo",
+       "incumbent": true,
+       "designation": "Governing Board Member, Mt. San Antonio College"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 006",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*judy Chen Haggerty",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/mt-san-antonio-ccd/"
+  },
+  {
+   "name": "Mt. San Jacinto Community College District",
+   "county": "Riverside",
+   "registrar_url": "https://voteinfo.net/sites/g/files/aldnop371/files/2026-09/Final%20candidate%20list%20nov%202026%20eng.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Vicki Carpenter",
+       "incumbent": true,
+       "designation": "Mt San Jacinto Board Member Trustee"
+      },
+      {
+       "name": "Robert Douglas",
+       "incumbent": false,
+       "designation": "Director Board Member"
+      },
+      {
+       "name": "Sergei Vinkov",
+       "incumbent": false,
+       "designation": "Legal Document Assistant"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Jhalister Corona",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/mt-san-jacinto-ccd/"
+  },
+  {
+   "name": "Napa Valley Community College District",
+   "county": "Napa",
+   "registrar_url": "https://www.napacounty.gov/2328/Qualified-List-of-Candidates",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Jeff Dodd",
+       "incumbent": false
+      },
+      {
+       "name": "Heriverto Ruiz",
+       "incumbent": false,
+       "designation": "School Counselor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Emily Pastula",
+       "incumbent": false,
+       "designation": "Teacher"
+      },
+      {
+       "name": "Elizabeth L. Goff",
+       "incumbent": false,
+       "designation": "Retired Teacher"
+      },
+      {
+       "name": "Karina Servente",
+       "incumbent": false,
+       "designation": "Community Parent Liaison"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Cindy Johnson",
+       "incumbent": false,
+       "designation": "High School Counselor"
+      },
+      {
+       "name": "William \"Kyle\" Iverson",
+       "incumbent": false
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Lotte Cosca",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/napa-valley-ccd/"
+  },
+  {
+   "name": "North Orange County Community College District",
+   "county": "Orange",
+   "registrar_url": "https://ocvote.gov/fileadmin/user_upload/data/candlog/GEN2026/candlog.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Barbara Dunsheath",
+       "incumbent": true,
+       "designation": "Trustee, North Orange County Community College District, Area 1"
+      },
+      {
+       "name": "Rama R. Maline",
+       "incumbent": false,
+       "designation": "State Prosecutor/Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Larry Andre",
+       "incumbent": false,
+       "designation": "Business Owner"
+      },
+      {
+       "name": "Chloe Serrano",
+       "incumbent": false,
+       "designation": "Education Policy Advisor"
+      },
+      {
+       "name": "Paul Gonzales",
+       "incumbent": false,
+       "designation": "Staff Specialist/Businessman"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Paulette Chaffee",
+       "incumbent": false,
+       "designation": "Educator/Nonprofit Boardmember"
+      },
+      {
+       "name": "Jesus Silva",
+       "incumbent": false,
+       "designation": "Teacher/Business Owner"
+      },
+      {
+       "name": "Jeffrey P. Brown",
+       "incumbent": true,
+       "designation": "NOCCCD Boardmember/Engineer"
+      },
+      {
+       "name": "Zonya Townsend",
+       "incumbent": false,
+       "designation": "Educator/Parent/Nurse"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/north-orange-county-ccd/"
+  },
+  {
+   "name": "Ohlone Community College District",
+   "county": "Alameda",
+   "registrar_url": "https://www.alamedacountyca.gov/rov_app/candidatelist (select General Election - 11/03/2026, election id 260)",
+   "seats": [
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Phuong Nguyen",
+       "incumbent": false,
+       "designation": "Management Analyst II"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Elisa Martinez",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Suzanne \"Sue\" Lee Chan",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Sonia Salwan",
+       "incumbent": false,
+       "designation": "Veterinarian/Nonprofit Founder"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Betty Ho",
+       "incumbent": true,
+       "designation": "Appointed Ohlone Community College District Trustee"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/ohlone-ccd/"
+  },
+  {
+   "name": "Palo Verde Community College District",
+   "county": "Riverside",
+   "registrar_url": "https://voteinfo.net/sites/g/files/aldnop371/files/2026-09/Final%20candidate%20list%20nov%202026%20eng.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1 (3 seats)",
+     "count": 3,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Denise Hunt",
+       "incumbent": false,
+       "designation": "Retired College Employee"
+      },
+      {
+       "name": "Michael W. Cusick",
+       "incumbent": false,
+       "designation": "Operation Manager / Consultant"
+      },
+      {
+       "name": "Richard Johnson",
+       "incumbent": false,
+       "designation": "No Ballot Designation"
+      },
+      {
+       "name": "Jennifer Arneson",
+       "incumbent": false,
+       "designation": "Realtor"
+      },
+      {
+       "name": "Bradley Arneson",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Monty Dale",
+       "incumbent": false,
+       "designation": "Social Worker"
+      },
+      {
+       "name": "Scott R Dean",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Beverly Mays",
+       "incumbent": false,
+       "designation": "Teacher"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/palo-verde-ccd/"
+  },
+  {
+   "name": "Palomar Community College District",
+   "county": "San Diego",
+   "registrar_url": "https://www.sdvote.com/content/dam/rov/en/election/nov-3-2026-gubernatorial-general-election/candidate-list.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Patacsil, Judy",
+       "incumbent": true,
+       "designation": "Governing Board Member, Palomar Community College"
+      },
+      {
+       "name": "Wiley, Anthony",
+       "incumbent": false,
+       "designation": "Parent/Retired Engineer"
+      },
+      {
+       "name": "Xu, Frank",
+       "incumbent": false,
+       "designation": "Parent/Non-profit Executive"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Anderson, Cory",
+       "incumbent": false,
+       "designation": "Marriage Family Therapist"
+      },
+      {
+       "name": "Jeffries, Jennifer",
+       "incumbent": false,
+       "designation": "Retired College Professor"
+      },
+      {
+       "name": "Moore, Michelle C.",
+       "incumbent": false,
+       "designation": "College Professor"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/palomar-ccd/"
+  },
+  {
+   "name": "Pasadena Area Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 001",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Geoff Baum",
+       "incumbent": false,
+       "designation": "Educator/NonProfit Executive"
+      },
+      {
+       "name": "Francis Pollara",
+       "incumbent": false,
+       "designation": "Businessman/City Commissioner"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 003",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*steve Gibson",
+       "incumbent": true,
+       "designation": "Governing Board Member, Pasadena Area Community College District"
+      },
+      {
+       "name": "David Coher",
+       "incumbent": false,
+       "designation": "City Boardmember/Businessman"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 005",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*kristine E. Kwong",
+       "incumbent": true,
+       "designation": "Governing Board Member, Pasadena Area Community College District"
+      },
+      {
+       "name": "Jennifer Thompson",
+       "incumbent": false,
+       "designation": "Media Marketing Executive"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 007",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*alton Wang",
+       "incumbent": true,
+       "designation": "Governing Board Member, Pasadena Area Community College District"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/pasadena-area-ccd/"
+  },
+  {
+   "name": "Peralta Community College District",
+   "county": "Alameda",
+   "registrar_url": "https://www.alamedacountyca.gov/rov_app/candidatelist (select General Election - 11/03/2026, election id 260)",
+   "seats": [
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Louis Quindlen",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Cindi Reiss",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Sandra Weese",
+       "incumbent": false,
+       "designation": "Retired Labor Organizer"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Sheweet Yohannes",
+       "incumbent": true,
+       "designation": "Peralta Community College District Board, Area 7"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/peralta-ccd/"
+  },
+  {
+   "name": "Rancho Santiago Community College District",
+   "county": "Orange",
+   "registrar_url": "https://ocvote.gov/fileadmin/user_upload/data/candlog/GEN2026/candlog.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "John R. Hanna",
+       "incumbent": true,
+       "designation": "Governing Board Member, Rancho Santiago Community College District, Trustee Area 2"
+      },
+      {
+       "name": "Steve Rocco",
+       "incumbent": false,
+       "designation": "No Ballot Designation"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Beatriz Mendoza",
+       "incumbent": false,
+       "designation": "Parent/Businesswoman"
+      },
+      {
+       "name": "Daisy Tong",
+       "incumbent": true,
+       "designation": "Rancho Santiago Community College District Governing Board Member, Trustee Area 4"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/rancho-santiago-ccd/"
+  },
+  {
+   "name": "Rio Hondo Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area No. 001",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "David Stephen Siegrist",
+       "incumbent": false,
+       "designation": "Educator/Chaplain/Linguist"
+      },
+      {
+       "name": "*anais Medina Diaz",
+       "incumbent": true,
+       "designation": "Governing Board Member"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 003",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "*rosaelva Lomeli",
+       "incumbent": true,
+       "designation": "Governing Boardmember/Teacher"
+      },
+      {
+       "name": "Manuel Urteaga",
+       "incumbent": false,
+       "designation": "Doctor/College Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area No. 005",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*oscar Valladares",
+       "incumbent": true,
+       "designation": "Governing Board Member"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/rio-hondo-ccd/"
+  },
+  {
+   "name": "Riverside Community College District",
+   "county": "Riverside",
+   "registrar_url": "https://voteinfo.net/sites/g/files/aldnop371/files/2026-09/Final%20candidate%20list%20nov%202026%20eng.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Virginia Blumenthal",
+       "incumbent": true,
+       "designation": "Riverside Community College District Trustee Area 2"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Jose J. Alcala",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Keri A. Then",
+       "incumbent": true,
+       "designation": "Riverside Community College District Board Member, Trustee Area 5"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/riverside-ccd/"
+  },
+  {
+   "name": "San Bernardino Community College District",
+   "county": "Riverside",
+   "registrar_url": "https://voteinfo.net/sites/g/files/aldnop371/files/2026-09/Final%20candidate%20list%20nov%202026%20eng.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Nathan D. Gonzales",
+       "incumbent": true,
+       "designation": "San Bernardino Community College District Member, Governing Board Area 4"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Stephanie Houston",
+       "incumbent": true,
+       "designation": "San Bernardino Community College District Member, Governing Board Area 6"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/san-bernardino-ccd/"
+  },
+  {
+   "name": "San Diego Community College District",
+   "county": "San Diego",
+   "registrar_url": "https://www.sdvote.com/content/dam/rov/en/election/nov-3-2026-gubernatorial-general-election/candidate-list.pdf",
+   "seats": [
+    {
+     "name": "District A",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Brown, Jonny",
+       "incumbent": false,
+       "designation": "Student Advocate/Writer"
+      },
+      {
+       "name": "Senour, Maria Nieto",
+       "incumbent": true,
+       "designation": "Governing Board Member, San Diego Community College District"
+      }
+     ]
+    },
+    {
+     "name": "District C",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Ely, Samantha",
+       "incumbent": false,
+       "designation": "Appointed Program Manager"
+      },
+      {
+       "name": "Milgrim, Craig",
+       "incumbent": true,
+       "designation": "Governing Board Member, San Diego Community College District"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/san-diego-ccd/"
+  },
+  {
+   "name": "San Francisco Community College District",
+   "county": "San Francisco",
+   "registrar_url": "https://www.sf.gov/candidates-november-3-2026-general-election",
+   "seats": [
+    {
+     "name": "Community College Board Partial Term",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Ruth Ferguson",
+       "incumbent": false
+      }
+     ]
+    },
+    {
+     "name": "Community College Board, At large",
+     "count": 3,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Elijah Ball",
+       "incumbent": false
+      },
+      {
+       "name": "Rome Moses Jones",
+       "incumbent": false
+      },
+      {
+       "name": "Monroe Lace",
+       "incumbent": false
+      },
+      {
+       "name": "Leah LaCroix",
+       "incumbent": false
+      },
+      {
+       "name": "Jeremy Lee",
+       "incumbent": false
+      },
+      {
+       "name": "Bunny McFadden",
+       "incumbent": false
+      },
+      {
+       "name": "Erwin Tam",
+       "incumbent": false
+      },
+      {
+       "name": "Lisa Wynn",
+       "incumbent": false
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/san-francisco-ccd/"
+  },
+  {
+   "name": "San Joaquin Delta Community College District",
+   "county": "Alameda, Solano, Sacramento, San Joaquin",
+   "registrar_url": "https://www.alamedacountyca.gov/rov_app/candidatelist (select General Election - 11/03/2026, election id 260)",
+   "seats": [
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Janet Rivera",
+       "incumbent": true,
+       "designation": "Delta College Trustee"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Charles R Jennings",
+       "incumbent": true,
+       "designation": "Delta College Trustee"
+      },
+      {
+       "name": "Tony Shah",
+       "incumbent": false,
+       "designation": "Retired School Administrator"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Catherine Mathis",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/san-joaquin-delta-ccd/"
+  },
+  {
+   "name": "San José-Evergreen Community College District",
+   "county": "Santa Clara",
+   "registrar_url": "https://files.santaclaracounty.gov/exjcpb1296/2026-09/qualified-list-of-local-candidates-9-28-26.pdf?VersionId=CM6jbwAVTLFIjLakj6hJku2l9KPAIxli",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Karen Martinez",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Scott Hung Pham",
+       "incumbent": false,
+       "designation": "Retired College Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Maria R. Fuentes",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Jeffrey Lease",
+       "incumbent": false,
+       "designation": "Educator/Chiropractor/Parent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "San Luis Obispo County Community College District",
+   "county": "San Luis Obispo",
+   "registrar_url": "https://www.slocounty.ca.gov/departments/clerk-recorder/forms-documents/elections-and-voting/current-elections/2026-11-04/unofficial-candidates-list",
+   "seats": [
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Scott R. Lathrop",
+       "incumbent": false
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Antonia Herrera",
+       "incumbent": false,
+       "designation": "Retired Manager"
+      },
+      {
+       "name": "Peter J. Sysak",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/san-luis-obispo-county-ccd/"
+  },
+  {
+   "name": "San Mateo County Community College District",
+   "county": "San Mateo",
+   "registrar_url": "https://smcacre.gov/system/files/2026-09/52_candidateroster0903.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Mike Guingona",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Jason Holt",
+       "incumbent": false,
+       "designation": "Software Engineer / Parent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Richard Holober",
+       "incumbent": false,
+       "designation": "College Board Vice-President"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/san-mateo-county-ccd/"
+  },
+  {
+   "name": "Santa Barbara Community College District",
+   "county": "Santa Barbara",
+   "registrar_url": "https://content.civicplus.com/api/assets/1c1115e9-7446-48b3-9cea-5ad1eb88b2e6",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Charlotte Gullap-Moore",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Dominique Luján",
+       "incumbent": false,
+       "designation": "Licensed Counselor"
+      },
+      {
+       "name": "E Howard Green",
+       "incumbent": false,
+       "designation": "Community Volunteer"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Jonathan Abboud",
+       "incumbent": true,
+       "designation": "Trustee, Santa Barbara Community College District"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Oscar Zavala",
+       "incumbent": false,
+       "designation": "Retired Associate Professor"
+      },
+      {
+       "name": "Heather McGinnis",
+       "incumbent": false,
+       "designation": "Registered Nurse"
+      },
+      {
+       "name": "Andrea Varon",
+       "incumbent": false,
+       "designation": "Retired Educator"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/santa-barbara-ccd/"
+  },
+  {
+   "name": "Santa Clarita Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 001",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Reza Rassool",
+       "incumbent": false,
+       "designation": "Educator/Nonprofit Director"
+      },
+      {
+       "name": "*darlene Trevino",
+       "incumbent": true,
+       "designation": "Member, Board of Trustees, Santa Clarita Community College District, Trustee Area 1"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 005",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "*carlos Guerrero",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/santa-clarita-ccd/"
+  },
+  {
+   "name": "Santa Monica Community College District",
+   "county": "Los Angeles",
+   "registrar_url": "https://content.lavote.gov/docs/rrcc/documents/final-list-of-qualified-candidates-to-appear-on-the-ballot9fcf3b64-1a33-4882-9e17-8cbc3b3c8d76.pdf",
+   "seats": [
+    {
+     "name": "At large, 4 seats (Vote for no more than 4)",
+     "count": 4,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Tom Peters",
+       "incumbent": false,
+       "designation": "SMC Board Vice-Chair"
+      },
+      {
+       "name": "Oscar De La Torre",
+       "incumbent": false,
+       "designation": "Youth Center Director"
+      },
+      {
+       "name": "Luis Barrera Castanon",
+       "incumbent": false,
+       "designation": "Appointed Santa Monica College Board Trustee"
+      },
+      {
+       "name": "Kera Blades-Snell",
+       "incumbent": false,
+       "designation": "Entrepreneur/Nonprofit Director"
+      },
+      {
+       "name": "Sion Roy",
+       "incumbent": false,
+       "designation": "Santa Monica College Board Chair/Physician"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/santa-monica-ccd/"
+  },
+  {
+   "name": "Shasta-Tehama-Trinity Joint Community College District",
+   "county": "Shasta, Tehama, Modoc, Trinity",
+   "registrar_url": "https://elections.shastacounty.gov/wp-content/uploads/2026/08/Final-Qualifed-Candidate-List-8-25-26.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area B",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Peggy Colwell",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "John Wildey",
+       "incumbent": false,
+       "designation": "Real Estate Broker"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area F",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Michelle Hickok",
+       "incumbent": false,
+       "designation": "(No Ballot Designation)"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area G",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Richard Lawrence",
+       "incumbent": true,
+       "designation": "Shasta College Trustee Area G"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/shasta-tehama-trinity-joint-ccd/"
+  },
+  {
+   "name": "Sierra Joint Community College District",
+   "county": "Sacramento, Placer, El Dorado, Nevada",
+   "registrar_url": "https://elections.saccounty.gov/content/vre/us/en/campaign-services/candidate-report.html",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Robert J. Gonzalez",
+       "incumbent": false,
+       "designation": "RETIRED MILITARY LIEUTENANT"
+      },
+      {
+       "name": "Paul Harris",
+       "incumbent": false,
+       "designation": "COLLEGE AUDITOR/CPA"
+      },
+      {
+       "name": "Bob Romness",
+       "incumbent": true,
+       "designation": "SIERRA COLLEGE TRUSTEE"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Laura Abbey Brown",
+       "incumbent": false,
+       "designation": "Education Foundation Consultant"
+      },
+      {
+       "name": "Judy Gilmore",
+       "incumbent": false,
+       "designation": "Small Business Owner"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Cari Dawson Bartley",
+       "incumbent": true,
+       "designation": "Sierra Joint Community College District Trustee"
+      },
+      {
+       "name": "Dennis Grossman",
+       "incumbent": false,
+       "designation": "Scientist/Woodworker"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Rachel Rosenthal",
+       "incumbent": true,
+       "designation": "Sierra College Trustee"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/sierra-joint-ccd/"
+  },
+  {
+   "name": "Siskiyou Joint Community College District",
+   "county": "Shasta, Siskiyou",
+   "registrar_url": "https://elections.shastacounty.gov/wp-content/uploads/2026/08/Final-Qualifed-Candidate-List-8-25-26.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Raymond Keller",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Deborah Derby",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Carol L. Cupp",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "Dennis Roberts",
+       "incumbent": false,
+       "designation": "Retired College Administrator"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4 (Short Term)",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Christal Duncan",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Erica Mitchell",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/siskiyou-joint-ccd/"
+  },
+  {
+   "name": "Solano Community College District",
+   "county": "Solano",
+   "registrar_url": "https://content.solanocounty.gov/sites/default/files/2026-07/CANDIDATE_FILED_LOG_Nov_3_2026_7.13.26.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Karimah Karah",
+       "incumbent": true,
+       "designation": "Financial Advisor / Parent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Annie M. Young",
+       "incumbent": true,
+       "designation": "Retired Mathematics Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Denis Honeychurch",
+       "incumbent": true,
+       "designation": "College Trustee / Attorney"
+      },
+      {
+       "name": "Tony Yang",
+       "incumbent": false,
+       "designation": "College Analyst / Administrator"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Amber M. Cargo-Reed",
+       "incumbent": true,
+       "designation": "Solano Community College Board Trustee Area 6"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/solano-ccd/"
+  },
+  {
+   "name": "Sonoma County Junior College District",
+   "county": "Marin, Sonoma",
+   "registrar_url": "https://www.marincounty.gov/departments/elections/november-3-2026-general-election/information-and-about-candidates-110326/status-local-candidates-office-11032026",
+   "seats": [
+    {
+     "name": "Trustee Area 1 (East County)",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Ezrah Chaaban",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Fishman, Margaret",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2 (South County)",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Margaret Fishman",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5 (Central Santa Rosa)",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Dorothy Battenfeld",
+       "incumbent": true,
+       "designation": "SRJC Trustee/Educator"
+      },
+      {
+       "name": "Leticia Contreras",
+       "incumbent": false,
+       "designation": "Anthropologist/Archaeologist"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7 (West County)",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Michael Valdovinos",
+       "incumbent": true,
+       "designation": "Trustee, Sonoma County Junior College District Area 7"
+      },
+      {
+       "name": "Kateliyn Rutkowski",
+       "incumbent": false,
+       "designation": "Homemaker/Student"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "South Orange County Community College District",
+   "county": "Orange",
+   "registrar_url": "https://ocvote.gov/fileadmin/user_upload/data/candlog/GEN2026/candlog.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Gila Jones",
+       "incumbent": false,
+       "designation": "Board Member, Capistrano Unified School District"
+      },
+      {
+       "name": "John Black",
+       "incumbent": false,
+       "designation": "Military Officer/Educator"
+      },
+      {
+       "name": "Narges Rakin",
+       "incumbent": false,
+       "designation": "College Dean/Educator"
+      },
+      {
+       "name": "Karima Feldhus",
+       "incumbent": false,
+       "designation": "College Administrator/Educator"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/south-orange-county-ccd/"
+  },
+  {
+   "name": "Southwestern Community College District",
+   "county": "San Diego",
+   "registrar_url": "https://www.sdvote.com/content/dam/rov/en/election/nov-3-2026-gubernatorial-general-election/candidate-list.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Moreno, Robert",
+       "incumbent": true,
+       "designation": "Southwestern College Governing Board Member"
+      },
+      {
+       "name": "Salas, Mary",
+       "incumbent": false,
+       "designation": "Retired Mayor Chula Vista"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Andersen, Trevor",
+       "incumbent": false,
+       "designation": "Father/Business Owner"
+      },
+      {
+       "name": "Cuellar-Martinez, Aimee",
+       "incumbent": false,
+       "designation": "Assistant Principal"
+      },
+      {
+       "name": "Ellis-Vizcarra, Selena",
+       "incumbent": false,
+       "designation": "Nonprofit Executive/COO"
+      },
+      {
+       "name": "Soto, Corina",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Dumas, Don",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/southwestern-ccd/"
+  },
+  {
+   "name": "State Center Community College District",
+   "county": "Fresno, Madera",
+   "registrar_url": "https://www2.fresnocountyca.gov/2850/post/2026Nov/officesupforelectioncandidatelist.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Destiny Rodriguez",
+       "incumbent": true,
+       "designation": "Businesswoman/Board Trustee"
+      },
+      {
+       "name": "Nicholás Salinas",
+       "incumbent": false,
+       "designation": "Business Owner/ Contractor"
+      },
+      {
+       "name": "Omair Javaid",
+       "incumbent": false,
+       "designation": "Insurance Agent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Magdalena Gomez",
+       "incumbent": true,
+       "designation": "State Center Community College District Trustee"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Terance Frazier",
+       "incumbent": false,
+       "designation": "Businessman/Nonprofit Director"
+      },
+      {
+       "name": "Marcos Osorio",
+       "incumbent": false,
+       "designation": "Educator/Small Businessman"
+      },
+      {
+       "name": "Miguel Castaneda Sanchez",
+       "incumbent": false,
+       "designation": "Sales Associate/Student"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/state-center-ccd/"
+  },
+  {
+   "name": "Ventura County Community College District",
+   "county": "Ventura",
+   "registrar_url": "https://clerkrecorder.venturacounty.gov/wp-content/uploads/2026/06/cfmcfmr001_contcanddataproof_08-17-2026-off-ballot.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Joshua Chancer",
+       "incumbent": true,
+       "designation": "Governing Board Member, Ventura County Community College District, Trustee Area 1"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Roger Bowerman",
+       "incumbent": false,
+       "designation": "Community College Professor"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Gabriela Torres",
+       "incumbent": true,
+       "designation": "No Ballot Designation"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/ventura-county-ccd/"
+  },
+  {
+   "name": "Victor Valley Community College District",
+   "county": "San Bernardino",
+   "registrar_url": "https://uploads.rov.sbcounty.gov/ROV/Elections/2026/1103/Report_CandidateList.pdf",
+   "seats": [
+    {
+     "name": "Governing Board Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Joseph W. Brady",
+       "incumbent": true,
+       "designation": "Victor Valley Community College District Member, Governing Board Area 2"
+      },
+      {
+       "name": "Daniel L. Alcala Sr.",
+       "incumbent": false,
+       "designation": "Commercial Truck Driver"
+      }
+     ]
+    },
+    {
+     "name": "Governing Board Area 5",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Laura K. Dvareckas",
+       "incumbent": false,
+       "designation": "Small Business Owner"
+      },
+      {
+       "name": "Stephen Tyrrell",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/victor-valley-ccd/"
+  },
+  {
+   "name": "West Hills Community College District",
+   "county": "Fresno, Madera, Monterey, San Benito",
+   "registrar_url": "https://www2.fresnocountyca.gov/2850/post/2026Nov/officesupforelectioncandidatelist.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Kenneth Stoppenbrink",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Salvador Raygoza Godoy",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/west-hills-ccd/"
+  },
+  {
+   "name": "West Kern Community College District",
+   "county": "Kern",
+   "registrar_url": "https://www.kernvote.com/home/showpublisheddocument/25735/639248079733830000",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Michael W Eveland",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Kathryn Cooper",
+       "incumbent": true,
+       "designation": "Appointed Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "E. Dawn Cole",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/west-kern-ccd/"
+  },
+  {
+   "name": "West Valley-Mission Community College District",
+   "county": "Santa Clara, Santa Cruz",
+   "registrar_url": "https://files.santaclaracounty.gov/exjcpb1296/2026-09/qualified-list-of-local-candidates-9-28-26.pdf?VersionId=CM6jbwAVTLFIjLakj6hJku2l9KPAIxli",
+   "seats": [
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Anne J. Kepner",
+       "incumbent": false,
+       "designation": "Governing Board Member, West Valley-Mission Community College District, Trustee Area 3"
+      },
+      {
+       "name": "Colin Lee Elliott Glaves",
+       "incumbent": false,
+       "designation": "Materials Engineer"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Diane Lamkin",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 7",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Doug Robb",
+       "incumbent": false,
+       "designation": "College Professor/Coach"
+      },
+      {
+       "name": "Susan Oster Fish",
+       "incumbent": false,
+       "designation": "Nurse/College Trustee"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/west-valley-mission-ccd/"
+  },
+  {
+   "name": "Yosemite Community College District",
+   "county": "Santa Clara, San Joaquin, Stanislaus, Merced, Tuolumne, Calaveras",
+   "registrar_url": "https://files.santaclaracounty.gov/exjcpb1296/2026-09/qualified-list-of-local-candidates-9-28-26.pdf?VersionId=CM6jbwAVTLFIjLakj6hJku2l9KPAIxli",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Don Davis",
+       "incumbent": true,
+       "designation": "Incumbent"
+      },
+      {
+       "name": "William Andrew Dunn",
+       "incumbent": false,
+       "designation": "Educational Consultant"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 2",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Debra Hendricks",
+       "incumbent": false,
+       "designation": "Retired School Superintendent"
+      },
+      {
+       "name": "David Rico",
+       "incumbent": false,
+       "designation": "Veteran's Services Aide"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 4",
+     "count": 1,
+     "unopposed": false,
+     "candidates": [
+      {
+       "name": "Ryan Segoviano",
+       "incumbent": false,
+       "designation": "Teacher"
+      },
+      {
+       "name": "Jenny Nicolau",
+       "incumbent": true,
+       "designation": "Incumbent"
+      }
+     ]
+    }
+   ],
+   "site_path": "/districts/yosemite-ccd/"
+  },
+  {
+   "name": "Yuba Community College District",
+   "county": "Placer, Yolo, Sutter, Yuba, Butte",
+   "registrar_url": "https://www.placercountyelections.gov/Uploads/documents/11032026/can_watch/can_watch27.pdf",
+   "seats": [
+    {
+     "name": "Trustee Area 1",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Richard \"Ric\" Teagarden",
+       "incumbent": true,
+       "designation": "Yuba Community College District Trustee"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 3",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Bill Cornelius",
+       "incumbent": true
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 5",
+     "count": 1,
+     "unopposed": true,
+     "candidates": [
+      {
+       "name": "Irma Rodriguez",
+       "incumbent": false,
+       "designation": "Retired College Educator"
+      }
+     ]
+    },
+    {
+     "name": "Trustee Area 6",
+     "count": 1,
+     "unopposed": false,
+     "candidates": []
+    }
+   ],
+   "site_path": "/districts/yuba-ccd/"
+  }
+ ]
+}

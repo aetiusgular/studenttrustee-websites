@@ -543,15 +543,15 @@
       var head = el("div", { class: "map-page" },
         el("div", { class: "map-intro" },
           el("p", { class: "eyebrow" }, "Elections"),
-          el("h1", { id: "page-title", tabindex: "-1" }, "Who is on the ballot, and when."),
-          el("p", { class: "intro" }, "Pick a state. Each one lists its next election and deadlines and every race for Congress with the people running. California also has every statewide and legislative race, the Board of Supervisors contests and the community college board seats. Records refresh every night from official sources."),
+          el("h1", { id: "page-title", tabindex: "-1" }, "Who’s on your ballot and when to vote."),
+          el("p", { class: "intro" }, "Find upcoming election dates, key deadlines, and candidates running for office in each state."),
           CIVIC_KEY ? addressForm("map-addr", null) : null,
           legendEl(st, cal)),
         el("div", { class: "map-wrap" }, geo, grid,
           el("p", { class: "terr" }, cal ? "Dates come from the Google Civic Information election list and each state's election office. Every state page links its official office for deadlines and the certified list of candidates." : "The election calendar has not been published yet; each state page links its election office.")));
       var foot = footLine([el("span", null, "Last refresh ", time(electionsAge(man), true)), link(href(["races"]), "Every federal race"),
         link(href(["california"], { level: "college" }), "California college boards"), link(href(["sources"]), "Sources")]);
-      return { title: "Who is on the ballot, and when.", docTitle: "Every state", head: head, body: foot };
+      return { title: "Who’s on your ballot and when to vote.", docTitle: "Every state", head: head, body: foot };
     });
   }
 

@@ -219,9 +219,9 @@ def main(check=False):
            canonical=origin + '/legislation/')
 
     render('pages/elections.html', 'elections/index.html', current='/elections/', body_class='leg-page',
-           title='Elections · Who Is on the Ballot, and When | studenttrustee.net',
+           title='Elections · Who’s on Your Ballot and When to Vote | studenttrustee.net',
            description='Every state\'s next election and deadlines, every race for Congress with the people running, California\'s county and community college board seats, certified results, and your own ballot by address.',
-           og_title='Elections · who is on the ballot, and when',
+           og_title='Elections · who’s on your ballot and when to vote',
            og_description='Election dates and deadlines for every state, every federal race with its candidates, California college board seats, and certified results, refreshed nightly from official sources.',
            canonical=origin + '/elections/')
 

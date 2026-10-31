@@ -196,7 +196,7 @@ def main(check=False):
     render('pages/home.html', 'index.html', current='/',
            title='California Student Trustees | All 72 Community College Districts',
            description='An interactive map of all 72 California community college districts, their boundaries, and the student trustees who represent them.',
-           og_title='Polis · every student trustee in California',
+           og_title='The Civic Initiative · every student trustee in California',
            og_description='72 community college districts, drawn to their real boundaries, each with the student who sits on its board.',
            canonical=origin + '/',
            stats={'trustees': trustees, 'filled': filled, 'districts': len(districts), 'empty': len(empty), 'vacant_sentence': vacant_sentence.strip()})
@@ -212,14 +212,14 @@ def main(check=False):
            canonical=origin + '/map', roster_json=roster_json)
 
     render('pages/legislation.html', 'legislation/index.html', current='/legislation/', body_class='leg-page',
-           title='Legislative Votes & Records · Federal, State & County | Polis',
+           title='Legislative Votes & Records · Federal, State & County | The Civic Initiative',
            description='Bills, roll-call votes, each legislator\'s voting record and upcoming votes at the federal, state and county levels, for every state and county, refreshed nightly.',
            og_title='Legislative votes and records · federal, state and county',
            og_description='Who represents every state and county, how Congress, the California Legislature and county boards have voted, with every record linked to its source and stamped with when it last changed.',
            canonical=origin + '/legislation/')
 
     render('pages/elections.html', 'elections/index.html', current='/elections/', body_class='leg-page',
-           title='Elections · Who’s on Your Ballot and When to Vote | Polis',
+           title='Elections · Who’s on Your Ballot and When to Vote | The Civic Initiative',
            description='Every state\'s next election and deadlines, every race for Congress with the people running, California\'s county and community college board seats, certified results, and your own ballot by address.',
            og_title='Elections · who’s on your ballot and when to vote',
            og_description='Election dates and deadlines for every state, every federal race with its candidates, California college board seats, and certified results, refreshed nightly from official sources.',
@@ -233,32 +233,32 @@ def main(check=False):
            canonical=origin + '/legislation/calendars/')
 
     render('pages/accessibility.html', 'accessibility.html', current=None,
-           title='Accessibility | Polis',
-           description='How Polis meets WCAG 2.2 AAA, how that is tested, where it still falls short, and how to report a barrier.',
+           title='Accessibility | The Civic Initiative',
+           description='How The Civic Initiative meets WCAG 2.2 AAA, how that is tested, where it still falls short, and how to report a barrier.',
            canonical=origin + '/accessibility', accessibility_reviewed=stamp_us(site['accessibility_reviewed']))
 
     render('pages/about.html', 'about.html', current='/about',
-           title='About | Polis',
+           title='About | The Civic Initiative',
            description='Nick Bonasera, Student Trustee for the Contra Costa Community College District, on why this site exists and how to reach him.',
            canonical=origin + '/about')
 
     with open(os.path.join(ROOT, 'tools', 'get-started.json'), encoding='utf-8') as fh:
         gs_videos = json.load(fh)
     render('pages/get_started.html', 'get-started/index.html', current='/get-started/',
-           title='Get Started | Polis',
-           description='How to get involved in civic life, from voting to speaking at a board meeting, and how to use Polis.',
+           title='Get Started | The Civic Initiative',
+           description='How to get involved in civic life, from voting to speaking at a board meeting, and how to use The Civic Initiative.',
            canonical=origin + '/get-started/')
     render('pages/get_involved.html', 'get-started/get-involved/index.html', current='/get-started/',
-           title='How to Get Involved | Polis',
+           title='How to Get Involved | The Civic Initiative',
            description='Register and vote, reach your student trustee, run for student government, speak at a board meeting, contact your representatives and volunteer.',
            canonical=origin + '/get-started/get-involved/', videos=gs_videos['get-involved'])
     render('pages/using_the_site.html', 'get-started/using-the-site/index.html', current='/get-started/',
-           title='How to Use This Site | Polis',
+           title='How to Use This Site | The Civic Initiative',
            description='How to use the district map, the Legislation and Elections sections, and how to tell how fresh each record is.',
            canonical=origin + '/get-started/using-the-site/', videos=gs_videos['using-the-site'])
 
     render('pages/districts_index.html', 'districts/index.html', current='/districts/',
-           title='All 72 California Community College Districts | Polis',
+           title='All 72 California Community College Districts | The Civic Initiative',
            description='Every California community college district and its student trustee, grouped by region. One page per district.',
            canonical=origin + '/districts/', districts=districts)
 
@@ -272,7 +272,7 @@ def main(check=False):
         else:
             desc = '%s has no student trustee listed in the current roster. The colleges in the district and its board page.' % d['name']
         render('pages/district.html', 'districts/%s/index.html' % d['slug'], current='/districts/',
-               title='%s Student Trustee | Polis' % d['name'], description=desc,
+               title='%s Student Trustee | The Civic Initiative' % d['name'], description=desc,
                canonical='%s/districts/%s/' % (origin, d['slug']),
                d=d, prev=districts[i - 1] if i else None, next=districts[i + 1] if i + 1 < len(districts) else None,
                json_ld=json_ld(d, origin))

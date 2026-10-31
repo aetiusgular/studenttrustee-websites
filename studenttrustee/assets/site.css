@@ -50,7 +50,7 @@ main:focus{outline:none}
 }
 .mark{display:flex; align-items:center; gap:9px; font-weight:700; letter-spacing:-.02em; font-size:15px}
 .mark a{display:inline-flex; align-items:center; min-height:var(--min-target); text-decoration:none}
-.mark .wordmark{font-family:Georgia,"Times New Roman",Times,serif; font-weight:400; font-size:30px; line-height:1; letter-spacing:-.01em; color:var(--text-primary)}
+.mark .wordmark img{display:block; height:48px; width:auto}
 .grow{flex:1}
 .top nav{display:flex; flex-wrap:wrap; column-gap:30px; row-gap:0}
 .top nav a{
@@ -64,7 +64,7 @@ main:focus{outline:none}
   .top{flex-direction:column; align-items:flex-start; gap:4px; padding:12px 16px 4px; min-height:0}
   .top .grow{display:none}
   .top nav{column-gap:22px}
-  .mark .wordmark{font-size:26px}
+  .mark .wordmark img{height:40px}
 }
 
 /* ---- buttons, and the pill navigation some pages keep ---- */

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://studenttrustee.net/sitemap.xml
+Sitemap: https://civic-initiative.com/sitemap.xml

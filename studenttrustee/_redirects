@@ -1,3 +1,7 @@
+# The site moved to civic-initiative.com on 2026-10-31. Old addresses keep working and land on
+# the same page at the new domain. map.studenttrustee.net is left serving the site as before.
+https://studenttrustee.net/*      https://civic-initiative.com/:splat   301!
+https://www.studenttrustee.net/*  https://civic-initiative.com/:splat   301!
 # Netlify redirects. The old calendars page moved into the Legislation section.
 /legislature            /legislation/calendars/   301
 /legislature.html       /legislation/calendars/   301

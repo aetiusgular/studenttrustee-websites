@@ -22,6 +22,7 @@
 <link rel="mask-icon" href="/brand/poppy-mask-p6.svg" color="#CC480D">
 <link rel="manifest" href="/site-p6.webmanifest">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/nav.js" defer></script>
 <link rel="preload" href="/data/districts.geojson" as="fetch" crossorigin="anonymous">
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <link rel="stylesheet" href="/assets/map.css">
@@ -37,12 +38,34 @@
   <div class="grow"></div>
   <nav class="bar" aria-label="Site">
     <a class="btn navlink" href="/">Home</a>
-    <a class="btn navlink" href="/get-started/">Get Started</a>
-    <a class="btn navlink" href="/map" aria-current="page">District map</a>
-    <a class="btn navlink" href="/districts/">Districts</a>
+    <div class="nav-item">
+      <a class="btn navlink" href="/get-started/">Get Started</a>
+      <button type="button" class="nav-toggle btn navlink" aria-expanded="false" aria-controls="menu-get-started"><span class="visually-hidden">More in Get Started</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" focusable="false"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></button>
+      <ul class="nav-menu" id="menu-get-started" hidden>
+        <li><a href="/get-started/get-involved/"><span class="t">How to get involved</span><span class="d">Vote, reach your trustee, speak up</span></a>
+        </li>
+        <li><a href="/get-started/using-the-site/"><span class="t">How to use this site</span><span class="d">Tutorials for every section</span></a>
+        </li>
+        <li><span class="nm soon"><span class="t">Videos &amp; Slides <span class="tag">Coming soon</span></span><span class="d">Short videos and slide decks</span></span>
+        </li>
+      </ul>
+    </div>
     <a class="btn navlink" href="/legislation/">Legislation</a>
     <a class="btn navlink" href="/elections/">Elections</a>
     <a class="btn navlink" href="/about">About</a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <div class="nav-item right">
+      <a class="btn navlink" href="/map" aria-current="page">District map</a>
+      <button type="button" class="nav-toggle btn navlink" aria-expanded="false" aria-controls="menu-district-map"><span class="visually-hidden">More in District map</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" focusable="false"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></button>
+      <ul class="nav-menu" id="menu-district-map" hidden>
+        <li><a href="/map" aria-current="page"><span class="t">District map</span><span class="d">All 72 districts on one map</span></a>
+        </li>
+        <li><a href="/districts/"><span class="t">Districts</span><span class="d">One page per district, by region</span></a>
+        </li>
+        <li><a href="https://volunteer.civic-initiative.com/" rel="noopener"><span class="t">Volunteer guide <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (separate site)</span></span><span class="d">Bay Area volunteer opportunities</span></a>
+        </li>
+      </ul>
+    </div>
     <button type="button" class="btn only-narrow" id="btn-side" aria-controls="side" aria-expanded="false">List</button>
     <button type="button" class="btn" id="btn-table" aria-pressed="false" aria-controls="sheet">Table view</button>
   </nav>

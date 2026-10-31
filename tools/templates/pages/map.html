@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_nav.html" import site_nav %}
 {% block head %}
 <link rel="preload" href="/data/districts.geojson" as="fetch" crossorigin="anonymous">
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
@@ -13,9 +14,7 @@
   </div>
   <div class="grow"></div>
   <nav class="bar" aria-label="Site">
-    {%- for href, label in nav %}
-    <a class="btn navlink" href="{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a>
-    {%- endfor %}
+    {{- site_nav(nav, current, 'btn navlink') }}
     <button type="button" class="btn only-narrow" id="btn-side" aria-controls="side" aria-expanded="false">List</button>
     <button type="button" class="btn" id="btn-table" aria-pressed="false" aria-controls="sheet">Table view</button>
   </nav>

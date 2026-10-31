@@ -45,8 +45,22 @@ REGION_HEX = {
 }
 
 # Nav is defined once. /legislature (the old calendars page) redirects to /legislation/calendars/.
-NAV = [('/', 'Home'), ('/get-started/', 'Get Started'), ('/map', 'District map'), ('/districts/', 'Districts'),
-       ('/legislation/', 'Legislation'), ('/elections/', 'Elections'), ('/about', 'About')]
+NAV = [
+    {'href': '/', 'label': 'Home'},
+    {'href': '/get-started/', 'label': 'Get Started', 'id': 'get-started', 'menu': [
+        {'href': '/get-started/get-involved/', 'label': 'How to get involved', 'note': 'Vote, reach your trustee, speak up'},
+        {'href': '/get-started/using-the-site/', 'label': 'How to use this site', 'note': 'Tutorials for every section'},
+        {'href': None, 'label': 'Videos & Slides', 'note': 'Short videos and slide decks', 'soon': True},
+    ]},
+    {'href': '/legislation/', 'label': 'Legislation'},
+    {'href': '/elections/', 'label': 'Elections'},
+    {'href': '/about', 'label': 'About'},
+    {'href': '/map', 'label': 'District map', 'id': 'district-map', 'right': True, 'menu': [
+        {'href': '/map', 'label': 'District map', 'note': 'All 72 districts on one map'},
+        {'href': '/districts/', 'label': 'Districts', 'note': 'One page per district, by region'},
+        {'href': 'https://volunteer.civic-initiative.com/', 'label': 'Volunteer guide', 'note': 'Bay Area volunteer opportunities', 'external': True},
+    ]},
+]
 
 
 def slug(s):

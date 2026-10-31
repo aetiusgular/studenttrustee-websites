@@ -15,7 +15,11 @@ main a{color:var(--text-primary);text-decoration:underline;text-underline-offset
 .gs-doors{display:flex;flex-direction:column;gap:16px;margin:28px 0 0;padding:0;list-style:none}
 .gs-doors li{margin:0}
 .gs-door{display:flex;flex-direction:column;gap:6px;padding:22px 24px;border:1px solid var(--text-primary);text-decoration:none !important;color:var(--text-primary)}
-.gs-door:hover{background:var(--plane)}
+a.gs-door:hover{background:var(--plane)}
+.gs-door.soon{border-style:dashed; border-color:var(--text-secondary)}
+.gs-door.soon .dt{color:var(--text-secondary)}
+.gs-door .tag{display:inline-block; margin-left:8px; padding:1px 6px; border:1px solid var(--text-primary); font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-primary); vertical-align:4px}
 .gs-door .dt{font-family:Georgia,"Times New Roman",Times,serif;font-size:26px;line-height:1.2}
 .gs-door .dd{font-size:15px;line-height:1.5;color:var(--text-secondary)}
 

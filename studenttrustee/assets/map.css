@@ -194,3 +194,10 @@ body.reveal-armed.reveal-on .dchip{opacity:1;transition:opacity .55s ease}
 /* Attribution: Leaflet's default link blue is 4.9:1; use ink and underline so links are links (1.4.1, 1.4.6). */
 .leaflet-container .leaflet-control-attribution{color:var(--text-secondary);font-size:12px;background:rgba(255,255,255,.9)}
 .leaflet-container .leaflet-control-attribution a{color:var(--text-primary);text-decoration:underline;text-underline-offset:2px}
+/* Nav menus in the toolbar (site.css has the menu itself): the button sits flush against its link. */
+.bar .nav-item{display:inline-flex}
+.bar .nav-toggle{margin:0 0 0 -1px; padding:0 10px}
+.bar .nav-sep{display:none}
+@media (max-width:760px){
+  header .bar .nav-item{order:4; flex:none}
+}

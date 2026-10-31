@@ -1,0 +1,29 @@
+{#- The site nav, shared by the content header and the map toolbar. An item with a menu is a link to
+    its main page plus a button that opens the menu (assets/nav.js). A parent whose menu holds the
+    current page is marked aria-current="true"; the page itself is aria-current="page". -#}
+{%- macro site_nav(nav, current, link_class='') %}
+{%- for item in nav %}
+  {%- set hrefs = (item.menu or []) | map(attribute='href') | list %}
+  {%- set mark = 'page' if item.href == current else ('true' if current in hrefs else '') %}
+  {%- if item.right %}
+    <span class="nav-sep" aria-hidden="true"></span>
+  {%- endif %}
+  {%- if item.menu %}
+    <div class="nav-item{% if item.right %} right{% endif %}">
+      <a{% if link_class %} class="{{ link_class }}"{% endif %} href="{{ item.href }}"{% if mark %} aria-current="{{ mark }}"{% endif %}>{{ item.label }}</a>
+      <button type="button" class="nav-toggle{% if link_class %} {{ link_class }}{% endif %}" aria-expanded="false" aria-controls="menu-{{ item.id }}"><span class="visually-hidden">More in {{ item.label }}</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" focusable="false"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></button>
+      <ul class="nav-menu" id="menu-{{ item.id }}" hidden>
+        {%- for m in item.menu %}
+        <li>
+          {%- if m.soon %}<span class="nm soon"><span class="t">{{ m.label }} <span class="tag">Coming soon</span></span><span class="d">{{ m.note }}</span></span>
+          {%- else %}<a href="{{ m.href }}"{% if m.external %} rel="noopener"{% endif %}{% if m.href == current %} aria-current="page"{% endif %}><span class="t">{{ m.label }}{% if m.external %} <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (separate site)</span>{% endif %}</span><span class="d">{{ m.note }}</span></a>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  {%- else %}
+    <a{% if link_class %} class="{{ link_class }}"{% endif %} href="{{ item.href }}"{% if mark %} aria-current="{{ mark }}"{% endif %}>{{ item.label }}</a>
+  {%- endif %}
+{%- endfor %}
+{%- endmacro %}

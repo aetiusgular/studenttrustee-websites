@@ -1,3 +1,4 @@
+{%- from "_nav.html" import site_nav -%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +28,7 @@
 <link rel="mask-icon" href="/brand/poppy-mask-p6.svg" color="#CC480D">
 <link rel="manifest" href="/site-p6.webmanifest">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/nav.js" defer></script>
 {%- block head %}{% endblock %}
 </head>
 <body{% if body_class %} class="{{ body_class }}"{% endif %}>
@@ -36,9 +38,7 @@
   <div class="mark"><a href="/" class="wordmark"><img src="/brand/civic-logo-horizontal.png" alt="The Civic Initiative" width="313" height="112"></a></div>
   <div class="grow"></div>
   <nav aria-label="Site">
-    {%- for href, label in nav %}
-    <a href="{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a>
-    {%- endfor %}
+    {{- site_nav(nav, current) }}
   </nav>
 </header>
 {%- endblock %}

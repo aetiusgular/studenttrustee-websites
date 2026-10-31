@@ -25,3 +25,4 @@ h1{font-size:60px;line-height:1.04;letter-spacing:-.035em;margin:0 0 22px;font-w
   .st-lockup{max-width:240px;margin:0 auto}
   .stats{flex-wrap:wrap;gap:26px}
 }
+.hero + .doors{margin-top:64px}

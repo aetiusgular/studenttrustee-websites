@@ -8,34 +8,30 @@
 {% block main %}
   <div class="hero">
     <div>
-      <h1>Find the student trustee for your district.</h1>
-      <p class="sub">California has 72 community college districts. Each is run by a locally elected
-      board, and each board seats a student trustee elected by that district's students. Search the map
-      for your district, see who holds the seat, and which seats still need to be filled.</p>
-      <p class="ctas"><a class="cta" href="/map">Find your district</a>
-      <a class="cta2" href="{{ nav_legislation_href }}">{{ nav_legislation_cta }}</a></p>
+      <h1>Know who represents you and how to have a say.</h1>
+      <p class="sub">The Civic Initiative puts your representatives, their votes, your ballot and your deadlines
+      in one place, from Congress to your county board and community college district. Every record comes from
+      an official source and is refreshed nightly.</p>
+      <p class="ctas"><a class="cta" href="/get-started/">Get started</a>
+      <a class="cta2" href="/elections/">Election dates and deadlines</a></p>
     </div>
     <img class="st-lockup" src="/brand/civic-logo-stacked.png" alt="The Civic Initiative" width="640" height="898">
   </div>
 
-  <div class="stats">
-    <p class="tally"><b>{{ stats.trustees }}</b> student trustees across <b>{{ stats.filled }}</b> of the {{ stats.districts }} districts.
-    <b>{{ stats.empty }}</b> districts have no student trustee listed. {{ stats.vacant_sentence }}
-    <span id="freshness" data-verified="{{ site.last_verified }}">This information is up to date as of {{ verified_stamp }}.</span></p>
-  </div>
-
   <div class="doors">
-    <a class="door" href="/map"><span class="k">01 &middot; Map</span>
-      <h2 class="dh">District map</h2><p>Explore all 72 districts, shown with their actual boundaries and
-      current student trustees. Search by trustee, district, or college. Districts without a listed
-      trustee appear as vacant.</p></a>
-    <a class="door" href="{{ nav_legislation_href }}"><span class="k">02 &middot; Reference</span>
+    <a class="door" href="/get-started/"><span class="k">01 &middot; Start here</span>
+      <h2 class="dh">Get started</h2><p>How to get involved, from registering to vote to speaking at a board
+      meeting, and a guide to every part of this site.</p></a>
+    <a class="door" href="{{ nav_legislation_href }}"><span class="k">02 &middot; Votes</span>
       <h2 class="dh">{{ door_legislation_title }}</h2><p>{{ door_legislation_text }}</p></a>
-    <a class="door" href="/about"><span class="k">03 &middot; Who</span>
-      <h2 class="dh">About</h2><p>Learn who created and maintains this resource, why it was built, and how it
-      helps students navigate community college governance.</p></a>
+    <a class="door" href="/elections/"><span class="k">03 &middot; Ballots</span>
+      <h2 class="dh">Elections</h2><p>Election dates and registration, mail ballot and early voting deadlines for
+      every state, and who is running, from Congress to county boards.</p></a>
+    <a class="door" href="/map"><span class="k">04 &middot; Districts</span>
+      <h2 class="dh">District map</h2><p>California's 72 community college districts, drawn to their real
+      boundaries, with who sits on each board.</p></a>
+    <a class="door" href="/about"><span class="k">05 &middot; Who</span>
+      <h2 class="dh">About</h2><p>Who built and maintains this site, why it exists, and how to reach them.</p></a>
   </div>
 {%- endblock %}
-{% block scripts %}
-<script src="/assets/home.js"></script>
-{%- endblock %}
+

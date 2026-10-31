@@ -208,12 +208,11 @@ def main(check=False):
         outputs[path] = env.get_template(template).render(**common, **ctx)
 
     render('pages/home.html', 'index.html', current='/',
-           title='California Student Trustees | All 72 Community College Districts',
-           description='An interactive map of all 72 California community college districts, their boundaries, and the student trustees who represent them.',
-           og_title='The Civic Initiative · every student trustee in California',
-           og_description='72 community college districts, drawn to their real boundaries, each with the student who sits on its board.',
-           canonical=origin + '/',
-           stats={'trustees': trustees, 'filled': filled, 'districts': len(districts), 'empty': len(empty), 'vacant_sentence': vacant_sentence.strip()})
+           title='The Civic Initiative | Your Representatives, Their Votes and Your Ballot',
+           description='Who represents you, how they vote, who is on your ballot and when to vote, from Congress to your county board and community college district.',
+           og_title='The Civic Initiative · know who represents you and how to have a say',
+           og_description='Representatives, roll-call votes, election dates and deadlines, and who is running, from official sources, refreshed nightly.',
+           canonical=origin + '/')
 
     roster_json = json.dumps({'districts': districts, 'totalTrustees': roster.get('totalTrustees'),
                               'sourceFile': roster.get('sourceFile')}, ensure_ascii=False, separators=(',', ':'))

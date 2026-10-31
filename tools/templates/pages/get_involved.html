@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% from "pages/_video.html" import video %}
+{% block head %}
+<link rel="stylesheet" href="/assets/get-started.css">
+{%- endblock %}
+{% block main %}
+  <p class="crumbs"><a href="/get-started/">Get started</a> / How to get involved</p>
+  <h1>How to get involved</h1>
+  <p class="lead">Six ways to take part, from the smallest step to the biggest. Each one links the part of Polis
+  that helps.</p>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <h2 id="toc-h">On this page</h2>
+    <ol>
+      <li><a href="#vote">Register and vote</a></li>
+      <li><a href="#trustee">Reach your student trustee</a></li>
+      <li><a href="#run">Run for student government or student trustee</a></li>
+      <li><a href="#public-comment">Speak at a board meeting</a></li>
+      <li><a href="#representatives">Contact your representatives</a></li>
+      <li><a href="#volunteer">Volunteer</a></li>
+    </ol>
+  </nav>
+
+  <section class="guide" id="vote" aria-labelledby="vote-h">
+    <h2 id="vote-h">Register and vote</h2>
+    {{ video(videos['vote'], 'Video: how to register and vote') }}
+    <p>Every state sets its own deadlines for registering, asking for a mail ballot and voting early. Miss the
+    registration date and you may not be able to vote in that election.</p>
+    <ol class="steps">
+      <li>Open <a href="/elections/">Elections</a> and pick your state. The top of the state's page shows the
+      registration deadline, the mail ballot rules and the early voting window.</li>
+      <li>Use the link to your state's election office on that page to register or check your registration. The
+      office's own site is always the final word.</li>
+      <li>In California you can pre-register at 16 or 17 at
+      <a href="https://registertovote.ca.gov/">registertovote.ca.gov</a>, and you are registered when you turn 18.</li>
+      <li>Before election day, open <span class="go">Who's running</span> on your state's page to see the races and
+      the candidates.</li>
+    </ol>
+  </section>
+
+  <section class="guide" id="trustee" aria-labelledby="trustee-h">
+    <h2 id="trustee-h">Reach your student trustee</h2>
+    {{ video(videos['trustee'], 'Video: how to reach your student trustee') }}
+    <p>Each of California's 72 community college districts is run by an elected board, and each board seats a
+    student trustee elected by the district's students. That person speaks for you when the board votes on budgets,
+    fees, programs and policy.</p>
+    <ol class="steps">
+      <li>Find your college on the <a href="/map">District map</a> or in the <a href="/districts/">Districts</a>
+      list.</li>
+      <li>Open your district's page for the trustee's name and email and the link to the board.</li>
+      <li>Write to them about a specific problem at your college: what is happening, who it affects, and what you
+      want the board to do.</li>
+    </ol>
+  </section>
+
+  <section class="guide" id="run" aria-labelledby="run-h">
+    <h2 id="run-h">Run for student government or student trustee</h2>
+    {{ video(videos['run'], 'Video: how to run for student government') }}
+    <p>Student trustees and student government officers are elected by students. Each district and college sets its
+    own rules, filing dates and election timeline.</p>
+    <ol class="steps">
+      <li>Ask your college's student government office (often called Associated Students) when filing opens and
+      what the requirements are.</li>
+      <li>Talk to the current student trustee for your district. Their contact details are on your district's page.</li>
+      <li>The Student Senate for California Community Colleges represents students statewide. Its ten regions are
+      the colored regions on the <a href="/map">District map</a>.</li>
+    </ol>
+  </section>
+
+  <section class="guide" id="public-comment" aria-labelledby="public-comment-h">
+    <h2 id="public-comment-h">Speak at a board meeting</h2>
+    {{ video(videos['public-comment'], 'Video: how to speak at a board meeting') }}
+    <p>College boards, city councils and county boards in California meet in public, and state open meeting law
+    gives members of the public the chance to comment. You do not need to be an expert. A two-minute comment about
+    your own experience counts.</p>
+    <ol class="steps">
+      <li>Open your district's page and follow the link to the board's page for the agenda and meeting dates.</li>
+      <li>For county boards, open <a href="/legislation/">Legislation</a>, pick your state and then your county to
+      see recent votes and what is coming up.</li>
+      <li>Check the agenda for how to sign up to speak. Many boards take comments in person and some take them
+      online or by email.</li>
+    </ol>
+  </section>
+
+  <section class="guide" id="representatives" aria-labelledby="representatives-h">
+    <h2 id="representatives-h">Contact your representatives</h2>
+    {{ video(videos['representatives'], 'Video: how to contact your representatives') }}
+    <p>Your members of Congress and your state legislators answer to the people in their districts. A short message
+    that names one bill and says how it affects you is the kind that gets counted.</p>
+    <ol class="steps">
+      <li>Open <a href="/legislation/">Legislation</a>, pick your state, and choose
+      <span class="go">Who represents me</span>.</li>
+      <li>Open a legislator's page to see how they have voted and the bills they have voted on.</li>
+      <li>Check <span class="go">What's coming up</span> and the <a href="/legislation/calendars/">legislative
+      calendars</a> so your message arrives before the vote, not after it.</li>
+    </ol>
+  </section>
+
+  <section class="guide" id="volunteer" aria-labelledby="volunteer-h">
+    <h2 id="volunteer-h">Volunteer</h2>
+    {{ video(videos['volunteer'], 'Video: how to find volunteer work') }}
+    <ul>
+      <li>The <a href="https://volunteer.studenttrustee.net/">Bay Area Volunteer Guide</a> lists volunteer
+      opportunities across the Bay Area.</li>
+      <li>County election offices recruit poll workers for every election. In California, high school students can
+      serve as student poll workers. Your state's page on <a href="/elections/">Elections</a> links its election
+      office.</li>
+    </ul>
+  </section>
+
+  <p class="next">Next: <a href="/get-started/using-the-site/">How to use this site</a></p>
+{%- endblock %}

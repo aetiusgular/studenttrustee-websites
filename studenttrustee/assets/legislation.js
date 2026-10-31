@@ -423,7 +423,7 @@
       clearTimeout(slowTimer);
       app.replaceChildren();
       append(app, staleNotice(r[1]), out.head || pageHead(out), out.body);
-      document.title = (out.docTitle || out.title) + " · Legislation · studenttrustee.net";
+      document.title = (out.docTitle || out.title) + " · Legislation · Polis";
       setCanonical();
       app.removeAttribute("aria-busy");
       // The #fragment a link pointed at wins; then the element the link asked for; then the h1. On
@@ -450,7 +450,7 @@
       clearTimeout(slowTimer);
       app.replaceChildren();
       append(app, pageHead({ title: "Legislation", crumbs: [["All states", BASE], "Page not loaded"] }), errorBox(e));
-      document.title = "Page not loaded · Legislation · studenttrustee.net";
+      document.title = "Page not loaded · Legislation · Polis";
       app.removeAttribute("aria-busy");
       firstRender = false;
       say("");

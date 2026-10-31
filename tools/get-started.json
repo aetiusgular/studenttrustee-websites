@@ -1,0 +1,19 @@
+{
+  "_comment": "Videos for the Get Started pages. Put each file in studenttrustee/media/ with a WebVTT captions file beside it, then set the section's entry to {\"src\": \"/media/name.mp4\", \"captions\": \"/media/name.vtt\", \"poster\": \"/media/name.jpg\"} (poster is optional) and run npm run build. A section whose entry is null shows no video. Captions are required: the site targets WCAG 2.2 AAA.",
+  "get-involved": {
+    "vote": null,
+    "trustee": null,
+    "run": null,
+    "public-comment": null,
+    "representatives": null,
+    "volunteer": null
+  },
+  "using-the-site": {
+    "getting-around": null,
+    "map": null,
+    "districts": null,
+    "legislation": null,
+    "elections": null,
+    "data": null
+  }
+}

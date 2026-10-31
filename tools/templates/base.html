@@ -9,7 +9,7 @@
 <link rel="canonical" href="{{ canonical }}">
 {%- endif %}
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="studenttrustee.net">
+<meta property="og:site_name" content="Polis">
 {%- if canonical %}
 <meta property="og:url" content="{{ canonical }}">
 {%- endif %}
@@ -33,7 +33,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 {%- block header %}
 <header class="top">
-  <div class="mark"><a href="/" aria-label="StudentTrustee.net home"><img class="st-wordmark" src="/brand/logo-wordmark.png" alt="StudentTrustee.net" width="1015" height="127"></a></div>
+  <div class="mark"><a href="/" class="wordmark">Polis</a></div>
   <div class="grow"></div>
   <nav aria-label="Site">
     {%- for href, label in nav %}
@@ -50,7 +50,7 @@
 {%- block footer %}
 <footer class="site-footer">
   {%- block footer_extra %}{% endblock %}
-  <p>Maintained by {{ site.maintainer }}. {% if roster_stamp %}Roster verified {{ roster_stamp }}. {% endif %}For site corrections, <a class="fix" href="mailto:{{ site.corrections_email }}?subject=Student%20Trustee%20Website%20Update">please reach out</a> with updated information. <a href="/accessibility">Accessibility</a>.</p>
+  <p>Maintained by {{ site.maintainer }}. {% if roster_stamp %}Roster verified {{ roster_stamp }}. {% endif %}For site corrections, <a class="fix" href="mailto:{{ site.corrections_email }}?subject=Polis%20website%20correction">please reach out</a> with updated information. <a href="/accessibility">Accessibility</a>.</p>
 </footer>
 {%- endblock %}
 {%- block scripts %}{% endblock %}

@@ -302,7 +302,7 @@
       clearTimeout(slowTimer);
       app.replaceChildren();
       append(app, staleNotice(r[1]), out.head || pageHead(out), out.body);
-      document.title = (out.docTitle || out.title) + " · Elections · studenttrustee.net";
+      document.title = (out.docTitle || out.title) + " · Elections · Polis";
       setCanonical();
       app.removeAttribute("aria-busy");
       var hashTarget = location.hash ? document.getElementById(safeDecode(location.hash.slice(1))) : null;
@@ -325,7 +325,7 @@
       clearTimeout(slowTimer);
       app.replaceChildren();
       append(app, pageHead({ title: "Elections", crumbs: [["All states", BASE], "Page not loaded"] }), errorBox(e));
-      document.title = "Page not loaded · Elections · studenttrustee.net";
+      document.title = "Page not loaded · Elections · Polis";
       app.removeAttribute("aria-busy");
       firstRender = false;
       say("");

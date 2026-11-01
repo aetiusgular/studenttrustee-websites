@@ -1,0 +1,15 @@
+/* Glossary: a filter box, a jump list, then one definition list per source. Loaded after get-started.css. */
+.gl-find{margin:8px 0 0}
+.gl-find label{display:block;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;font-weight:600;color:var(--text-primary);margin:0 0 6px}
+.gl-find input{box-sizing:border-box;width:100%;min-height:var(--min-target);padding:8px 12px;border:1px solid var(--text-primary);border-radius:0;
+  background:var(--surface-1);color:var(--text-primary);font:inherit;font-size:16px}
+.gl-find input::placeholder{color:var(--text-muted);opacity:1}
+.gl-count{font-size:14px;margin:8px 0 0;min-height:1.6em}
+.gl-jump{display:flex;flex-wrap:wrap;gap:0 24px;margin:0;padding:0;list-style:none}
+.gl-src{font-size:14px}
+.gl-terms{margin:0}
+.gl-term{padding:14px 0;border-top:1px solid var(--rule)}
+.gl-term dt{font-family:Georgia,"Times New Roman",Times,serif;font-size:20px;line-height:1.3;color:var(--text-primary);margin:0 0 4px}
+.gl-term dd{margin:0;font-size:16px;line-height:1.6;color:var(--text-secondary)}
+.gl-term:target{background:var(--surface-1);outline:2px solid var(--text-primary);outline-offset:4px}
+.gl-none{font-style:italic}

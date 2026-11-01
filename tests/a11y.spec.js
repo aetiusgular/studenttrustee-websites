@@ -175,6 +175,7 @@ const PAGES = [
   { name: "get-started", url: "/get-started/" },
   { name: "get-involved", url: "/get-started/get-involved/" },
   { name: "using-the-site", url: "/get-started/using-the-site/" },
+  { name: "glossary", url: "/glossary/" },
   ...legislationPages(),
   ...electionPages(),
   { name: "volunteer", url: "http://127.0.0.1:8101/", settle: 1500 },

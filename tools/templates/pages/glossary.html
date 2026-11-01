@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/assets/get-started.css">
+<link rel="stylesheet" href="/assets/glossary.css">
+<script src="/assets/glossary.js" defer></script>
+{%- endblock %}
+{% block main %}
+  <h1>Government glossary</h1>
+  <p class="lead">The words you will run into on bills, votes and ballots, defined by the offices that use them: the
+  U.S. Senate, the California State Assembly and the U.S. Election Assistance Commission.</p>
+
+  <div class="gl-find" hidden>
+    <label for="gl-q">Find a term</label>
+    <input type="search" id="gl-q" autocomplete="off" spellcheck="false" placeholder="Type a word, like cloture">
+    <p class="gl-count" id="gl-count" role="status"></p>
+  </div>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <h2 id="toc-h">On this page</h2>
+    <ul class="gl-jump">
+    {%- for s in glossary.sections %}
+      <li><a href="#{{ s.id }}">{{ s.title }} ({{ s.terms|length }})</a></li>
+    {%- endfor %}
+    </ul>
+  </nav>
+{% for s in glossary.sections %}
+  <section class="guide gl-section" id="{{ s.id }}" aria-labelledby="{{ s.id }}-h">
+    <h2 id="{{ s.id }}-h">{{ s.title }}</h2>
+    <p class="gl-src">{% if s.quoted %}Definitions quoted as published in the {% else %}Our summaries of entries in the {% endif %}<a href="{{ s.url }}">{{ s.source }}</a>.{% if not s.quoted %} Read the full entries there.{% endif %}</p>
+    <dl class="gl-terms">
+    {%- for t in s.terms %}
+      <div class="gl-term" id="{{ s.id }}-{{ t.term|slug }}">
+        <dt>{{ t.term }}</dt>
+        <dd>{{ t.definition }}</dd>
+      </div>
+    {%- endfor %}
+    </dl>
+    <p class="gl-none" hidden>No {{ s.title }} terms match.</p>
+  </section>
+{% endfor %}
+{%- endblock %}

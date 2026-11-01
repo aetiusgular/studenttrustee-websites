@@ -1,0 +1,419 @@
+{
+ "sections": [
+  {
+   "id": "congress",
+   "title": "Congress",
+   "source": "U.S. Senate's glossary",
+   "url": "https://www.senate.gov/about/research-tools/glossary.htm",
+   "quoted": true,
+   "terms": [
+    {
+     "term": "Act",
+     "definition": "A measure passed by one or both Chambers. Usually refers to a measure passed by both Chambers in identical format and signed into law by the president or passed over a veto."
+    },
+    {
+     "term": "Adjournment sine die",
+     "definition": "[Latin: without day] The final adjournment of a session of a Congress."
+    },
+    {
+     "term": "Advice and consent",
+     "definition": "The role of the Senate to confirm presidential nominations for executive and judicial posts and international treaties."
+    },
+    {
+     "term": "Amendment",
+     "definition": "A proposal to alter the text of a pending bill or other measure by striking out part of it, inserting new language, or both."
+    },
+    {
+     "term": "Appropriation",
+     "definition": "A provision of funds for federal agencies to make payments out of the Treasury for specified purposes."
+    },
+    {
+     "term": "Authorization",
+     "definition": "A statutory provision that obligates funding for a federal program or agency. An authorization establishes the terms and conditions under which the program or agency operates, authorizes the enactment of appropriations, and specifies how appropriated funds are to be used."
+    },
+    {
+     "term": "Bill",
+     "definition": "A proposal to enact or repeal laws."
+    },
+    {
+     "term": "Budget resolution",
+     "definition": "A concurrent resolution setting forth the congressional budget by establishing various budget totals and dividing spending totals into functional categories (e.g., transportation). It sometimes includes reconciliation instructions to designated Senate or House committees."
+    },
+    {
+     "term": "Caucus",
+     "definition": "An informal organization of members of the Senate or House, or both, that exists to discuss issues of mutual concern and possibly to perform legislative research and policy planning for its members. There are regional, political, ideological, and ethnic caucuses."
+    },
+    {
+     "term": "Cloture",
+     "definition": "A procedure used in the Senate to place a time limit on consideration of a bill or other matter. Used to overcome or deter a filibuster. See Senate Rule XXII."
+    },
+    {
+     "term": "Committee",
+     "definition": "A subgroup of the House or Senate established for the purpose of considering legislation, conducting hearings and investigations, or carrying out other assignments as instructed by its respective Chamber."
+    },
+    {
+     "term": "Concurrent resolution",
+     "definition": "A legislative measure dealing with matters affecting both Chambers, such as a congratulatory message to another country, a concurrent budget resolution, or the creation of a temporary joint committee. Concurrent resolutions are not submitted to the president and thus do not have the force of law."
+    },
+    {
+     "term": "Conference committee",
+     "definition": "An ad hoc panel composed of Senate and House conferees formed for the purpose of reconciling different versions of a measure after passage in each Chamber."
+    },
+    {
+     "term": "Congressional Record",
+     "definition": "The substantially verbatim accounts of daily proceedings on the House and Senate floors. Printed each day either Chamber is in session."
+    },
+    {
+     "term": "Continuing resolution",
+     "definition": "A joint resolution enacted by Congress to provide budget authority for federal agencies and programs to continue operating in the absence of regular appropriations. Also referred to as continuing appropriations."
+    },
+    {
+     "term": "Filibuster",
+     "definition": "An attempt to block or delay Senate action on a bill or other matter by debating it at length, by offering numerous procedural motions, or by any other delaying or obstructive actions."
+    },
+    {
+     "term": "Fiscal year",
+     "definition": "The accounting period for the federal government that begins on October 1 and ends on September 30. The fiscal year is designated by the calendar year in which it ends; for example, fiscal year 2013 began on October 1, 2012, and ended on September 30, 2013. Congress passes appropriations legislation to fund the government for every fiscal year."
+    },
+    {
+     "term": "Hearing",
+     "definition": "A meeting of a committee or subcommittee held to take testimony on proposed legislation, conduct an investigation, review a federal agency or program, or consider a nomination or treaty."
+    },
+    {
+     "term": "Joint resolution",
+     "definition": "A legislative measure frequently employed for such matters as constitutional amendments, continuing appropriations, establishing permanent joint committees, and corrections of errors in existing law, and the vehicle most often used for congressional approval and disapproval, though it can be used for any legislative matter. Becomes law when approved by both Chambers and signed by the president, except for a proposed constitutional amendment, which requires a two-thirds affirmative vote in each Chamber and ratification by three-quarters of the states."
+    },
+    {
+     "term": "Lame duck session",
+     "definition": "The time following the November general elections in an even-numbered year. So called because some of the lawmakers who take part will not be returning for the next Congress."
+    },
+    {
+     "term": "Majority leader",
+     "definition": "The floor leader for the majority party."
+    },
+    {
+     "term": "Markup",
+     "definition": "The process by which congressional committees and subcommittees debate, amend, and rewrite proposed legislation."
+    },
+    {
+     "term": "Minority leader",
+     "definition": "The floor leader for the minority party."
+    },
+    {
+     "term": "Nomination",
+     "definition": "An appointment by the president to executive or judicial office. Subject to Senate confirmation."
+    },
+    {
+     "term": "Oversight",
+     "definition": "Review of the activities of a federal agency or program by a committee."
+    },
+    {
+     "term": "Pocket veto",
+     "definition": "A veto that occurs when the president does not sign a bill within 10 days of receiving it—the time period granted by the Constitution for presidential review—and Congress adjourns during that time."
+    },
+    {
+     "term": "President pro tempore",
+     "definition": "A constitutionally recognized officer of the Senate who presides over the Chamber in the absence of the vice president. Elected by the Senate and, by custom, the senator of the majority party with the longest record of continuous service."
+    },
+    {
+     "term": "Public law",
+     "definition": "A bill or joint resolution with general applicability nationwide that has passed both Chambers and is signed by the president."
+    },
+    {
+     "term": "Quorum",
+     "definition": "The number of senators that must be present for the Senate or House to do business. The Constitution requires a majority of senators (51) and representatives (218) for a quorum."
+    },
+    {
+     "term": "Ranking member",
+     "definition": "The highest-ranking (and usually longest-serving) minority member of a committee or subcommittee."
+    },
+    {
+     "term": "Recess",
+     "definition": "A temporary interruption of Senate or House proceedings. A recess may extend for a few hours or overnight, or may constitute a long break, such as over a holiday period."
+    },
+    {
+     "term": "Reconciliation",
+     "definition": "An optional process established by the Congressional Budget Act of 1974 by which Congress changes existing laws to conform tax and spending levels to levels set in a budget resolution. Reconciliation instructions found in budget resolutions direct committees to report or submit to the Budget Committee legislation that would enact such changes, indicating appropriate dollar changes to be achieved and usually providing a deadline for committee action. The resulting legislation is a reconciliation bill."
+    },
+    {
+     "term": "Rider",
+     "definition": "A nongermane amendment to a bill or an amendment to an appropriation bill that changes the permanent law governing a program funded by the bill."
+    },
+    {
+     "term": "Roll call vote",
+     "definition": "A vote in which each senator or representative votes “yea” or “nay” as his or her name is called by the clerk. Sometimes referred to as the “yeas and nays.”"
+    },
+    {
+     "term": "Session",
+     "definition": "The period during which Congress assembles and conducts business. Each Congress generally has a first and second session roughly lasting a calendar year; historically, there have also been third and special sessions."
+    },
+    {
+     "term": "Simple resolution",
+     "definition": "A measure used to express nonbinding positions of the Senate or House or to deal with either Chamber's internal affairs, such as the creation of a special committee. Does not require action by the other Chamber and does not have the force of law."
+    },
+    {
+     "term": "Standing committee",
+     "definition": "A permanent committee established under the rules of the Senate or House, specializing in the consideration of particular subject areas."
+    },
+    {
+     "term": "Unanimous consent",
+     "definition": "Agreement on any question or matter before the Senate that sets aside a rule of procedure to expedite proceedings. Many requests for unanimous consent (u.c.) are routine but if any senator objects, the request is rejected."
+    },
+    {
+     "term": "Veto",
+     "definition": "The procedure by which the president prevents the enactment of a bill or joint resolution into law. Occurs when the president returns the legislation to the Chamber in which it originated. Can be overridden by a two-thirds vote in both the Senate and the House."
+    },
+    {
+     "term": "Veto override",
+     "definition": "The passage into law of a bill vetoed by the president. Requires a two-thirds vote in both Chambers."
+    },
+    {
+     "term": "Whip",
+     "definition": "An assistant to the majority or minority leader who is also elected by his or her party conference. Responsible for mobilizing votes within the party on major issues and often serves as acting floor leader."
+    }
+   ]
+  },
+  {
+   "id": "california",
+   "title": "California Legislature",
+   "source": "California State Assembly Chief Clerk's Glossary of Legislative Terms",
+   "url": "https://clerk.assembly.ca.gov/glossary-terms",
+   "quoted": false,
+   "terms": [
+    {
+     "term": "Across the desk",
+     "definition": "How a bill is formally introduced. Once it goes across the desk it gets a number and is printed as a public document."
+    },
+    {
+     "term": "Author",
+     "definition": "The legislator who introduces a bill and carries it through each step, presenting it in committee and on the floor."
+    },
+    {
+     "term": "Chaptered",
+     "definition": "What happens to a bill after the Governor signs it: the Secretary of State gives it a chapter number in that year's statutes, and it is law."
+    },
+    {
+     "term": "Concurrence",
+     "definition": "When a bill returns to the house it started in with amendments from the other house, the first house votes on whether to accept those amendments. If it does not, the bill can go to a conference committee."
+    },
+    {
+     "term": "Consent calendar",
+     "definition": "A list of bills that passed committee with no votes against them. The full house passes them together in a single vote, without debate."
+    },
+    {
+     "term": "Constitutional amendment",
+     "definition": "A proposal to change the California Constitution, numbered ACA in the Assembly and SCA in the Senate. It needs a two-thirds vote of each house and then the approval of the voters. The Governor does not sign it."
+    },
+    {
+     "term": "Daily File",
+     "definition": "The agenda each house publishes for every day it meets. It lists the bills up for a floor vote and the committee hearings ahead, with the bills each committee will hear."
+    },
+    {
+     "term": "Effective date",
+     "definition": "When a new law takes effect. A bill passed in a regular session normally takes effect on January 1 of the following year. An urgency bill takes effect as soon as it is signed."
+    },
+    {
+     "term": "Floor",
+     "definition": "The chamber where the whole Assembly or Senate meets. A bill “on the floor” is before the entire house rather than a committee."
+    },
+    {
+     "term": "Gut and amend",
+     "definition": "Removing the entire contents of a bill and replacing them with new, often unrelated, language. It lets a new proposal move without starting over as a new bill."
+    },
+    {
+     "term": "Inactive file",
+     "definition": "A part of the Daily File where a bill goes when its author pulls it from the list of bills awaiting a floor vote. The author can bring it back with notice."
+    },
+    {
+     "term": "Legislative Counsel's Digest",
+     "definition": "The summary printed at the top of every bill by the Legislative Counsel, the Legislature's nonpartisan lawyers. It explains what current law says and how the bill would change it."
+    },
+    {
+     "term": "Majority vote",
+     "definition": "More than half of the members of a house: 41 of 80 in the Assembly and 21 of 40 in the Senate. Most bills, including the state budget, pass with a majority vote."
+    },
+    {
+     "term": "Spot bill",
+     "definition": "A bill introduced with small, placeholder changes to the law so that it can be amended later with the real proposal."
+    },
+    {
+     "term": "Suspense file",
+     "definition": "Where the Appropriations Committees hold bills that would cost the state a significant amount. The bills are weighed against each other and decided together at a single hearing."
+    },
+    {
+     "term": "Third reading",
+     "definition": "The stage at which a bill is debated and voted on by the full house. The bills waiting for that vote are listed under third reading in the Daily File."
+    },
+    {
+     "term": "Two-thirds vote",
+     "definition": "Two-thirds of the members of a house: 54 in the Assembly and 27 in the Senate. Urgency bills, tax increases, constitutional amendments and veto overrides need it."
+    },
+    {
+     "term": "Two-year bill",
+     "definition": "A bill introduced in the first year of the Legislature's two-year session that is held over and acted on in the second year."
+    },
+    {
+     "term": "Urgency clause",
+     "definition": "A section of a bill that makes it take effect as soon as the Governor signs it, instead of on January 1. A bill with an urgency clause needs a two-thirds vote in each house."
+    },
+    {
+     "term": "Veto",
+     "definition": "The Governor's rejection of a bill, returned to the house where it started. The Legislature can override a veto with a two-thirds vote of each house."
+    }
+   ]
+  },
+  {
+   "id": "elections",
+   "title": "Elections",
+   "source": "U.S. Election Assistance Commission's Glossary of Election Terminology",
+   "url": "https://www.eac.gov/election-officials/glossaries-election-terminology",
+   "quoted": true,
+   "terms": [
+    {
+     "term": "Absentee ballot",
+     "definition": "A ballot cast by a voter other than in-person on election day. Some jurisdictions use the term synonymous with mailed ballots while other jurisdictions use the term synonymous with early voting."
+    },
+    {
+     "term": "Ballot",
+     "definition": "The official presentation of all of the contests to be decided in a particular election. Either in paper or electronic format, the mechanism for voters to show their voter preferences."
+    },
+    {
+     "term": "Ballot designation",
+     "definition": "A description, name or formal title printed under a candidate's name on a ballot. May also include a candidate's political party or incumbent status."
+    },
+    {
+     "term": "Ballot measure",
+     "definition": "(1) A question that appears on the ballot for approval or rejection. (2) A contest on a ballot where the voter may vote yes or no."
+    },
+    {
+     "term": "Candidate",
+     "definition": "A person who is seeking nomination or election to a specified office and who either has met the legal requirements to have his/her name printed on the ballot or is eligible to have his/her name written in on the ballot and counted as the voter's choice for the contest. Note - federal campaign finance and some states do not require a person to have filed petitions to be considered a candidate. Raising money alone can make you a candidate."
+    },
+    {
+     "term": "Canvass",
+     "definition": "(1) Aggregating or confirming every valid ballot cast and counted, which includes absentee, early voting, Election Day, provisional, challenged, and uniformed and overseas citizen. (2) Solicit votes."
+    },
+    {
+     "term": "Certified election results",
+     "definition": "Final vote tallies that have been attested as true and accurate by the official responsible for confirming their accuracy."
+    },
+    {
+     "term": "Close of registration",
+     "definition": "The last day that a citizen can register to vote or update their voter registration before an election."
+    },
+    {
+     "term": "Closed primary",
+     "definition": "Primary election in which voters receive a ballot listing only those candidates running for office in the political party with which the voters are affiliated. In some states, non-partisan contests and ballot issues may be included."
+    },
+    {
+     "term": "Early voting",
+     "definition": "Voting before election day where the voter completes the ballot in person at an elections office or other designated polling site prior to election day. Early voting can also include voting with a mailed or absentee ballot prior to election day."
+    },
+    {
+     "term": "Election Day",
+     "definition": "The last day on which voters may cast a ballot. Absentee ballots and early voting ballots may be cast in advance of Election Day."
+    },
+    {
+     "term": "Election precinct",
+     "definition": "Election administration division corresponding to a contiguous geographic area that is the basis for determining which contests and issues the voters legally residing in that area are eligible to vote on."
+    },
+    {
+     "term": "Electoral College",
+     "definition": "A body of people representing the states of the U.S., who formally cast votes for the election of the president and vice president."
+    },
+    {
+     "term": "Nonpartisan election",
+     "definition": "Election held with candidates in non-party-specific contests."
+    },
+    {
+     "term": "Open primary",
+     "definition": "Primary election in which any voters can participate, regardless of their political affiliation. Some states require voters to publicly declare their choice of party ballot at the polling place, after which the poll worker provides or activates the appropriate ballot. Other states allow the voters to make their choice of party ballot within the privacy of the voting booth."
+    },
+    {
+     "term": "Overvote",
+     "definition": "When the number of selections made by a voter in a contest is more than the maximum number allowed."
+    },
+    {
+     "term": "Partisan election",
+     "definition": "An election in which candidates run for offices as representatives of a political party, often in which their party affiliation is printed on the ballot."
+    },
+    {
+     "term": "Poll worker",
+     "definition": "The official responsible for the proper and orderly voting at a polling location or an election process."
+    },
+    {
+     "term": "Polling place",
+     "definition": "Facility to which voters are assigned to cast in-person ballots."
+    },
+    {
+     "term": "Primary election",
+     "definition": "Election held to determine which candidate will represent a political party for a given office in the general election. Some states have an open primary, while others have a closed or modified closed, primary. Sometimes elections for nonpartisan offices and ballot issues are held during primary elections."
+    },
+    {
+     "term": "Proposition",
+     "definition": "A proposal to enact a new law or constitutional amendment that is placed on the ballot for approval or rejection by voters."
+    },
+    {
+     "term": "Provisional ballot",
+     "definition": "A ballot cast by a voter who was not on the list of eligible voters, whose information was incomplete or not accurate, or who had already received a ballot in the mail and was allowed to vote. Fail-safe ballots are usually kept separate from the other ballots until an election official can determine if the voter is eligible to vote. These ballots are sometimes called fail-safe ballots."
+    },
+    {
+     "term": "Recall election",
+     "definition": "An election in which the question of whether to remove an elected official from office before their term is completed appears on the ballot for approval or rejection."
+    },
+    {
+     "term": "Referendum",
+     "definition": "Process whereby a state law or constitutional amendment may be referred to the voters before it goes into effect."
+    },
+    {
+     "term": "Registered voter",
+     "definition": "A voter who is listed on an electoral roll for the jurisdiction where a voter resides."
+    },
+    {
+     "term": "Run-off election",
+     "definition": "Election to select a winner following a primary or a general election in which no candidate in the contest received the required minimum percentage of the votes cast. The two candidates receiving the most votes for the contest in question proceed to the run-off election."
+    },
+    {
+     "term": "Sample ballot",
+     "definition": "An example ballot provided to voters with information specific to the voter."
+    },
+    {
+     "term": "Special election",
+     "definition": "Primary, general, municipal, proposition, run-off, or recall election that is not held on a date and time regularly scheduled through statute. A special election may be combined with a scheduled election."
+    },
+    {
+     "term": "Undervote",
+     "definition": "Occurs when the number of choices selected by a voter in a contest is less than the maximum number allowed for that contest or when no selection is made for a single choice contest."
+    },
+    {
+     "term": "Vote by mail",
+     "definition": "Method of casting ballots by which eligible voters are mailed ballots and information packets by the local jurisdiction. Voters can return their marked ballots by mail, to a voting location, or in drop boxes, depending on the jurisdiction."
+    },
+    {
+     "term": "Vote center",
+     "definition": "A vote center is one of multiple voting locations in an election jurisdiction where voters may choose to vote at any of the locations offered (i.e. they are not assigned to one location). Vote centers are typically opened for multiple days and offer a variety of election services."
+    },
+    {
+     "term": "Voter identification (ID)",
+     "definition": "A means of proving a person's identity for the purposes of voting, according to the laws of the jurisdiction. Common forms of Identification are Driver's Licenses and Passports."
+    },
+    {
+     "term": "Voter initiative",
+     "definition": "A means by which voters may propose new laws or amend existing laws by gathering signatures from registered voters to either enact a law or place the issue on the ballot for the public to vote on."
+    },
+    {
+     "term": "Voter registration",
+     "definition": "A term used by election officials when referring to a voter's record. Voter Registration also refers to the requirement for citizens to register with a state or local elections office in order to be eligible to receive an official ballot for a given election, and to participate in certain election-related activities (including but not limited to signing petitions, serving as poll workers, and running for office)."
+    },
+    {
+     "term": "Voter turnout",
+     "definition": "The number of people voting in an election. This number is typically reported as a percentage of the total number of voters in an election divided by the total number of registered voters in a given precinct or jurisdiction."
+    },
+    {
+     "term": "Write-in candidate",
+     "definition": "Any person seeking election, but whose name will not be printed on the ballot. For these votes to be tallied and certified, the candidate must file forms with the election official during the qualifying period. A space will be provided on the ballot for voters to write in the candidate's name. The candidate must educate voters to write in the candidate's name in the space provided."
+    }
+   ]
+  }
+ ]
+}

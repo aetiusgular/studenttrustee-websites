@@ -54,6 +54,7 @@ NAV = [
     ]},
     {'href': '/legislation/', 'label': 'Legislation'},
     {'href': '/elections/', 'label': 'Elections'},
+    {'href': '/glossary/', 'label': 'Glossary'},
     {'href': '/about', 'label': 'About'},
     {'href': '/map', 'label': 'District map', 'id': 'district-map', 'right': True, 'menu': [
         {'href': '/map', 'label': 'District map', 'note': 'All 72 districts on one map'},
@@ -178,6 +179,7 @@ def main(check=False):
 
     env = Environment(loader=FileSystemLoader(TEMPLATES), autoescape=select_autoescape(['html']),
                       trim_blocks=False, lstrip_blocks=False, keep_trailing_newline=True)
+    env.filters['slug'] = slug
 
     filled = sum(1 for d in districts if d.get('trustees'))
     trustees = sum(len(d.get('trustees') or []) for d in districts)
@@ -270,6 +272,13 @@ def main(check=False):
            description='How to use the district map, the Legislation and Elections sections, and how to tell how fresh each record is.',
            canonical=origin + '/get-started/using-the-site/', videos=gs_videos['using-the-site'])
 
+    with open(os.path.join(ROOT, 'tools', 'glossary.json'), encoding='utf-8') as fh:
+        glossary = json.load(fh)
+    render('pages/glossary.html', 'glossary/index.html', current='/glossary/',
+           title='Government Glossary · Congress, the California Legislature and Elections | The Civic Initiative',
+           description='Plain definitions of the terms used for bills, votes and ballots, from the U.S. Senate, the California State Assembly and the U.S. Election Assistance Commission.',
+           canonical=origin + '/glossary/', glossary=glossary)
+
     render('pages/districts_index.html', 'districts/index.html', current='/districts/',
            title='All 72 California Community College Districts | The Civic Initiative',
            description='Every California community college district and its student trustee, grouped by region. One page per district.',
@@ -295,7 +304,7 @@ def main(check=False):
     urls = [('/', '1.0'), ('/map', '0.9'), ('/districts/', '0.9'), ('/legislation/', '0.9'), ('/legislation/calendars/', '0.7'),
             ('/legislation/california/', '0.8'), ('/legislation/california/representatives/', '0.7'), ('/legislation/votes/', '0.7'), ('/legislation/bills/', '0.7'),
             ('/legislation/upcoming/', '0.7'), ('/legislation/sources/', '0.5'), ('/elections/', '0.9'), ('/elections/california/', '0.8'),
-            ('/elections/races/', '0.6'), ('/elections/sources/', '0.5'),
+            ('/elections/races/', '0.6'), ('/elections/sources/', '0.5'), ('/glossary/', '0.7'),
             ('/get-started/', '0.8'), ('/get-started/get-involved/', '0.7'), ('/get-started/using-the-site/', '0.7'), ('/about', '0.6'), ('/accessibility', '0.3')]
     urls += [('/districts/%s/' % d['slug'], '0.8') for d in districts]
     body = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
